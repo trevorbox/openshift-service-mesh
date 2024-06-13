@@ -40,3 +40,10 @@ spec:
       enabled: false
     openshiftRoute:
       enabled: false
+  addons:
+    grafana:
+      enabled: false
+    kiali:
+      enabled: false
+    prometheus:
+      enabled: false

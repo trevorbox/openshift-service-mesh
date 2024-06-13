@@ -2,9 +2,6 @@ apiVersion: networking.istio.io/v1beta1
 kind: ServiceEntry
 metadata:
   name: tempo-otlp-http
-  annotations:
-    helm.sh/hook: post-install,post-upgrade
-    helm.sh/hook-weight: "-1"
 spec:
   hosts:
   - tempo-minio-dev-distributor.tempo-system.svc.cluster.local

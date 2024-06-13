@@ -95,3 +95,12 @@ applications:
       namespace: istio-system
     source:
       path: components/istio-system
+
+  istio-system-configs:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '5'
+    destination:
+      namespace: istio-system
+    source:
+      path: components/istio-system-configs

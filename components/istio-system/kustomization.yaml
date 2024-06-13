@@ -8,5 +8,3 @@ resources:
   - resourcequota-service-mesh.yaml
   - servicemeshcontrolplane-full-install.yaml
   - servicemeshmemberroll.yaml
-  - destinationrule-disable-mtls-for-tempo.yaml
-  - serviceentry-tempo-otlp-http.yaml

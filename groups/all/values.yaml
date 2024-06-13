@@ -49,4 +49,49 @@ applications:
     destination:
       namespace: cert-manager
     source:
-      path: components/cert-manager-operator
+      path: components/cert-manager-operator     
+                          
+  openshift-monitoring:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '5'
+    destination:
+      namespace: openshift-monitoring
+    source:
+      path: components/openshift-monitoring
+
+  kiali-operator:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '5'
+    destination:
+      namespace: openshift-kiali-operator
+    source:
+      path: components/kiali-operator
+
+  kiali:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '15'
+    destination:
+      namespace: openshift-ingress
+    source:
+      path: components/kiali                           
+                          
+  openshift-servicemesh-operator:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '5'
+    destination:
+      namespace: openshift-servicemesh-operator
+    source:
+      path: components/openshift-servicemesh-operator
+
+  istio-system:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '5'
+    destination:
+      namespace: istio-system
+    source:
+      path: components/istio-system

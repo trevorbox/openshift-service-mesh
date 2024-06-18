@@ -6,8 +6,8 @@ installPlanApproverAndVerifyJobsImage: quay.io/openshift/origin-cli:4.14
 operatorGroups:
 - name: openshift-service-mesh-operator
   createNamespace: true
-  targetOwnNamespace: false
-  otherTargetNamespaces: null
+  # targetOwnNamespace: false
+  # otherTargetNamespaces: null
 
 operators:
 - channel: stable

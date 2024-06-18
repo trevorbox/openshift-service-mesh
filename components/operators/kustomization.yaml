@@ -7,3 +7,6 @@ helmCharts:
   valuesFile: values.yaml
   namespace: openshift-gitops
   version: 2.4.3
+
+resources:
+  - operatorgroup.yaml 

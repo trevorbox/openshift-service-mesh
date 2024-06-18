@@ -9,6 +9,7 @@ spec:
   extraConfig:
     resource.compareoptions: |
       ignoreAggregatedRoles: true
+    application.instanceLabelKey: argocd.argoproj.io/instance
   server:
     autoscale:
       enabled: false

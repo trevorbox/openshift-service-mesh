@@ -42,6 +42,15 @@ projects:
 
 applications:
 
+  operators:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '5'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: components/operators 
+
   cert-manager-operator:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous

@@ -9,5 +9,6 @@ helmCharts:
   valuesFile: values.yaml
   namespace: openshift-gitops
 - name: operators-installer
-  valuesFile: values.yaml
+  repo: https://redhat-cop.github.io/helm-charts
+  valuesFile: values-operators-installer.yaml
   namespace: openshift-gitops

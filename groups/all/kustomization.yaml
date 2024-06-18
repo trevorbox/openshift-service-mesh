@@ -8,3 +8,6 @@ helmCharts:
 - name: argocd-app-of-app
   valuesFile: values.yaml
   namespace: openshift-gitops
+- name: operators-installer
+  valuesFile: values.yaml
+  namespace: openshift-gitops

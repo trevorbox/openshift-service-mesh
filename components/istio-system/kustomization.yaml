@@ -7,5 +7,5 @@ resources:
   - namespace-istio-system.yaml
   - limitrange-service-mesh.yaml  
   - resourcequota-service-mesh.yaml
-  - servicemeshcontrolplane-full-install.yaml
+  - servicemeshcontrolplane-ossm-2-5.yaml
   - servicemeshmemberroll.yaml

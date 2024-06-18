@@ -5,3 +5,4 @@ helmCharts:
 - name: operators-installer
   repo: https://redhat-cop.github.io/helm-charts
   valuesFile: values.yaml
+  namespace: openshift-gitops

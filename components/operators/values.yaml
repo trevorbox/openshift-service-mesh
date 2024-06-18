@@ -7,7 +7,7 @@ operatorGroups:
 - name: openshift-service-mesh-operator
   createNamespace: true
   # targetOwnNamespace: false
-  # otherTargetNamespaces: null
+  otherTargetNamespaces: []
 
 operators:
 - channel: stable

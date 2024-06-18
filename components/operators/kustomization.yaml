@@ -6,3 +6,4 @@ helmCharts:
   repo: https://redhat-cop.github.io/helm-charts
   valuesFile: values.yaml
   namespace: openshift-gitops
+  version: 2.4.3

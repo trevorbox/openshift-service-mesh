@@ -5,6 +5,7 @@ installPlanApproverAndVerifyJobsImage: quay.io/openshift/origin-cli:4.14
 
 operatorGroups:
 - name: cert-manager-operator
+  targetOwnNamespace: true
   createNamespace: true
 - name: service-mesh-operator
   createNamespace: true

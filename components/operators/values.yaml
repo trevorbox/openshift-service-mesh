@@ -4,10 +4,16 @@ approveManualInstallPlanViaHook: true
 installPlanApproverAndVerifyJobsImage: quay.io/openshift/origin-cli:4.14
 
 operatorGroups:
-- name: openshift-service-mesh-operator
+- name: service-mesh-operator
   createNamespace: true
-  targetOwnNamespace: false
-  otherTargetNamespaces: 
+- name: kiali-operator
+  createNamespace: true
+- name: cert-manager-operator
+  createNamespace: true
+- name: tempo-operator
+  createNamespace: true
+- name: gatekeeper-operator
+  createNamespace: true
 
 operators:
 - channel: stable
@@ -16,7 +22,39 @@ operators:
   source: redhat-operators
   sourceNamespace: openshift-marketplace
   csv: servicemeshoperator.v2.5.0
-  namespace: openshift-service-mesh-operator
+  namespace: service-mesh-operator
+  installPlanVerifierActiveDeadlineSeconds: 1200
+- channel: stable
+  installPlanApproval: Manual
+  name: kiali-ossm
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  csv: kiali-operator.v1.73.8
+  namespace: kiali-operator
+  installPlanVerifierActiveDeadlineSeconds: 1200
+- channel: stable-v1
+  installPlanApproval: Manual
+  name: openshift-cert-manager-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  # csv: 
+  namespace: cert-manager-operator
+  installPlanVerifierActiveDeadlineSeconds: 1200
+- channel: stable
+  installPlanApproval: Manual
+  name: tempo-product
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  # csv: 
+  namespace: tempo-operator
+  installPlanVerifierActiveDeadlineSeconds: 1200
+- channel: stable
+  installPlanApproval: Manual
+  name: gatekeeper-operator-product
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  # csv: 
+  namespace: gatekeeper-operator
   installPlanVerifierActiveDeadlineSeconds: 1200
 
 commonLabels:

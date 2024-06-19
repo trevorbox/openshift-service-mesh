@@ -5,14 +5,14 @@ helmGlobals:
   chartHome: ../../.helm/charts
 
 helmCharts:
-# - name: operators-installer
-#   repo: https://redhat-cop.github.io/helm-charts
-#   valuesFile: values.yaml
-#   namespace: openshift-gitops
-#   version: 2.4.3
 - name: operators-installer
+  repo: https://redhat-cop.github.io/helm-charts
   valuesFile: values.yaml
   namespace: openshift-gitops
+  version: 2.4.3
+# - name: operators-installer
+#   valuesFile: values.yaml
+#   namespace: openshift-gitops
 # resources:
 #   - operatorgroup.yaml
 #   - namespace.yaml

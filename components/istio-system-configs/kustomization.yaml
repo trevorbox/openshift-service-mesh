@@ -5,3 +5,5 @@ namespace: istio-system
 resources:
   - destinationrule-disable-mtls-for-tempo.yaml
   - serviceentry-tempo-otlp-http.yaml
+  - telemetry-mesh-default.yaml
+  - servicemonitor-istiod-monitor.yaml

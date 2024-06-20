@@ -62,9 +62,9 @@ spec:
       - name: "Istio Performance Dashboard"
       - name: "Istio Wasm Extension Dashboard"
     istio:
-      config_map_name: istio-istio-ossm-2-5
-      istio_sidecar_injector_config_map_name: istio-sidecar-injector-istio-ossm-2-5
-      istiod_deployment_name: istiod-istio-ossm-2-5
+      config_map_name: istio-ossm-2-5
+      istio_sidecar_injector_config_map_name: istio-sidecar-injector-ossm-2-5
+      istiod_deployment_name: istiod-ossm-2-5
       url_service_version: 'http://istiod-istio-ossm-2-5.istio-system:15014/version'
       root_namespace: istio-system
       component_status:

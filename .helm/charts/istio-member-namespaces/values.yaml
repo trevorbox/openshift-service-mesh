@@ -1,5 +1,8 @@
-members:
+namespaces:
   - istio-ingress
+  - golang-ex
+  - bookinfo
+  - nginx-echo-headers
 labels:
   istio.io/rev: ossm-2.5
 smcp:

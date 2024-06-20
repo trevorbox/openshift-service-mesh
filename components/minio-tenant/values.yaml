@@ -9,16 +9,8 @@ tenant:
   pools:
     - name: pool-0
       servers: 1
-      volumeClaimTemplate:
-        metadata:
-          name: data
-        spec:
-          storageClassName: crc-csi-hostpath-provisioner
-          accessModes:
-            - ReadWriteOnce
-          resources:
-            requests:
-              storage: 2Gi
+      storageClassName: crc-csi-hostpath-provisioner
+      size: 2Gi
       securityContext: 
         runAsNonRoot: true
         seccompProfile:

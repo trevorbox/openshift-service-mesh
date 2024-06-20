@@ -13,6 +13,7 @@ tenant:
         metadata:
           name: data
         spec:
+          storageClassName: crc-csi-hostpath-provisioner
           accessModes:
             - ReadWriteOnce
           resources:

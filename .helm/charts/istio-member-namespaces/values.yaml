@@ -1,0 +1,7 @@
+members:
+  - istio-ingress
+labels:
+  istio.io/rev: ossm-2.5
+smcp:
+  name: ossm-2-5
+  namespace: istio-system

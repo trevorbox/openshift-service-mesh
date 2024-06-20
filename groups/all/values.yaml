@@ -49,7 +49,10 @@ applications:
     destination:
       namespace: openshift-gitops
     source:
-      path: components/operators 
+      path: components/operators
+
+
+
 
   # cert-manager-operator:
   #   annotations:
@@ -68,6 +71,15 @@ applications:
       namespace: openshift-monitoring
     source:
       path: components/openshift-monitoring
+
+  istio-member-namespaces:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '6'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: components/istio-member-namespaces
 
   # kiali-operator:
   #   annotations:

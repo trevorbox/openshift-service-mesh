@@ -47,7 +47,7 @@ spec:
       # Grafana service name is "grafana" and is in the "telemetry" namespace.
       in_cluster_url: 'http://grafana-instance-service.istio-system.svc:3000'
       # Public facing URL of Grafana
-      url: {{ .Values.kiali.grafana.url }}
+      url: # TODO
       dashboards:
       - name: "Istio Service Dashboard"
         variables:
@@ -88,7 +88,7 @@ spec:
       query_timeout: 30
       enabled: true
       in_cluster_url: 'http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:16685'
-      url: {{ .Values.kiali.tempo.url }}
+      url: # TODO
       use_grpc: true
   installation_tag: 'Kiali [istio-system]'
   istio_namespace: istio-system

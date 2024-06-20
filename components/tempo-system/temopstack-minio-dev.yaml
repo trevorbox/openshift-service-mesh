@@ -12,7 +12,7 @@ spec:
     total:
       limits:
         memory: 6Gi
-        cpu: 4
+        cpu: '4'
   # observability:
   #   metrics:
   #     createServiceMonitors: true

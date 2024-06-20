@@ -12,6 +12,8 @@ spec:
       - "^openshift.*"
       - "^ibm.*"
       - "^kiali-operator"
+      include:
+      - istio-system
       label_selector_include: "istio.io/rev=ossm-2.5"
   auth:
     strategy: openshift

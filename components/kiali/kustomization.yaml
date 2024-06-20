@@ -7,3 +7,4 @@ resources:
   - kiali-kiali.yaml
   - networkpolicies-allow-ossmconsole-components-to-kiali.yaml
   - ossmconsole-ossmconsole.yaml
+  - kiali-view-link.yaml

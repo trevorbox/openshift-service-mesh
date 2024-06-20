@@ -103,4 +103,4 @@ applications:
     destination:
       namespace: istio-ingress
     source:
-      path: components/istio-ingress-gateway
+      path: components/istio-ingressgateway

@@ -6,5 +6,4 @@ helmGlobals:
 
 helmCharts:
 - name: nginx-echo-headers
-  valuesFile: values.yaml
   namespace: nginx-echo-headers

@@ -10,3 +10,4 @@ helmCharts:
 
 resources:
   - route.yaml
+  - namespace-minio-tenant.yaml

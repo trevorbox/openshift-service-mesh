@@ -60,6 +60,15 @@ applications:
     source:
       path: components/openshift-monitoring
 
+  istio-system:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '5'
+    destination:
+      namespace: istio-system
+    source:
+      path: components/istio-system
+
   istio-member-namespaces:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
@@ -78,14 +87,7 @@ applications:
     source:
       path: components/kiali                           
 
-  istio-system:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '14'
-    destination:
-      namespace: istio-system
-    source:
-      path: components/istio-system
+
 
   istio-system-configs:
     annotations:

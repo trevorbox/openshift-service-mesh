@@ -50,19 +50,7 @@ applications:
       namespace: openshift-gitops
     source:
       path: components/operators
-
-
-
-
-  # cert-manager-operator:
-  #   annotations:
-  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
-  #     argocd.argoproj.io/sync-wave: '5'
-  #   destination:
-  #     namespace: cert-manager
-  #   source:
-  #     path: components/cert-manager-operator     
-                          
+                         
   openshift-monitoring:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
@@ -81,15 +69,6 @@ applications:
     source:
       path: components/istio-member-namespaces
 
-  # kiali-operator:
-  #   annotations:
-  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
-  #     argocd.argoproj.io/sync-wave: '5'
-  #   destination:
-  #     namespace: openshift-kiali-operator
-  #   source:
-  #     path: components/kiali-operator
-
   kiali:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
@@ -98,20 +77,11 @@ applications:
       namespace: openshift-ingress
     source:
       path: components/kiali                           
-                          
-  # openshift-servicemesh-operator:
-  #   annotations:
-  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
-  #     argocd.argoproj.io/sync-wave: '5'
-  #   destination:
-  #     namespace: openshift-servicemesh-operator
-  #   source:
-  #     path: components/openshift-servicemesh-operator
 
   istio-system:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '5'
+      argocd.argoproj.io/sync-wave: '14'
     destination:
       namespace: istio-system
     source:
@@ -120,7 +90,7 @@ applications:
   istio-system-configs:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '5'
+      argocd.argoproj.io/sync-wave: '15'
     destination:
       namespace: istio-system
     source:
@@ -129,7 +99,7 @@ applications:
   istio-ingressgateway:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '5'
+      argocd.argoproj.io/sync-wave: '16'
     destination:
       namespace: istio-ingress
     source:

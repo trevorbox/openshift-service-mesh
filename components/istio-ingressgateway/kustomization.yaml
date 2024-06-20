@@ -8,6 +8,3 @@ helmCharts:
   namespace: istio-ingress
   version: ~1.18.5
   releaseName: istio-ingressgateway
-
-resources:
-  - namespace-istio-ingress.yaml

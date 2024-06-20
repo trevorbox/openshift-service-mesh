@@ -7,3 +7,6 @@ helmCharts:
   valuesFile: values.yaml
   namespace: istio-ingress
   version: ~1.18.5
+
+resources:
+  - namespace.yaml

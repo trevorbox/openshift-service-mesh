@@ -1,0 +1,30 @@
+{{- range $k, $v := .Values.features }}
+
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ $.Values.context.name }}-gateway-{{ $k }}
+  namespace: {{ $.Values.ingressgateway.namespace }}
+spec:
+  gateways:
+    - {{ $.Values.ingressgateway.namespace }}/{{ $.Values.context.name }}-{{ $k }}
+  hosts:
+    - {{ $v.host }}
+  http:
+{{- if eq $k "stable" }}
+{{- range $k2, $v2 := $.Values.features }}
+  - match:
+    - headers:
+        x-feature:
+          regex: {{ printf ".*%s/%s.*" $.Values.context.name $k2}}
+    route:
+    - destination:
+        host: {{ $v2.svc }}.{{ $.Values.context.namespace }}.svc.cluster.local
+{{- end }}
+{{- end }}
+  - route:
+    - destination:
+        host: {{ $v.svc }}.{{ $.Values.context.namespace }}.svc.cluster.local
+...
+{{- end }}

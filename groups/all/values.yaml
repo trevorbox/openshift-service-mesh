@@ -104,3 +104,21 @@ applications:
       namespace: istio-ingress
     source:
       path: components/istio-ingressgateway
+
+  nginx-echo-headers-istio:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '16'
+    destination:
+      namespace: nginx-echo-headers
+    source:
+      path: components/nginx-echo-headers-istio
+
+  nginx-echo-headers:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '16'
+    destination:
+      namespace: nginx-echo-headers
+    source:
+      path: components/nginx-echo-headers

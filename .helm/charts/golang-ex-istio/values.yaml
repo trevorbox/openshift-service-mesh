@@ -1,0 +1,17 @@
+ingressgateway:
+  name: ingressgateway
+  namespace: istio-ingress
+context: 
+  name: golang-ex
+  namespace: golang-ex
+features:
+  stable:
+    svc: golang-ex-stable
+    host: 
+  high:
+    svc: golang-ex-high
+    host: 
+  featurea:
+    svc: golang-ex-featurea
+    host: 
+  

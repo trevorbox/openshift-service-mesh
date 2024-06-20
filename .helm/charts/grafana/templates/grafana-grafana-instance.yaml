@@ -70,6 +70,7 @@ spec:
               ports:
                 - containerPort: 9091
                   name: https
+                  protocol: TCP
               resources: 
                 requests:
                   cpu: 10m

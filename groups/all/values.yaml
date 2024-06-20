@@ -114,7 +114,7 @@ applications:
     source:
       path: components/istio-system-configs
 
-  istio-ingress-gateway:
+  istio-ingressgateway:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
       argocd.argoproj.io/sync-wave: '5'

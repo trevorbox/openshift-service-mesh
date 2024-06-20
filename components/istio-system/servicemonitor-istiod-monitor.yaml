@@ -14,5 +14,5 @@ spec:
     interval: 30s
     relabelings:
     - action: replace
-      replacement: {{ printf "%s/%s" .Values.smcp.namespace .Values.smcp.name }}
+      replacement: istio-system/ossm-2-5
       targetLabel: mesh_id

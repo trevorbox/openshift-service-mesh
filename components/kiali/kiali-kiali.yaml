@@ -33,20 +33,39 @@ spec:
   external_services:
     custom_dashboards:
       namespace_label: kubernetes_namespace
+    # grafana:
+    #   auth:
+    #     password: {{ .Values.htpasswd }}
+    #     type: none
+    #     use_kiali_token: false
+    #     username: internal
+    #   enabled: true
+    #   in_cluster_url: 'http://grafana-instance-service.istio-system.svc:3000'
+    #   url: {{ .Values.kiali.grafana.url }}
     grafana:
-      auth:
-        password: {{ .Values.htpasswd }}
-        type: none
-        use_kiali_token: false
-        username: internal
       enabled: true
+      # Grafana service name is "grafana" and is in the "telemetry" namespace.
       in_cluster_url: 'http://grafana-instance-service.istio-system.svc:3000'
+      # Public facing URL of Grafana
       url: {{ .Values.kiali.grafana.url }}
+      dashboards:
+      - name: "Istio Service Dashboard"
+        variables:
+          namespace: "var-namespace"
+          service: "var-service"
+      - name: "Istio Workload Dashboard"
+        variables:
+          namespace: "var-namespace"
+          workload: "var-workload"
+      - name: "Istio Mesh Dashboard"
+      - name: "Istio Control Plane Dashboard"
+      - name: "Istio Performance Dashboard"
+      - name: "Istio Wasm Extension Dashboard"
     istio:
-      config_map_name: istio-full-install
-      istio_sidecar_injector_config_map_name: istio-sidecar-injector-full-install
-      istiod_deployment_name: istiod-full-install
-      url_service_version: 'http://istiod-full-install.istio-system:15014/version'
+      config_map_name: istio-istio-ossm-2-5
+      istio_sidecar_injector_config_map_name: istio-sidecar-injector-istio-ossm-2-5
+      istiod_deployment_name: istiod-istio-ossm-2-5
+      url_service_version: 'http://istiod-istio-ossm-2-5.istio-system:15014/version'
       root_namespace: istio-system
       component_status:
         enabled: true
@@ -63,7 +82,7 @@ spec:
         type: bearer
         use_kiali_token: true
       query_scope:
-        mesh_id: istio-system/full-install
+        mesh_id: istio-system/istio-ossm-2-5
       url: 'https://thanos-querier.openshift-monitoring.svc.cluster.local:9091'
     tracing:
       query_timeout: 30

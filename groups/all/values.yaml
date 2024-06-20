@@ -74,7 +74,7 @@ applications:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
       argocd.argoproj.io/sync-wave: '15'
     destination:
-      namespace: openshift-ingress
+      namespace: istio-system
     source:
       path: components/kiali                           
 

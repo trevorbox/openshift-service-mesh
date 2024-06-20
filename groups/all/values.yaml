@@ -122,3 +122,30 @@ applications:
       namespace: nginx-echo-headers
     source:
       path: components/nginx-echo-headers
+
+  minio-tenant:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '15'
+    destination:
+      namespace: minio-tenant
+    source:
+      path: components/minio-tenant
+
+  tempo-system:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '15'
+    destination:
+      namespace: tempo-system
+    source:
+      path: components/tempo-system
+
+  grafana:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '15'
+    destination:
+      namespace: istio-system
+    source:
+      path: components/grafana

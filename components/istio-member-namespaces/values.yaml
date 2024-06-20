@@ -1,4 +1,4 @@
-namespaces:
+members:
   - istio-ingress
   - golang-ex
   - bookinfo

@@ -113,3 +113,12 @@ applications:
       namespace: istio-system
     source:
       path: components/istio-system-configs
+
+  istio-ingress-gateway:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '5'
+    destination:
+      namespace: istio-ingress
+    source:
+      path: components/istio-ingress-gateway

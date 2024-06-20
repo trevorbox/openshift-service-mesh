@@ -86,9 +86,10 @@ To do so you can simply run this commands, however you might want to implement t
 ```sh
 export gitops_repo=https://github.com/trevorbox/openshift-service-mesh.git
 export cluster_name=dev
+export ingress_host=openshift-gitops-server-openshift-gitops.$(oc get ingress.config.openshift.io cluster -o jsonpath={.spec.domain}) 
 oc apply -f .bootstrap/subscription.yaml
 oc apply -f .bootstrap/cluster-rolebinding.yaml
-oc apply -f .bootstrap/argocd.yaml
+envsubst < .bootstrap/argocd.yaml | oc apply -f -
 envsubst < .bootstrap/root-application.yaml | oc apply -f -
 ```
 

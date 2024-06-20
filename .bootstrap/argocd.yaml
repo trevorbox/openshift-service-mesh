@@ -11,6 +11,7 @@ spec:
       ignoreAggregatedRoles: true
     application.instanceLabelKey: argocd.argoproj.io/instance
   server:
+    host: ${ingress_host}
     autoscale:
       enabled: false
     grpc:

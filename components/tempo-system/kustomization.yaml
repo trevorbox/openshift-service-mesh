@@ -5,4 +5,12 @@ namespace: tempo-system
 resources:
   - namespace-tempo-system.yaml
   - secret-minio-dev.yaml
-  - temopstack-minio-dev.yaml
+  - tempostack-minio-dev.yaml
+
+helmGlobals:
+  chartHome: ../../.helm/charts
+
+helmCharts:
+- name: openshift-oauth-proxy
+  valuesFile: values.yaml
+  namespace: tempo-system

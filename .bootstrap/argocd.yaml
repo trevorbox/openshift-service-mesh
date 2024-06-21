@@ -196,7 +196,7 @@ spec:
           if obj.status.readiness ~= nil then
             if obj.status.readiness.components ~= nil then
               if obj.status.readiness.components.ready ~= nil then
-                for i, component in pairs(tab) do
+                for i, component in pairs(obj.status.readiness.components.ready) do
                   if component == "istio-discovery" then
                     health_status.status = "Healthy"
                     health_status.message = component

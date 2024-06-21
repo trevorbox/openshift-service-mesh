@@ -193,16 +193,17 @@ spec:
       check: |
         local health_status = {}
         if obj.status ~= nil then
-          if obj.status.readiness ~= nil then
-            if obj.status.readiness.components ~= nil then
-              if obj.status.readiness.components.ready ~= nil then
-                for i, component in pairs(obj.status.readiness.components.ready) do
-                  if component == "istio-discovery" then
-                    health_status.status = "Healthy"
-                    health_status.message = component
-                    return health_status
-                  end
-                end
+          if obj.status.conditions ~= nil then
+            for i, condition in pairs(obj.status.conditions) do
+              if condition.reason == "ComponentsReady" and condition.status == "True" then
+                health_status.status = "Healthy"
+                health_status.message = condition.message
+                return health_status
+              end
+              if condition.reason == "ComponentsReady" and condition.status == "False" then
+                health_status.status = "Degraded"
+                health_status.message = condition.message
+                return health_status
               end
             end
           end

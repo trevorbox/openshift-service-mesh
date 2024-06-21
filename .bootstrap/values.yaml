@@ -15,3 +15,7 @@ operators:
   csv: openshift-gitops-operator.v1.12.3
   namespace: openshift-gitops-operator
   installPlanVerifierActiveDeadlineSeconds: 1200
+  config:
+    env:
+    - name: DISABLE_DEFAULT_ARGOCD_INSTANCE
+      value: "true"

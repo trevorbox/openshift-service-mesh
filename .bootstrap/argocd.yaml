@@ -32,23 +32,10 @@ spec:
         insecureEdgeTerminationPolicy: Redirect
     service:
       type: ""
-  resourceCustomizations: |
-    argoproj.io/Application:
-      health.lua: |
-        hs = {}
-        hs.status = "Progressing"
-        hs.message = ""
-        if obj.status ~= nil then
-          if obj.status.health ~= nil then
-            hs.status = obj.status.health.status
-            if obj.status.health.message ~= nil then
-              hs.message = obj.status.health.message
-            end
-          end
-        end
-        return hs
-    cert-manager.io/Certificate:
-      health.lua: |
+  resourceHealthChecks:
+    - group: certmanager.k8s.io
+      kind: Certificate
+      check: |
         hs = {}
         if obj.status ~= nil then
           if obj.status.conditions ~= nil then
@@ -66,12 +53,27 @@ spec:
             end
           end
         end
-
         hs.status = "Progressing"
         hs.message = "Waiting for certificate"
         return hs
-    cert-manager.io/ClusterIssuer:
-      health.lua: |
+    - group: argoproj.io
+      kind: Application
+      check: |
+        hs = {}
+        hs.status = "Progressing"
+        hs.message = ""
+        if obj.status ~= nil then
+          if obj.status.health ~= nil then
+            hs.status = obj.status.health.status
+            if obj.status.health.message ~= nil then
+              hs.message = obj.status.health.message
+            end
+          end
+        end
+        return hs
+    - group: certmanager.k8s.io
+      kind: ClusterIssuer
+      check: |
         hs = {}
         if obj.status ~= nil then
           if obj.status.conditions ~= nil then
@@ -93,8 +95,9 @@ spec:
         hs.status = "Progressing"
         hs.message = "Initializing issuer"
         return hs
-    route.openshift.io/Route:
-      health.lua: |
+    - group: route.openshift.io
+      kind: Route
+      check: |
         health_status = {}
         if obj.status ~= nil then
           if obj.status.ingress ~= nil then
@@ -132,8 +135,9 @@ spec:
         health_status.status = "Progressing"
         health_status.message = "Route is still getting admitted"
         return health_status
-    operators.coreos.com/Subscription:
-      health.lua: |
+    - group: operators.coreos.com
+      kind: Subscription
+      check: |
         health_status = {}
         if obj.status ~= nil then
           if obj.status.conditions ~= nil then
@@ -168,8 +172,9 @@ spec:
         health_status.status = "Progressing"
         health_status.message = "An install plan for a subscription is pending installation"
         return health_status
-    operators.coreos.com/InstallPlan:
-      health.lua: |
+    - group: operators.coreos.com
+      kind: InstallPlan
+      check: |
         hs = {}
         if obj.status ~= nil then
           if obj.status.phase ~= nil then
@@ -183,6 +188,28 @@ spec:
         hs.status = "Progressing"
         hs.message = "Waiting for InstallPlan to complete"
         return hs
+    - group: maistra.io
+      kind: ServiceMeshControlPlane
+      check: |
+        local health_status = {}
+        if obj.status ~= nil then
+          if obj.status.readiness ~= nil then
+            if obj.status.readiness.components ~= nil then
+              if obj.status.readiness.components.ready ~= nil then
+                for i, component in pairs(tab) do
+                  if component == "istio-discovery" then
+                    health_status.status = "Healthy"
+                    health_status.message = component
+                    return health_status
+                  end
+                end
+              end
+            end
+          end
+        end
+        health_status.status = "Progressing"
+        health_status.message = "Waiting for Istio Control Plane"
+        return health_status
   grafana:
     enabled: false
     ingress:

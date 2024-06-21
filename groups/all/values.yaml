@@ -45,7 +45,7 @@ applications:
   operators:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '5'
+      argocd.argoproj.io/sync-wave: '-1'
     destination:
       namespace: openshift-gitops
     source:
@@ -54,7 +54,7 @@ applications:
   openshift-monitoring:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '5'
+      argocd.argoproj.io/sync-wave: '6'
     destination:
       namespace: openshift-monitoring
     source:
@@ -63,7 +63,7 @@ applications:
   istio-system:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '5'
+      argocd.argoproj.io/sync-wave: '7'
     destination:
       namespace: istio-system
     source:
@@ -72,7 +72,7 @@ applications:
   istio-member-namespaces:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '6'
+      argocd.argoproj.io/sync-wave: '8'
     destination:
       namespace: openshift-gitops
     source:
@@ -81,7 +81,7 @@ applications:
   kiali:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '15'
+      argocd.argoproj.io/sync-wave: '9'
     destination:
       namespace: istio-system
     source:
@@ -92,43 +92,16 @@ applications:
   istio-system-configs:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '15'
+      argocd.argoproj.io/sync-wave: '10'
     destination:
       namespace: istio-system
     source:
       path: components/istio-system-configs
 
-  istio-ingressgateway:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '16'
-    destination:
-      namespace: istio-ingress
-    source:
-      path: components/istio-ingressgateway
-
-  nginx-echo-headers-istio:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '16'
-    destination:
-      namespace: nginx-echo-headers
-    source:
-      path: components/nginx-echo-headers-istio
-
-  nginx-echo-headers:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '16'
-    destination:
-      namespace: nginx-echo-headers
-    source:
-      path: components/nginx-echo-headers
-
   minio-tenant:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '15'
+      argocd.argoproj.io/sync-wave: '11'
     destination:
       namespace: minio-tenant
     source:
@@ -137,7 +110,7 @@ applications:
   tempo-system:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '15'
+      argocd.argoproj.io/sync-wave: '12'
     destination:
       namespace: tempo-system
     source:
@@ -146,8 +119,35 @@ applications:
   grafana:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '15'
+      argocd.argoproj.io/sync-wave: '13'
     destination:
       namespace: istio-system
     source:
       path: components/grafana
+
+  nginx-echo-headers-istio:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '14'
+    destination:
+      namespace: nginx-echo-headers
+    source:
+      path: components/nginx-echo-headers-istio
+
+  istio-ingressgateway:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '100'
+    destination:
+      namespace: istio-ingress
+    source:
+      path: components/istio-ingressgateway
+
+  nginx-echo-headers:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '101'
+    destination:
+      namespace: nginx-echo-headers
+    source:
+      path: components/nginx-echo-headers

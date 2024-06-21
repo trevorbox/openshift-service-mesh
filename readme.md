@@ -89,9 +89,8 @@ export cluster_name=dev
 export ingress_host=openshift-gitops-server-openshift-gitops.$(oc get ingress.config.openshift.io cluster -o jsonpath={.spec.domain}) 
 # oc apply -f .bootstrap/subscription.yaml
 helm repo add redhat-cop https://redhat-cop.github.io/helm-charts
-helm install openshift-gitops redhat-cop/operators-installer -f .bootstrap/values.yaml -n openshift-operators --create-namespace
+helm upgrade -i openshift-gitops redhat-cop/operators-installer -f .bootstrap/values.yaml -n openshift-operators --create-namespace
 oc apply -f .bootstrap/cluster-rolebinding.yaml
-oc new-project openshift-gitops
 envsubst < .bootstrap/argocd.yaml | oc apply -f -
 envsubst < .bootstrap/root-application.yaml | oc apply -f -
 ```

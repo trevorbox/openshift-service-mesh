@@ -1,0 +1,12 @@
+smcp:
+  name: ossm-2-5
+namespaceMemberSelector: istio.io/rev=ossm-2.5
+consoleLink: "https://kiali-istio-system.apps-crc.testing"
+grafana:
+  in_cluster_url: http://grafana-instance-service.istio-system.svc:3000
+  url:
+prometheus:
+  url: https://thanos-querier.openshift-monitoring.svc.cluster.local:9091
+tracing: 
+  in_cluster_url: http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:16685
+  url: 

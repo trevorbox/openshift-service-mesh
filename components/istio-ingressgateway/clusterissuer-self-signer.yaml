@@ -11,6 +11,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: ingressgateway-rootca
+  namespace: istio-ingress
 spec:
   secretName: ingressgateway-rootca
   issuerRef:
@@ -25,6 +26,7 @@ apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
   name: internal-issuer
+  namespace: istio-ingress
 spec:
   ca:
     secretName: ingressgateway-rootca

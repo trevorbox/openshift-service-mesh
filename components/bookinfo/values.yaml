@@ -1,6 +1,3 @@
-control_plane:
-  name: ossm-2-5
-  namespace: istio-system
 ingressgateway:
   name: ingressgateway
   namespace: istio-ingress

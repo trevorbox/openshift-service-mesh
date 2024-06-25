@@ -1,9 +1,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-resources:
-  - clusterrolebinding-kiali-monitoring-rbac.yaml
-  - kiali-kiali.yaml
-  - networkpolicies-allow-ossmconsole-components-to-kiali.yaml
-  - ossmconsole-ossmconsole.yaml
-  - consolelink-kiali-view-link.yaml
+helmCharts:
+- name: kiali
+  repo: https://trevorbox.github.io/helm-charts
+  namespace: istio-system
+  valuesFile: values.yaml
+  version: ~0.1.0
+  releaseName: kiali

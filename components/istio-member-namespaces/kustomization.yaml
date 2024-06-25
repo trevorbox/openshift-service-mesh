@@ -1,10 +1,9 @@
 apiVersion: kustomize.config.k8s.io/v1alpha1
 kind: Component
 
-helmGlobals:
-  chartHome: ../../.helm/charts
-
 helmCharts:
 - name: istio-member-namespaces
-  valuesFile: values.yaml
-  namespace: openshift-gitops
+  repo: https://trevorbox.github.io/helm-charts
+  namespace: default
+  version: ~2.5.2
+  releaseName: istio-member-namespaces

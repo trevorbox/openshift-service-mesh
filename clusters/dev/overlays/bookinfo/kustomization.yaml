@@ -7,7 +7,7 @@ components:
 helmCharts:
 - name: bookinfo
   repo: https://trevorbox.github.io/helm-charts
-  valuesFile: values.yaml
+  valuesFile: ../../clusters/dev/bookinfo/values.yaml
   namespace: bookinfo
   version: ~2.4.0
   releaseName: bookinfo

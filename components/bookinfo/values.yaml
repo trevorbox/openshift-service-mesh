@@ -1,0 +1,7 @@
+control_plane:
+  name: ossm-2-5
+  namespace: istio-system
+ingressgateway:
+  name: ingressgateway
+  namespace: istio-ingress
+  host: bookinfo-istio-ingress.apps-crc.testing

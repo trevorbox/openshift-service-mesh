@@ -148,3 +148,12 @@ applications:
       namespace: nginx-echo-headers
     source:
       path: components/nginx-echo-headers
+
+  bookinfo:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: bookinfo
+    source:
+      path: components/bookinfo

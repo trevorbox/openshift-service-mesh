@@ -26,7 +26,7 @@ operators:
   name: servicemeshoperator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  csv: servicemeshoperator.v2.5.1
+  csv: servicemeshoperator.v2.5.2
   namespace: service-mesh-operator
   installPlanVerifierActiveDeadlineSeconds: 1200
 - channel: stable

@@ -71,6 +71,7 @@ applications:
   istio-system:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       argocd.argoproj.io/sync-wave: '2'
     destination:
       namespace: istio-system
@@ -80,7 +81,7 @@ applications:
   kiali:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '2'
+      argocd.argoproj.io/sync-wave: '3'
     destination:
       namespace: istio-system
     source:

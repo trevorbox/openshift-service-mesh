@@ -5,5 +5,5 @@ helmCharts:
 - name: istio-member-namespaces
   repo: https://trevorbox.github.io/helm-charts
   namespace: default
-  version: ~2.5.2
+  version: ~0.1.0
   releaseName: istio-member-namespaces

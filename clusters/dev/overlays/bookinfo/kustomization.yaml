@@ -7,7 +7,9 @@ components:
 helmCharts:
 - name: bookinfo
   repo: https://trevorbox.github.io/helm-charts
-  valuesFile: ../../clusters/dev/bookinfo/values.yaml
+  valuesFile: ../../../../components/bookinfo/values.yaml
   namespace: bookinfo
   version: ~2.4.0
   releaseName: bookinfo
+  additionalValuesFiles:
+    - values-overwrite.yml

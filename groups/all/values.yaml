@@ -71,21 +71,11 @@ applications:
   istio-system:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       argocd.argoproj.io/sync-wave: '2'
     destination:
       namespace: istio-system
     source:
-      path: components/istio-system
-
-  kiali:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '3'
-    destination:
-      namespace: istio-system
-    source:
-      path: components/kiali                           
+      path: components/istio-system                          
 
   minio-tenant:
     annotations:
@@ -113,6 +103,15 @@ applications:
       namespace: istio-system
     source:
       path: components/grafana-istio
+
+  kiali:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '3'
+    destination:
+      namespace: istio-system
+    source:
+      path: components/kiali 
 
   istio-ingressgateway:
     annotations:

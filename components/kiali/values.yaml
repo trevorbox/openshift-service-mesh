@@ -1,7 +1,7 @@
 smcp:
   name: ossm-2-5
 namespaceMemberSelector: istio.io/rev=ossm-2.5
-consoleLink: "https://kiali-istio-system.apps-crc.testing"
+consoleLink: 
 grafana:
   in_cluster_url: http://grafana-instance-service.istio-system.svc:3000
   url:

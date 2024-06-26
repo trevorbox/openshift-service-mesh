@@ -1,0 +1,7 @@
+features:
+  stable:
+    host: golang-ex-stable-istio-ingress.apps.dev.sandbox280.opentlc.com
+  high:
+    host: golang-ex-high-istio-ingress.apps.dev.sandbox280.opentlc.com
+  featurea:
+    host: golang-ex-featurea-istio-ingress.apps.dev.sandbox280.opentlc.com

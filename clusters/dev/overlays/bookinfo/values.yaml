@@ -1,4 +1,2 @@
 ingressgateway:
-  name: ingressgateway
-  namespace: istio-ingress
   host: bookinfo-istio-ingress.apps.dev.sandbox280.opentlc.com

@@ -29,3 +29,39 @@ default:
         maxDuration: 10m # the maximum amount of time allowed for the backoff strategy
 
 applications:
+
+  bookinfo:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: bookinfo
+    source:
+      path: clusters/crc/overlays/bookinfo
+
+  kiali:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '3'
+    destination:
+      namespace: istio-system
+    source:
+      path: clusters/crc/overlays/kiali
+
+  golang-ex-istio:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: golang-ex
+    source:
+      path: clusters/crc/overlays/golang-ex-istio
+
+  nginx-echo-headers:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: nginx-echo-headers
+    source:
+      path: clusters/crc/overlays/nginx-echo-headers

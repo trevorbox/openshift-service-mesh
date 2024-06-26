@@ -50,6 +50,7 @@ applications:
       namespace: openshift-gitops
     source:
       path: components/operators
+
   istio-member-namespaces:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
@@ -104,15 +105,6 @@ applications:
     source:
       path: components/grafana-istio
 
-  kiali:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '3'
-    destination:
-      namespace: istio-system
-    source:
-      path: components/kiali 
-
   istio-ingressgateway:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
@@ -122,16 +114,6 @@ applications:
     source:
       path: components/istio-ingressgateway
 
-  nginx-echo-headers:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '4'
-    destination:
-      namespace: nginx-echo-headers
-    source:
-      path: components/nginx-echo-headers
-
-
   golang-ex:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
@@ -140,12 +122,3 @@ applications:
       namespace: golang-ex
     source:
       path: components/golang-ex
-
-  golang-ex-istio:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '4'
-    destination:
-      namespace: golang-ex
-    source:
-      path: components/golang-ex-istio

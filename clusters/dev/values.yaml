@@ -33,6 +33,7 @@ applications:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
       argocd.argoproj.io/sync-wave: '4'
+      kustomize.config.k8s.io/behavior: replace
     destination:
       namespace: bookinfo
     source:

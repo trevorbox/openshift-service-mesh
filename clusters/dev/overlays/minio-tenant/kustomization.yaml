@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+helmCharts:
+- name: tenant
+  repo: "https://operator.min.io"
+  valuesFile: ../../../../components/minio-tenant/values.yaml
+  namespace: minio-tenant
+  version: ~5.0.14
+  additionalValuesFiles: 
+    - values.yaml
+
+resources:
+  - route.yaml
+  - namespace-minio-tenant.yaml

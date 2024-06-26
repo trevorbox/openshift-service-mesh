@@ -78,15 +78,6 @@ applications:
     source:
       path: components/istio-system                          
 
-  minio-tenant:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '2'
-    destination:
-      namespace: minio-tenant
-    source:
-      path: components/minio-tenant
-
   tempo-system:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous

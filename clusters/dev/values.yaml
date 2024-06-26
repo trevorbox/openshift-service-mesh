@@ -30,6 +30,15 @@ default:
 
 applications:
 
+  minio-tenant:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '2'
+    destination:
+      namespace: minio-tenant
+    source:
+      path: clusters/dev/overlays/minio-tenant
+
   bookinfo:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous

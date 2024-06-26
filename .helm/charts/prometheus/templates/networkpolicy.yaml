@@ -15,5 +15,4 @@ spec:
     matchLabels:
       app: prometheus
   ingress:
-  - ports:
-    port: 3001
+  - port: 3001

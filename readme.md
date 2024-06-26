@@ -85,7 +85,7 @@ To do so you can simply run this commands, however you might want to implement t
 
 ```sh
 export gitops_repo=https://github.com/trevorbox/openshift-service-mesh.git
-export cluster_name=dev
+export cluster_name=crc #dev
 export ingress_host=openshift-gitops-server-openshift-gitops.$(oc get ingress.config.openshift.io cluster -o jsonpath={.spec.domain}) 
 # oc apply -f .bootstrap/subscription.yaml
 helm repo add redhat-cop https://redhat-cop.github.io/helm-charts

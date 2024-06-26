@@ -1,10 +1,21 @@
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-# namespace: istio-system
-# resources:
-#   - https://raw.githubusercontent.com/istio/istio/release-1.18/samples/addons/prometheus.yaml
-
+namespace: istio-system
+resources:
+  - https://raw.githubusercontent.com/istio/istio/release-1.18/samples/addons/prometheus.yaml
+patches:
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: prometheus
+      namespace: istio-system
+    spec:
+      template:
+        spec:
+          securityContext: 
+            $patch: delete
 # helmGlobals:
 #   chartHome: ../../.helm/charts
 
@@ -12,5 +23,5 @@ kind: Kustomization
 # - name: prometheus
 #   namespace: istio-system
 #   releaseName: prometheus
-resources:
-  - prometheus.yaml
+# resources:
+#   - prometheus.yaml

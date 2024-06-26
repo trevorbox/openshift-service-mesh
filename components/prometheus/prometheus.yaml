@@ -521,12 +521,12 @@ spec:
       #   runAsGroup: 65534
       #   runAsNonRoot: true
       #   runAsUser: 65534
-      securityContext:
-        allowPrivilegeEscalation: false
-        capabilities:
-          drop:
-          - ALL
-        readOnlyRootFilesystem: true
+      # securityContext:
+      #   allowPrivilegeEscalation: false
+      #   capabilities:
+      #     drop:
+      #     - ALL
+      #   readOnlyRootFilesystem: true
       terminationGracePeriodSeconds: 300
       volumes:
         - name: config-volume

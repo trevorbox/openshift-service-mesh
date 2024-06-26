@@ -16,12 +16,3 @@ patches:
         spec:
           securityContext: 
             $patch: delete
-# helmGlobals:
-#   chartHome: ../../.helm/charts
-
-# helmCharts:
-# - name: prometheus
-#   namespace: istio-system
-#   releaseName: prometheus
-# resources:
-#   - prometheus.yaml

@@ -29,3 +29,11 @@ default:
         maxDuration: 10m # the maximum amount of time allowed for the backoff strategy
 
 applications:
+  bookinfo:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: bookinfo
+    source:
+      path: clusters/dev/overlays/bookinfo

@@ -65,3 +65,12 @@ applications:
       namespace: nginx-echo-headers
     source:
       path: clusters/crc/overlays/nginx-echo-headers
+
+  prometheus:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '2'
+    destination:
+      namespace: istio-system
+    source:
+      path: components/prometheus

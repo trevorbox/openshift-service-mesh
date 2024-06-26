@@ -43,6 +43,7 @@ global:
     # limits:
     #   cpu: 100m
     #   memory: 128Mi
+  caCertConfigMapName: "istio-ca-root-cert"
 
 meshConfig:
   enablePrometheusMerge: false

@@ -5,8 +5,14 @@ consoleLink:
 grafana:
   in_cluster_url: http://grafana-instance-service.istio-system.svc:3000
   url:
-prometheus:
-  url: https://thanos-querier.openshift-monitoring.svc.cluster.local:9091
 tracing: 
   in_cluster_url: http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:16685
   url: 
+prometheus:
+  auth:
+    insecure_skip_verify: true
+    type: bearer
+    use_kiali_token: true
+  query_scope:
+    mesh_id: istio-system/ossm-2-5
+  url: https://thanos-querier.openshift-monitoring.svc.cluster.local:9091

@@ -6,5 +6,5 @@ helmCharts:
   repo: https://trevorbox.github.io/helm-charts
   namespace: istio-system
   valuesFile: values.yaml
-  version: ~0.1.1
+  version: ~0.1.2
   releaseName: kiali

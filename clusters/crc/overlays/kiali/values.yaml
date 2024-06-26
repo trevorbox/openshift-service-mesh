@@ -5,3 +5,5 @@ tracing:
   url: https://jaeger-ui-proxy-tempo-system.apps-crc.testing
 prometheus:
   url: http://prometheus.istio-system.svc.cluster.local:9090
+  auth: {}
+  query_scope: {}

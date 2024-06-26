@@ -2,6 +2,6 @@ consoleLink: "https://kiali-istio-system.apps-crc.testing"
 grafana:
   url: https://grafana-instance-route-istio-system.apps-crc.testing
 prometheus:
-  url: https://thanos-querier.openshift-monitoring.svc.cluster.local:9091
+  url: http://prometheus.istio-system.svc.cluster.local:9090
 tracing:
   url: https://jaeger-ui-proxy-tempo-system.apps-crc.testing

@@ -5,7 +5,7 @@ helmCharts:
 - name: istio-gateway
   repo: https://trevorbox.github.io/helm-charts
   namespace: istio-ingress
-  version: ~0.1.0
+  version: ~1.18.6
   releaseName: istio-ingressgateway
 
 resources:

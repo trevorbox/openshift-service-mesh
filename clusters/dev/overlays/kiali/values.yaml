@@ -1,4 +1,4 @@
-consoleLink: "https://kiali-istio-system.apps-crc.testing"
+consoleLink: "https://kiali-istio-system.apps.dev.sandbox280.opentlc.com"
 grafana:
   url: https://grafana-instance-route-istio-system.apps.dev.sandbox280.opentlc.com
 tracing:

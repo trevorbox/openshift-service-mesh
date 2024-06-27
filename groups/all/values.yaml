@@ -28,6 +28,7 @@ projects:
     annotations:
       notifications.argoproj.io/subscribe.on-sync-failed.slack: cluster-gitops
       notifications.argoproj.io/subscribe.on-health-degraded.slack: cluster-gitops
+      argocd.argoproj.io/sync-wave: '-100'
     description: Project for overall cluster configuration
     namespace: openshift-gitops
     sourceRepos:

@@ -1,0 +1,18 @@
+
+approveManualInstallPlanViaHook: true
+
+installPlanApproverAndVerifyJobsImage: quay.io/openshift/origin-cli:4.14
+
+operatorGroups:
+- name: grafana-operator
+  createNamespace: true
+
+operators:
+- channel: v5
+  installPlanApproval: Manual
+  name: grafana-operator
+  source: community-operators
+  sourceNamespace: openshift-marketplace
+  csv: grafana-operator.v5.9.2
+  namespace: grafana-operator
+  installPlanVerifierActiveDeadlineSeconds: 1200

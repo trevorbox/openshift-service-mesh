@@ -1,0 +1,18 @@
+
+approveManualInstallPlanViaHook: true
+
+installPlanApproverAndVerifyJobsImage: quay.io/openshift/origin-cli:4.14
+
+operatorGroups:
+- name: tempo-operator
+  createNamespace: true
+
+operators:
+- channel: stable
+  installPlanApproval: Manual
+  name: tempo-product
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  csv: tempo-operator.v0.10.0-7
+  namespace: tempo-operator
+  installPlanVerifierActiveDeadlineSeconds: 1200

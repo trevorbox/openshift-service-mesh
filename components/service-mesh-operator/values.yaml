@@ -1,0 +1,18 @@
+
+approveManualInstallPlanViaHook: true
+
+installPlanApproverAndVerifyJobsImage: quay.io/openshift/origin-cli:4.14
+
+operatorGroups:
+- name: service-mesh-operator
+  createNamespace: true
+
+operators:
+- channel: stable
+  installPlanApproval: Manual
+  name: servicemeshoperator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  csv: servicemeshoperator.v2.5.0
+  namespace: service-mesh-operator
+  installPlanVerifierActiveDeadlineSeconds: 1200

@@ -1,0 +1,18 @@
+
+approveManualInstallPlanViaHook: true
+
+installPlanApproverAndVerifyJobsImage: quay.io/openshift/origin-cli:4.14
+
+operatorGroups:
+- name: minio-operator
+  createNamespace: true
+
+operators:
+- channel: stable
+  installPlanApproval: Manual
+  name: minio-operator
+  source: certified-operators
+  sourceNamespace: openshift-marketplace
+  csv: minio-operator.v5.0.15
+  namespace: minio-operator
+  installPlanVerifierActiveDeadlineSeconds: 1200

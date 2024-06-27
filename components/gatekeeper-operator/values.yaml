@@ -4,55 +4,10 @@ approveManualInstallPlanViaHook: true
 installPlanApproverAndVerifyJobsImage: quay.io/openshift/origin-cli:4.14
 
 operatorGroups:
-- name: cert-manager-operator
-  targetOwnNamespace: true
-  createNamespace: true
-- name: service-mesh-operator
-  createNamespace: true
-- name: kiali-operator
-  createNamespace: true
-- name: tempo-operator
-  createNamespace: true
 - name: gatekeeper-operator
-  createNamespace: true
-- name: grafana-operator
-  createNamespace: true
-- name: minio-operator
   createNamespace: true
 
 operators:
-- channel: stable
-  installPlanApproval: Manual
-  name: servicemeshoperator
-  source: redhat-operators
-  sourceNamespace: openshift-marketplace
-  csv: servicemeshoperator.v2.5.0
-  namespace: service-mesh-operator
-  installPlanVerifierActiveDeadlineSeconds: 1200
-- channel: stable
-  installPlanApproval: Manual
-  name: kiali-ossm
-  source: redhat-operators
-  sourceNamespace: openshift-marketplace
-  csv: kiali-operator.v1.73.8
-  namespace: kiali-operator
-  installPlanVerifierActiveDeadlineSeconds: 1200
-- channel: stable-v1
-  installPlanApproval: Manual
-  name: openshift-cert-manager-operator
-  source: redhat-operators
-  sourceNamespace: openshift-marketplace
-  csv: cert-manager-operator.v1.13.1
-  namespace: cert-manager-operator
-  installPlanVerifierActiveDeadlineSeconds: 1200
-- channel: stable
-  installPlanApproval: Manual
-  name: tempo-product
-  source: redhat-operators
-  sourceNamespace: openshift-marketplace
-  csv: tempo-operator.v0.10.0-7
-  namespace: tempo-operator
-  installPlanVerifierActiveDeadlineSeconds: 1200
 - channel: stable
   installPlanApproval: Manual
   name: gatekeeper-operator-product
@@ -61,22 +16,3 @@ operators:
   csv: gatekeeper-operator-product.v3.14.1-0.1718225063.p
   namespace: gatekeeper-operator
   installPlanVerifierActiveDeadlineSeconds: 1200
-- channel: v5
-  installPlanApproval: Manual
-  name: grafana-operator
-  source: community-operators
-  sourceNamespace: openshift-marketplace
-  csv: grafana-operator.v5.9.2
-  namespace: grafana-operator
-  installPlanVerifierActiveDeadlineSeconds: 1200
-- channel: stable
-  installPlanApproval: Manual
-  name: minio-operator
-  source: certified-operators
-  sourceNamespace: openshift-marketplace
-  csv: minio-operator.v5.0.15
-  namespace: minio-operator
-  installPlanVerifierActiveDeadlineSeconds: 1200
-
-commonLabels:
-  # test-label: xyz123

@@ -37,7 +37,7 @@ applications:
     destination:
       namespace: minio-tenant
     source:
-      path: clusters/dev/overlays/minio-tenant
+      path: clusters/aws/overlays/minio-tenant
 
   bookinfo:
     annotations:
@@ -46,7 +46,7 @@ applications:
     destination:
       namespace: bookinfo
     source:
-      path: clusters/dev/overlays/bookinfo
+      path: clusters/aws/overlays/bookinfo
 
   kiali:
     annotations:
@@ -55,7 +55,7 @@ applications:
     destination:
       namespace: istio-system
     source:
-      path: clusters/dev/overlays/kiali
+      path: clusters/aws/overlays/kiali
 
   golang-ex-istio:
     annotations:
@@ -64,7 +64,7 @@ applications:
     destination:
       namespace: golang-ex
     source:
-      path: clusters/dev/overlays/golang-ex-istio
+      path: clusters/aws/overlays/golang-ex-istio
 
   nginx-echo-headers:
     annotations:
@@ -73,4 +73,4 @@ applications:
     destination:
       namespace: nginx-echo-headers
     source:
-      path: clusters/dev/overlays/nginx-echo-headers
+      path: clusters/aws/overlays/nginx-echo-headers

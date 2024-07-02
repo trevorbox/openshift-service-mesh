@@ -4,6 +4,6 @@ grafana:
 tracing:
   url: https://jaeger-ui-proxy-tempo-system.apps-crc.testing
 prometheus:
-  url: http://prometheus.istio-system.svc.cluster.local:9090
+  url: http://prometheus-server.istio-system.svc.cluster.local
   auth: 
   query_scope:

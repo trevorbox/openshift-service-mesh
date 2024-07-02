@@ -8,3 +8,5 @@ prometheus-node-exporter:
   enabled: false
 server:
   securityContext: null
+  global:
+    scrape_interval: 15s

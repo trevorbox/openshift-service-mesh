@@ -30,6 +30,15 @@ default:
 
 applications:
 
+  sail-operator:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '-1'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: components/sail-operator
+
   istio-member-namespaces:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
@@ -37,7 +46,7 @@ applications:
     destination:
       namespace: openshift-gitops
     source:
-      path: components/istio-member-namespaces
+      path: clusters/crc-multitenant/overlays/istio-member-namespaces
                          
   openshift-monitoring:
     annotations:
@@ -55,7 +64,16 @@ applications:
     destination:
       namespace: istio-system
     source:
-      path: components/istio-system                          
+      path: clusters/crc-multitenant/overlays/istio-system                        
+
+  istio-system-2-5:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '2'
+    destination:
+      namespace: istio-system-2-5
+    source:
+      path: clusters/crc-multitenant/overlays/istio-system-2-5
 
   tempo-system:
     annotations:
@@ -109,7 +127,7 @@ applications:
     destination:
       namespace: bookinfo
     source:
-      path: clusters/crc/overlays/bookinfo
+      path: clusters/crc-multitenant/overlays/bookinfo
 
   kiali:
     annotations:
@@ -118,7 +136,16 @@ applications:
     destination:
       namespace: istio-system
     source:
-      path: clusters/crc/overlays/kiali
+      path: clusters/crc-multitenant/overlays/kiali
+
+  kiali-2-5:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '3'
+    destination:
+      namespace: istio-system-2-5
+    source:
+      path: clusters/crc-multitenant/overlays/kiali-2-5
 
   golang-ex-istio:
     annotations:
@@ -127,7 +154,7 @@ applications:
     destination:
       namespace: golang-ex
     source:
-      path: clusters/crc/overlays/golang-ex-istio
+      path: clusters/crc-multitenant/overlays/golang-ex-istio
 
   nginx-echo-headers:
     annotations:
@@ -136,7 +163,7 @@ applications:
     destination:
       namespace: nginx-echo-headers
     source:
-      path: clusters/crc/overlays/nginx-echo-headers
+      path: clusters/crc-multitenant/overlays/nginx-echo-headers
 
   prometheus:
     annotations:
@@ -146,3 +173,12 @@ applications:
       namespace: istio-system
     source:
       path: components/prometheus
+
+  prometheus-2-5:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '2'
+    destination:
+      namespace: istio-system-2-5
+    source:
+      path: clusters/crc-multitenant/overlays/prometheus-2-5

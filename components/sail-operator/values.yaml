@@ -1,0 +1,18 @@
+
+approveManualInstallPlanViaHook: true
+
+installPlanApproverAndVerifyJobsImage: quay.io/openshift/origin-cli:4.14
+
+operatorGroups:
+- name: sail-operator
+  createNamespace: true
+
+operators:
+- channel: 3.0-nightly
+  installPlanApproval: Manual
+  name: sailoperator
+  source: community-operators
+  sourceNamespace: openshift-marketplace
+  csv: ailoperator.v3.0.0-nightly-2024-05-13
+  namespace: sail-operator
+  installPlanVerifierActiveDeadlineSeconds: 1200

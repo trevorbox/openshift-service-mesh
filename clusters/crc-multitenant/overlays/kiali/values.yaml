@@ -1,3 +1,6 @@
+smcp:
+  name: ossm-2-4
+namespaceMemberSelector: istio.io/rev=ossm-2.4
 consoleLink: 
   enabled: true
   route: "https://kiali-istio-system.apps-crc.testing"

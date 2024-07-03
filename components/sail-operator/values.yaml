@@ -13,6 +13,6 @@ operators:
   name: sailoperator
   source: community-operators
   sourceNamespace: openshift-marketplace
-  csv: ailoperator.v3.0.0-nightly-2024-05-13
+  csv: sailoperator.v3.0.0-nightly-2024-05-13
   namespace: sail-operator
   installPlanVerifierActiveDeadlineSeconds: 1200

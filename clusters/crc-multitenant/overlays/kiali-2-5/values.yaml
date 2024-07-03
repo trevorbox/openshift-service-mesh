@@ -1,6 +1,5 @@
 smcp:
   name: ossm-2-5
-namespaceMemberSelector: istio.io/rev=ossm-2.5
 consoleLink: 
   enabled: true
   route: "https://kiali-istio-system-2-5.apps-crc.testing"
@@ -14,3 +13,9 @@ prometheus:
   query_scope:
 ossmconsole:
   enabled: false
+cluster_wide_access: false
+accessible_namespaces:
+  - bookinfo
+  - golang-ex
+  - istio-ingress
+  - nginx-echo-headers

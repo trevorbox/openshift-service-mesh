@@ -10,3 +10,4 @@ server:
   securityContext: null
   global:
     scrape_interval: 15s
+  clusterRoleNameOverride: "prometheus-2-5"

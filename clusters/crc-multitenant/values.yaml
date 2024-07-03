@@ -12,7 +12,7 @@ default:
       server: https://kubernetes.default.svc
     source:
       repoURL: https://github.com/trevorbox/openshift-service-mesh
-      targetRevision: HEAD
+      targetRevision: multitenant
     syncOptions:
     - ApplyOutOfSyncOnly=true
     - PrunePropagationPolicy=foreground
@@ -100,7 +100,7 @@ applications:
     destination:
       namespace: minio-tenant
     source:
-      path: clusters/aws/overlays/minio-tenant
+      path: components/minio-tenant
 
   bookinfo:
     annotations:
@@ -109,7 +109,7 @@ applications:
     destination:
       namespace: bookinfo
     source:
-      path: clusters/aws/overlays/bookinfo
+      path: clusters/crc/overlays/bookinfo
 
   kiali:
     annotations:
@@ -118,7 +118,7 @@ applications:
     destination:
       namespace: istio-system
     source:
-      path: clusters/aws/overlays/kiali
+      path: clusters/crc/overlays/kiali
 
   golang-ex-istio:
     annotations:
@@ -127,7 +127,7 @@ applications:
     destination:
       namespace: golang-ex
     source:
-      path: clusters/aws/overlays/golang-ex-istio
+      path: clusters/crc/overlays/golang-ex-istio
 
   nginx-echo-headers:
     annotations:
@@ -136,4 +136,13 @@ applications:
     destination:
       namespace: nginx-echo-headers
     source:
-      path: clusters/aws/overlays/nginx-echo-headers
+      path: clusters/crc/overlays/nginx-echo-headers
+
+  prometheus:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '2'
+    destination:
+      namespace: istio-system
+    source:
+      path: components/prometheus

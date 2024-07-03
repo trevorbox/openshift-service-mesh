@@ -1,0 +1,7 @@
+features:
+  stable:
+    host: golang-ex-stable-istio-ingress.apps-crc.testing
+  high:
+    host: golang-ex-high-istio-ingress.apps-crc.testing
+  featurea:
+    host: golang-ex-featurea-istio-ingress.apps-crc.testing

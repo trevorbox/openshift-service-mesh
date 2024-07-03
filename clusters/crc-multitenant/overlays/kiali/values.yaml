@@ -1,0 +1,9 @@
+consoleLink: "https://kiali-istio-system.apps-crc.testing"
+grafana:
+  url: https://grafana-instance-route-istio-system.apps-crc.testing
+tracing:
+  url: https://jaeger-ui-proxy-tempo-system.apps-crc.testing
+prometheus:
+  url: http://prometheus-server.istio-system.svc.cluster.local
+  auth: 
+  query_scope:

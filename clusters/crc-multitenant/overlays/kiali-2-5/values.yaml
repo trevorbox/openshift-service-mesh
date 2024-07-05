@@ -20,7 +20,7 @@ ossmconsole:
   enabled: false
 cluster_wide_access: false
 accessible_namespaces:
-  - istio-system-2-5
+  - istio-ingress-2-5
   # - bookinfo
   # - golang-ex
   # - istio-ingress

@@ -21,6 +21,7 @@ ossmconsole:
 cluster_wide_access: false
 accessible_namespaces:
   - istio-system-2-5
+  - kiali-2-5
   # - bookinfo
   # - golang-ex
   # - istio-ingress

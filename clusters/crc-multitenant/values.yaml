@@ -145,7 +145,7 @@ applications:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
       argocd.argoproj.io/sync-wave: '3'
     destination:
-      namespace: kiali
+      namespace: kiali-2-5
     source:
       path: clusters/crc-multitenant/overlays/kiali-2-5
 

@@ -4,7 +4,7 @@ smcp:
 ingressgateway:
   namespace: istio-ingress-2-5
 deployment:
-  namespace: kiali
+  namespace: kiali-2-5
 consoleLink: 
   enabled: true
   route: "https://kiali-istio-system-2-5.apps-crc.testing"

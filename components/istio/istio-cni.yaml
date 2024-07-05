@@ -1,0 +1,12 @@
+apiVersion: operator.istio.io/v1alpha1
+kind: IstioCNI
+metadata:
+  name: default
+spec:
+  namespace: istio-cni
+  # values:
+  #   cni:
+  #     ambient:
+  #       dnsCapture: true
+  #       enabled: true
+  version: v1.21.0

@@ -1,3 +1,8 @@
+smcp:
+  name: ossm-2-5
+  namespace: istio-system
+deployment:
+  namespace: kiali
 consoleLink: 
   enabled: true
   route: "https://kiali-istio-system.apps-crc.testing"

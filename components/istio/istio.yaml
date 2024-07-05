@@ -1,0 +1,24 @@
+apiVersion: operator.istio.io/v1alpha1
+kind: Istio
+metadata:
+  name: default
+spec:
+  namespace: istio-system
+  updateStrategy:
+    inactiveRevisionDeletionGracePeriodSeconds: 30
+    type: RevisionBased
+    updateWorkloads: true
+  values:
+    meshConfig:
+      discoverySelectors:
+        - matchExpressions:
+            - key: istio.io/rev
+              operator: In
+              values:
+                - '1.21'
+    pilot:
+      autoscaleEnabled: true
+      enableProtocolSniffingForInbound: false
+      env:
+        ENABLE_ENHANCED_RESOURCE_SCOPING: 'true'
+  version: v1.21.0

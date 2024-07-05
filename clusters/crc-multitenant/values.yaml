@@ -39,6 +39,15 @@ applications:
     source:
       path: components/sail-operator
 
+  istio-member-namespaces-2-5-gateway:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '1'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: clusters/crc-multitenant/overlays/istio-member-namespaces-2-5-gateway
+
   istio-member-namespaces:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
@@ -46,6 +55,7 @@ applications:
     destination:
       namespace: openshift-gitops
     source:
+      # switch tenants from 2.4 to 2.5 then rollout manually
       path: clusters/crc-multitenant/overlays/istio-member-namespaces
       # path: clusters/crc-multitenant/overlays/istio-member-namespaces-2-5
                          
@@ -102,6 +112,15 @@ applications:
       namespace: istio-ingress
     source:
       path: components/istio-ingressgateway
+
+  istio-ingressgateway-2-5:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '3'
+    destination:
+      namespace: istio-ingress-2-5
+    source:
+      path: clusters/crc-multitenant/overlays/istio-ingressgateway-2-5
 
   golang-ex:
     annotations:

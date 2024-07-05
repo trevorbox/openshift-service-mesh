@@ -177,8 +177,8 @@ applications:
     destination:
       namespace: openshift-gitops
     source:      
-      # path: clusters/crc-multitenant/overlays/istio-member-namespaces
-      path: clusters/crc-multitenant/overlays/istio-member-namespaces-2-5
+      path: clusters/crc-multitenant/overlays/istio-member-namespaces
+      # path: clusters/crc-multitenant/overlays/istio-member-namespaces-2-5
 
   bookinfo:
     annotations:
@@ -187,8 +187,8 @@ applications:
     destination:
       namespace: bookinfo
     source:
-      # path: clusters/crc-multitenant/overlays/bookinfo
-      path: clusters/crc-multitenant/overlays/bookinfo-2-5
+      path: clusters/crc-multitenant/overlays/bookinfo
+      # path: clusters/crc-multitenant/overlays/bookinfo-2-5
 
   golang-ex-istio:
     annotations:
@@ -197,8 +197,8 @@ applications:
     destination:
       namespace: golang-ex
     source:
-      # path: clusters/crc-multitenant/overlays/golang-ex-istio
-      path: clusters/crc-multitenant/overlays/golang-ex-istio-2-5
+      path: clusters/crc-multitenant/overlays/golang-ex-istio
+      # path: clusters/crc-multitenant/overlays/golang-ex-istio-2-5
 
   nginx-echo-headers:
     annotations:
@@ -207,5 +207,5 @@ applications:
     destination:
       namespace: nginx-echo-headers
     source:
-      # path: clusters/crc-multitenant/overlays/nginx-echo-headers
-      path: clusters/crc-multitenant/overlays/nginx-echo-headers-2-5
+      path: clusters/crc-multitenant/overlays/nginx-echo-headers
+      # path: clusters/crc-multitenant/overlays/nginx-echo-headers-2-5

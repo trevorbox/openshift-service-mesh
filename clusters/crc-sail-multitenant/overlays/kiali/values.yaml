@@ -1,0 +1,26 @@
+smcp:
+  name: ossm-2-4
+  namespace: istio-system
+ingressgateway:
+  namespace: istio-ingress
+deployment:
+  namespace: istio-system
+consoleLink: 
+  enabled: true
+  route: "https://kiali-ossm-2-4-istio-system-istio-system.apps-crc.testing"
+grafana:
+  url: https://grafana-instance-route-istio-system.apps-crc.testing
+tracing:
+  url: https://jaeger-ui-proxy-tempo-system.apps-crc.testing
+prometheus:
+  url: http://prometheus-server.prometheus.svc.cluster.local
+  auth: 
+  query_scope:
+ossmconsole:
+  enabled: false
+cluster_wide_access: false
+accessible_namespaces:
+  - bookinfo
+  - golang-ex
+  - istio-ingress
+  - nginx-echo-headers

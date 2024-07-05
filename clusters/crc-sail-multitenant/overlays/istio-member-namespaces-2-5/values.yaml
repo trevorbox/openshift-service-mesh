@@ -1,0 +1,12 @@
+members:
+  - golang-ex
+  - bookinfo
+  - nginx-echo-headers
+labels:
+  istio.io/rev: ossm-2.5
+  argocd.argoproj.io/managed-by: openshift-gitops
+annotations:
+  argocd.argoproj.io/sync-options: Delete=false 
+smcp:
+  name: ossm-2-5
+  namespace: istio-system-2-5

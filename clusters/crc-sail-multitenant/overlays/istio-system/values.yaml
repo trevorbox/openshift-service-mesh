@@ -1,0 +1,11 @@
+namespaceMemberSelector:
+  istio.io/rev: ossm-2.4
+smcp:
+  name: ossm-2-4
+  accessLoggingEnabled: true
+  version: v2.4
+  mode: MultiTenant
+  outboundPolicy: REGISTRY_ONLY # ALLOW_ANY
+tempo:
+  enabled: false
+  host: tempo-minio-dev-distributor.tempo-system.svc.cluster.local

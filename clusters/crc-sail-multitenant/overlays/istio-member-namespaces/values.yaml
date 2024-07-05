@@ -1,0 +1,13 @@
+members:
+  - istio-ingress
+  - golang-ex
+  - bookinfo
+  - nginx-echo-headers
+labels:
+  istio.io/rev: 1.21
+  argocd.argoproj.io/managed-by: openshift-gitops
+annotations:
+  argocd.argoproj.io/sync-options: Delete=false 
+smcp:
+  name: ossm-2-4
+  namespace: istio-system

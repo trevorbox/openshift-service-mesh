@@ -116,7 +116,7 @@ applications:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
       argocd.argoproj.io/sync-wave: '3'
     destination:
-      namespace: istio-system
+      namespace: kiali
     source:
       path: clusters/crc/overlays/kiali
 

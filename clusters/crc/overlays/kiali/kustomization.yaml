@@ -7,7 +7,7 @@ resources:
 helmCharts:
 - name: kiali
   repo: https://trevorbox.github.io/helm-charts
-  namespace: kiali
+  namespace: istio-system
   valuesFile: ../../../../components/kiali/values.yaml
   version: ~1.0.5
   releaseName: kiali

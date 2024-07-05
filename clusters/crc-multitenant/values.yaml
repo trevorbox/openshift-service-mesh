@@ -140,14 +140,14 @@ applications:
     source:
       path: clusters/crc-multitenant/overlays/kiali
 
-  kiali-2-5:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '3'
-    destination:
-      namespace: kiali-2-5
-    source:
-      path: clusters/crc-multitenant/overlays/kiali-2-5
+  # kiali-2-5:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '3'
+  #   destination:
+  #     namespace: kiali-2-5
+  #   source:
+  #     path: clusters/crc-multitenant/overlays/kiali-2-5
 
   prometheus:
     annotations:

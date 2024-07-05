@@ -29,6 +29,15 @@ default:
         maxDuration: 10m # the maximum amount of time allowed for the backoff strategy
 
 applications:
+  
+  service-mesh-operator:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '-1'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: components/service-mesh-operator
 
   istio-member-namespaces:
     annotations:

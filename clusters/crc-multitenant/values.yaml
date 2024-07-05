@@ -30,14 +30,14 @@ default:
 
 applications:
 
-  sail-operator:
+  service-mesh-operator:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
       argocd.argoproj.io/sync-wave: '-1'
     destination:
       namespace: openshift-gitops
     source:
-      path: components/sail-operator
+      path: components/service-mesh-operator
 
   istio-member-namespaces-2-5-gateway:
     annotations:
@@ -47,8 +47,6 @@ applications:
       namespace: openshift-gitops
     source:
       path: clusters/crc-multitenant/overlays/istio-member-namespaces-2-5-gateway
-
-
                          
   openshift-monitoring:
     annotations:

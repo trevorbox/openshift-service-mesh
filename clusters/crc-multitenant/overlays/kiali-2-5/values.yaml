@@ -4,7 +4,7 @@ smcp:
 ingressgateway:
   namespace: istio-ingress-2-5
 deployment:
-  namespace: kiali-2-5
+  namespace: istio-system-2-5
 consoleLink: 
   enabled: true
   route: "https://kiali-istio-system-2-5.apps-crc.testing"
@@ -21,7 +21,6 @@ ossmconsole:
 cluster_wide_access: false
 accessible_namespaces:
   - istio-system-2-5
-  - kiali-2-5
   # - bookinfo
   # - golang-ex
   # - istio-ingress

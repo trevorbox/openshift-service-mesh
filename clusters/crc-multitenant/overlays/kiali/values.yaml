@@ -4,7 +4,7 @@ smcp:
 ingressgateway:
   namespace: istio-ingress
 deployment:
-  namespace: kiali
+  namespace: istio-system
 consoleLink: 
   enabled: true
   route: "https://kiali-istio-system.apps-crc.testing"
@@ -24,4 +24,3 @@ accessible_namespaces:
   - golang-ex
   - istio-ingress
   - nginx-echo-headers
-  - kiali

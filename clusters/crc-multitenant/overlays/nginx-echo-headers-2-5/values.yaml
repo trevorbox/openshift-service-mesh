@@ -1,0 +1,3 @@
+ingressgateway:
+  host: nginx-echo-headers-istio-ingress.apps-crc.testing
+  namespace: istio-ingress-2-5

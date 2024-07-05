@@ -158,15 +158,6 @@ applications:
     source:
       path: components/prometheus
 
-  prometheus-2-5:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '2'
-    destination:
-      namespace: istio-system-2-5
-    source:
-      path: clusters/crc-multitenant/overlays/prometheus-2-5
-
 # Begin switch
 # switch tenants from 2.4 to 2.5 then rollout manually by changing the source paths for each app
 

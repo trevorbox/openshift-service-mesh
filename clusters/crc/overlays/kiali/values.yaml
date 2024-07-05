@@ -1,6 +1,8 @@
 smcp:
   name: ossm-2-5
   namespace: istio-system
+ingressgateway:
+  namespace: istio-ingress
 deployment:
   namespace: kiali
 consoleLink: 

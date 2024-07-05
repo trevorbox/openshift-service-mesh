@@ -24,3 +24,4 @@ accessible_namespaces:
   - golang-ex
   - istio-ingress
   - nginx-echo-headers
+  - kiali

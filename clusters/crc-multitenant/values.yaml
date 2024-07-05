@@ -136,7 +136,7 @@ applications:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
       argocd.argoproj.io/sync-wave: '3'
     destination:
-      namespace: istio-system
+      namespace: kiali
     source:
       path: clusters/crc-multitenant/overlays/kiali
 
@@ -145,7 +145,7 @@ applications:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
       argocd.argoproj.io/sync-wave: '3'
     destination:
-      namespace: istio-system-2-5
+      namespace: kiali
     source:
       path: clusters/crc-multitenant/overlays/kiali-2-5
 
@@ -154,7 +154,7 @@ applications:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
       argocd.argoproj.io/sync-wave: '2'
     destination:
-      namespace: istio-system
+      namespace: prometheus
     source:
       path: components/prometheus
 

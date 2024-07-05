@@ -143,6 +143,6 @@ applications:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
       argocd.argoproj.io/sync-wave: '2'
     destination:
-      namespace: istio-system
+      namespace: prometheus
     source:
       path: components/prometheus

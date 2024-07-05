@@ -177,8 +177,8 @@ applications:
     destination:
       namespace: openshift-gitops
     source:      
-      path: clusters/crc-multitenant/overlays/istio-member-namespaces
-      # path: clusters/crc-multitenant/overlays/istio-member-namespaces-2-5
+      # path: clusters/crc-multitenant/overlays/istio-member-namespaces
+      path: clusters/crc-multitenant/overlays/istio-member-namespaces-2-5
 
   bookinfo:
     annotations:

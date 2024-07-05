@@ -32,6 +32,10 @@ applications:
 ```
 
 ```sh
+while true; do curl -ki https://golang-ex-featurea-istio-ingress.apps-crc.testing/; sleep 1s; done > out.log
+```
+
+```sh
 oc rollout restart deployment -n istio-ingress
 oc rollout restart deployment -n bookinfo
 oc rollout restart deployment -n nginx-echo-headers

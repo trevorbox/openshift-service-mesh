@@ -2,6 +2,7 @@ members:
   - istio-ingress-2-5
 labels:
   istio.io/rev: "1.22"
+  istio-injection: enabled
   argocd.argoproj.io/managed-by: openshift-gitops
 annotations:
   argocd.argoproj.io/sync-options: Delete=false 

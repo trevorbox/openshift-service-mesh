@@ -3,7 +3,7 @@ members:
   - bookinfo
   - nginx-echo-headers
 labels:
-  istio.io/rev: ossm-2.5
+  istio.io/rev: 1.22
   argocd.argoproj.io/managed-by: openshift-gitops
 annotations:
   argocd.argoproj.io/sync-options: Delete=false 

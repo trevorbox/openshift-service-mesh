@@ -38,16 +38,7 @@ applications:
       namespace: openshift-gitops
     source:
       path: components/sail-operator
-
-  istio-member-namespaces-2-5-gateway:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '1'
-    destination:
-      namespace: openshift-gitops
-    source:
-      path: clusters/crc-sail-multitenant/overlays/istio-member-namespaces-2-5-gateway
-                       
+                     
   openshift-monitoring:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous

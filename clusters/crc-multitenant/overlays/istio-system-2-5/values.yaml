@@ -9,3 +9,6 @@ smcp:
 tempo:
   enabled: false
   host: tempo-minio-dev-distributor.tempo-system.svc.cluster.local
+kiali:
+  enabled: true
+  name: kiali-ossm-2-5-istio-system-2-5

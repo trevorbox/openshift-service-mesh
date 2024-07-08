@@ -20,10 +20,7 @@ ossmconsole:
   enabled: false
 cluster_wide_access: false
 accessible_namespaces:
-  # - bookinfo
-  # - golang-ex
-  # - istio-ingress
-  # - nginx-echo-headers
+  - '**'
 api:
   namespaces:
     exclude:

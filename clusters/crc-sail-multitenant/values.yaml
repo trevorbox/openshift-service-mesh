@@ -64,16 +64,7 @@ applications:
     destination:
       namespace: istio-system
     source:
-      path: components/sail-istio-system                        
-
-  # istio-system-2-5:
-  #   annotations:
-  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
-  #     argocd.argoproj.io/sync-wave: '2'
-  #   destination:
-  #     namespace: istio-system-2-5
-  #   source:
-  #     path: clusters/crc-sail-multitenant/overlays/istio-system-2-5
+      path: components/sail-istio-system
 
   tempo-system:
     annotations:
@@ -84,14 +75,14 @@ applications:
     source:
       path: components/tempo-system
 
-  grafana-istio:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '2'
-    destination:
-      namespace: istio-system
-    source:
-      path: components/grafana-istio
+  # grafana-istio:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '2'
+  #   destination:
+  #     namespace: istio-system
+  #   source:
+  #     path: components/grafana-istio
 
   istio-ingressgateway:
     annotations:
@@ -100,16 +91,7 @@ applications:
     destination:
       namespace: istio-ingress
     source:
-      path: components/istio-ingressgateway
-
-  # istio-ingressgateway-2-5:
-  #   annotations:
-  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
-  #     argocd.argoproj.io/sync-wave: '3'
-  #   destination:
-  #     namespace: istio-ingress-2-5
-  #   source:
-  #     path: clusters/crc-sail-multitenant/overlays/istio-ingressgateway-2-5
+      path: clusters/crc-sail-multitenant/overlays/istio-ingressgateway
 
   golang-ex:
     annotations:
@@ -137,15 +119,6 @@ applications:
       namespace: istio-system
     source:
       path: clusters/crc-sail-multitenant/overlays/kiali
-
-  # kiali-2-5:
-  #   annotations:
-  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
-  #     argocd.argoproj.io/sync-wave: '3'
-  #   destination:
-  #     namespace: istio-system-2-5
-  #   source:
-  #     path: clusters/crc-sail-multitenant/overlays/kiali-2-5
 
   prometheus:
     annotations:

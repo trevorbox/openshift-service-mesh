@@ -4,11 +4,11 @@ members:
   - bookinfo
   - nginx-echo-headers
 labels:
-  istio.io/rev: "1.21"
-  istio-injection: enabled
+  istio.io/rev: default-v1-21-0
+  # istio-injection: enabled
   argocd.argoproj.io/managed-by: openshift-gitops
 annotations:
   argocd.argoproj.io/sync-options: Delete=false 
 smcp:
-  name: ossm-2-4
+  name: default-v1-21-0
   namespace: istio-system

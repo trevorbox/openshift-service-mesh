@@ -19,14 +19,3 @@ prometheus:
 ossmconsole:
   enabled: false
 cluster_wide_access: false
-accessible_namespaces:
-  - '**'
-api:
-  namespaces:
-    exclude:
-    - "^istio-operator"
-    - "^kube-.*"
-    - "^openshift.*"
-    - "^ibm.*"
-    - "^kiali-operator"
-    label_selector_include: "istio.io/rev=ossm-2.4"

@@ -27,6 +27,4 @@ api:
     # - "^openshift.*"
     # - "^ibm.*"
     # - "^kiali-operator"
-    include:
-    - istio-system
-    label_selector_include: "istio.io/rev=ossm-2.4"
+    label_selector_include: "maistra.io/member-of=istio-system"

@@ -10,5 +10,5 @@ tempo:
   enabled: false
   host: tempo-minio-dev-distributor.tempo-system.svc.cluster.local
 kiali:
-  enabled: true
+  enabled: false
   name: kiali-ossm-2-5-istio-system-2-5

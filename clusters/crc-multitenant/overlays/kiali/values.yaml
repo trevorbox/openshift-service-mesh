@@ -21,12 +21,12 @@ ossmconsole:
 cluster_wide_access: true
 api:
   namespaces:
-    exclude:
-    - "^istio-operator"
-    - "^kube-.*"
-    - "^openshift.*"
-    - "^ibm.*"
-    - "^kiali-operator"
-    include:
-    - istio-system
+    # exclude:
+    # - "^istio-operator"
+    # - "^kube-.*"
+    # - "^openshift.*"
+    # - "^ibm.*"
+    # - "^kiali-operator"
+    # include:
+    # - istio-system
     label_selector_include: "istio.io/rev=ossm-2.4"

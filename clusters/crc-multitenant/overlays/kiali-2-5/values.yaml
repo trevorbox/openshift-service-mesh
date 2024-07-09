@@ -18,4 +18,4 @@ prometheus:
   query_scope:
 ossmconsole:
   enabled: false
-cluster_wide_access: false
+cluster_wide_access: true

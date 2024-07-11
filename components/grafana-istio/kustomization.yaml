@@ -5,5 +5,5 @@ helmCharts:
 - name: grafana-istio
   repo: https://trevorbox.github.io/helm-charts
   namespace: istio-system
-  version: ~0.1.0
+  version: ~0.1.2
   releaseName: grafana-istio

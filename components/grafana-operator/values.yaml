@@ -13,6 +13,6 @@ operators:
   name: grafana-operator
   source: community-operators
   sourceNamespace: openshift-marketplace
-  csv: grafana-operator.v5.9.2
+  csv: grafana-operator.v5.15.1
   namespace: grafana-operator
   installPlanVerifierActiveDeadlineSeconds: 1200

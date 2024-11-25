@@ -1,5 +1,5 @@
 smcp:
-  name: ossm-2-5
+  name: ossm-2-6
   namespace: istio-system
 ingressgateway:
   namespace: istio-ingress

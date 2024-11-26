@@ -9,7 +9,8 @@ consoleLink:
   enabled: true
   route: "https://kiali-ossm-2-6-istio-system-kiali.apps-crc.testing"
 grafana:
-  url: https://grafana-instance-route-istio-system.apps-crc.testing
+  url: https://grafana-instance-route-grafana.apps-crc.testing
+  in_cluster_url: http://grafana-instance-service.grafana.svc:3000
 tracing:
   url: https://jaeger-ui-proxy-tempo-system.apps-crc.testing
 prometheus:

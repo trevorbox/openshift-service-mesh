@@ -3,3 +3,6 @@ datasource:
   url: 'http://prometheus-server.prometheus.svc.cluster.local'
   jsonData:
     customQueryParameters:
+consoleLink: 
+  enabled: true
+  route: "https://grafana-instance-route-grafana.apps-crc.testing"

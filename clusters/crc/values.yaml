@@ -82,7 +82,7 @@ applications:
     destination:
       namespace: istio-system
     source:
-      path: components/grafana-istio
+      path: clusters/crc/overlays/grafana-istio
 
   istio-ingressgateway:
     annotations:

@@ -7,3 +7,5 @@ helmCharts:
   namespace: istio-system
   version: ~0.1.3
   releaseName: grafana-istio
+  additionalValuesFiles: 
+    - values.yaml

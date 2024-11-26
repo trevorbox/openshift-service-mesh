@@ -1,3 +1,5 @@
 cookieSecret: supersecret
 datasource:
   url: 'http://prometheus-server.prometheus.svc.cluster.local'
+  jsonData:
+    customQueryParameters:

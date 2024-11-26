@@ -7,7 +7,7 @@ deployment:
   namespace: kiali
 consoleLink: 
   enabled: true
-  route: "https://kiali-istio-system.apps-crc.testing"
+  route: "https://kiali-ossm-2-6-istio-system-kiali.apps-crc.testing"
 grafana:
   url: https://grafana-instance-route-istio-system.apps-crc.testing
 tracing:

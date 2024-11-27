@@ -18,4 +18,4 @@ operators:
   config:
     env:
     - name: DISABLE_DEFAULT_ARGOCD_INSTANCE
-      value: "true"
+      value: "false" # note: if this were true, every time the operator restarts it will delete the "openshift-gitops" argocd instnce in openshift-gitops

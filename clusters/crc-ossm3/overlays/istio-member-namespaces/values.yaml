@@ -6,9 +6,10 @@ members:
 labels:
   istio-discovery: enabled
   istio-injection: enabled
+  istio.io/rev: default
   argocd.argoproj.io/managed-by: openshift-gitops
 annotations:
   argocd.argoproj.io/sync-options: Delete=false 
 smcp:
-  name: ossm-2-6
+  name: default
   namespace: istio-system

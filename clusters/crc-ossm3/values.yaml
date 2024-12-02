@@ -46,7 +46,7 @@ applications:
     destination:
       namespace: openshift-gitops
     source:
-      path: components/istio-member-namespaces
+      path: clusters/crc-ossm3/overlays/istio-member-namespaces
                          
   openshift-monitoring:
     annotations:
@@ -82,7 +82,7 @@ applications:
     destination:
       namespace: grafana
     source:
-      path: clusters/crc/overlays/grafana-istio
+      path: clusters/crc-ossm3/overlays/grafana-istio
 
   istio-ingressgateway:
     annotations:
@@ -118,7 +118,7 @@ applications:
     destination:
       namespace: bookinfo
     source:
-      path: clusters/crc/overlays/bookinfo
+      path: clusters/crc-ossm3/overlays/bookinfo
 
   kiali:
     annotations:
@@ -127,7 +127,7 @@ applications:
     destination:
       namespace: kiali
     source:
-      path: clusters/crc/overlays/kiali
+      path: clusters/crc-ossm3/overlays/kiali
 
   golang-ex-istio:
     annotations:
@@ -136,7 +136,7 @@ applications:
     destination:
       namespace: golang-ex
     source:
-      path: clusters/crc/overlays/golang-ex-istio
+      path: clusters/crc-ossm3/overlays/golang-ex-istio
 
   nginx-echo-headers:
     annotations:
@@ -145,7 +145,7 @@ applications:
     destination:
       namespace: nginx-echo-headers
     source:
-      path: clusters/crc/overlays/nginx-echo-headers
+      path: clusters/crc-ossm3/overlays/nginx-echo-headers
 
   prometheus:
     annotations:

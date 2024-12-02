@@ -1,0 +1,14 @@
+members:
+  - istio-ingress
+  - golang-ex
+  - bookinfo
+  - nginx-echo-headers
+labels:
+  istio-discovery: enabled
+  istio-injection: enabled
+  argocd.argoproj.io/managed-by: openshift-gitops
+annotations:
+  argocd.argoproj.io/sync-options: Delete=false 
+smcp:
+  name: ossm-2-6
+  namespace: istio-system

@@ -54,6 +54,9 @@ kiali:
           #     is_proxy: true
           #     namespace: istio-ingress
           enabled: true
+        gateway_api_classes: []
+        egress_gateway_namespace: ""
+        ingress_gateway_namespace: "istio-ingress"
         config_map_name: istio
         istio_sidecar_injector_config_map_name: istio-sidecar-injector
         istiod_deployment_name: istiod

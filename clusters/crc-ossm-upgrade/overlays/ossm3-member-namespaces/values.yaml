@@ -1,0 +1,18 @@
+userWorkloadAccess:
+  enabled: true
+  podMonitor:
+    meshIdLabel:
+      enabled: false
+      key: mesh_id
+      value: istiod-istio-system
+members:
+  - istio-ingress3
+  - golang-ex3
+  - bookinfo3
+  - nginx-echo-headers3
+labels:
+  istio.io/rev: default
+  istio-injection: enabled
+  argocd.argoproj.io/managed-by: openshift-gitops
+annotations:
+  argocd.argoproj.io/sync-options: Delete=false 

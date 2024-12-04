@@ -1,0 +1,193 @@
+default:
+  app:
+    enabled: true
+    enableAutoSync: true
+    autoSyncPrune: false
+    project: cluster-config
+    labels:
+      app-source: cluster-dev
+      repo: cluster-config
+    destination:
+      namespace: openshift-gitops
+      server: https://kubernetes.default.svc
+    source:
+      repoURL: https://github.com/trevorbox/openshift-service-mesh
+      targetRevision: HEAD
+    syncOptions:
+    - ApplyOutOfSyncOnly=true
+    - PrunePropagationPolicy=foreground
+    - PruneLast=true
+    - ServerSideApply=true  
+    - FailOnSharedResource=true
+    - RespectIgnoreDifferences=true
+    - CreateNamespace=false
+    syncPolicyRetry:
+      limit: -1 # number of failed sync attempt retries; unlimited number of attempts if less than 0
+      backoff:
+        duration: 5s # the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+        factor: 2 # a factor to multiply the base duration after each failed retry
+        maxDuration: 10m # the maximum amount of time allowed for the backoff strategy
+
+applications:
+
+  servicemeshoperator3:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '-1'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: components/servicemeshoperator3
+
+  service-mesh-operator:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '-1'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: components/service-mesh-operator
+
+  istio-member-namespaces:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '1'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: components/istio-member-namespaces
+
+  ossm3-member-namespaces:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '1'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: clusters/crc-ossm-upgrade/overlays/ossm3-member-namespaces
+                         
+  openshift-monitoring:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '1'
+    destination:
+      namespace: openshift-monitoring
+    source:
+      path: components/openshift-monitoring
+
+  istio-system:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '2'
+    destination:
+      namespace: istio-system
+    source:
+      path: components/istio-system
+
+  ossm3-istio-system:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '2'
+    destination:
+      namespace: istio-system3
+    source:
+      path: clusters/crc-ossm-upgrade/overlays/ossm3-istio-system               
+
+  tempo-system:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '2'
+    destination:
+      namespace: tempo-system
+    source:
+      path: components/tempo-system
+
+  grafana-istio:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '2'
+    destination:
+      namespace: grafana
+    source:
+      path: clusters/crc-ossm-upgrade/overlays/grafana-istio
+
+  istio-ingressgateway:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '3'
+    destination:
+      namespace: istio-ingress
+    source:
+      path: components/istio-ingressgateway
+
+  ossm3-istio-ingressgateway:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '3'
+    destination:
+      namespace: istio-ingress3
+    source:
+      path: clusters/crc-ossm-upgrade/overlays/ossm3-istio-ingressgateway
+
+  golang-ex:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: golang-ex
+    source:
+      path: components/golang-ex
+
+  minio-tenant:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '2'
+    destination:
+      namespace: minio-tenant
+    source:
+      path: components/minio-tenant
+
+  bookinfo:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: bookinfo
+    source:
+      path: clusters/crc-ossm-upgrade/overlays/bookinfo
+
+  kiali:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '3'
+    destination:
+      namespace: kiali
+    source:
+      path: clusters/crc-ossm-upgrade/overlays/kiali
+
+  golang-ex-istio:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: golang-ex
+    source:
+      path: clusters/crc-ossm-upgrade/overlays/golang-ex-istio
+
+  nginx-echo-headers:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: nginx-echo-headers
+    source:
+      path: clusters/crc-ossm-upgrade/overlays/nginx-echo-headers
+
+  prometheus:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '2'
+    destination:
+      namespace: prometheus
+    source:
+      path: components/prometheus

@@ -1,0 +1,33 @@
+# ---
+# apiVersion: cert-manager.io/v1
+# kind: ClusterIssuer
+# metadata:
+#   name: self-signer
+# spec:
+#   selfSigned: {}
+# ...
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: ingressgateway-rootca
+  namespace: istio-ingress3
+spec:
+  secretName: ingressgateway-rootca
+  issuerRef:
+    kind: ClusterIssuer
+    name: self-signer
+  commonName: "ca.self-signer.cert-manager"
+  isCA: true
+...
+---  
+# Create an Issuer that uses the above generated CA certificate to issue certs
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: internal-issuer
+  namespace: istio-ingress3
+spec:
+  ca:
+    secretName: ingressgateway-rootca
+...

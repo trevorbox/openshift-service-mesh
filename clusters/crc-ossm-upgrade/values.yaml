@@ -183,6 +183,15 @@ applications:
     source:
       path: clusters/crc-ossm-upgrade/overlays/nginx-echo-headers
 
+  nginx-echo-headers3:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: nginx-echo-headers3
+    source:
+      path: clusters/crc-ossm-upgrade/overlays/nginx-echo-headers3
+
   prometheus:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous

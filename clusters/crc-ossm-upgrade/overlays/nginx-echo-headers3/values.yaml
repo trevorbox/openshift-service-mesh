@@ -1,0 +1,2 @@
+ingressgateway:
+  host: nginx-echo-headers-istio-ingress3.apps-crc.testing

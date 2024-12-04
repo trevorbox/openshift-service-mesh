@@ -1,0 +1,15 @@
+namespaceMemberSelector:
+  istio.io/rev: ossm-2.6
+smcp:
+  name: ossm-2-6
+  accessLoggingEnabled: true
+  version: v2.6
+  mode: MultiTenant
+  outboundPolicy: REGISTRY_ONLY # ALLOW_ANY
+tempo:
+  enabled: true
+  host: tempo-minio-dev-distributor.tempo-system.svc.cluster.local
+kiali:
+  enabled: false
+istiod:
+  replicas: 2

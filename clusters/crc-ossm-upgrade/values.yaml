@@ -82,7 +82,7 @@ applications:
     destination:
       namespace: istio-system
     source:
-      path: components/istio-system
+      path: clusters/crc-ossm-upgrade/overlays/istio-system
 
   ossm3-istio-system:
     annotations:

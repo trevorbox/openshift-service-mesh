@@ -6,7 +6,7 @@ helmCharts:
   repo: https://trevorbox.github.io/helm-charts
   namespace: nginx-echo-headers3
   valuesFile: ../../../../components/nginx-echo-headers/values.yaml
-  version: ~0.1.0
+  version: ~0.1.1
   releaseName: nginx-echo-headers
   additionalValuesFiles: 
     - values.yaml

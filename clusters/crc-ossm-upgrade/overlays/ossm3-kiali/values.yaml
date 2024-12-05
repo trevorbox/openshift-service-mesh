@@ -5,6 +5,19 @@ ossmconsole:
   enabled: false
 kiali:
   spec:
+    # v1-89 requirement
+    api:
+      namespaces:
+        exclude:
+          - "^istio-operator"
+          - "^kube-.*"
+          - "^openshift.*"
+          - "^ibm.*"
+          - "^kiali-operator"
+        include: []
+        label_selector_exclude: ""
+        # default: label_selector_include is undefined
+        label_selector_include: "istio.io/rev=default"
     auth:
       strategy: openshift
     deployment:

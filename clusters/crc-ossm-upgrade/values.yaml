@@ -165,6 +165,15 @@ applications:
     source:
       path: clusters/crc-ossm-upgrade/overlays/kiali
 
+  kiali3:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '3'
+    destination:
+      namespace: kiali3
+    source:
+      path: clusters/crc-ossm-upgrade/overlays/kiali3
+
   golang-ex-istio:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous

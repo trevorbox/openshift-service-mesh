@@ -163,7 +163,7 @@ applications:
     destination:
       namespace: kiali
     source:
-      path: clusters/crc-ossm-upgrade/overlays/ossm3-kiali
+      path: clusters/crc-ossm-upgrade/overlays/kiali
 
   kiali3:
     annotations:
@@ -172,7 +172,7 @@ applications:
     destination:
       namespace: kiali3
     source:
-      path: clusters/crc-ossm-upgrade/overlays/kiali3
+      path: clusters/crc-ossm-upgrade/overlays/ossm3-kiali
 
   golang-ex-istio:
     annotations:

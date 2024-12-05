@@ -23,10 +23,7 @@ kiali:
     deployment:
       # v1-89 requirement
       accessible_namespaces:
-        - bookinfo3
-        - golang-ex3
-        - istio-ingress3
-        - nginx-echo-headers3
+        - '**'
       resources:
         requests:
           cpu: 100m

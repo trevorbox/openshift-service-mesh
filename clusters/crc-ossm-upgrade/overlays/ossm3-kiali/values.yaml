@@ -13,7 +13,7 @@ kiali:
           cpu: 100m
           memory: 256Mi
       image_pull_policy: ''
-      cluster_wide_access: true
+      cluster_wide_access: false
       logger:
         log_level: debug
       ingress:
@@ -24,7 +24,11 @@ kiali:
         sidecar.istio.io/inject: 'false'
       namespace: kiali3
       replicas: 1
-    external_services:
+      discovery_selectors:
+        default:
+          - matchLabels:
+              istio.io/rev: default
+      external_services:
       custom_dashboards:
         namespace_label: kubernetes_namespace
       grafana:

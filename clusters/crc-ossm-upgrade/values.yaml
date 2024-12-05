@@ -163,7 +163,7 @@ applications:
     destination:
       namespace: kiali
     source:
-      path: clusters/crc-ossm-upgrade/overlays/kiali
+      path: clusters/crc-ossm-upgrade/overlays/ossm3-kiali
 
   kiali3:
     annotations:

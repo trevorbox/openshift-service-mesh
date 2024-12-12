@@ -1,6 +1,9 @@
 apiVersion: kustomize.config.k8s.io/v1alpha1
 kind: Component
 
+resources:
+  - networkpolicy-allow-from-openshift-ingress3.yaml
+
 helmCharts:
 - name: istio-member-namespaces
   repo: https://trevorbox.github.io/helm-charts

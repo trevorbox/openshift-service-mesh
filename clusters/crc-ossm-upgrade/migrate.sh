@@ -9,7 +9,7 @@ istioctl -i istio-system ps >> migrate.log
 echo "istio-system3 Before"... >> migrate.log
 istioctl -i istio-system3 ps >> migrate.log
 
-RESOURCES=$(oc get namespace -l istio.io/rev=ossm-2.6 -o custom-columns=":metadata.name")
+RESOURCES=$(oc get namespace -l istio.io/rev=ossm2 -o custom-columns=":metadata.name")
 for n in $RESOURCES
 do
   oc label namespace $n istio.io/rev=default --overwrite

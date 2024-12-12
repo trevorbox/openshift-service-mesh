@@ -1,5 +1,5 @@
 smcp:
-  name: ossm-2-6
+  name: ossm2
   namespace: istio-system
 ingressgateway:
   namespace: istio-ingress
@@ -20,5 +20,5 @@ prometheus:
     type: bearer
     use_kiali_token: true
   query_scope:
-    mesh_id: istio-system/ossm-2-6
+    mesh_id: istio-system/ossm2
   url: https://thanos-querier.openshift-monitoring.svc.cluster.local:9091

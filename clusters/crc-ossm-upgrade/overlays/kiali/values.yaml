@@ -1,5 +1,5 @@
 smcp:
-  name: ossm-2-6
+  name: ossm2
   namespace: istio-system
 ingressgateway:
   namespace: istio-ingress
@@ -7,7 +7,7 @@ deployment:
   namespace: kiali
 consoleLink: 
   enabled: true
-  route: "https://kiali-ossm-2-6-istio-system-kiali.apps-crc.testing"
+  route: "https://kiali-ossm2-istio-system-kiali.apps-crc.testing"
 grafana:
   url: https://grafana-instance-route-grafana.apps-crc.testing
   in_cluster_url: http://grafana-instance-service.grafana.svc:3000

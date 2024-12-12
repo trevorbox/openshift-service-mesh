@@ -1,7 +1,7 @@
 namespaceMemberSelector:
-  istio.io/rev: ossm-2.6
+  istio.io/rev: ossm2
 smcp:
-  name: ossm-2-6
+  name: ossm2
   accessLoggingEnabled: true
   version: v2.6
   mode: ClusterWide

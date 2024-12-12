@@ -21,14 +21,14 @@ oc apply -n $n -f - <<EOF
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: istio-injection-enabled
+  name: istio-rev-default
 spec:
   podSelector: {}
   ingress:
     - from:
         - namespaceSelector:
             matchLabels:
-              istio-injection: enabled
+              istio.io/rev: default
   policyTypes:
     - Ingress
 EOF

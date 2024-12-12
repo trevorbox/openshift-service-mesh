@@ -5,7 +5,6 @@ members:
   - nginx-echo-headers
 labels:
   istio.io/rev: default-v1-21-0
-  # istio-injection: enabled
   argocd.argoproj.io/managed-by: openshift-gitops
 annotations:
   argocd.argoproj.io/sync-options: Delete=false 

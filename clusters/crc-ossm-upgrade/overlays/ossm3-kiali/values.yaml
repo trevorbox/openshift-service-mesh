@@ -32,7 +32,7 @@ kiali:
           cpu: 100m
           memory: 256Mi
       image_pull_policy: ''
-      cluster_wide_access: false
+      cluster_wide_access: true
       logger:
         log_level: debug
       ingress:

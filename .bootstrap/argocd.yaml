@@ -234,6 +234,7 @@ spec:
       enabled: false
   initialSSHKnownHosts: {}
   applicationSet:
+    enabled: false
     #extraCommandArgs:
     #  - --enable-progressive-syncs
     resources:

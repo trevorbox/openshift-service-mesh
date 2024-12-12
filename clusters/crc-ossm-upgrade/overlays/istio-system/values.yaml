@@ -4,7 +4,7 @@ smcp:
   name: ossm-2-6
   accessLoggingEnabled: true
   version: v2.6
-  mode: MultiTenant
+  mode: ClusterWide
   outboundPolicy: REGISTRY_ONLY # ALLOW_ANY
 tempo:
   enabled: true

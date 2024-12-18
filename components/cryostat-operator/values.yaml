@@ -1,0 +1,18 @@
+
+approveManualInstallPlanViaHook: true
+
+installPlanApproverAndVerifyJobsImage: quay.io/openshift/origin-cli:4.14
+
+operatorGroups:
+- name: cryostat-operator
+  createNamespace: true
+
+operators:
+- channel: stable
+  installPlanApproval: Manual
+  name: cryostat-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  csv: cryostat-operator.v3.0.1-9
+  namespace: cryostat-operator
+  installPlanVerifierActiveDeadlineSeconds: 1200

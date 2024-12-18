@@ -75,14 +75,14 @@ applications:
     source:
       path: components/istio-system                          
 
-  tempo-system:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '2'
-    destination:
-      namespace: tempo-system
-    source:
-      path: components/tempo-system
+  # tempo-system:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '2'
+  #   destination:
+  #     namespace: tempo-system
+  #   source:
+  #     path: components/tempo-system
 
   grafana-istio:
     annotations:
@@ -102,32 +102,32 @@ applications:
     source:
       path: components/istio-ingressgateway
 
-  golang-ex:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '4'
-    destination:
-      namespace: golang-ex
-    source:
-      path: components/golang-ex
+  # golang-ex:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '4'
+  #   destination:
+  #     namespace: golang-ex
+  #   source:
+  #     path: components/golang-ex
 
-  minio-tenant:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '2'
-    destination:
-      namespace: minio-tenant
-    source:
-      path: components/minio-tenant
+  # minio-tenant:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '2'
+  #   destination:
+  #     namespace: minio-tenant
+  #   source:
+  #     path: components/minio-tenant
 
-  bookinfo:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '4'
-    destination:
-      namespace: bookinfo
-    source:
-      path: clusters/crc-cryostat/overlays/bookinfo
+  # bookinfo:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '4'
+  #   destination:
+  #     namespace: bookinfo
+  #   source:
+  #     path: clusters/crc-cryostat/overlays/bookinfo
 
   kiali:
     annotations:
@@ -138,14 +138,14 @@ applications:
     source:
       path: clusters/crc-cryostat/overlays/kiali
 
-  golang-ex-istio:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '4'
-    destination:
-      namespace: golang-ex
-    source:
-      path: clusters/crc-cryostat/overlays/golang-ex-istio
+  # golang-ex-istio:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '4'
+  #   destination:
+  #     namespace: golang-ex
+  #   source:
+  #     path: clusters/crc-cryostat/overlays/golang-ex-istio
 
   nginx-echo-headers:
     annotations:

@@ -17,4 +17,4 @@ prometheus:
   url: http://prometheus-server.prometheus.svc.cluster.local
   auth: 
   query_scope:
-    mesh_id: istiod-istio-system
+    # mesh_id: istiod-istio-system

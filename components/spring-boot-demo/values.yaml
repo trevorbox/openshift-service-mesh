@@ -1,4 +1,4 @@
 istio:
   enabled: true
 ingressgateway:
-  host: springboot.apps-crc.testing
+  host: spring-boot-demo-istio-ingress.apps-crc.testing

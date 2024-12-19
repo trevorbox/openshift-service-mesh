@@ -3,6 +3,7 @@ members:
   - golang-ex
   - bookinfo
   - nginx-echo-headers
+  - spring-boot-demo
 labels:
   istio.io/rev: ossm2
   argocd.argoproj.io/managed-by: openshift-gitops

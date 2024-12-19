@@ -1,0 +1,14 @@
+apiVersion: operator.cryostat.io/v1beta2
+kind: Cryostat
+metadata:
+  name: cryostat
+spec:
+  enableCertManager: true
+  reportOptions:
+    resources: {}
+  storageOptions:
+    pvc:
+      spec:
+        resources: {}
+  targetNamespaces:
+    - spring-boot-demo

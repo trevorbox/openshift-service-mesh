@@ -129,6 +129,24 @@ applications:
   #   source:
   #     path: clusters/crc-cryostat/overlays/bookinfo
 
+  spring-boot-demo:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: spring-boot-demo
+    source:
+      path: components/spring-boot-demo
+
+  cryostat:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: cryostat
+    source:
+      path: components/cryostat
+
   kiali:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous

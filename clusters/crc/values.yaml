@@ -30,6 +30,16 @@ default:
 
 applications:
 
+  gatekeeper-system:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '1'
+      argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    destination:
+      namespace: gatekeeper-system
+    source:
+      path: components/gatekeeper-system
+
   service-mesh-operator:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous

@@ -39,6 +39,15 @@ applications:
       namespace: gatekeeper-system
     source:
       path: components/gatekeeper-system
+    syncOptions:
+      - ApplyOutOfSyncOnly=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+      - ServerSideApply=true  
+      - FailOnSharedResource=true
+      - RespectIgnoreDifferences=true
+      - CreateNamespace=false
+      - SkipDryRunOnMissingResource=true
 
   service-mesh-operator:
     annotations:

@@ -2,8 +2,6 @@ apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sRequiredContainerNames
 metadata:
   name: require-istio-proxy
-  annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   match:
     kinds:

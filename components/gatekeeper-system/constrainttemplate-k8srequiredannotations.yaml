@@ -3,7 +3,6 @@ kind: ConstraintTemplate
 metadata:
   name: k8srequiredannotations
   annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
     metadata.gatekeeper.sh/title: "Required Annotations"
     metadata.gatekeeper.sh/version: 1.0.0
     description: >-

@@ -4,4 +4,3 @@ kind: Kustomization
 
 resources:
   - gatekeeper-gatekeeper.yaml
-  - namespace-gatekeeper-system.yaml

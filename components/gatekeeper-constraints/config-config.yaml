@@ -2,7 +2,7 @@ apiVersion: config.gatekeeper.sh/v1alpha1
 kind: Config
 metadata:
   name: config
-  namespace: gatekeeper-system
+  namespace: openshift-gatekeeper-system
 spec:
   # taken from https://github.com/open-cluster-management-io/policy-collection/blob/main/community/CM-Configuration-Management/policy-gatekeeper-config-exclude-namespaces.yaml
   sync:

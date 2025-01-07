@@ -4,20 +4,21 @@ metadata:
   name: gatekeeper
 spec:
   validatingWebhook: Enabled
-  match:
-    - excludedNamespaces:
-        - ansible-automation-platform
-        - hive
-        - kube-*
-        - local-quay
-        - multicluster-engine
-        - open-cluster-management
-        - open-cluster-management-*
-        - openshift-*
-        - rhacs-operator
-        - stackrox
-      processes:
-        - '*'
+  config:
+    matches:
+      - excludedNamespaces:
+          - ansible-automation-platform
+          - hive
+          - kube-*
+          - local-quay
+          - multicluster-engine
+          - open-cluster-management
+          - open-cluster-management-*
+          - openshift-*
+          - rhacs-operator
+          - stackrox
+        processes:
+          - '*'
   audit:
     logLevel: INFO
     replicas: 1

@@ -3,6 +3,8 @@ kind: Config
 metadata:
   name: config
   namespace: gatekeeper-system
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   # taken from https://github.com/open-cluster-management-io/policy-collection/blob/main/community/CM-Configuration-Management/policy-gatekeeper-config-exclude-namespaces.yaml
   sync:

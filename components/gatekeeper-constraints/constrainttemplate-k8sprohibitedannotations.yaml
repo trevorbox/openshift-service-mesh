@@ -1,0 +1,49 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8sprohibitedannotations
+  annotations:
+    metadata.gatekeeper.sh/title: "Prohibited Annotations"
+    metadata.gatekeeper.sh/version: 1.0.0
+    description: >-
+      Prohibits resources to contain specified annotations, with values matching
+      provided regular expressions.
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sProhibitedAnnotations
+      validation:
+        openAPIV3Schema:
+          type: object
+          properties:
+            message:
+              type: string
+            annotations:
+              type: array
+              description: >-
+                A list of annotations and values the object must specify.
+              items:
+                type: object
+                properties:
+                  key:
+                    type: string
+                    description: >-
+                      The prohibited annotation.
+                  prohibitedRegex:
+                    type: string
+                    description: >-
+                      If specified, a regular expression the annotation's value
+                      to match. The value must contain at least one match for
+                      the regular expression.
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8sprohibitedannotations
+
+        violation[{"msg": msg}] {
+          value := input.review.object.metadata.annotations[key]
+          not value
+          re_match(expected.prohibitedRegex, value)
+          msg := sprintf("Annotation <%v: %v> matches regex: %v and is not allowed", [key, value, expected.prohibitedRegex])
+        }

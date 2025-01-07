@@ -1,7 +1,7 @@
 apiVersion: constraints.gatekeeper.sh/v1beta1
-kind: K8sRequiredAnnotations
+kind: K8sProhibitedAnnotations
 metadata:
-  name: require-sidecar-injection-annotation
+  name: disallow-gateway-template
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:

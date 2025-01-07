@@ -45,5 +45,5 @@ spec:
           value := input.review.object.metadata.annotations[key]
           value != ""
           re_match(expected.prohibitedRegex, value)
-          msg := sprintf("Annotation <%v: %v> matches regex: %v and is not allowed", [key, value, expected.prohibitedRegex])
+          msg := "yes"
         }

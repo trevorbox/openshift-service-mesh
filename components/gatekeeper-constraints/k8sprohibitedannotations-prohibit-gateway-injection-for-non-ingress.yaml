@@ -1,7 +1,7 @@
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sProhibitedAnnotations
 metadata:
-  name: prohibit-gateway-injection-for-non-ingress
+  name: prohibit-gateway-injection
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
@@ -16,7 +16,7 @@ spec:
     excludedNamespaces:
       - istio-ingress
   parameters:
-    message: "Disallow `inject.istio.io/templates` annotation with a value of `gateway`."
+    message: "Disallow `inject.istio.io/templates` annotation with a value of `gateway` for non ingress namespaces."
     annotations:
       - key: "inject.istio.io/templates"
         # Matches email address or github user

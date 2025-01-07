@@ -34,11 +34,28 @@ applications:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
       argocd.argoproj.io/sync-wave: '1'
-      argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
     destination:
       namespace: gatekeeper-system
     source:
       path: components/gatekeeper-system
+    syncOptions:
+      - ApplyOutOfSyncOnly=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+      - ServerSideApply=true  
+      - FailOnSharedResource=true
+      - RespectIgnoreDifferences=true
+      - CreateNamespace=false
+      - SkipDryRunOnMissingResource=true
+
+  gatekeeper-constraints:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '2'
+    destination:
+      namespace: gatekeeper-system
+    source:
+      path: components/gatekeeper-constraints
     syncOptions:
       - ApplyOutOfSyncOnly=true
       - PrunePropagationPolicy=foreground

@@ -22,7 +22,7 @@ spec:
             annotations:
               type: array
               description: >-
-                A list of annotations and values the object must specify.
+                A list of annotations and values the object must not specify.
               items:
                 type: object
                 properties:

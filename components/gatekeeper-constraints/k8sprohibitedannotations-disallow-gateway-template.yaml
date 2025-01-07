@@ -16,7 +16,7 @@ spec:
     excludedNamespaces:
       - istio-system
   parameters:
-    message: "Disallow `abd` annotation with a value of `true`."
+    message: "Disallow `abc` annotation with a value of `true`."
     annotations:
       - key: abc
         # Matches email address or github user

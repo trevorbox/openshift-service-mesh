@@ -43,7 +43,9 @@ spec:
 
         violation[{"msg": msg}] {
           value := input.review.object.metadata.annotations[key]
-          value != ""
+          expected := input.parameters.annotations[_]
+          expected.key == key
+          expected.prohibitedRegex != ""
           re_match(expected.prohibitedRegex, value)
-          msg := "yes"
+          msg := sprintf("Annotation <%v: %v> does not satisfy prohibited regex: %v", [key, value, expected.prohibitedRegex])
         }

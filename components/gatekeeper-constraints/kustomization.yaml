@@ -8,5 +8,5 @@ resources:
   - constrainttemplate-k8srequireistioproxysidecar.yaml
   - k8srequiredannotations-require-sidecar-annotation.yaml
   - k8srequiredcontainernames-require-istio-proxy.yaml
-  - prohibited-annotations/
-  # - prohibited-annotations/k8sprohibitedannotations-prohibit-gateway-injection.yaml
+  - prohibited-annotations/template.yaml
+  - prohibited-annotations/prohibit-injected-gateway-annotation/constraint.yaml

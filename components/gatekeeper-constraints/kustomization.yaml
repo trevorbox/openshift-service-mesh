@@ -10,7 +10,7 @@ resources:
   - k8srequiredcontainernames-require-istio-proxy.yaml
   - prohibited-annotations/template.yaml
   - prohibited-annotations/prohibit-injected-gateway-annotation/constraint.yaml
-  - explicit-gateway-host/template.yaml
-  - explicit-gateway-host/wildcard/constraint.yaml
-  - explicit-virtualservice-host/template.yaml
-  - explicit-virtualservice-host/wildcard/constraint.yaml
+  - explicit-gateway-hosts/template.yaml
+  - explicit-gateway-hosts/wildcard/constraint.yaml
+  - explicit-virtualservice-hosts/template.yaml
+  - explicit-virtualservice-hosts/wildcard/constraint.yaml

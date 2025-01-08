@@ -16,5 +16,5 @@ jobs:
       - name: gator
         uses: minchao/setup-gator@v2
         with:
-          version: 'v3.8.1'
+          version: 'v3.18.1'
       - run: pwd && ls -1 && gator verify components/gatekeeper-constraints/explicit-gateway-hosts/wildcard/test/suite.yaml

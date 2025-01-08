@@ -1,5 +1,7 @@
 # Testing gator unit tests
 
+> found example from https://github.com/open-policy-agent/gatekeeper/tree/master/test/gator/test/fixtures/manifests/expansion
+
 For some reason `gator test` works...
 
 ```sh

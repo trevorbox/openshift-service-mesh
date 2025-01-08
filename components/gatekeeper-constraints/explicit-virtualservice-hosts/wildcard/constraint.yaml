@@ -1,0 +1,17 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: IstioExplicitVirtualServiceHost
+metadata:
+  name: explicitvistualservicehost
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+      - apiGroups: ["networking.istio.io"]
+        kinds: ["VirtualService"]
+    namespaceSelector:
+      matchExpressions:
+        - key: maistra.io/member-of
+          operator: Exists
+  parameters:
+    disallowedHosts:
+    - "*"

@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: my-gateway
+  namespace: my-ns
+spec:
+  selector:
+    app: my-gateway-controller
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - eu.bookinfo.example.com
+    - "*/example.com"

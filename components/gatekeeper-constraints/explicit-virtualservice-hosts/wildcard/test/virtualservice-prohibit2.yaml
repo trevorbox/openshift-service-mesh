@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: bookinfo-mongo
+  namespace: my-ns
+spec:
+  hosts:
+  - "*.prod.svc.cluster.local" # name of internal Mongo service
+  gateways:
+  - some-config-namespace/my-gateway # can omit the namespace if gateway is in same namespace as virtual service.
+  tcp:
+  - match:
+    - port: 27017
+    route:
+    - destination:
+        host: mongo.prod.svc.cluster.local
+        port:
+          number: 5555

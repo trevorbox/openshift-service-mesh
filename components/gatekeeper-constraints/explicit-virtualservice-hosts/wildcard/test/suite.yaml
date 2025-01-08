@@ -1,0 +1,31 @@
+apiVersion: test.gatekeeper.sh/v1alpha1
+kind: Suite
+tests:
+- name: Explicit VirtualService Hosts
+  template: ../../template.yaml
+  constraint: ../constraint.yaml
+  cases:
+  - name: Valid hosts in mesh namespace
+    object: virtualservice-allow.yaml
+    inventory:
+    - namespace-my-ns.yaml
+    assertions:
+    - violations: no
+  - name: Invalid wildcard (non-explicit) host in mesh namespace
+    object: virtualservice-prohibit.yaml
+    inventory:
+    - namespace-my-ns.yaml
+    assertions:
+    - violations: yes
+  - name: Invalid (#2) wildcard (non-explicit) host in mesh namespace
+    object: virtualservice-prohibit2.yaml
+    inventory:
+    - namespace-my-ns.yaml
+    assertions:
+    - violations: yes
+  - name: Valid - non mesh namespace
+    object: virtualservice-prohibit.yaml
+    inventory:
+    - namespace-my-ns-negative-match.yaml
+    assertions:
+    - violations: no

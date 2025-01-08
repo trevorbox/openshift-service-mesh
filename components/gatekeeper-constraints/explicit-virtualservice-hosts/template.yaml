@@ -1,0 +1,40 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: istioexplicitvirtualservicehost
+  annotations:
+    description: Prohibits wildcard host configuration
+spec:
+  crd:
+    spec:
+      names:
+        kind: IstioExplicitVirtualServiceHost
+      validation:
+        openAPIV3Schema:
+          type: object
+          properties:
+            disallowedHosts:
+              type: array
+              items:
+                type: string
+  targets:
+  - target: admission.k8s.gatekeeper.sh
+    rego: |-
+      # https://istio.io/latest/docs/ops/best-practices/security/#avoid-overly-broad-hosts-configurations
+      package istio.security.virtualservicehost
+
+      import future.keywords
+
+      violation[{"msg": msg}] {
+        disallowed_hosts := input.parameters.disallowedHosts
+        hosts := input.review.object.spec.hosts
+
+        some h in disallowed_hosts
+        _contains(hosts, h)
+        
+        msg := sprintf("Non-explicit host in spec.hosts: %v", [hosts])
+      }
+
+      _contains(arr, elem) {
+        contains(arr[_], elem)
+      }

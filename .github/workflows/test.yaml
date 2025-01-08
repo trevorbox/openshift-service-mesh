@@ -1,0 +1,22 @@
+name: Test
+
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+
+jobs:
+  gator-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: gator
+        uses: minchao/setup-gator@v2
+        with:
+          version: 'v3.18.1'
+      - run: gator verify components/gatekeeper-constraints/explicit-gateway-hosts/wildcard/test/suite.yaml
+      - run: gator verify components/gatekeeper-constraints/explicit-virtualservice-hosts/wildcard/test/suite.yaml
+      - run: gator verify components/gatekeeper-constraints/prohibited-annotations/prohibit-injected-gateway-annotation/test/suite.yaml

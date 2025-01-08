@@ -1,32 +1,26 @@
 # Testing gator unit tests
 
-> found example from https://github.com/open-policy-agent/gatekeeper/tree/master/test/gator/test/fixtures/manifests/expansion
+> Tested using [gator v3.18.1](https://github.com/open-policy-agent/gatekeeper/releases/tag/v3.18.1). Found example from <https://github.com/open-policy-agent/gatekeeper/tree/master/test/gator/test/fixtures/manifests/expansion>
 
-For some reason `gator test` works...
+Run the test suite..
 
 ```sh
-tbox@fedora:~/git/trevorbox/openshift-service-mesh/components/gatekeeper-constraints/prohibited-annotations$ gator test -f k8sprohibitedannotations-prohibit-gateway-injection.yaml -f constrainttemplate-k8sprohibitedannotations.yaml -f expansion.yaml -f deployment.yaml -f namespace.yaml
+gator verify prohibit-injected-gateway-annotation/test/suite.yaml
+```
+
+You can also run `gator test` manually to see the messages...
+
+```sh
+gator test -f prohibit-injected-gateway-annotation/constraint.yaml -f template.yaml -f prohibit-injected-gateway-annotation/test/expansion.yaml -f prohibit-injected-gateway-annotation/test/deployment-my-ns.yaml -f prohibit-injected-gateway-annotation/test/namespace-my-ns.yaml
+```
+
+Example...
+
+```sh
+tbox@fedora:~/git/trevorbox/openshift-service-mesh/components/gatekeeper-constraints/prohibited-annotations$ gator verify prohibit-injected-gateway-annotation/test/suite.yaml
+ok      prohibit-injected-gateway-annotation/test/suite.yaml    0.018s
+PASS
+
+tbox@fedora:~/git/trevorbox/openshift-service-mesh/components/gatekeeper-constraints/prohibited-annotations$ gator test -f prohibit-injected-gateway-annotation/constraint.yaml -f template.yaml -f prohibit-injected-gateway-annotation/test/expansion.yaml -f prohibit-injected-gateway-annotation/test/deployment-my-ns.yaml -f prohibit-injected-gateway-annotation/test/namespace-my-ns.yaml
 apps/v1/Deployment my-ns/nginx-deployment: ["prohibit-gateway-injection"] Message: "[Implied by expand-workloads] Annotation <inject.istio.io/templates: gateway> does not satisfy prohibited regex: ^gateway$"
-tbox@fedora:~/git/trevorbox/openshift-service-mesh/components/gatekeeper-constraints/prohibited-annotations$ echo $?
-1
-tbox@fedora:~/git/trevorbox/openshift-service-mesh/components/gatekeeper-constraints/prohibited-annotations$ gator test -f k8sprohibitedannotations-prohibit-gateway-injection.yaml -f constrainttemplate-k8sprohibitedannotations.yaml -f expansion.yaml -f deployment.yaml -f namespace-allow.yaml
-tbox@fedora:~/git/trevorbox/openshift-service-mesh/components/gatekeeper-constraints/prohibited-annotations$ echo $?
-0
 ```
-
-but this does not...
-
-> TODO look into what I'm doing wong with the suite.yaml
-
-```sh
-tbox@fedora:~/git/trevorbox/openshift-service-mesh/components/gatekeeper-constraints/prohibited-annotation$ gator verify .
-    --- FAIL: prohibited-annotation     (0.005s)
-        unexpected number of violations: got 0 violations but want at least 1: got messages []
---- FAIL: prohibited-annotation (0.009s)
-FAIL    .yaml   0.009s
-FAIL
-
-Error: FAIL
-```
-
-

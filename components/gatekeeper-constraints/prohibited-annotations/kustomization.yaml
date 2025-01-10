@@ -1,0 +1,3 @@
+resources:
+  - template.yaml
+  - samples/prohibit-injected-gateway

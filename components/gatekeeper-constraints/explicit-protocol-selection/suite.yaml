@@ -1,0 +1,37 @@
+kind: Suite
+apiVersion: test.gatekeeper.sh/v1alpha1
+metadata:
+  name: require-explicit-protocol-selection
+tests:
+  - name: require-explicit-protocol-selection
+    template: template.yaml
+    constraint: samples/require-explicit-protocol-selection/constraint.yaml
+    cases:
+      - name: allowed-protocol
+        object: samples/require-explicit-protocol-selection/allow-port-name-1.yaml
+        assertions:
+          - violations: no
+      - name: allowed-protocol-suffix
+        object: samples/require-explicit-protocol-selection/allow-port-name-2.yaml
+        assertions:
+          - violations: no
+      - name: allowed-app-protocol
+        object: samples/require-explicit-protocol-selection/allow-app-protocol.yaml
+        assertions:
+          - violations: no
+      - name: allowed-mix-name-app-protocol
+        object: samples/require-explicit-protocol-selection/allow-port-name-and-appprotocol.yaml
+        assertions:
+          - violations: no
+      - name: disallowed-app-protocol
+        object: samples/require-explicit-protocol-selection/disallow-app-protocol.yaml
+        assertions:
+          - violations: yes
+      - name: disallowed-port-name
+        object: samples/require-explicit-protocol-selection/disallow-port-name.yaml
+        assertions:
+          - violations: yes
+      - name: disallowed-no-port-name-and-app-prototocl
+        object: samples/require-explicit-protocol-selection/disallow-no-port-name-and-app-protocol.yaml
+        assertions:
+          - violations: yes

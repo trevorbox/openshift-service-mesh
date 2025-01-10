@@ -2,42 +2,42 @@ apiVersion: test.gatekeeper.sh/v1alpha1
 kind: Suite
 tests:
 - name: Explicit Gateway Hosts
-  template: ../../template.yaml
-  constraint: ../constraint.yaml
+  template: template.yaml
+  constraint: samples/wildcard/constraint.yaml
   cases:
   - name: Valid hosts in mesh namespace
-    object: gateway-allow.yaml
+    object: samples/wildcard/gateway-allow.yaml
     inventory:
-    - namespace-my-ns.yaml
+    - samples/wildcard/namespace-my-ns.yaml
     assertions:
     - violations: no
   - name: Valid (#2) hosts in mesh namespace
-    object: gateway-allow2.yaml
+    object: samples/wildcard/gateway-allow2.yaml
     inventory:
-    - namespace-my-ns.yaml
+    - samples/wildcard/namespace-my-ns.yaml
     assertions:
     - violations: no
   - name: Invalid wildcard (non-explicit) host in mesh namespace
-    object: gateway-prohibit.yaml
+    object: samples/wildcard/gateway-prohibit.yaml
     inventory:
-    - namespace-my-ns.yaml
+    - samples/wildcard/namespace-my-ns.yaml
     assertions:
     - violations: yes
   - name: Invalid (#2) wildcard (non-explicit) host in mesh namespace
-    object: gateway-prohibit2.yaml
+    object: samples/wildcard/gateway-prohibit2.yaml
     inventory:
-    - namespace-my-ns.yaml
+    - samples/wildcard/namespace-my-ns.yaml
     assertions:
     - violations: yes
   - name: Invalid (#3) wildcard (non-explicit) host in mesh namespace
-    object: gateway-prohibit3.yaml
+    object: samples/wildcard/gateway-prohibit3.yaml
     inventory:
-    - namespace-my-ns.yaml
+    - samples/wildcard/namespace-my-ns.yaml
     assertions:
     - violations: yes
   - name: Valid - non mesh namespace
-    object: gateway-prohibit.yaml
+    object: samples/wildcard/gateway-prohibit.yaml
     inventory:
-    - namespace-my-ns-negative-match.yaml
+    - samples/wildcard/namespace-my-ns-negative-match.yaml
     assertions:
     - violations: no

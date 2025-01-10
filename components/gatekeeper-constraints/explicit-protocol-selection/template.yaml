@@ -1,0 +1,61 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  annotations:
+    description: Explicit protocol selection either by name or appProtocol
+  name: istioexplicitprotocolselection
+spec:
+  crd:
+    spec:
+      names:
+        kind: IstioExplicitProtocolSelection
+      validation:
+        openAPIV3Schema:
+          type: object
+          properties:
+            prefixes:
+              type: string
+            protocols:
+              type: array
+              items:
+                type: string
+  targets:
+  - target: admission.k8s.gatekeeper.sh
+    rego: |-
+      # https://istio.io/latest/docs/ops/configuration/traffic-management/protocol-selection/
+      package istio.security.protocolselection
+
+      import future.keywords
+
+      violation[{"msg": msg}] {
+        protocols := input.parameters.protocols
+        
+        some port in input.review.object.spec.ports
+        not _is_valid(port, protocols)
+        
+        msg := sprintf("port: %v name or appProtocol is invalid", [port])
+      }
+
+      _is_valid(port, protocols) {
+        port.appProtocol
+
+        _match_app_protocol(port.appProtocol, protocols)
+      }
+
+      _is_valid(port, protocols) {
+        not port.appProtocol
+        port.name
+        
+        _match_port_name(port.name, protocols)
+      }
+
+      _match_app_protocol(protocol, protocols) {
+        protocol in protocols
+      }
+
+      # port name meets the pattern: <protocol>-<suffix>
+      _match_port_name(port_name, protocols) {
+        protocol := split(port_name, "-")[0]
+        
+        protocol in protocols
+      }

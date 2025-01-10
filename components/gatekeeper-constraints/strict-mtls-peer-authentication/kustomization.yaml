@@ -1,0 +1,3 @@
+resources:
+  - template.yaml
+  - samples/strict-mtls-peer-authentication

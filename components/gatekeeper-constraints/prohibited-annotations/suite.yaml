@@ -1,0 +1,26 @@
+apiVersion: test.gatekeeper.sh/v1alpha1
+kind: Suite
+tests:
+- name: prohibit-injected-gateway
+  template: template.yaml
+  constraint: samples/prohibit-injected-gateway/constraint.yaml
+  expansion: samples/prohibit-injected-gateway/expansion.yaml
+  cases:
+  - name: Deployment with matching annotation & matching namespace selector
+    object: samples/prohibit-injected-gateway/deployment-my-ns.yaml
+    inventory:
+    - samples/prohibit-injected-gateway/namespace-my-ns.yaml
+    assertions:
+    - violations: yes
+  - name: Deployment with matching annotation, but no matching namespace selector
+    object: samples/prohibit-injected-gateway/deployment-my-ns.yaml
+    inventory:
+    - samples/prohibit-injected-gateway/namespace-my-ns-negative-match.yaml
+    assertions:
+    - violations: no
+  - name: Deployment with matching annotation & matching namespace selector, but in an excluded namespace
+    object: samples/prohibit-injected-gateway/deployment-istio-ingress.yaml
+    inventory:
+    - samples/prohibit-injected-gateway/namespace-istio-ingress.yaml
+    assertions:
+    - violations: no

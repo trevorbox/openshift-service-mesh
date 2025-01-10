@@ -2,6 +2,8 @@ apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: AuthzPolicyDefaultDeny
 metadata:
   name: default-deny-authorization-policies
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   enforcementAction: dryrun
   match:

@@ -5,7 +5,6 @@ kind: Kustomization
 resources:
 
   - config-config.yaml
-  - constrainttemplate-k8srequiredannotations.yaml
   - constrainttemplate-k8srequireistioproxysidecar.yaml
   - k8srequiredannotations-require-sidecar-annotation.yaml
   - k8srequiredcontainernames-require-istio-proxy.yaml

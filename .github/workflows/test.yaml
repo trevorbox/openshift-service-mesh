@@ -17,6 +17,4 @@ jobs:
         uses: minchao/setup-gator@v2
         with:
           version: 'v3.18.1'
-      - run: gator verify components/gatekeeper-constraints/explicit-gateway-hosts/wildcard/test/suite.yaml
-      - run: gator verify components/gatekeeper-constraints/explicit-virtualservice-hosts/wildcard/test/suite.yaml
-      - run: gator verify components/gatekeeper-constraints/prohibited-annotations/prohibit-injected-gateway-annotation/test/suite.yaml
+      - run: gator verify components/gatekeeper-constraints/...

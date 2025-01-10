@@ -5,5 +5,5 @@
 Run the test suite..
 
 ```sh
-gator verify wildcard/test/suite.yaml
+gator verify .
 ```

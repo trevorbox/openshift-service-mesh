@@ -8,3 +8,6 @@ helmCharts:
   namespace: spring-boot-demo
   version: ~0.0.1
   releaseName: spring-boot-demo
+
+resources:
+  - peerauthentication-spring-boot-demo-disable-mtls-jfr-port-only.yaml

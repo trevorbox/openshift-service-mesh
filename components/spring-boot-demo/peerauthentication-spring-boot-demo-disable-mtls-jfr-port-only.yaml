@@ -1,0 +1,14 @@
+apiVersion: security.istio.io/v1
+kind: PeerAuthentication
+metadata:
+  name: jfr
+  namespace: spring-boot-demo
+spec:
+  selector:
+    matchLabels:
+      app: spring-boot-demo
+  mtls:
+    mode: STRICT
+  portLevelMtls:
+    9091:
+      mode: DISABLE

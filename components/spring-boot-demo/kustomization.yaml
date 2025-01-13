@@ -11,3 +11,6 @@ helmCharts:
 
 resources:
   - peerauthentication-spring-boot-demo-disable-mtls-jfr-port-only.yaml
+  - networkpolicy-cryostat.yaml
+  - destinationrule-disable-mtls-for-cryostat.yaml
+  - serviceentry-cryostat.yaml

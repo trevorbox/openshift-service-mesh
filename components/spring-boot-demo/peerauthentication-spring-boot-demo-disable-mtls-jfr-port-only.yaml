@@ -10,5 +10,5 @@ spec:
   mtls:
     mode: STRICT
   portLevelMtls:
-    9091:
+    "9091":
       mode: DISABLE

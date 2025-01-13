@@ -10,7 +10,7 @@ helmCharts:
   releaseName: spring-boot-demo
 
 resources:
-  # - peerauthentication-spring-boot-demo-disable-mtls-jfr-port-only.yaml
+  - peerauthentication-spring-boot-demo-disable-mtls-jfr-port-only.yaml
   - networkpolicy-cryostat.yaml
-  # - destinationrule-disable-mtls-for-cryostat.yaml
-  # - serviceentry-cryostat.yaml
+  - destinationrule-disable-mtls-for-cryostat.yaml
+  - serviceentry-cryostat.yaml

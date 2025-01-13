@@ -1,7 +1,7 @@
 apiVersion: security.istio.io/v1
 kind: PeerAuthentication
 metadata:
-  name: jfr
+  name: spring-boot-demo-disable-mtls-jfr-port-only
   namespace: spring-boot-demo
 spec:
   selector:

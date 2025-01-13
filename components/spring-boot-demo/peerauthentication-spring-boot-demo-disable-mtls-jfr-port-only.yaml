@@ -6,7 +6,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: spring-boot-demo
+      app.kubernetes.io/name: spring-boot-demo
   mtls:
     mode: STRICT
   portLevelMtls:

@@ -9,14 +9,14 @@ spec:
   hosts:
   - cryostat-headless.cryostat.svc.cluster.local
   location: MESH_EXTERNAL
-  ports:
-  - number: 8181
-    name: tcp-cryostat
-    protocol: TCP
-  - number: 8989
-    name: tcp-jfr-ds
-    protocol: TCP
-  - number: 4180
-    name: http
-    protocol: HTTP
+  # ports:
+  # - number: 8181
+  #   name: tcp-cryostat
+  #   protocol: TCP
+  # - number: 8989
+  #   name: tcp-jfr-ds
+  #   protocol: TCP
+  # - number: 4180
+  #   name: http
+  #   protocol: HTTP
   resolution: DNS

@@ -16,6 +16,9 @@ spec:
   - number: 8181
     name: http-cryostat
     protocol: HTTP
+  - number: 4180
+    name: http-cryostat2
+    protocol: HTTP
   # - number: 8989
   #   name: tcp-jfr-ds
   #   protocol: TCP

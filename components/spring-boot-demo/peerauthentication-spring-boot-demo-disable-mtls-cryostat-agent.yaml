@@ -1,0 +1,14 @@
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: peerauthentication-spring-boot-demo-disable-mtls-cryostat-agent
+  namespace: spring-boot-demo
+spec:
+  mtls:
+    mode: STRICT
+  portLevelMtls:
+    '9977':
+      mode: DISABLE
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: spring-boot-demo

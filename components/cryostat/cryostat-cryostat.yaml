@@ -3,7 +3,7 @@ kind: Cryostat
 metadata:
   name: cryostat
 spec:
-  enableCertManager: true
+  enableCertManager: false
   reportOptions:
     resources: {}
   storageOptions:

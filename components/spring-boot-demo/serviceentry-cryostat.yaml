@@ -13,12 +13,12 @@ spec:
   # addresses:
   #   - 10.217.0.107/32
   ports:
-  - number: 8181
+  # - number: 8181
+  #   name: http-cryostat
+  #   protocol: HTTP
+  - number: 4180
     name: http-cryostat
     protocol: HTTP
-  - number: 4180
-    name: https-cryostat
-    protocol: HTTPS
   # - number: 8989
   #   name: tcp-jfr-ds
   #   protocol: TCP

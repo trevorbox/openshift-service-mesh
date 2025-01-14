@@ -6,12 +6,12 @@ helmCharts:
   repo: https://trevorbox.github.io/helm-charts
   valuesFile: values.yaml
   namespace: spring-boot-demo
-  version: ~0.0.7
+  version: ~0.0.8
   releaseName: spring-boot-demo
 
 resources:
-  # - peerauthentication-spring-boot-demo-disable-mtls-jfr-port-only.yaml
   # - peerauthentication-spring-boot-demo-disable-mtls.yaml
+  - peerauthentication-spring-boot-demo-disable-mtls-cryostat-agent.yaml
   - networkpolicy-cryostat.yaml
   - destinationrule-disable-mtls-for-cryostat.yaml
   - serviceentry-cryostat.yaml

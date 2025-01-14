@@ -95,6 +95,11 @@ envsubst < .bootstrap/argocd.yaml | oc apply -f -
 envsubst < .bootstrap/root-application.yaml | oc apply -f -
 ```
 
+```sh
+oc create sa cryostat-agent -n cryostat
+oc policy add-role-to-user edit -z cryostat-agent -n cryostat
+```
+
 Note: for pedagogical reason this repo contains some example of components, groups and clusters, you will have to likely remove these examples and start adding the configurations you actually need.
 
 ### Local tools & setup

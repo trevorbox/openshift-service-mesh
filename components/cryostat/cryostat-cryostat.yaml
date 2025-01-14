@@ -4,6 +4,13 @@ metadata:
   name: cryostat
 spec:
   enableCertManager: false
+  authorizationOptions:
+    openShiftSSO: # only effective when running on OpenShift
+      disable: false # set this to `true` to disable OpenShift SSO integration
+      accessReview: # override this to change the required Role for users and service accounts to access the application
+        verb: get
+        resource: pods
+        namespace: cryostat
   reportOptions:
     resources: {}
   storageOptions:

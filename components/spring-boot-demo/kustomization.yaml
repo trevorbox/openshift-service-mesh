@@ -15,3 +15,4 @@ resources:
   - networkpolicy-cryostat.yaml
   - destinationrule-disable-mtls-for-cryostat.yaml
   - serviceentry-cryostat.yaml
+  - spring-boot-demo-view.yaml

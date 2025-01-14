@@ -4,11 +4,12 @@ metadata:
   name: spring-boot-demo-disable-mtls-jfr-port-only
   namespace: spring-boot-demo
 spec:
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: spring-boot-demo
+  # selector:
+  #   matchLabels:
+  #     app.kubernetes.io/name: spring-boot-demo
   mtls:
-    mode: STRICT
-  portLevelMtls:
-    "9091":
-      mode: DISABLE
+    # mode: STRICT
+    mode: DISABLE
+  # portLevelMtls:
+  #   "9091":
+  #     mode: DISABLE

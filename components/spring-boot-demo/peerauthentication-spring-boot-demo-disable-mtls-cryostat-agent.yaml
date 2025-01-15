@@ -6,6 +6,8 @@ metadata:
 spec:
   mtls:
     mode: STRICT
+  # I suspect this is needed because agent to cryostat communication is specific pod IPs instead of service VIPs
+  # https://github.com/istio/istio/issues/51658#issuecomment-2187075002
   portLevelMtls:
     '9977':
       mode: DISABLE

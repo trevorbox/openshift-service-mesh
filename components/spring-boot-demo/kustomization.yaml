@@ -12,8 +12,9 @@ helmCharts:
 resources:
   # - peerauthentication-spring-boot-demo-disable-mtls.yaml
 
-  - peerauthentication-spring-boot-demo-disable-mtls-cryostat-agent.yaml
+  # - peerauthentication-spring-boot-demo-disable-mtls-cryostat-agent.yaml
   # - networkpolicy-cryostat.yaml
   # - destinationrule-disable-mtls-for-cryostat.yaml
   # - serviceentry-cryostat.yaml
   - rolebinding-spring-boot-demo-view.yaml
+  - service-spring-boot-demo-headless.yaml

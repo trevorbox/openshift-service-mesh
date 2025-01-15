@@ -1,0 +1,20 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: spring-boot-demo-headless
+  namespace: spring-boot-demo
+spec:
+  clusterIP: None
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: http
+    - name: cryostat-agent
+      protocol: TCP
+      appProtocol: tcp
+      port: 9977
+      targetPort: 9977
+  selector:
+    app.kubernetes.io/instance: spring-boot-demo
+    app.kubernetes.io/name: spring-boot-demo

@@ -11,6 +11,11 @@ spec:
         verb: get
         resource: pods
         namespace: cryostat
+  operandMetadata:
+    podMetadata:
+      labels:
+        maistra.io/expose-route: 'false'
+        sidecar.istio.io/inject: 'true'
   reportOptions:
     resources: {}
   storageOptions:

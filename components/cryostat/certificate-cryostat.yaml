@@ -1,0 +1,16 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: cryostat-cert
+  namespace: istio-ingress
+spec:
+  dnsNames:
+    - cryostat
+  issuerRef:
+    group: cert-manager.io
+    kind: Issuer
+    name: internal-issuer
+  secretName: cryostat-cert
+  usages:
+    - server auth
+    - client auth

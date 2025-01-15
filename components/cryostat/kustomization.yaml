@@ -5,4 +5,7 @@ kind: Kustomization
 resources:
   - namespace-cryostat.yaml
   - cryostat-cryostat.yaml
-
+  - certificate-cryostat.yaml
+  - gateway-cryostat.yaml
+  - route-cryostat.yaml
+  - virtualservice-cryostat.yaml

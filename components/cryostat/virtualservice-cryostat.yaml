@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: cryostat
+  namespace: cryostat
+spec:
+  gateways:
+    - istio-ingress/cryostat
+  hosts:
+    - cryostat-istio-ingress.apps-crc.testing
+  http:
+    - route:
+        - destination:
+            host: cryostat.cryostat.svc.cluster.local
+            port:
+              number: 4180

@@ -2,3 +2,4 @@ istio:
   enabled: true
 ingressgateway:
   host: spring-boot-demo-istio-ingress.apps-crc.testing
+replicaCount: 3

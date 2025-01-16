@@ -10,6 +10,6 @@ helmCharts:
   releaseName: spring-boot-demo2
 
 resources:
-  - rolebinding-spring-boot-demo-view.yaml
+  - rolebinding-spring-boot-demo2-view.yaml
   - istio-configs.yaml
   - namespace-spring-boot-demo2.yaml

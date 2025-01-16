@@ -69,26 +69,6 @@ spec:
 ...
 ---
 # Source: spring-boot-demo2/templates/istio-configs.yaml
-apiVersion: route.openshift.io/v1
-kind: Route
-metadata:
-  name: spring-boot-demo2
-  namespace: istio-ingress3
-spec:
-  host: spring-boot-demo2-istio-ingress.apps-crc.testing
-  port:
-    targetPort: https
-  tls:
-    termination: passthrough
-    insecureEdgeTerminationPolicy: Redirect
-  to:
-    kind: Service
-    name: istio-ingressgateway
-    weight: 100
-  wildcardPolicy: None
-...
----
-# Source: spring-boot-demo2/templates/istio-configs.yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:

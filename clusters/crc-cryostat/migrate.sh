@@ -9,8 +9,15 @@ istioctl -i istio-system ps >> migrate.log
 echo "istio-system3 Before"... >> migrate.log
 istioctl -i istio-system3 ps >> migrate.log
 
-gnome-terminal -- bash -c "siege https://spring-boot-demo-istio-ingress.apps-crc.testing/; exec bash"
 gnome-terminal -- bash -c "siege https://spring-boot-demo2-istio-ingress.apps-crc.testing/; exec bash"
+gnome-terminal -- bash -c "siege https://spring-boot-demo2-istio-ingress3.apps-crc.testing/; exec bash"
+
+# edit the route in components/spring-boot-2/istio-configs.yaml to deploy to istio-ingress3 instead of istio-ingress
+# push it
+
+
+
+
 oc label namespace $n istio.io/rev=default --overwrite
 
 RESOURCES=$(oc get namespace -l istio.io/rev=ossm2 -o custom-columns=":metadata.name")

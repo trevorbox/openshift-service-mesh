@@ -192,3 +192,39 @@ applications:
       namespace: prometheus
     source:
       path: components/prometheus
+
+  ossm3-member-namespaces:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '1'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: clusters/crc-cryostat/overlays/ossm3-member-namespaces
+
+  ossm3-istio-system:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '2'
+    destination:
+      namespace: istio-system3
+    source:
+      path: clusters/crc-ossm-upgrade/overlays/ossm3-istio-system
+
+  ossm3-istio-ingressgateway:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '3'
+    destination:
+      namespace: istio-ingress3
+    source:
+      path: clusters/crc-ossm-upgrade/overlays/ossm3-istio-ingressgateway
+
+  ossm3-kiali:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '3'
+    destination:
+      namespace: kiali3
+    source:
+      path: clusters/crc-ossm-upgrade/overlays/ossm3-kiali

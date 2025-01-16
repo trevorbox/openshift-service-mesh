@@ -11,6 +11,7 @@ spec:
   # commonName: spring-boot-demo2
   dnsNames:
     - spring-boot-demo2-istio-ingress3.apps-crc.testing
+    - spring-boot-demo2-istio-ingress.apps-crc.testing
     - foggle
   usages:
     - server auth
@@ -41,6 +42,7 @@ spec:
       protocol: HTTPS
     hosts:
       - spring-boot-demo2-istio-ingress3.apps-crc.testing
+      - spring-boot-demo2-istio-ingress.apps-crc.testing
     tls:
       mode: SIMPLE
       credentialName: spring-boot-demo2-cert
@@ -50,9 +52,30 @@ spec:
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
+  name: spring-boot-demo2-tmp
+  namespace: istio-ingress3
+spec:
+  host: spring-boot-demo2-istio-ingress3.apps-crc.testing
+  port:
+    targetPort: https
+  tls:
+    termination: passthrough
+    insecureEdgeTerminationPolicy: Redirect
+  to:
+    kind: Service
+    name: istio-ingressgateway
+    weight: 100
+  wildcardPolicy: None
+...
+---
+# Source: spring-boot-demo2/templates/istio-configs.yaml
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
   name: spring-boot-demo2
   namespace: istio-ingress3
 spec:
+  host: spring-boot-demo2-istio-ingress.apps-crc.testing
   port:
     targetPort: https
   tls:
@@ -76,6 +99,7 @@ spec:
   - istio-ingress3/spring-boot-demo2
   hosts:
   - spring-boot-demo2-istio-ingress3.apps-crc.testing
+  - spring-boot-demo2-istio-ingress.apps-crc.testing
   http:
   - route:
     - destination:

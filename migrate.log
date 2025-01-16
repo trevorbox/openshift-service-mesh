@@ -1,0 +1,2 @@
+NAME                                                     CLUSTER        CDS        LDS        EDS        RDS        ECDS         ISTIOD                     VERSION
+istio-ingressgateway-565f945765-w2x65.istio-ingress3     Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-5458cc5fd-bbnwg     1.23.0

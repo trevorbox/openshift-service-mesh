@@ -193,6 +193,15 @@ applications:
     source:
       path: components/prometheus
 
+  servicemeshoperator3:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '-1'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: components/servicemeshoperator3
+
   ossm3-member-namespaces:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous

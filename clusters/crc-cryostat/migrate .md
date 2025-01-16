@@ -1,5 +1,9 @@
 # Migrate gateways from ossm 2 to 3
 
+This process describes using ossm2 for just managing gateway pods (NO sidecars in applications), deploying new ossm3 gateways, changing the OCP routes to point to the new ossm3 gateway pods.
+With this approach the pods can be restarted to get the ossm3 sidecar injected into application pods without outage. 
+After all gateways are migrated, ocp routes are switched and applications have been restarted with the sidecars inject, mtls can be required.
+
 ```sh
 echo "istio-system Before"... > migrate.log
 istioctl -i istio-system ps >> migrate.log
@@ -25,6 +29,7 @@ istio-ingressgateway-565f945765-w2x65.istio-ingress3     Kubernetes     SYNCED  
 ## start siege
 ```sh
 gnome-terminal -- bash -c "siege -q -j https://spring-boot-demo2-istio-ingress.apps-crc.testing/; exec bash"
+gnome-terminal -- bash -c "siege -q -j https://spring-boot-demo2-istio-ingress3.apps-crc.testing/; exec bash"
 gnome-terminal -- bash -c "oc logs -f deploy/istio-ingressgateway --tail=4 -n istio-ingress > istio-ingress.log; exec bash"
 gnome-terminal -- bash -c "oc logs -f deploy/istio-ingressgateway --tail=4 -n istio-ingress3 > istio-ingress3.log; exec bash"
 ```
@@ -80,3 +85,30 @@ tbox@fedora:~/git/trevorbox/openshift-service-mesh$ head -8 istio-ingress3.log
 [2025-01-16T22:56:50.563Z] "GET / HTTP/1.1" 200 - via_upstream - "-" 0 39 7 6 "10.217.0.2" "Mozilla/5.0 (redhat-x86_64-linux-gnu) Siege/4.1.6" "f7d04eae-1324-4067-b1a0-b352977d8ee8" "spring-boot-demo2-istio-ingress.apps-crc.testing" "10.217.0.180:8080" outbound|8080||spring-boot-demo2.spring-boot-demo2.svc.cluster.local 10.217.1.5:51516 10.217.1.5:8443 10.217.0.2:40640 spring-boot-demo2-istio-ingress.apps-crc.testing -
 [2025-01-16T22:56:50.557Z] "GET / HTTP/1.1" 200 - via_upstream - "-" 0 39 15 15 "10.217.0.2" "Mozilla/5.0 (redhat-x86_64-linux-gnu) Siege/4.1.6" "f3b90ef8-4a22-4d1e-9ec5-daa0c4a55650" "spring-boot-demo2-istio-ingress.apps-crc.testing" "10.217.0.180:8080" outbound|8080||spring-boot-demo2.spring-boot-demo2.svc.cluster.local 10.217.1.5:51512 10.217.1.5:8443 10.217.0.2:40620 spring-boot-demo2-istio-ingress.apps-crc.testing -
 ```
+
+## Verify the sidecar can be autoinjected (from ossm3) if the pod restarted without outage. 
+
+since mtls is not enforced there is no outage. ossm2 gateway can still talk to pod with ossm3 sidecar
+
+```sh
+tbox@fedora:~/git/trevorbox/openshift-service-mesh$ oc get pods -n spring-boot-demo2
+NAME                                 READY   STATUS    RESTARTS   AGE
+spring-boot-demo2-664c6cc5d6-4lsq7   1/1     Running   0          8m19s
+```
+
+rollout the application and it will get the new sidecar from ossm3 control plane
+
+```sh
+tbox@fedora:~/git/trevorbox/openshift-service-mesh$ oc rollout restart deploy -n spring-boot-demo2
+deployment.apps/spring-boot-demo2 restarted
+tbox@fedora:~/git/trevorbox/openshift-service-mesh$ oc get pods -n spring-boot-demo2
+NAME                                 READY   STATUS        RESTARTS   AGE
+spring-boot-demo2-5c5bdc68f4-pk9dn   2/2     Running       0          25s
+spring-boot-demo2-664c6cc5d6-4lsq7   1/1     Terminating   0          9m38s
+```
+
+Siege is still running so no outage...
+
+When all the gateways are migrated, we can require mtls mesh-wide by simply changing the peerauthnetication and default destination rule in istio-system.
+
+Final step is delete the istio-ingress, istio-system, and remove the service mesh oprator.

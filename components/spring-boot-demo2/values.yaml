@@ -1,0 +1,10 @@
+istio:
+  enabled: false
+ingressgateway:
+  host: spring-boot-demo2-istio-ingress.apps-crc.testing
+replicaCount: 1
+cryostat:
+  agent:
+    enabled: false
+  jmx:
+    enabled: true

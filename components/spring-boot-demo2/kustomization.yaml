@@ -5,9 +5,11 @@ helmCharts:
 - name: spring-boot-demo
   repo: https://trevorbox.github.io/helm-charts
   valuesFile: values.yaml
-  namespace: spring-boot-demo
+  namespace: spring-boot-demo2
   version: ~0.0.11
-  releaseName: spring-boot-demo
+  releaseName: spring-boot-demo2
 
 resources:
   - rolebinding-spring-boot-demo-view.yaml
+  - istio-configs.yaml
+  - namespace-spring-boot-demo2.yaml

@@ -13,8 +13,9 @@ gnome-terminal -- bash -c "siege https://spring-boot-demo2-istio-ingress.apps-cr
 gnome-terminal -- bash -c "siege https://spring-boot-demo2-istio-ingress3.apps-crc.testing/; exec bash"
 
 # edit the route in components/spring-boot-2/istio-configs.yaml to deploy to istio-ingress3 instead of istio-ingress
-# push it
+vim components/spring-boot-demo2/istio-configs.yaml 
 
+# if argo syncs and doesnt have autoprune the new route will have a conflict and wont be admitted. As soon are the old resource is pruned traffic is shifted to new istio using the same dns.
 
 
 

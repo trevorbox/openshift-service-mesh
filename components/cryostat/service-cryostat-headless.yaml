@@ -1,0 +1,16 @@
+# needed for cryostat agent in istio with mtls enabled for pod-to-pod communication
+kind: Service
+apiVersion: v1
+metadata:
+  name: cryostat-headless
+  namespace: cryostat
+spec:
+  clusterIP: None
+  ports:
+    - name: http
+      protocol: TCP
+      port: 4180
+      targetPort: 4180
+  selector:
+    app: cryostat
+    component: cryostat

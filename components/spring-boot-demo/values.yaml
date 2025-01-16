@@ -3,3 +3,8 @@ istio:
 ingressgateway:
   host: spring-boot-demo-istio-ingress.apps-crc.testing
 replicaCount: 3
+cryostat:
+  agent:
+    enabled: false
+  jmx:
+    enabled: true

@@ -9,3 +9,4 @@ resources:
   - gateway-cryostat.yaml
   - route-cryostat.yaml
   - virtualservice-cryostat.yaml
+  - service-cryostat-headless.yaml

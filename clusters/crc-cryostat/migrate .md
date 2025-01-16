@@ -24,8 +24,9 @@ istio-ingressgateway-565f945765-w2x65.istio-ingress3     Kubernetes     SYNCED  
 
 ## start siege
 ```sh
-gnome-terminal -- bash -c "siege https://spring-boot-demo2-istio-ingress.apps-crc.testing/; exec bash"
-gnome-terminal -- bash -c "siege https://spring-boot-demo2-istio-ingress3.apps-crc.testing/; exec bash"
+gnome-terminal -- bash -c "siege -q -j https://spring-boot-demo2-istio-ingress.apps-crc.testing/; exec bash"
+gnome-terminal -- bash -c "oc logs -f deploy/istio-ingressgateway --tail=4 -n istio-ingress > istio-ingress.log; exec bash"
+gnome-terminal -- bash -c "oc logs -f deploy/istio-ingressgateway --tail=4 -n istio-ingress3 > istio-ingress3.log; exec bash"
 ```
 
 ## edit the route in components/spring-boot-2/istio-configs.yaml to deploy to istio-ingress3 instead of istio-ingress
@@ -40,6 +41,8 @@ If argo syncs and doesnt have autoprune the new route will have a host conflict 
 ## stop the siege window
 
 use control-c and view the results (no outage).
+
+results from `siege https://spring-boot-demo-istio-ingress.apps-crc.testing/`
 
 ```sh
 HTTP/1.1 200     0.06 secs:      39 bytes ==> GET  /

@@ -246,4 +246,4 @@ applications:
     destination:
       namespace: istio-ingress3
     source:
-      path: components/ossm3-spring-boot-demo2-configs
+      path: clusters/crc-cryostat/overlays/ossm3-spring-boot-demo2-configs

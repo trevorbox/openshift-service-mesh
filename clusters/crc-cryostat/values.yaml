@@ -237,3 +237,13 @@ applications:
       namespace: kiali3
     source:
       path: clusters/crc-ossm-upgrade/overlays/ossm3-kiali
+
+  # this allows ossm3 gateway to also point to spring-boot-demo2
+  ossm3-spring-boot-demo2-configs:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: istio-ingress3
+    source:
+      path: components/ossm3-spring-boot-demo2-configs

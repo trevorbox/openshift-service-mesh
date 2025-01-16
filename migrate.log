@@ -1,11 +1,11 @@
 istio-system Before...
 NAME                                                       CLUSTER        CDS        LDS        EDS        RDS        ECDS         ISTIOD                           VERSION
 cryostat-788449649b-7vpqj.cryostat                         Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-ossm2-5d9df5dbc-w2gjv     1.20.8
-istio-ingressgateway-565f945765-7x2nk.istio-ingress        Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-ossm2-5d9df5dbc-qqt26     1.20.8
+istio-ingressgateway-565f945765-7x2nk.istio-ingress        Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-ossm2-5d9df5dbc-w2gjv     1.20.8
 nginx-echo-headers-6db87c9dcb-vvgv5.nginx-echo-headers     Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-ossm2-5d9df5dbc-qqt26     1.20.8
 spring-boot-demo-548b58675f-2kz8b.spring-boot-demo         Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-ossm2-5d9df5dbc-w2gjv     1.20.8
 spring-boot-demo-548b58675f-69x9x.spring-boot-demo         Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-ossm2-5d9df5dbc-w2gjv     1.20.8
-spring-boot-demo-548b58675f-rvp7f.spring-boot-demo         Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-ossm2-5d9df5dbc-w2gjv     1.20.8
+spring-boot-demo-548b58675f-rvp7f.spring-boot-demo         Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-ossm2-5d9df5dbc-qqt26     1.20.8
 istio-system3 Before...
 NAME                                                     CLUSTER        CDS        LDS        EDS        RDS        ECDS         ISTIOD                     VERSION
 istio-ingressgateway-565f945765-w2x65.istio-ingress3     Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-5458cc5fd-bbnwg     1.23.0

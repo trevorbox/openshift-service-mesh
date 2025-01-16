@@ -1,0 +1,33 @@
+requireMtls: false
+kiali:
+  namespace: kiali3
+tempo:
+  enabled: false
+  host: tempo-minio-dev-distributor.tempo-system.svc.cluster.local
+istio:
+  name: default
+  spec:
+    namespace: istio-system3
+    updateStrategy:
+      type: InPlace
+    values:
+      meshConfig:
+        accessLogFile: /dev/stdout
+        discoverySelectors:
+          - matchLabels:
+              istio-discovery: enabled
+        enableTracing: true
+        # TODO
+        # extensionProviders:
+        #   - name: otel-tracing
+        #     opentelemetry:
+        #       port: 4317
+        #       service: otel-collector.istio-system.svc.cluster.local
+        extensionProviders:
+          - name: tempo
+            opentelemetry:
+              service: tempo-minio-dev-distributor.tempo-system.svc.cluster.local
+              port: 4317
+        outboundTrafficPolicy:
+          mode: REGISTRY_ONLY # ALLOW_ANY
+    version: v1.23.0

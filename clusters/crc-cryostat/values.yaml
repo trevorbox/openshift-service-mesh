@@ -218,7 +218,7 @@ applications:
     destination:
       namespace: istio-system3
     source:
-      path: clusters/crc-ossm-upgrade/overlays/ossm3-istio-system
+      path: clusters/crc-cryostat/overlays/ossm3-istio-system
 
   ossm3-istio-ingressgateway:
     annotations:

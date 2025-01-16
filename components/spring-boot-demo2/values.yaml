@@ -2,6 +2,7 @@ istio:
   enabled: false
 ingressgateway:
   host: spring-boot-demo2-istio-ingress.apps-crc.testing
+fullnameOverride: spring-boot-demo2
 replicaCount: 1
 cryostat:
   agent:

@@ -83,25 +83,25 @@ spec:
         port:
           number: 8080
 ...
----
-apiVersion: networking.istio.io/v1beta1
-kind: ServiceEntry
-metadata:
-  name: spring-boot-demo2
-  namespace: istio-ingress
-spec:
-  hosts:
-  - spring-boot-demo2.spring-boot-demo2.svc.cluster.local
-  location: MESH_EXTERNAL
-  ports:
-  - number: 8080
-    name: http
-    protocol: HTTP
-  - number: 9977
-    name: cryostat-agent
-    protocol: TCP
-  resolution: DNS
-...
+# ---
+# apiVersion: networking.istio.io/v1beta1
+# kind: ServiceEntry
+# metadata:
+#   name: spring-boot-demo2
+#   namespace: istio-ingress
+# spec:
+#   hosts:
+#   - spring-boot-demo2.spring-boot-demo2.svc.cluster.local
+#   location: MESH_EXTERNAL
+#   ports:
+#   - number: 8080
+#     name: http
+#     protocol: HTTP
+#   - number: 9977
+#     name: cryostat-agent
+#     protocol: TCP
+#   resolution: DNS
+# ...
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule

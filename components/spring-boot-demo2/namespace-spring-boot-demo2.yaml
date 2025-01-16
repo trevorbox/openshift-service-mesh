@@ -8,3 +8,4 @@ metadata:
     argocd.argoproj.io/sync-wave: '-10'
   labels:
     argocd.argoproj.io/managed-by: openshift-gitops
+    istio-discovery: enabled

@@ -1,2 +1,9 @@
 smcp:
   outboundPolicy: ALLOW_ANY
+  discoverySelectors:
+    - matchExpressions:
+      - key: maistra.io/member-of
+        operator: Exists
+    - matchLabels:
+        # Allow any namespaces with `istio-discovery=enabled`
+        istio-discovery: enabled

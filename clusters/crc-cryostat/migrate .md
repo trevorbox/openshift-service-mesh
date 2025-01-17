@@ -4,6 +4,8 @@ This process describes using ossm2 for just managing gateway pods (NO sidecars i
 With this approach the pods can be restarted to get the ossm3 sidecar injected into application pods without outage. 
 After all gateways are migrated, ocp routes are switched and applications have been restarted with the sidecars inject, mtls can be required.
 
+> Note that if two control planes can discover the same namepspace they will both update the istio-ca-root-cert configmap so we need a serviceentry instead for ossm2. ossm3 (being the long term solution can however discover namespaces).
+
 ```sh
 echo "istio-system Before"... > migrate.log
 istioctl -i istio-system ps >> migrate.log

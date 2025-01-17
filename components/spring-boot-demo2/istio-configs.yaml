@@ -94,13 +94,13 @@ spec:
   hosts:
   - spring-boot-demo2.spring-boot-demo2.svc.cluster.local
   location: MESH_EXTERNAL
-  ports:
-  - number: 8080
-    name: http
-    protocol: HTTP
-  - number: 9977
-    name: cryostat-agent
-    protocol: TCP
+  # ports:
+  # - number: 8080
+  #   name: http
+  #   protocol: HTTP
+  # - number: 9977
+  #   name: cryostat-agent
+  #   protocol: TCP
   resolution: DNS
 ...
 ---

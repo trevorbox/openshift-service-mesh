@@ -8,6 +8,7 @@ metadata:
     argocd.argoproj.io/sync-wave: '-10'
   labels:
     argocd.argoproj.io/managed-by: openshift-gitops
-    istio-injection: disabled
+    istio-injection: enabled
+    istio-discovery: enabled
     # istio.io/rev: ossm2
     istio.io/rev: default

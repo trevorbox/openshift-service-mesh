@@ -216,7 +216,7 @@ applications:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
       argocd.argoproj.io/sync-wave: '2'
     destination:
-      namespace: istio-system3
+      namespace: istio-system
     source:
       path: clusters/crc-cryostat/overlays/ossm3-istio-system
 

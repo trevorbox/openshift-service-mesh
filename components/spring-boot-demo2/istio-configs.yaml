@@ -51,7 +51,7 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: spring-boot-demo2
-  namespace: istio-ingress3
+  namespace: istio-ingress
 spec:
   host: spring-boot-demo2-istio-ingress.apps-crc.testing
   port:

@@ -4,3 +4,5 @@ smcp:
     - matchExpressions:
       - key: maistra.io/member-of
         operator: Exists
+    - matchLabels:
+        istio-discovery: enabled

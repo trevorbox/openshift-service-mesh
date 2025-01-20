@@ -84,7 +84,7 @@ spec:
         port:
           number: 8080
 ...
----
+# ---
 # apiVersion: networking.istio.io/v1beta1
 # kind: ServiceEntry
 # metadata:
@@ -102,7 +102,7 @@ spec:
 #     name: cryostat-agent
 #     protocol: TCP
 #   resolution: DNS
-...
+# ...
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule

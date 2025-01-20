@@ -65,18 +65,21 @@ spec:
     weight: 100
   wildcardPolicy: None
 ...
+
 ---
 # Source: spring-boot-demo2/templates/istio-configs.yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: spring-boot-demo2
-  namespace: istio-ingress
+  namespace: spring-boot-demo2
 spec:
   gateways:
   - istio-ingress/spring-boot-demo2
+  - istio-ingress3/spring-boot-demo2
   hosts:
   - spring-boot-demo2-istio-ingress.apps-crc.testing
+  - spring-boot-demo2-istio-ingress3.apps-crc.testing
   http:
   - route:
     - destination:
@@ -84,6 +87,7 @@ spec:
         port:
           number: 8080
 ...
+# TODO not needed if both control planes can discover the same namespace. both CPs need to be disabled to inject in that namespace and use the same root CA.
 # ---
 # apiVersion: networking.istio.io/v1beta1
 # kind: ServiceEntry
@@ -108,7 +112,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
   name: disable-mtls-for-spring-boot-demo2
-  namespace: istio-ingress
+  namespace: spring-boot-demo2
 spec:
   host: spring-boot-demo2.spring-boot-demo2.svc.cluster.local
   trafficPolicy:

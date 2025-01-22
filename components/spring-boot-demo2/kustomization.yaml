@@ -13,4 +13,4 @@ resources:
   - rolebinding-spring-boot-demo2-view.yaml
   - istio-configs.yaml
   - namespace-spring-boot-demo2.yaml
-  - networkpolicy-allow-istio-rev-default.yaml
+  - networkpolicy-istio-rev-default.yaml

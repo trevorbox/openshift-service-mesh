@@ -7,7 +7,7 @@ tempo:
 istio:
   name: default
   spec:
-    namespace: istio-system3
+    namespace: istio-system
     updateStrategy:
       type: InPlace
     values:

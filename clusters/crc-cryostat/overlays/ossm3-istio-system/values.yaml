@@ -16,6 +16,8 @@ istio:
         discoverySelectors:
           - matchLabels:
               istio.io/rev: default
+          - matchLabels:
+              istio-discovery: enabled
         enableTracing: true
         # TODO
         # extensionProviders:

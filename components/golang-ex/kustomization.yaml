@@ -7,6 +7,7 @@ helmCharts:
   namespace: golang-ex
   valuesFile: values-stable.yaml
   version: ~0.1.1
+  # version: ~0.2.0
   releaseName: golang-ex-stable
 
 - name: golang-ex
@@ -14,6 +15,7 @@ helmCharts:
   namespace: golang-ex
   valuesFile: values-high.yaml
   version: ~0.1.1
+  # version: ~0.2.0
   releaseName: golang-ex-high
 
 - name: golang-ex
@@ -21,4 +23,5 @@ helmCharts:
   namespace: golang-ex
   valuesFile: values-featurea.yaml
   version: ~0.1.1
+  # version: ~0.2.0
   releaseName: golang-ex-featurea

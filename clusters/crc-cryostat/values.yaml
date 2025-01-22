@@ -202,14 +202,14 @@ applications:
     source:
       path: components/servicemeshoperator3
 
-  ossm3-member-namespaces:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '1'
-    destination:
-      namespace: openshift-gitops
-    source:
-      path: clusters/crc-cryostat/overlays/ossm3-member-namespaces
+  # ossm3-member-namespaces:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '1'
+  #   destination:
+  #     namespace: openshift-gitops
+  #   source:
+  #     path: clusters/crc-cryostat/overlays/ossm3-member-namespaces
 
   ossm3-istio-system:
     annotations:

@@ -4,8 +4,11 @@ members:
   - bookinfo
   - nginx-echo-headers
   - spring-boot-demo
+  - spring-boot-demo2
 labels:
-  istio.io/rev: default
+  istio-discovery: enabled
+  istio.io/rev: ossm2
+  # istio.io/rev: default
   argocd.argoproj.io/managed-by: openshift-gitops
 annotations:
   argocd.argoproj.io/sync-options: Delete=false 

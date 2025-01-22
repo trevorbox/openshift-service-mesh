@@ -1,14 +1,15 @@
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: istio-rev-default
+  name: allow-any-istio-rev
   namespace: spring-boot-demo2
 spec:
   podSelector: {}
   ingress:
     - from:
         - namespaceSelector:
-            matchLabels:
-              istio.io/rev: default
+            matchExpressions:
+              - key: istio.io/rev
+                operator: Exists
   policyTypes:
     - Ingress

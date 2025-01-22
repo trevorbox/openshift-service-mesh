@@ -10,5 +10,5 @@ metadata:
     argocd.argoproj.io/managed-by: openshift-gitops
     # istio-injection: disabled
     istio-discovery: enabled
-    istio.io/rev: default
+    istio.io/rev: ossm2
     # istio.io/rev: default

@@ -10,3 +10,7 @@ helmCharts:
   releaseName: ossm3-member-namespaces
   additionalValuesFiles: 
     - values.yaml
+
+resources:
+  - networkpolicy-allow-istio-system-istio-ingress3.yaml
+  - networkpolicy-allow-istio-system-spring-boot-demo2.yaml

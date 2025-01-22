@@ -114,3 +114,48 @@ Siege is still running so no outage...
 When all the gateways are migrated, we can require mtls mesh-wide by simply changing the peerauthnetication and default destination rule in istio-system.
 
 Final step is delete the istio-ingress, istio-system, and remove the service mesh oprator.
+
+
+# try canary upgrades in same namespaces
+
+deploy the ossm3 control plane in istio-system. and then rollout pods in istio-ingress and application namespace after changing the istio.io/rev label in the namespace.
+
+```sh
+tbox@fedora:~/git/trevorbox/openshift-service-mesh$ istioctl ps
+NAME                                                       CLUSTER        CDS        LDS        EDS        RDS        ECDS         ISTIOD                           VERSION
+cryostat-788449649b-mscfc.cryostat                         Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-ossm2-5d9df5dbc-59cpg     1.20.8
+istio-ingressgateway-565f945765-qlpxj.istio-ingress        Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-ossm2-5d9df5dbc-59cpg     1.20.8
+nginx-echo-headers-6db87c9dcb-lxbqb.nginx-echo-headers     Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-546bfdb64c-pgx84          1.23.0
+spring-boot-demo-548b58675f-rnvq7.spring-boot-demo         Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-546bfdb64c-pgx84          1.23.0
+spring-boot-demo-548b58675f-sfc6l.spring-boot-demo         Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-546bfdb64c-pgx84          1.23.0
+spring-boot-demo-548b58675f-tgmrb.spring-boot-demo         Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-546bfdb64c-pgx84          1.23.0
+spring-boot-demo2-664c6cc5d6-5pzxj.spring-boot-demo2       Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-ossm2-5d9df5dbc-7v5cz     1.20.8
+```
+
+start siege
+
+```sh
+gnome-terminal -- bash -c "siege -q -j https://spring-boot-demo2-istio-ingress.apps-crc.testing/; exec bash"
+```
+
+change the label in components/istio-member-namepsaces/values.yaml from istio.io/rev: ossm2 to istio.io/rev: default
+
+```yaml
+members:
+  - istio-ingress
+  - golang-ex
+  - bookinfo
+  - nginx-echo-headers
+  - spring-boot-demo
+  - spring-boot-demo2
+labels:
+  istio-discovery: enabled
+  # istio.io/rev: ossm2
+  istio.io/rev: default
+  argocd.argoproj.io/managed-by: openshift-gitops
+annotations:
+  argocd.argoproj.io/sync-options: Delete=false 
+smcp:
+  name: ossm2
+  namespace: istio-system
+```

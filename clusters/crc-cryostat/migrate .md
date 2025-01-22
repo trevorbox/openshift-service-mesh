@@ -116,9 +116,28 @@ When all the gateways are migrated, we can require mtls mesh-wide by simply chan
 Final step is delete the istio-ingress, istio-system, and remove the service mesh oprator.
 
 
+
+
 # try canary upgrades in same namespaces
 
-deploy the ossm3 control plane in istio-system. and then rollout pods in istio-ingress and application namespace after changing the istio.io/rev label in the namespace.
+> 01/22/25
+
+Deploy the ossm3 control plane in same namespace as ossm2 (istio-system) and then rollout pods in istio-ingress and application namespace after changing the istio.io/rev namespace label. What is good about this is mTLS is also working.
+
+> TODO Kiali v1.73 with clusterwide access show the below logs (has some config behavior errors during testing)
+
+kiali logs...
+```log
+2025-01-22T11:30:54Z DBG Found controlplane [istiod/istio-system] on cluster [Kubernetes].
+2025-01-22T11:30:54Z DBG Found controlplane [istiod-ossm2/istio-system] on cluster [Kubernetes].
+```
+
+Notes...
+- For ossm3, the name of the istio CR (in my case "default") is what informs the mutatingwebhookconfiguration label matching logic.
+- For ossm2, the ServiceMeshMemberRoll is what informs the mutatingwebhookconfiguration label matching logic.
+- Both ossm2 and ossm3 can discover the same namespace (I used istio-discovery: true)
+- If two control planes can discover the same namespace, they will both update the istio-ca-root-cert configmap, which means they both should use the same rootca secret (we accomplish this by deploying both control planes in the same namespace). I assume an intermediary ca that shares the same root ca could be used, but not necessary in my case.
+- We need to maintain our own networkpolicies to permit ingress, since ossm2 will create these (and thus restrict things). I used `allow-any-istio-rev` and `allow-istio-system`
 
 ```sh
 tbox@fedora:~/git/trevorbox/openshift-service-mesh$ istioctl ps
@@ -158,4 +177,58 @@ annotations:
 smcp:
   name: ossm2
   namespace: istio-system
+
+```
+
+```sh
+tbox@fedora:~/git/trevorbox/openshift-service-mesh$ git commit -am "flip to new istio revision default"
+[main e305bdb] flip to new istio revision default
+ 2 files changed, 47 insertions(+), 2 deletions(-)
+tbox@fedora:~/git/trevorbox/openshift-service-mesh$ git push
+```
+
+```sh
+oc rollout restart deploy -n istio-ingress
+tbox@fedora:~/git/trevorbox/openshift-service-mesh$ istioctl ps
+NAME                                                       CLUSTER        CDS        LDS        EDS        RDS        ECDS         ISTIOD                           VERSION
+cryostat-788449649b-mscfc.cryostat                         Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-ossm2-5d9df5dbc-59cpg     1.20.8
+istio-ingressgateway-75f668975-sz67g.istio-ingress         Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-546bfdb64c-pgx84          1.23.0
+nginx-echo-headers-6db87c9dcb-lxbqb.nginx-echo-headers     Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-546bfdb64c-pgx84          1.23.0
+spring-boot-demo-548b58675f-rnvq7.spring-boot-demo         Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-546bfdb64c-pgx84          1.23.0
+spring-boot-demo-548b58675f-sfc6l.spring-boot-demo         Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-546bfdb64c-pgx84          1.23.0
+spring-boot-demo-548b58675f-tgmrb.spring-boot-demo         Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-546bfdb64c-pgx84          1.23.0
+spring-boot-demo2-664c6cc5d6-5pzxj.spring-boot-demo2       Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-ossm2-5d9df5dbc-7v5cz     1.20.8
+```
+
+```sh
+tbox@fedora:~/git/trevorbox/openshift-service-mesh$ oc rollout restart deploy -n spring-boot-demo2
+deployment.apps/spring-boot-demo2 restarted
+tbox@fedora:~/git/trevorbox/openshift-service-mesh$ istioctl ps
+NAME                                                       CLUSTER        CDS        LDS        EDS        RDS        ECDS         ISTIOD                           VERSION
+cryostat-788449649b-mscfc.cryostat                         Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-ossm2-5d9df5dbc-59cpg     1.20.8
+istio-ingressgateway-78cdb4984c-xpc57.istio-ingress        Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-546bfdb64c-pgx84          1.23.0
+nginx-echo-headers-6db87c9dcb-lxbqb.nginx-echo-headers     Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-546bfdb64c-pgx84          1.23.0
+spring-boot-demo-548b58675f-rnvq7.spring-boot-demo         Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-546bfdb64c-pgx84          1.23.0
+spring-boot-demo-548b58675f-sfc6l.spring-boot-demo         Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-546bfdb64c-pgx84          1.23.0
+spring-boot-demo-548b58675f-tgmrb.spring-boot-demo         Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-546bfdb64c-pgx84          1.23.0
+spring-boot-demo2-7ff46bf96-qgk8c.spring-boot-demo2        Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED     NOT SENT     istiod-546bfdb64c-pgx84          1.23.0
+```
+
+stop siege, show results
+
+```sh
+{
+	"transactions":			      222968,
+	"availability":			      100.00,
+	"elapsed_time":			      453.21,
+	"data_transferred":		        8.29,
+	"response_time":		        0.05,
+	"transaction_rate":		      491.98,
+	"throughput":			        0.02,
+	"concurrency":			       24.93,
+	"successful_transactions":	      222968,
+	"failed_transactions":		           0,
+	"longest_transaction":		        0.61,
+	"shortest_transaction":		        0.00
+}
 ```

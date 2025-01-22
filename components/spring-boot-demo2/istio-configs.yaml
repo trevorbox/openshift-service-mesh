@@ -76,7 +76,7 @@ metadata:
 spec:
   gateways:
   - istio-ingress/spring-boot-demo2
-  - istio-ingress3/spring-boot-demo2
+  # - istio-ingress3/spring-boot-demo2
   hosts:
   - spring-boot-demo2-istio-ingress.apps-crc.testing
   - spring-boot-demo2-istio-ingress3.apps-crc.testing

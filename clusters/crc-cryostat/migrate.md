@@ -135,9 +135,10 @@ kiali logs...
 Notes...
 - For ossm3, the name of the istio CR (in my case "default") is what informs the mutatingwebhookconfiguration label matching logic.
 - For ossm2, the ServiceMeshMemberRoll is what informs the mutatingwebhookconfiguration label matching logic.
-- Both ossm2 and ossm3 can discover the same namespace (I used istio-discovery: true)
-- If two control planes can discover the same namespace, they will both update the istio-ca-root-cert configmap, which means they both should use the same rootca secret (we accomplish this by deploying both control planes in the same namespace). I assume an intermediary ca that shares the same root ca could be used, but not necessary in my case.
-- We need to maintain our own networkpolicies to permit ingress, since ossm2 will create these (and thus restrict things). I used `allow-any-istio-rev` and `allow-istio-system`
+- Both ossm2 and ossm3 can discover the same namespace (I match discovery on the Existance of a label key `istio.io/rev`)
+- If two control planes can discover the same namespace, they will both update the istio-ca-root-cert configmap, which means they both should use the same rootca secret (we accomplish this by deploying both control planes in the same namespace, istio-system). I assume an intermediary ca that shares the same root ca could be used, but not necessary in my case.
+- We need to maintain our own networkpolicies to permit ingress, since ossm2 will create these (and thus restrict things). I used `allow-any-istio-rev` and `allow-istio-system`. These networkpolicies are placed in ingress, and app namespaces. and the istio-system namespace needs the `allow-any-istio-rev` networkpolicy.
+- We need to be able to upgrade the gateways separately form the dataplane and vice-versa.
 
 ```sh
 tbox@fedora:~/git/trevorbox/openshift-service-mesh$ istioctl ps

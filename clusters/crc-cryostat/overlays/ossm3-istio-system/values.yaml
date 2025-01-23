@@ -21,10 +21,9 @@ istio:
       meshConfig:
         accessLogFile: /dev/stdout
         discoverySelectors:
-          - matchLabels:
-              istio.io/rev: default
-          - matchLabels:
-              istio-discovery: enabled
+          - matchExpressions:
+              - key: istio.io/rev
+                operator: Exists
         enableTracing: true
         # TODO
         # extensionProviders:

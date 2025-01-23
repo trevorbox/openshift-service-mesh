@@ -168,7 +168,6 @@ members:
   - spring-boot-demo
   - spring-boot-demo2
 labels:
-  istio-discovery: enabled
   # istio.io/rev: ossm2
   istio.io/rev: default
   argocd.argoproj.io/managed-by: openshift-gitops

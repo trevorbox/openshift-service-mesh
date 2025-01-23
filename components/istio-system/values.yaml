@@ -2,7 +2,5 @@ smcp:
   outboundPolicy: ALLOW_ANY
   discoverySelectors:
     - matchExpressions:
-      - key: maistra.io/member-of
-        operator: Exists
-    - matchLabels:
-        istio-discovery: enabled
+        - key: istio.io/rev
+          operator: Exists

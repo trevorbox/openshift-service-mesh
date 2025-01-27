@@ -1,0 +1,14 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: openshift-gitops-applicationset-controller  
+  namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  template:
+    spec:
+      dnsConfig:
+        options:
+          - name: ndots
+            value: '4'

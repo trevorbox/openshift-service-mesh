@@ -247,3 +247,12 @@ applications:
   #     namespace: istio-ingress3
   #   source:
   #     path: clusters/crc-cryostat/overlays/ossm3-spring-boot-demo2-configs
+
+  patch:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '10'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: components/patch

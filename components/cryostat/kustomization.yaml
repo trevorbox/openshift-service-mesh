@@ -11,3 +11,4 @@ resources:
   - virtualservice-cryostat.yaml
   - service-cryostat-headless.yaml
   - networkpolicy-allow-any-istio-rev.yaml
+  - serviceaccount-cryostat.yaml

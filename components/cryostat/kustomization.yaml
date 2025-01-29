@@ -10,3 +10,4 @@ resources:
   - route-cryostat.yaml
   - virtualservice-cryostat.yaml
   - service-cryostat-headless.yaml
+  - networkpolicy-allow-any-istio-rev.yaml

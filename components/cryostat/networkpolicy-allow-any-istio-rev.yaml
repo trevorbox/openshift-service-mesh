@@ -1,0 +1,15 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-any-istio-rev
+  namespace: cryostat
+spec:
+  podSelector: {}
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchExpressions:
+              - key: istio.io/rev
+                operator: Exists
+  policyTypes:
+    - Ingress

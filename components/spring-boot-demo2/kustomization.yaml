@@ -6,7 +6,7 @@ helmCharts:
   repo: https://trevorbox.github.io/helm-charts
   valuesFile: values.yaml
   namespace: spring-boot-demo2
-  version: ~0.0.12
+  version: ~0.0.13
   releaseName: spring-boot-demo2
 
 resources:

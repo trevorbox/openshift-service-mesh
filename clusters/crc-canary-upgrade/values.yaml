@@ -139,6 +139,15 @@ applications:
     source:
       path: components/golang-ex
 
+  golang-ex-istio:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: golang-ex
+    source:
+      path: clusters/crc-canary-upgrade/overlays/golang-ex-istio
+
   minio-tenant:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
@@ -147,15 +156,6 @@ applications:
       namespace: minio-tenant
     source:
       path: components/minio-tenant
-
-  # bookinfo:
-  #   annotations:
-  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
-  #     argocd.argoproj.io/sync-wave: '4'
-  #   destination:
-  #     namespace: bookinfo
-  #   source:
-  #     path: clusters/crc-cryostat/overlays/bookinfo
 
   spring-boot-demo:
     annotations:

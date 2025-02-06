@@ -12,6 +12,10 @@ spec:
       - ""
       kinds:
       - Service
+    namespaceSelector:
+      matchExpressions:
+        - key: istio.io/rev
+          operator: Exists
   parameters:
     protocols:
     - http

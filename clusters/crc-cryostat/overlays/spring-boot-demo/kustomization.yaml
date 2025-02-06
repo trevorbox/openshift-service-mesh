@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# helmCharts:
+# - name: spring-boot-demo
+#   repo: https://trevorbox.github.io/helm-charts
+#   valuesFile: ../../../../components/spring-boot-demo/values.yaml
+#   namespace: spring-boot-demo
+#   version: ~0.0.13
+#   releaseName: spring-boot-demo
+
+resources:
+  - ../../../../components/spring-boot-demo
+  - rolebinding-spring-boot-demo-view.yaml

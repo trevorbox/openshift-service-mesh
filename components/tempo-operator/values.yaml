@@ -13,6 +13,6 @@ operators:
   name: tempo-product
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  csv: tempo-operator.v0.13.0-1-0.1730817419.p # tempo-operator.v0.10.0-7
+  csv: tempo-operator.v0.14.1-2 # tempo-operator.v0.10.0-7
   namespace: tempo-operator
   installPlanVerifierActiveDeadlineSeconds: 1200

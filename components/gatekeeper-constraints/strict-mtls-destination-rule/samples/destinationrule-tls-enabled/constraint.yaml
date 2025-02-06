@@ -12,3 +12,9 @@ spec:
       - networking.istio.io
       kinds:
       - DestinationRule
+    namespaceSelector:
+      matchExpressions:
+        - key: istio.io/rev
+          operator: Exists
+    excludedNamespaces:
+      - istio-system

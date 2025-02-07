@@ -1,3 +1,7 @@
+# Investigate sourceIp behavior with Openshift for Ip whitelist in AuthorizationPolicy
+
+https://istio.io/v1.20/docs/ops/configuration/traffic-management/network-topologies/#forwarding-external-client-attributes-ip-address-certificate-info-to-destination-workloads
+
 ```sh
 tbox@fedora:~/git/trevorbox/openshift-service-mesh$ curl -k -s -H 'X-Forwarded-For: 56.5.6.7, 72.9.5.6, 98.1.2.3' "https://golang-ex-featurea-istio-ingress.apps-crc.testing/"
 {
@@ -85,5 +89,96 @@ Since this is a passthrough route, haproxy would not change any encrypted info.
 Try Edge and replace the forwarded-headers maybe that will add the source IP im looking for
 
 https://docs.openshift.com/container-platform/4.16/networking/routes/route-configuration.html
-
 haproxy.router.openshift.io/set-forwarded-headers: replace
+
+```sh
+tbox@fedora:~/git/trevorbox/openshift-service-mesh$ curl -k -s -H 'X-Forwarded-For: 56.5.6.7, 72.9.5.6, 98.1.2.3' "https://golang-ex-edge-istio-ingress.apps-crc.testing/"
+{
+ "RequestHeaders": {
+  "Accept": [
+   "*/*"
+  ],
+  "Forwarded": [
+   "for=192.168.130.1;host=golang-ex-edge-istio-ingress.apps-crc.testing;proto=https"
+  ],
+  "Traceparent": [
+   "00-7902062dbcb726642632182ce87601fe-a98ec5f2be06489d-01"
+  ],
+  "Tracestate": [
+   ""
+  ],
+  "User-Agent": [
+   "curl/8.6.0"
+  ],
+  "X-Envoy-Attempt-Count": [
+   "1"
+  ],
+  "X-Envoy-External-Address": [
+   "10.217.0.2"
+  ],
+  "X-Forwarded-Client-Cert": [
+   "By=spiffe://cluster.local/ns/golang-ex/sa/golang-ex;Hash=d87f7515af2bd04d5de6610eca07b9d949d52f216eb245099674044ae7b14314;Subject=\"\";URI=spiffe://cluster.local/ns/istio-ingress/sa/istio-ingressgateway"
+  ],
+  "X-Forwarded-For": [
+   "192.168.130.1,10.217.0.2"
+  ],
+  "X-Forwarded-Host": [
+   "golang-ex-edge-istio-ingress.apps-crc.testing"
+  ],
+  "X-Forwarded-Port": [
+   "443"
+  ],
+  "X-Forwarded-Proto": [
+   "http"
+  ],
+  "X-Request-Id": [
+   "e7bb3e0d-6f24-9cf3-ba81-55cf6aaa9b4d"
+  ]
+ },
+ "ResponseHeaders": {
+  "ETag": [
+   "W/\"0815\""
+  ],
+  "Set-Cookie": [
+   "id=a3fWa; Max-Age=2592000",
+   "id=b3fWa; Max-Age=3592000"
+  ],
+  "Test": [
+   "test"
+  ],
+  "X-Content-Type-Options": [
+   ""
+  ],
+  "X-Powered-By": [
+   "Go"
+  ],
+  "X-XSS-Protection": [
+   "0"
+  ]
+ },
+ "Status": "Returned headers from the RESPONSE_HEADERS environment variable.",
+ "Error": "",
+ "Usage": "Usage: Set the RESPONSE_HEADERS environment variable to always return custom response headers for a GET request, else static default headers will be returned. Alternatively, send a POST or PUT request with the headers you want returned. Example: curl -i -X POST localhost:8080 -d '{\"k1\":[\"v1\"],\"k2\":[\"v3\",\"v4\"]}'"
+}
+```
+
+what is 192.168.130.1?
+
+```sh
+tbox@fedora:~/git/trevorbox/openshift-service-mesh$ ifconfig 
+crc: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.130.1  netmask 255.255.255.0  broadcast 192.168.130.255
+        ether 52:54:00:fd:be:d0  txqueuelen 1000  (Ethernet)
+        RX packets 363347  bytes 1472144724 (1.3 GiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 728895  bytes 1177032495 (1.0 GiB)
+        TX errors 0  dropped 11 overruns 0  carrier 0  collisions 0
+
+tbox@fedora:~/git/trevorbox/openshift-service-mesh$ nslookup *.apps-crc.testing
+Server:         127.0.0.53
+Address:        127.0.0.53#53
+
+Non-authoritative answer:
+Name:   *.apps-crc.testing
+Address: 192.168.130.11
+```

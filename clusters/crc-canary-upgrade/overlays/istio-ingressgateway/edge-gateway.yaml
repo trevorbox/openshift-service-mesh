@@ -1,0 +1,51 @@
+apiVersion: networking.istio.io/v1
+kind: Gateway
+metadata:
+  name: golang-ex-edge
+  namespace: istio-ingress
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - hosts:
+        - golang-ex-edge-istio-ingress.apps-crc.testing
+      port:
+        name: https
+        number: 8080
+        protocol: HTTP
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: golang-ex-edge
+  namespace: istio-ingress
+  annotations:
+    haproxy.router.openshift.io/set-forwarded-headers: replace
+spec:
+
+  to:
+    kind: Service
+    name: istio-ingressgateway
+    weight: 100
+  port:
+    targetPort: http2
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None
+
+---
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: golang-ex-gateway-edge
+  namespace: istio-ingress
+spec:
+  gateways:
+    - istio-ingress/golang-ex-edge
+  hosts:
+    - golang-ex-edge-istio-ingress.apps-crc.testing
+  http:
+    - route:
+        - destination:
+            host: golang-ex-featurea.golang-ex.svc.cluster.local

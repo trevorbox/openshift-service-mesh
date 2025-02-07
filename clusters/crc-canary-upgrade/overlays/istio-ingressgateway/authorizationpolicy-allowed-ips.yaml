@@ -1,0 +1,16 @@
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: allowed-ips
+  namespace: istio-ingress
+spec:
+  selector:
+    matchLabels:
+      app: istio-ingressgateway
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+       ipBlocks: 
+         - 1.2.3.4
+         - 5.6.7.0/24

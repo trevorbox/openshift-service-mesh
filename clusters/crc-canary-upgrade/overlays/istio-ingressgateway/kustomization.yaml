@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+helmCharts:
+- name: istio-gateway
+  repo: https://trevorbox.github.io/helm-charts
+  namespace: istio-ingress
+  valuesFile: values.yaml
+  version: ~1.18.6
+  releaseName: istio-ingressgateway
+
+resources:
+  - ../../../../components/istio-ingressgateway/clusterissuer-self-signer.yaml
+  - ../../../../components/istio-ingressgateway/networkpolicy-allow-from-openshift-ingress.yaml
+  - authorizationpolicy-allowed-ips.yaml

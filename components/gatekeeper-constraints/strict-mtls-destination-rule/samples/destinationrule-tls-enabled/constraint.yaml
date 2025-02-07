@@ -15,6 +15,9 @@ spec:
     namespaceSelector:
       matchExpressions:
         - key: istio.io/rev
-          operator: Exists
+          operator: In
+          values:
+            - ossm2
+            - default
     excludedNamespaces:
       - istio-system

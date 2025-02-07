@@ -1,4 +1,4 @@
 gateway:
   podAnnotations:
     "proxy.istio.io/config": '{"gatewayTopology" : { "numTrustedProxies": 1 } }'
-    "sidecar.istio.io/componentLogLevel": "rbac=debug"
+    "sidecar.istio.io/logLevel": "rbac=debug"

@@ -107,15 +107,15 @@ spec:
 #     protocol: TCP
 #   resolution: DNS
 # ...
-# ---
-# apiVersion: networking.istio.io/v1alpha3
-# kind: DestinationRule
-# metadata:
-#   name: disable-mtls-for-spring-boot-demo2
-#   namespace: spring-boot-demo2
-# spec:
-#   host: spring-boot-demo2.spring-boot-demo2.svc.cluster.local
-#   trafficPolicy:
-#     tls:
-#       mode: DISABLE
-# ...
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: disable-mtls-for-spring-boot-demo2
+  namespace: spring-boot-demo2
+spec:
+  host: spring-boot-demo2.spring-boot-demo2.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: DISABLE
+...

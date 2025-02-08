@@ -1,3 +1,4 @@
+# https://istio.io/v1.20/docs/tasks/security/authorization/authz-ingress/#ip-based-allow-list-and-deny-list
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
@@ -11,5 +12,5 @@ spec:
   rules:
   - from:
     - source:
-       ipBlocks: 
+       remoteIpBlocks: 
          - 192.168.130.1

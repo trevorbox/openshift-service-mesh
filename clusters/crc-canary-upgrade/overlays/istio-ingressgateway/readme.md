@@ -182,3 +182,9 @@ Non-authoritative answer:
 Name:   *.apps-crc.testing
 Address: 192.168.130.11
 ```
+
+Note: Authorizationpolicy needs to use remoteIpBlocks per https://istio.io/v1.20/docs/tasks/security/authorization/authz-ingress/#ip-based-allow-list-and-deny-list
+
+```sh
+
+```

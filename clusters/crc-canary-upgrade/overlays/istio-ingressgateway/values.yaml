@@ -1,5 +1,5 @@
 gateway:
   podAnnotations:
-    "proxy.istio.io/config": '{"gatewayTopology" : { "numTrustedProxies": 1 } }'
+    "proxy.istio.io/config": '{"gatewayTopology" : { "numTrustedProxies": 2 } }'
     # "proxy.istio.io/config": '{"gatewayTopology" : { "proxyProtocol": {} }}'
     "sidecar.istio.io/logLevel": "rbac:debug"

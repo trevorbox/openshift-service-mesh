@@ -172,14 +172,6 @@ crc: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
         RX errors 0  dropped 0  overruns 0  frame 0
         TX packets 728895  bytes 1177032495 (1.0 GiB)
         TX errors 0  dropped 11 overruns 0  carrier 0  collisions 0
-
-tbox@fedora:~/git/trevorbox/openshift-service-mesh$ nslookup *.apps-crc.testing
-Server:         127.0.0.53
-Address:        127.0.0.53#53
-
-Non-authoritative answer:
-Name:   *.apps-crc.testing
-Address: 192.168.130.11
 ```
 
 Note: Authorizationpolicy needs to use remoteIpBlocks per https://istio.io/v1.20/docs/tasks/security/authorization/authz-ingress/#ip-based-allow-list-and-deny-list

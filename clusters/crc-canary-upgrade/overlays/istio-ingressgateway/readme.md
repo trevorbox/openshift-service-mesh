@@ -270,3 +270,5 @@ tbox@fedora:~/git/trevorbox/openshift-service-mesh$ curl -k -s -H 'X-Forwarded-F
 , dynamicMetadata: thread=21
 2025-02-08T00:15:19.831860Z debug envoy rbac external/envoy/source/extensions/filters/http/rbac/rbac_filter.cc:154 enforced allowed, matched policy ns[istio-ingress]-policy[allowed-ips]-rule[0] thread=21
 ```
+
+The 'x-envoy-external-address', '192.168.130.1' matches the ip in our AuthorizationPolicy's remoteIpBlocks.

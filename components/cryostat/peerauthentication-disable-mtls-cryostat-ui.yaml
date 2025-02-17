@@ -1,0 +1,13 @@
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: disable-mtls-cryostat-ui
+spec:
+  mtls:
+    mode: STRICT
+  portLevelMtls:
+    '4180':
+      mode: DISABLE
+  selector:
+    matchLabels:
+      app: cryostat

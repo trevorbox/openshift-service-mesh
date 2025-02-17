@@ -4,11 +4,11 @@ kind: Kustomization
 
 resources:
   - namespace-cryostat.yaml
-  - cryostat-cryostat.yaml
-  - certificate-cryostat.yaml
-  - gateway-cryostat.yaml
-  - route-cryostat.yaml
-  - virtualservice-cryostat.yaml
+  - cryostat-cryostat.yaml  
   - service-cryostat-headless.yaml
   - networkpolicy-allow-any-istio-rev.yaml
-  - serviceaccount-cryostat.yaml
+
+  # Disble mtls or enable ingress through a istio gateway
+  - peerauthentication-disable-mtls-cryostat-ui.yaml
+
+  # - gateway/

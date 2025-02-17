@@ -17,7 +17,11 @@ spec:
         maistra.io/expose-route: 'false'
         sidecar.istio.io/inject: 'true'
   reportOptions:
-    resources: {}
+    replicas: 2
+    resources:
+      requests:
+        cpu: 1000m
+        memory: 512Mi
   storageOptions:
     pvc:
       spec:

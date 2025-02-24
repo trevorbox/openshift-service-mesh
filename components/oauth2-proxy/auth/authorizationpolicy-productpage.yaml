@@ -1,0 +1,19 @@
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: productpage
+  namespace: bookinfo
+spec:
+  selector:
+    matchLabels:
+      app: productpage
+  rules:
+  - from:
+    # Require a valid jwt for all requests from the oauth2-proxy service only
+    - source:
+        requestPrincipals:
+          - "dev-tqolyn342htgbviz.us.auth0.com/*"
+        principals:
+          - "cluster.local/ns/oauth2-proxy/sa/oauth2-proxy"
+...

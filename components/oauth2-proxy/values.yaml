@@ -9,7 +9,7 @@ config:
     ]
     email_domains = "*"
     pass_access_token = true    
-    skip_provider_button = true
+    skip_provider_button = false
     # Note: use the following for testing within a container
     http_address = "0.0.0.0:4180"
     cookie_csrf_per_request = true

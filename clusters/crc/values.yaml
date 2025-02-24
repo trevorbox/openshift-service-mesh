@@ -147,14 +147,14 @@ applications:
     source:
       path: components/minio-tenant
 
-  # bookinfo:
-  #   annotations:
-  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
-  #     argocd.argoproj.io/sync-wave: '4'
-  #   destination:
-  #     namespace: bookinfo
-  #   source:
-  #     path: clusters/crc/overlays/bookinfo
+  bookinfo:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: bookinfo
+    source:
+      path: clusters/crc/overlays/bookinfo
 
   kiali:
     annotations:

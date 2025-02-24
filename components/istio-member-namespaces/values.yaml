@@ -4,6 +4,7 @@ members:
   - bookinfo
   - nginx-echo-headers
   - spring-boot-demo
+  - oauth2-proxy
   # - spring-boot-demo2
 labels:
   istio.io/rev: ossm2

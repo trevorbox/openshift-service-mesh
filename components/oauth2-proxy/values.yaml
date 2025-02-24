@@ -1,0 +1,33 @@
+config:
+  existingSecret: oauth2-proxy
+  configFile: |-
+    provider = "oidc"
+    redirect_url = "https://bookinfo-istio-ingress.apps-crc.testing/oauth2/callback"
+    oidc_issuer_url = "https://dev-tqolyn342htgbviz.us.auth0.com/"
+    upstreams = [
+        "http://0.0.0.0:8080"
+    ]
+    email_domains = "*"
+    pass_access_token = true    
+    skip_provider_button = true
+    # Note: use the following for testing within a container
+    http_address = "0.0.0.0:4180"
+    cookie_csrf_per_request = true
+    cookie_csrf_expire = "5m"
+    oidc_email_claim = "sub"
+    pass_host_header = false
+    skip_jwt_bearer_tokens = true
+podLabels: 
+  sidecar.istio.io/inject: 'true'
+securityContext:
+  enabled: true
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 
+  runAsGroup: 
+  seccompProfile:
+    type: RuntimeDefault

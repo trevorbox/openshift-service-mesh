@@ -19,9 +19,9 @@ config:
     oidc_email_claim = "sub"
     pass_host_header = false
     skip_jwt_bearer_tokens = true
-    oidc_extra_audiences = [
-      "foggle"
-    ]
+    login_url = https://dev-tqolyn342htgbviz.us.auth0.com/authorize?audience=https://api.mydomain.com/
+    oidc_jwks_url = https://dev-tqolyn342htgbviz.us.auth0.com/.well-known/jwks.json
+    skip_oidc_discovery = "true"
 podLabels: 
   sidecar.istio.io/inject: 'true'
 podAnnotations: 

@@ -12,6 +12,8 @@ spec:
     - issuer: "https://dev-tqolyn342htgbviz.us.auth0.com/"
       jwksUri: https://dev-tqolyn342htgbviz.us.auth0.com/.well-known/jwks.json
       audiences:
-        - "hvE1tB9E3MQurv6mfQAPx5byp9lRkSKb"
+        - "bookinfo-api"
         # - "https://somethingelse-istio-ingress.apps-crc.testing"
+      fromHeaders:
+      - name: x-forwarded-access-token        
 ...

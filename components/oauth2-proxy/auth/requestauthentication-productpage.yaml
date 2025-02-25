@@ -13,8 +13,6 @@ spec:
       jwksUri: https://dev-tqolyn342htgbviz.us.auth0.com/.well-known/jwks.json
       audiences:
         - "bookinfo-api"
-        - "https://dev-tqolyn342htgbviz.us.auth0.com/userinfo"
-        - "breaking"
       fromHeaders:
       - name: x-forwarded-access-token        
 ...

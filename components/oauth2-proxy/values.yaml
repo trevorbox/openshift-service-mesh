@@ -4,25 +4,22 @@ config:
     provider = "oidc"
     redirect_url = "https://oauth-bookinfo-istio-ingress.apps-crc.testing/oauth2/callback"
     oidc_issuer_url = "https://dev-tqolyn342htgbviz.us.auth0.com/"
-    oidc_jwks_url = "https://dev-tqolyn342htgbviz.us.auth0.com/.well-known/jwks.json"
-    login_url = "https://dev-tqolyn342htgbviz.us.auth0.com/authorize?audience=bookinfo-api"
-    redeem_url = "https://dev-tqolyn342htgbviz.us.auth0.com/oauth/token?audience=bookinfo-api"
-    skip_oidc_discovery = true
+    # oidc_jwks_url = "https://dev-tqolyn342htgbviz.us.auth0.com/.well-known/jwks.json"
+    # login_url = "https://dev-tqolyn342htgbviz.us.auth0.com/authorize?audience=bookinfo-api"
+    # redeem_url = "https://dev-tqolyn342htgbviz.us.auth0.com/oauth/token?audience=bookinfo-api"
+    # skip_oidc_discovery = true
     upstreams = [
         "http://oauth2-proxy-upstream.oauth2-proxy.svc.cluster.local:80"
     ]
     email_domains = "*"
-    # pass OIDC IDToken to upstream via Authorization Bearer header
-    # pass_authorization_header = true
     skip_provider_button = false
     # Note: use the following for testing within a container
     http_address = "0.0.0.0:4180"
     cookie_csrf_per_request = true
     cookie_csrf_expire = "5m"
-    # oidc_email_claim = "sub"
     pass_host_header = false
     # skip_jwt_bearer_tokens = true
-    # set_xauthrequest = true
+    # set the x-forwarded-access-token, use requestauthentication to validate the jwt in this header 
     pass_access_token = true
 podLabels: 
   sidecar.istio.io/inject: 'true'

@@ -12,6 +12,6 @@ spec:
     - issuer: "https://dev-tqolyn342htgbviz.us.auth0.com/"
       jwksUri: https://dev-tqolyn342htgbviz.us.auth0.com/.well-known/jwks.json
       audiences:
-        - "https://bookinfo-istio-ingress.apps-crc.testing"
+        - "hvE1tB9E3MQurv6mfQAPx5byp9lRkSKb"
         # - "https://somethingelse-istio-ingress.apps-crc.testing"
 ...

@@ -5,7 +5,7 @@ config:
     redirect_url = "https://oauth-bookinfo-istio-ingress.apps-crc.testing/oauth2/callback"
     oidc_issuer_url = "https://dev-tqolyn342htgbviz.us.auth0.com/"
     oidc_jwks_url = "https://dev-tqolyn342htgbviz.us.auth0.com/.well-known/jwks.json"
-    login_url = "https://dev-tqolyn342htgbviz.us.auth0.com/authorize?audience=https://bookinfo-istio-ingress.apps-crc.testing"
+    login_url = "https://dev-tqolyn342htgbviz.us.auth0.com/authorize?audience=bookinfo-api"
     redeem_url = "https://dev-tqolyn342htgbviz.us.auth0.com/oauth/token"
     skip_oidc_discovery = true
     upstreams = [

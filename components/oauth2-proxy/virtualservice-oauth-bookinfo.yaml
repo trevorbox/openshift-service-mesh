@@ -10,15 +10,10 @@ spec:
   - oauth-bookinfo-istio-ingress.apps-crc.testing
   http:
   - match:
-      - uri:
-          exact: ""
-    rewrite:
+    - uri:
+        exact: ""
+    redirect:
       uri: /productpage
-    route:
-    - destination:
-        host: oauth2-proxy.oauth2-proxy.svc.cluster.local
-        port:
-          number: 80
   - route:
     - destination:
         host: oauth2-proxy.oauth2-proxy.svc.cluster.local

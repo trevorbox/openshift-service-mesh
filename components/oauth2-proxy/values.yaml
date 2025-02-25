@@ -19,6 +19,9 @@ config:
     oidc_email_claim = "sub"
     pass_host_header = false
     skip_jwt_bearer_tokens = true
+    oidc_extra_audiences = [
+      "zEFRKC5B81cIFpLloeFdFlAaQ8IbSaOS"
+    ]
 podLabels: 
   sidecar.istio.io/inject: 'true'
 podAnnotations: 

@@ -19,7 +19,7 @@ config:
     oidc_email_claim = "sub"
     pass_host_header = false
     skip_jwt_bearer_tokens = true
-    login_url = "https://dev-tqolyn342htgbviz.us.auth0.com/authorize?audience=https://bookinfo-istio-ingress.apps-crc.testing"
+    login_url = "https://dev-tqolyn342htgbviz.us.auth0.com/authorize?audience=https://bookinfo-istio-ingress.apps-crc.testing&grant_type=client_credentials"
     oidc_jwks_url = "https://dev-tqolyn342htgbviz.us.auth0.com/.well-known/jwks.json"
     redeem_url = "https://dev-tqolyn342htgbviz.us.auth0.com/oauth/token"
     skip_oidc_discovery = true

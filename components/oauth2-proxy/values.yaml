@@ -4,12 +4,14 @@ config:
     provider = "oidc"
     redirect_url = "https://oauth-bookinfo-istio-ingress.apps-crc.testing/oauth2/callback"
     oidc_issuer_url = "https://dev-tqolyn342htgbviz.us.auth0.com/"
+    oidc_jwks_url = "https://dev-tqolyn342htgbviz.us.auth0.com/.well-known/jwks.json"
+    login_url = "https://dev-tqolyn342htgbviz.us.auth0.com/authorize?audience=https://bookinfo-istio-ingress.apps-crc.testing"
+    redeem_url = "https://dev-tqolyn342htgbviz.us.auth0.com/oauth/token"
+    skip_oidc_discovery = true
     upstreams = [
         "http://oauth2-proxy-upstream.oauth2-proxy.svc.cluster.local:80"
     ]
     email_domains = "*"
-    # pass_access_token = true
-    # set_authorization_header = true
     pass_authorization_header = true
     skip_provider_button = false
     # Note: use the following for testing within a container
@@ -19,10 +21,6 @@ config:
     oidc_email_claim = "sub"
     pass_host_header = false
     skip_jwt_bearer_tokens = true
-    login_url = "https://dev-tqolyn342htgbviz.us.auth0.com/authorize?audience=https://bookinfo-istio-ingress.apps-crc.testing&grant_type=client_credentials"
-    oidc_jwks_url = "https://dev-tqolyn342htgbviz.us.auth0.com/.well-known/jwks.json"
-    redeem_url = "https://dev-tqolyn342htgbviz.us.auth0.com/oauth/token"
-    skip_oidc_discovery = true
 podLabels: 
   sidecar.istio.io/inject: 'true'
 podAnnotations: 

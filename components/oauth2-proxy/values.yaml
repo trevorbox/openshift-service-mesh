@@ -21,7 +21,7 @@ config:
     # oidc_email_claim = "sub"
     pass_host_header = false
     # skip_jwt_bearer_tokens = true
-    # set_xauthrequest = true
+    set_xauthrequest = true
     pass_access_token = true
 podLabels: 
   sidecar.istio.io/inject: 'true'

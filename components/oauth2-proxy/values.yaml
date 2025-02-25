@@ -20,7 +20,7 @@ config:
     cookie_csrf_expire = "5m"
     oidc_email_claim = "sub"
     pass_host_header = false
-    skip_jwt_bearer_tokens = true
+    # skip_jwt_bearer_tokens = true
 podLabels: 
   sidecar.istio.io/inject: 'true'
 podAnnotations: 

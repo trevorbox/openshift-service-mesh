@@ -11,9 +11,7 @@ spec:
   jwtRules:
     - issuer: "https://dev-tqolyn342htgbviz.us.auth0.com/"
       jwksUri: https://dev-tqolyn342htgbviz.us.auth0.com/.well-known/jwks.json
-      # fromHeaders:
-      #   - name: "x-forwarded-access-token"
       audiences:
-        # - "https://bookinfo-istio-ingress.apps-crc.testing"
-        - "https://somethingelse-istio-ingress.apps-crc.testing"
+        - "https://bookinfo-istio-ingress.apps-crc.testing"
+        # - "https://somethingelse-istio-ingress.apps-crc.testing"
 ...

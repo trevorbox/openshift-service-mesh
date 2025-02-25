@@ -22,8 +22,6 @@ config:
     oidc_extra_audiences = [
       "foggle"
     ]
-
-skip_oidc_discovery = "true"
 podLabels: 
   sidecar.istio.io/inject: 'true'
 podAnnotations: 

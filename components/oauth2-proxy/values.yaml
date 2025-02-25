@@ -6,7 +6,7 @@ config:
     oidc_issuer_url = "https://dev-tqolyn342htgbviz.us.auth0.com/"
     oidc_jwks_url = "https://dev-tqolyn342htgbviz.us.auth0.com/.well-known/jwks.json"
     login_url = "https://dev-tqolyn342htgbviz.us.auth0.com/authorize?audience=bookinfo-api"
-    redeem_url = "https://dev-tqolyn342htgbviz.us.auth0.com/oauth/token"
+    redeem_url = "https://dev-tqolyn342htgbviz.us.auth0.com/oauth/token?audience=bookinfo-api"
     skip_oidc_discovery = true
     upstreams = [
         "http://oauth2-proxy-upstream.oauth2-proxy.svc.cluster.local:80"
@@ -22,6 +22,7 @@ config:
     pass_host_header = false
     # skip_jwt_bearer_tokens = true
     set_xauthrequest = true
+    pass_access_token = true
 podLabels: 
   sidecar.istio.io/inject: 'true'
 podAnnotations: 

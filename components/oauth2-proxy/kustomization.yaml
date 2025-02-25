@@ -17,5 +17,5 @@ resources:
   - serviceentry-auth0.yaml
   - service-oauth2-proxy-upstream.yaml
   - virtualservice-oauth-bookinfo.yaml
-  - virtualservice-oauth2-proxy-upstream.yaml
+  # - virtualservice-oauth2-proxy-upstream.yaml
   - auth

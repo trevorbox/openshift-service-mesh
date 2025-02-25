@@ -14,7 +14,7 @@ config:
     skip_oidc_discovery = true
 
     upstreams = [
-        "http://oauth2-proxy-upstream.oauth2-proxy.svc.cluster.local:80"
+        "http://productpage.bookinfo.svc.cluster.local:9080"
     ]
     email_domains = "*"
     skip_provider_button = false

@@ -18,8 +18,8 @@ spec:
         # string_value: "https://dev-tqolyn342htgbviz.us.auth0.com//auth0|67bcc89c834426c4e6978cf4"
         # }
         requestPrincipals:
-          # - "https://dev-tqolyn342htgbviz.us.auth0.com//*"
-          - "https://dev-tqolyn342htgbviz.us.auth0.com//auth0|67bcc89c834426c4e6978cf4"
+          - "https://dev-tqolyn342htgbviz.us.auth0.com//*" # <ISS>/<SUB>
+          # - "https://dev-tqolyn342htgbviz.us.auth0.com//auth0|67bcc89c834426c4e6978cf4"
         principals:
           - "cluster.local/ns/oauth2-proxy/sa/oauth2-proxy"
 ...

@@ -12,7 +12,7 @@ config:
         "http://oauth2-proxy-upstream.oauth2-proxy.svc.cluster.local:80"
     ]
     email_domains = "*"
-    pass_authorization_header = true
+    # pass_authorization_header = true
     skip_provider_button = false
     # Note: use the following for testing within a container
     http_address = "0.0.0.0:4180"
@@ -21,7 +21,7 @@ config:
     # oidc_email_claim = "sub"
     pass_host_header = false
     # skip_jwt_bearer_tokens = true
-    set_xauthrequest = true
+    # set_xauthrequest = true
     pass_access_token = true
 podLabels: 
   sidecar.istio.io/inject: 'true'

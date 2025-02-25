@@ -20,8 +20,10 @@ config:
     pass_host_header = false
     skip_jwt_bearer_tokens = true
     oidc_extra_audiences = [
-      "zEFRKC5B81cIFpLloeFdFlAaQ8IbSaOS"
+      "foggle"
     ]
+
+skip_oidc_discovery = "true"
 podLabels: 
   sidecar.istio.io/inject: 'true'
 podAnnotations: 

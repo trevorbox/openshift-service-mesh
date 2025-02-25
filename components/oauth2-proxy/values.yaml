@@ -8,7 +8,8 @@ config:
         "http://oauth2-proxy-upstream.oauth2-proxy.svc.cluster.local:80"
     ]
     email_domains = "*"
-    pass_access_token = true    
+    # pass_access_token = true
+    set_authorization_header = "true" 
     skip_provider_button = false
     # Note: use the following for testing within a container
     http_address = "0.0.0.0:4180"

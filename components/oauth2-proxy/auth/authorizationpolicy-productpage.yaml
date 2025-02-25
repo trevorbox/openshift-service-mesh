@@ -13,7 +13,7 @@ spec:
     # Require a valid jwt for all requests from the oauth2-proxy service only
     - source:
         requestPrincipals:
-          - "dev-tqolyn342htgbviz.us.auth0.com/*"
+          - "https://dev-tqolyn342htgbviz.us.auth0.com/*"
         principals:
           - "cluster.local/ns/oauth2-proxy/sa/oauth2-proxy"
 ...

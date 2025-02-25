@@ -21,7 +21,7 @@ config:
     skip_jwt_bearer_tokens = true
     login_url = https://dev-tqolyn342htgbviz.us.auth0.com/authorize?audience=https://api.mydomain.com/
     oidc_jwks_url = https://dev-tqolyn342htgbviz.us.auth0.com/.well-known/jwks.json
-    skip_oidc_discovery = "true"
+    skip_oidc_discovery = true
 podLabels: 
   sidecar.istio.io/inject: 'true'
 podAnnotations: 

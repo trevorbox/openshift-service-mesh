@@ -9,7 +9,7 @@ config:
     # auth0 requires you set an audience param when authorizing tokens, else the returned jwt is opaque - see https://auth0.com/docs/secure/tokens/access-tokens#opaque-access-tokens
     # so we need to set an audience. we can manually control this and not rely on oidc discovery
     oidc_jwks_url = "https://dev-tqolyn342htgbviz.us.auth0.com/.well-known/jwks.json"
-    login_url = "https://dev-tqolyn342htgbviz.us.auth0.com/authorize?audience=bookinfo-api"
+    login_url = "https://dev-tqolyn342htgbviz.us.auth0.com/authorize?audience=http%3A%2F%2Fmy-api"
     redeem_url = "https://dev-tqolyn342htgbviz.us.auth0.com/oauth/token"
     skip_oidc_discovery = true
 

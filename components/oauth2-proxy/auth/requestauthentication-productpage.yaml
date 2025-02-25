@@ -12,7 +12,7 @@ spec:
     - issuer: "https://dev-tqolyn342htgbviz.us.auth0.com/"
       jwksUri: https://dev-tqolyn342htgbviz.us.auth0.com/.well-known/jwks.json
       audiences:
-        - "bookinfo-api"
+        - "http://my-api"
       fromHeaders:
       - name: x-forwarded-access-token        
 ...

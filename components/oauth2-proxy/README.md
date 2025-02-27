@@ -2,13 +2,9 @@
 
 ![Kiali Auth Graph](./oauth2-proxy.png)
 
+## configure auth0
 
-enable debiggin
-```yaml deployment
-    annotations:
-      sidecar.istio.io/inject: 'true'
-      sidecar.istio.io/logLevel: 'rbac:debug,jwt:debug'
-```
+Create an auth0 app and api programmatically.
 
 ```sh
 auth0 login
@@ -31,5 +27,19 @@ auth0 api post client-grants --data "{\"audience\":\"http://my-api\",\"client_id
 auth0 apps show --reveal-secrets
 ```
 
-put the client id and secret in the oauth2-proxy secret.
+- put the client id and secret in the [oauth2-proxy secret](REFERENCE-secret-oauth2-proxy.yaml).
+- Note that audience must match the `identifier` (for example http://my-api) during authorize request. set this as parameter in oauth2-proxy [values.yaml](values.yaml), for example login_url = "https://dev-tqolyn342htgbviz.us.auth0.com/authorize?audience=http%3A%2F%2Fmy-api"
+- requestauthentication-productpage.yaml audience must match the `identifier` as well
 
+## notes
+
+enable debugging in the productpage deployment spec.template.metadata.annotations
+
+```yaml deployment
+spec:
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: 'true'
+        sidecar.istio.io/logLevel: 'rbac:debug,jwt:debug'  
+```

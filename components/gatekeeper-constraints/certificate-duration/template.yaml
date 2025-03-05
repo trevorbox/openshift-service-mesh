@@ -1,0 +1,57 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: certificatedurationrenewal
+  annotations:
+    description: Prohibits wildcard host configuration
+spec:
+  crd:
+    spec:
+      names:
+        kind: CertificateDurationRenewal
+      validation:
+        openAPIV3Schema:
+          type: object
+          properties:
+            maxDuration:
+              type: string
+            maxRenewBefore:
+              type: string
+  targets:
+  - target: admission.k8s.gatekeeper.sh
+    rego: |-
+      package certificatedurationrenewal
+
+      max_duration := time.parse_duration_ns(input.parameters.maxDuration)
+      max_renew_before := time.parse_duration_ns(input.parameters.maxRenewBefore)
+      
+      certificate := input.review.object
+
+      duration_str = certificate.spec.duration
+      duration_str = "2160h" {
+        not certificate.spec.duration
+      }
+
+      # If unset, this defaults to 90 days. Minimum accepted duration is 1 hour.
+      duration = time.parse_duration_ns(duration_str)
+
+      renew_before_str = certificate.spec.renewBefore
+      renew_before_str = "0h" {
+        not certificate.spec.renewBefore
+      }
+
+      # If unset, this defaults to 1/3 of the issued certificate's lifetime. Minimum accepted value is 5 minutes.
+      renew_before = time.parse_duration_ns(certificate.spec.renewBefore)
+      renew_before = duration / 3 {
+        not certificate.spec.renewBefore
+      }
+
+      violation[{"msg": msg}] {
+        duration > max_duration
+        msg := sprintf("Invalid certificate duration: <%v> (or <%v>ns). Maximum duration allowed: <%v>", [ duration_str, duration, input.parameters.maxDuration ])
+      }
+      
+      violation[{"msg": msg}] {
+        renew_before > max_renew_before
+        msg := sprintf("Invalid certificate renewBefore: <%v> (or <%v>ns). Maximum renewBefore allowed: <%v>", [ renew_before_str, renew_before, input.parameters.maxRenewBefore ])
+      }

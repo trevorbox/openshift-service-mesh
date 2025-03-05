@@ -1,0 +1,20 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: bookinfo-cert
+  namespace: istio-ingress
+spec:
+  commonName: bookinfo
+  # duration: 2160h # 90d
+  # renewBefore: 360h # 15d
+  dnsNames:
+    - bookinfo-istio-ingress.apps-crc.testing
+  issuerRef:
+    group: cert-manager.io
+    kind: Issuer
+    name: internal-issuer
+  secretName: bookinfo-cert
+  usages:
+    - server auth
+    - client auth
+

@@ -1,0 +1,66 @@
+apiVersion: test.gatekeeper.sh/v1alpha1
+kind: Suite
+tests:
+- name: Validate cert
+  template: template.yaml
+  constraint: samples/constraint.yaml
+  cases:
+  - name: Valid duration and renewBefore
+    object: samples/certificate.yaml
+    inventory:
+    - samples/namespace-istio-ingress.yaml
+    assertions:
+    - violations: no
+  - name: Invalid duration
+    object: samples/certificate-invalid-duration.yaml
+    inventory:
+    - samples/namespace-istio-ingress.yaml
+    assertions:
+    - message: Invalid certificate duration
+      violations: 1
+  - name: Invalid renewBefore
+    object: samples/certificate-invalid-renewbefore.yaml
+    inventory:
+    - samples/namespace-istio-ingress.yaml
+    assertions:
+    - message: Invalid certificate renewBefore
+      violations: 1
+  - name: Invalid duration and renewBefore
+    object: samples/certificate-invalid-duration-renewbefore.yaml
+    inventory:
+    - samples/namespace-istio-ingress.yaml
+    assertions:
+    - violations: 2
+    - message: Invalid certificate duration
+      violations: 1
+    - message: Invalid certificate renewBefore
+      violations: 1
+  - name: No duration
+    object: samples/certificate-no-duration.yaml
+    inventory:
+    - samples/namespace-istio-ingress.yaml
+    assertions:
+    - violations: no
+  - name: No renewBefore
+    object: samples/certificate-no-renewbefore.yaml
+    inventory:
+    - samples/namespace-istio-ingress.yaml
+    assertions:
+    - message: Invalid certificate renewBefore
+      violations: 1
+  - name: No duration No renewBefore
+    object: samples/certificate-no-duration-no-renewbefore.yaml
+    inventory:
+    - samples/namespace-istio-ingress.yaml
+    assertions:
+    - message: Invalid certificate renewBefore
+      violations: 1
+    # assertions:
+    # - violations: no
+  - name: No renewBefore small duration
+    object: samples/certificate-no-renewbefore-small-duration.yaml
+    inventory:
+    - samples/namespace-istio-ingress.yaml
+    assertions:
+    - message: Invalid certificate renewBefore
+      violations: 1

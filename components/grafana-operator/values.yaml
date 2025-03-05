@@ -23,4 +23,4 @@ operators:
         value: "kubernetes.io/metadata.name: nomatch"
       - name: WATCH_NAMESPACE
         # value: "kubernetes.io/metadata.name: grafana"
-        value: ""
+        value: "nomatch"

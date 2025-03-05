@@ -16,11 +16,13 @@ operators:
   csv: grafana-operator.v5.16.0
   namespace: grafana-operator
   installPlanVerifierActiveDeadlineSeconds: 1200
-  config:
-    env:
-      # - name: WATCH_NAMESPACE_SELECTOR
-      #   # value: "kubernetes.io/metadata.name: grafana"
-      #   value: "kubernetes.io/metadata.name: nomatch"
-      - name: WATCH_NAMESPACE
-        # value: "kubernetes.io/metadata.name: grafana"
-        value: "grafana"
+  otherTargetNamespaces:
+    - grafana
+  # config:
+  #   env:
+  #     # - name: WATCH_NAMESPACE_SELECTOR
+  #     #   # value: "kubernetes.io/metadata.name: grafana"
+  #     #   value: "kubernetes.io/metadata.name: nomatch"
+  #     - name: WATCH_NAMESPACE
+  #       # value: "kubernetes.io/metadata.name: grafana"
+  #       value: "grafana"

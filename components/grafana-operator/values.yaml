@@ -16,3 +16,7 @@ operators:
   csv: grafana-operator.v5.15.1
   namespace: grafana-operator
   installPlanVerifierActiveDeadlineSeconds: 1200
+  config:
+    env:
+      - name: WATCH_NAMESPACE_SELECTOR
+        value: "kubernetes.io/metadata.name: grafana"

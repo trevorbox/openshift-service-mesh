@@ -17,3 +17,4 @@ resources:
   - strict-mtls-destination-rule
   - strict-mtls-mesh-peer-authentication
   - strict-mtls-peer-authentication
+  # - certificate-duration

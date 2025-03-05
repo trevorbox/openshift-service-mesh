@@ -13,7 +13,7 @@ operators:
   name: grafana-operator
   source: community-operators
   sourceNamespace: openshift-marketplace
-  csv: grafana-operator.v5.15.1
+  csv: grafana-operator.v5.16.0
   namespace: grafana-operator
   installPlanVerifierActiveDeadlineSeconds: 1200
   config:
@@ -21,3 +21,6 @@ operators:
       - name: WATCH_NAMESPACE_SELECTOR
         # value: "kubernetes.io/metadata.name: grafana"
         value: "kubernetes.io/metadata.name: nomatch"
+      # - name: WATCH_NAMESPACE
+      #   # value: "kubernetes.io/metadata.name: grafana"
+      #   value: "kubernetes.io/metadata.name: nomatch"

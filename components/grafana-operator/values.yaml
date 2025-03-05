@@ -6,6 +6,8 @@ installPlanApproverAndVerifyJobsImage: quay.io/openshift/origin-cli:4.14
 operatorGroups:
 - name: grafana-operator
   createNamespace: true
+  otherTargetNamespaces:
+    - grafana
 
 operators:
 - channel: v5
@@ -16,8 +18,7 @@ operators:
   csv: grafana-operator.v5.16.0
   namespace: grafana-operator
   installPlanVerifierActiveDeadlineSeconds: 1200
-  otherTargetNamespaces:
-    - grafana
+  
   # config:
   #   env:
   #     # - name: WATCH_NAMESPACE_SELECTOR

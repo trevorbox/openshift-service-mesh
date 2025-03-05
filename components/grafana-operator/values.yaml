@@ -19,4 +19,5 @@ operators:
   config:
     env:
       - name: WATCH_NAMESPACE_SELECTOR
-        value: "kubernetes.io/metadata.name: grafana"
+        # value: "kubernetes.io/metadata.name: grafana"
+        value: "kubernetes.io/metadata.name: nomatch"

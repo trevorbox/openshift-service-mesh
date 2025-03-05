@@ -21,6 +21,6 @@ operators:
       - name: WATCH_NAMESPACE_SELECTOR
         # value: "kubernetes.io/metadata.name: grafana"
         value: "kubernetes.io/metadata.name: nomatch"
-      # - name: WATCH_NAMESPACE
-      #   # value: "kubernetes.io/metadata.name: grafana"
-      #   value: "kubernetes.io/metadata.name: nomatch"
+      - name: WATCH_NAMESPACE
+        # value: "kubernetes.io/metadata.name: grafana"
+        value: ""

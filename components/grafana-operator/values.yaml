@@ -7,7 +7,8 @@ operatorGroups:
 - name: grafana-operator
   createNamespace: true
   otherTargetNamespaces:
-    - grafana
+    # - grafana
+    - nomatch
 
 operators:
 - channel: v5

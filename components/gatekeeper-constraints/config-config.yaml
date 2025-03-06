@@ -25,4 +25,6 @@ spec:
       - group: networking.istio.io
         kind: DestinationRule
         version: v1beta1
-
+      - group: cert-manager.io
+        kind: Certificate
+        version: v1

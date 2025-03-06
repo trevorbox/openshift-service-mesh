@@ -16,7 +16,7 @@ spec:
           number: 80
     match:
     - uri:
-        prefix: ""
+        prefix: "/"
     rewrite:
       uri: /productpage
     # match:

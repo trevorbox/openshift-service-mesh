@@ -14,7 +14,7 @@ spec:
           type: object
           description: >-
             Requires cert-manager Certificates to have a maximum duration and renewBefore.
-            By default a valid `maxDuration` and ``maxRenewBefore` is required, these verifications
+            By default a valid `maxDuration` and `maxRenewBefore` is required, these verifications
             can be made optional by setting the `maxDurationOptional` and/or `maxrenewBeforeOptional` parameter to
             `true`.
           properties:

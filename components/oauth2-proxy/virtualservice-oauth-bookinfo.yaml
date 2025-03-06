@@ -14,6 +14,11 @@ spec:
         host: oauth2-proxy.oauth2-proxy.svc.cluster.local
         port:
           number: 80
+    match:
+    - uri:
+        prefix: ""
+    rewrite:
+      uri: /productpage
     # match:
     # - uri:
     #     exact: /productpage

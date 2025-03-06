@@ -1,0 +1,20 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: CertificateDurationRenewal
+metadata:
+  name: optional-max-duration
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+      - apiGroups: ["cert-manager.io"]
+        kinds: ["Certificate"]
+    namespaceSelector:
+      matchExpressions:
+        - key: maistra.io/member-of
+          operator: Exists
+  parameters:
+    maxDuration: 2160h # 90d
+    maxRenewBefore: 360h # 15d
+    maxDurationOptional: true

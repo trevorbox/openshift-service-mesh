@@ -16,9 +16,12 @@ spec:
           number: 80
     match:
     - uri:
-        prefix: "/"
+        exact: "/"
     rewrite:
       uri: /productpage
+    # redirect:
+    #   uri: /v1/bookRatings
+
   - route:
     - destination:
         host: oauth2-proxy.oauth2-proxy.svc.cluster.local

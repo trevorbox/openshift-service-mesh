@@ -19,6 +19,11 @@ spec:
         prefix: "/"
     rewrite:
       uri: /productpage
+  - route:
+    - destination:
+        host: oauth2-proxy.oauth2-proxy.svc.cluster.local
+        port:
+          number: 80
     # match:
     # - uri:
     #     exact: /productpage

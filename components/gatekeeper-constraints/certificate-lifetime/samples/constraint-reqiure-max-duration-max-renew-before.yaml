@@ -1,7 +1,7 @@
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: CertificateDurationRenewal
 metadata:
-  name: certificatedurationrenewal
+  name: reqiure-max-duration-max-renew-before
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:

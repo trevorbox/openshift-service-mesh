@@ -27,31 +27,24 @@ spec:
       
       certificate := input.review.object
 
-      duration_str = certificate.spec.duration
-      duration_str = "2160h" {
+      violation[{"msg": msg}] {
         not certificate.spec.duration
-      }
-
-      # If unset, this defaults to 90 days. Minimum accepted duration is 1 hour.
-      duration = time.parse_duration_ns(duration_str)
-
-      renew_before_str = certificate.spec.renewBefore
-      renew_before_str = "0h" {
-        not certificate.spec.renewBefore
-      }
-
-      # If unset, this defaults to 1/3 of the issued certificate's lifetime. Minimum accepted value is 5 minutes.
-      renew_before = time.parse_duration_ns(certificate.spec.renewBefore)
-      renew_before = duration / 3 {
-        not certificate.spec.renewBefore
+        msg := sprintf("Certificate spec.duration must be defined and must be no greater than <%v>.", [input.parameters.maxDuration])
       }
 
       violation[{"msg": msg}] {
+        not certificate.spec.renewBefore
+        msg := sprintf("Certificate spec.renewBefore must be defined and must be no greater than <%v>.", [input.parameters.maxRenewBefore])
+      }
+
+      violation[{"msg": msg}] {
+        duration := time.parse_duration_ns(certificate.spec.duration)
         duration > max_duration
-        msg := sprintf("Invalid certificate duration: <%v> (or <%v>ns). Maximum duration allowed: <%v>", [ duration_str, duration, input.parameters.maxDuration ])
+        msg := sprintf("Certificate spec.duration: <%v> must be no greater than <%v>.", [ certificate.spec.duration, input.parameters.maxDuration ])
       }
       
       violation[{"msg": msg}] {
+        renew_before := time.parse_duration_ns(certificate.spec.renewBefore)
         renew_before > max_renew_before
-        msg := sprintf("Invalid certificate renewBefore: <%v> (or <%v>ns). Maximum renewBefore allowed: <%v>", [ renew_before_str, renew_before, input.parameters.maxRenewBefore ])
+        msg := sprintf("Certificate spec.renewBefore: <%v> must be no greater than <%v>.", [ certificate.spec.renewBefore, input.parameters.maxRenewBefore ])
       }

@@ -1,2 +1,3 @@
 resources:
-  - constraint-reqiure-max-duration-max-renew-before.yaml
+  # - constraint-reqiure-max-duration-max-renew-before.yaml
+  - constraint-optional-max-duration-max-renew-before.yaml

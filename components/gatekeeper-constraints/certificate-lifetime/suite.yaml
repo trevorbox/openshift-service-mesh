@@ -65,3 +65,63 @@ tests:
     - samples/namespace-istio-ingress-negative-match.yaml
     assertions:
     - violations: no
+- name: Validate optional max duration
+  template: template.yaml
+  constraint: samples/constraint-optional-max-duration.yaml
+  cases:
+  - name: No duration, but its optional so allow
+    object: samples/certificate-no-duration.yaml
+    inventory:
+    - samples/namespace-istio-ingress.yaml
+    # assertions:
+    # - violations: 1
+    #   message: "Certificate spec.duration must be defined and must be no greater than <2160h>."
+    assertions:
+    - violations: no
+  - name: Invalid duration, but its optional so allow
+    object: samples/certificate-invalid-duration.yaml
+    inventory:
+    - samples/namespace-istio-ingress.yaml
+    # assertions:
+    # - message: "Certificate spec.duration: <2160h1ms> must be no greater than <2160h>."
+    #   violations: 1
+    assertions:
+    - violations: no
+- name: Validate optional renewBefore
+  template: template.yaml
+  constraint: samples/constraint-optional-max-renew-before.yaml
+  cases:
+  - name: No renewBefore, but its optional so allow
+    object: samples/certificate-no-renewbefore.yaml
+    inventory:
+    - samples/namespace-istio-ingress.yaml
+    # assertions:
+    # - message: "Certificate spec.renewBefore must be defined and must be no greater than <360h>."
+    #   violations: 1
+    assertions:
+    - violations: no
+  - name: Invalid renewBefore, but its optional so allow
+    object: samples/certificate-invalid-renewbefore.yaml
+    inventory:
+    - samples/namespace-istio-ingress.yaml
+    # assertions:
+    # - message: "Certificate spec.renewBefore: <360h1ms> must be no greater than <360h>."
+    #   violations: 1
+    assertions:
+    - violations: no
+- name: Validate optional duration and renewBefore
+  template: template.yaml
+  constraint: samples/constraint-optional-max-duration-max-renew-before.yaml
+  cases:
+  - name: Invalid duration and renewBefore, but they are both optional so allow
+    object: samples/certificate-invalid-duration-renewbefore.yaml
+    inventory:
+    - samples/namespace-istio-ingress.yaml
+    # assertions:
+    # - violations: 2
+    # - message: "Certificate spec.duration: <2160h1ms> must be no greater than <2160h>."
+    #   violations: 1
+    # - message: "Certificate spec.renewBefore: <360h1ms> must be no greater than <360h>."
+    #   violations: 1
+    assertions:
+    - violations: no

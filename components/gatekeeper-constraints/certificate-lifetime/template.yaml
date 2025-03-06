@@ -3,7 +3,7 @@ kind: ConstraintTemplate
 metadata:
   name: certificatedurationrenewal
   annotations:
-    description: Prohibits wildcard host configuration
+    description: A policy to requre cert-manager Certificates to have a maximum duration and renewBefore.
 spec:
   crd:
     spec:
@@ -12,11 +12,35 @@ spec:
       validation:
         openAPIV3Schema:
           type: object
+          description: >-
+            Requires cert-manager Certificates to have a maximum duration and renewBefore.
+            By default a valid `maxDuration` and ``maxRenewBefore` is required, these verifications
+            can be made optional by setting the `maxDurationOptional` and/or `maxrenewBeforeOptional` parameter to
+            `true`.
           properties:
             maxDuration:
+              description: >- 
+                "The maximum allowed certificate spec.duration.
+                Requested 'duration' (i.e. lifetime) of the Certificate. 
+                Note that the issuer may choose to ignore the requested duration, just like any other requested attribute.
+                Value must be in units accepted by Go time.ParseDuration https://golang.org/pkg/time/#ParseDuration."
               type: string
+            maxDurationOptional:
+              type: boolean
+              description: >- 
+                "When set to `true` the maxDuration verification is optional, defaults
+                to false."
             maxRenewBefore:
+              description: >- 
+                "The maximum allowed certificate spec.renewBefore.
+                How long before the currently issued certificate's expiry cert-manager should renew the certificate.
+                Value must be in units accepted by Go time.ParseDuration https://golang.org/pkg/time/#ParseDuration."
               type: string
+            maxRenewBeforeOptional:
+              type: boolean
+              description: >- 
+                "When set to `true` the maxRenewBefore verification is optional, defaults
+                to false."
   targets:
   - target: admission.k8s.gatekeeper.sh
     rego: |-
@@ -28,23 +52,39 @@ spec:
       certificate := input.review.object
 
       violation[{"msg": msg}] {
-        not certificate.spec.duration
+        not duration_is_optional
+        not certificate.spec.duration        
         msg := sprintf("Certificate spec.duration must be defined and must be no greater than <%v>.", [input.parameters.maxDuration])
       }
 
       violation[{"msg": msg}] {
-        not certificate.spec.renewBefore
+        not renew_before_is_optional
+        not certificate.spec.renewBefore        
         msg := sprintf("Certificate spec.renewBefore must be defined and must be no greater than <%v>.", [input.parameters.maxRenewBefore])
       }
 
       violation[{"msg": msg}] {
-        duration := time.parse_duration_ns(certificate.spec.duration)
+        not duration_is_optional
+        duration_str := certificate.spec.duration 
+        duration := time.parse_duration_ns(duration_str)
         duration > max_duration
-        msg := sprintf("Certificate spec.duration: <%v> must be no greater than <%v>.", [ certificate.spec.duration, input.parameters.maxDuration ])
+        msg := sprintf("Certificate spec.duration: <%v> must be no greater than <%v>.", [ duration_str, input.parameters.maxDuration ])
       }
       
       violation[{"msg": msg}] {
-        renew_before := time.parse_duration_ns(certificate.spec.renewBefore)
+        not renew_before_is_optional
+        renew_before_str := certificate.spec.renewBefore 
+        renew_before := time.parse_duration_ns(renew_before_str)
         renew_before > max_renew_before
-        msg := sprintf("Certificate spec.renewBefore: <%v> must be no greater than <%v>.", [ certificate.spec.renewBefore, input.parameters.maxRenewBefore ])
+        msg := sprintf("Certificate spec.renewBefore: <%v> must be no greater than <%v>.", [ renew_before_str, input.parameters.maxRenewBefore ])
+      }
+
+      duration_is_optional {
+        parameters := object.get(input, "parameters", {})
+        object.get(parameters, "maxDurationOptional", false) == true
+      }
+
+      renew_before_is_optional {
+        parameters := object.get(input, "parameters", {})
+        object.get(parameters, "maxRenewBeforeOptional", false) == true
       }

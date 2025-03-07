@@ -1,0 +1,3 @@
+resources:
+  # - constraint-reqiure-max-duration-max-renew-before.yaml
+  - verify-deploymentconfig/constraint.yaml

@@ -18,3 +18,4 @@ resources:
   - strict-mtls-mesh-peer-authentication
   - strict-mtls-peer-authentication
   - certificate-lifetime
+  - verifydeprecatedapi

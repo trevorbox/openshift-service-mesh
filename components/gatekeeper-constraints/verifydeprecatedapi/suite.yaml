@@ -1,0 +1,95 @@
+kind: Suite
+apiVersion: test.gatekeeper.sh/v1alpha1
+metadata:
+  name: verifydeprecatedapi
+tests:
+- name: verifydeprecatedapi-1.16
+  template: template.yaml
+  constraint: samples/verify-1.16/constraint.yaml
+  cases:
+  - name: example-allowed
+    object: samples/verify-1.16/example_allowed.yaml
+    assertions:
+    - violations: no
+  - name: example-disallowed
+    object: samples/verify-1.16/example_disallowed.yaml
+    assertions:
+    - violations: yes
+- name: verifydeprecatedapi-1.22
+  template: template.yaml
+  constraint: samples/verify-1.22/constraint.yaml
+  cases:
+  - name: example-allowed
+    object: samples/verify-1.22/example_allowed.yaml
+    assertions:
+    - violations: no
+  - name: example-disallowed
+    object: samples/verify-1.22/example_disallowed.yaml
+    assertions:
+    - violations: yes
+- name: verifydeprecatedapi-1.25
+  template: template.yaml
+  constraint: samples/verify-1.25/constraint.yaml
+  cases:
+  - name: example-allowed
+    object: samples/verify-1.25/example_allowed.yaml
+    assertions:
+    - violations: no
+  - name: example-disallowed
+    object: samples/verify-1.25/example_disallowed.yaml
+    assertions:
+    - violations: yes
+- name: verifydeprecatedapi-1.26
+  template: template.yaml
+  constraint: samples/verify-1.26/constraint.yaml
+  cases:
+  - name: example-allowed
+    object: samples/verify-1.26/example_allowed.yaml
+    assertions:
+    - violations: no
+  - name: example-disallowed
+    object: samples/verify-1.26/example_disallowed.yaml
+    assertions:
+    - violations: yes
+- name: verifydeprecatedapi-1.27
+  template: template.yaml
+  constraint: samples/verify-1.27/constraint.yaml
+  cases:
+  - name: example-allowed
+    object: samples/verify-1.27/example_allowed.yaml
+    assertions:
+    - violations: no
+  - name: example-disallowed
+    object: samples/verify-1.27/example_disallowed.yaml
+    assertions:
+    - violations: yes
+
+- name: verify deploymentconfig
+  template: template.yaml
+  constraint: samples/verify-deploymentconfig/constraint.yaml
+  cases:
+  - name: deny deploymentconfig
+    object: samples/verify-deploymentconfig/example-deploymentconfig.yaml
+    inventory:
+    - samples/verify-deploymentconfig/namespace-istio-ingress.yaml
+    assertions:
+    - violations: 1
+      message: "API DeploymentConfig for apps.openshift.io/v1 is deprecated in Kubernetes version 1.27 OpenShift version 4.14, please see Kubernetes or OpenShift API deprecation guide"
+  - name: allow deploymentconfig in unmatched namespace
+    object: samples/verify-deploymentconfig/example-deploymentconfig.yaml
+    inventory:
+    - samples/verify-deploymentconfig/namespace-istio-ingress-negative-match.yaml
+    assertions:
+    - violations: no
+
+- name: verify deploymentconfig openshift w/targetApi
+  template: template.yaml
+  constraint: samples/verify-deploymentconfig/constraint-openshift-targetapi.yaml
+  cases:
+  - name: deny deploymentconfig
+    object: samples/verify-deploymentconfig/example-deploymentconfig.yaml
+    inventory:
+    - samples/verify-deploymentconfig/namespace-istio-ingress.yaml
+    assertions:
+    - violations: 1
+      message: "API DeploymentConfig for apps.openshift.io/v1 is deprecated in Kubernetes version 1.27 OpenShift version 4.14, please use v2 instead"

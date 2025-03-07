@@ -1,0 +1,20 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: VerifyDeprecatedAPI
+metadata:
+  name: verify-deploymentconfig
+spec:
+  match:
+    kinds:
+      - apiGroups: ["apps.openshift.io"]
+        kinds: ["DeploymentConfig"]
+    namespaceSelector:
+      matchExpressions:
+        - key: maistra.io/member-of
+          operator: Exists
+  parameters:
+    kvs: 
+      - deprecatedAPI: "apps.openshift.io/v1"
+        kinds: ["DeploymentConfig"]
+        targetAPI: "None"
+    k8sVersion: 1.27
+    ocpVersion: 4.14

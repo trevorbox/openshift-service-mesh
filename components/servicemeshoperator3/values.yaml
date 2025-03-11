@@ -8,11 +8,11 @@ operatorGroups:
   createNamespace: true
 
 operators:
-- channel: candidates
+- channel: stable
   installPlanApproval: Manual
   name: servicemeshoperator3
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  csv: servicemeshoperator3.v3.0.0-tp.2
+  csv: servicemeshoperator3.v3.0.0
   namespace: servicemeshoperator3
   installPlanVerifierActiveDeadlineSeconds: 1200

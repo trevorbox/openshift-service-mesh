@@ -9,7 +9,7 @@ istio:
   spec:
     namespace: istio-system3
     updateStrategy:
-      type: InPlace
+      type: RevisionBased
     values:
       meshConfig:
         accessLogFile: /dev/stdout
@@ -30,4 +30,4 @@ istio:
               port: 4317
         outboundTrafficPolicy:
           mode: REGISTRY_ONLY # ALLOW_ANY
-    version: v1.23.0
+    version: v1.24.3

@@ -12,5 +12,5 @@ helmCharts:
 resources:
   - ../../../../components/istio-ingressgateway/clusterissuer-self-signer.yaml
   - ../../../../components/istio-ingressgateway/networkpolicy-allow-from-openshift-ingress.yaml
-  - authorizationpolicy-allowed-ips.yaml
+  # - authorizationpolicy-allowed-ips.yaml
   - edge-gateway.yaml

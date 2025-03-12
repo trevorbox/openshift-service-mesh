@@ -33,6 +33,7 @@ projects:
     namespace: openshift-gitops
     sourceRepos:
     - https://github.com/trevorbox/openshift-service-mesh
+    - https://github.com/redhat-cop/helm-charts
     destinations: |
       - namespace: '*'
         server: https://kubernetes.default.svc

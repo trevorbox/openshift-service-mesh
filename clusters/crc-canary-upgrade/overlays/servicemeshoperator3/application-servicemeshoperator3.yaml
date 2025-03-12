@@ -1,7 +1,7 @@
 ﻿apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: servicemeshoperator3
+  name: servicemeshoperator3-deploy
   namespace: openshift-gitops
 spec:
   destination:
@@ -28,7 +28,6 @@ spec:
           csv: servicemeshoperator3.v3.0.0
           namespace: servicemeshoperator3
           installPlanVerifierActiveDeadlineSeconds: 1200
-
   syncPolicy:
     automated:
       selfHeal: true

@@ -1,0 +1,48 @@
+﻿apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: servicemeshoperator3
+  namespace: openshift-gitops
+spec:
+  destination:
+    namespace: servicemeshoperator3
+    server: 'https://kubernetes.default.svc'
+  project: cluster-config
+  source:
+    path: charts/operators-installer
+    repoURL: https://github.com/redhat-cop/helm-charts
+    targetRevision: HEAD
+    helm:
+      valuesObject:
+        approveManualInstallPlanViaHook: true
+        installPlanApproverAndVerifyJobsImage: quay.io/openshift/origin-cli:4.14
+        operatorGroups:
+        - name: servicemeshoperator3
+          createNamespace: true
+        operators:
+        - channel: stable
+          installPlanApproval: Manual
+          name: servicemeshoperator3
+          source: redhat-operators
+          sourceNamespace: openshift-marketplace
+          csv: servicemeshoperator3.v3.0.0
+          namespace: servicemeshoperator3
+          installPlanVerifierActiveDeadlineSeconds: 1200
+
+  syncPolicy:
+    automated:
+      selfHeal: true
+    retry:
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 10m
+      limit: -1
+    syncOptions:
+      - ApplyOutOfSyncOnly=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+      - ServerSideApply=true
+      - FailOnSharedResource=true
+      - RespectIgnoreDifferences=true
+      - CreateNamespace=false

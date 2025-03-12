@@ -220,7 +220,8 @@ applications:
     destination:
       namespace: openshift-gitops
     source:
-      path: components/servicemeshoperator3
+      path: clusters/crc-canary-upgrade/overlays/components/servicemeshoperator3
+      # path: components/servicemeshoperator3
 
   ossm3-istio-system:
     annotations:

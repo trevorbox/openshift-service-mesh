@@ -54,11 +54,11 @@ kiali:
           #     is_proxy: true
           #     namespace: istio-ingress
           # enabled: true
-        # config_map_name: istio-default-v1-24-3
-        # istio_sidecar_injector_config_map_name: istio-sidecar-injector-default-v1-24-3
-        # istiod_deployment_name: istiod-default-v1-24-3
+        config_map_name: istio-default-v1-24-3
+        istio_sidecar_injector_config_map_name: istio-sidecar-injector-default-v1-24-3
+        istiod_deployment_name: istiod-default-v1-24-3
         root_namespace: istio-system
-        # url_service_version: 'http://istiod-default-v1-24-3.istio-system.svc.cluster.local:15014/version'
+        url_service_version: 'http://istiod-default-v1-24-3.istio-system.svc.cluster.local:15014/version'
       prometheus:
         url: 'http://prometheus-server.prometheus.svc.cluster.local'
       tracing:

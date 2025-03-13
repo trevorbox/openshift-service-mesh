@@ -26,7 +26,8 @@ kiali:
       replicas: 1
     kiali_feature_flags:
       # Turns on canary upgrade support
-      istio_upgrade_action: true
+      # istio_upgrade_action: true
+      istio_upgrade_action: false
     external_services:
       custom_dashboards:
         namespace_label: kubernetes_namespace

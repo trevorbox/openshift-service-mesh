@@ -1,19 +1,79 @@
-smcp:
-  name: ossm2
-  namespace: istio-system
-ingressgateway:
-  namespace: istio-ingress
-deployment:
-  namespace: kiali
 consoleLink: 
   enabled: true
-  route: "https://kiali-ossm2-istio-system-kiali.apps-crc.testing"
-grafana:
-  url: https://grafana-instance-route-grafana.apps-crc.testing
-  in_cluster_url: http://grafana-instance-service.grafana.svc:3000
-tracing:
-  url: https://jaeger-ui-proxy-tempo-system.apps-crc.testing
-prometheus:
-  url: http://prometheus-server.prometheus.svc.cluster.local
-  auth: 
-  query_scope:
+  route: "https://kiali-kiali.apps-crc.testing"
+ossmconsole:
+  enabled: false
+kiali:
+  spec:
+    auth:
+      strategy: openshift
+    deployment:
+      resources:
+        requests:
+          cpu: 100m
+          memory: 256Mi
+      image_pull_policy: ''
+      cluster_wide_access: true
+      logger:
+        log_level: debug
+      ingress:
+        enabled: true
+      instance_name: kiali
+      pod_labels:
+        # maistra.io/expose-route: 'true'
+        sidecar.istio.io/inject: 'false'
+      namespace: kiali
+      replicas: 1
+    external_services:
+      custom_dashboards:
+        namespace_label: kubernetes_namespace
+      grafana:
+        dashboards:
+          - name: Istio Service Dashboard
+            variables:
+              namespace: var-namespace
+              service: var-service
+          - name: Istio Workload Dashboard
+            variables:
+              namespace: var-namespace
+              workload: var-workload
+          - name: Istio Mesh Dashboard
+          - name: Istio Control Plane Dashboard
+          - name: Istio Performance Dashboard
+          - name: Istio Wasm Extension Dashboard
+        enabled: true
+        in_cluster_url: 'http://grafana-instance-service.grafana.svc:3000'
+        url: 'https://grafana-instance-route-grafana.apps-crc.testing'
+      istio:
+        component_status:
+          # components:
+          #   - app_label: istiod
+          #     is_core: true
+          #   - app_label: istio-ingressgateway
+          #     is_core: true
+          #     is_proxy: true
+          #     namespace: istio-ingress
+          enabled: true
+        config_map_name: istio-default-v1-24-3
+        istio_sidecar_injector_config_map_name: istio-sidecar-injector-default-v1-24-3
+        istiod_deployment_name: istiod-default-v1-24-3
+        root_namespace: istio-system
+        url_service_version: 'http://istiod-default-v1-24-3.istio-system.svc.cluster.local:15014/version'
+      prometheus:
+        url: 'http://prometheus-server.prometheus.svc.cluster.local'
+      tracing:
+        enabled: true
+        in_cluster_url: 'http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:16685'
+        query_timeout: 30
+        url: 'https://jaeger-ui-proxy-tempo-system.apps-crc.testing'
+        use_grpc: true
+    installation_tag: 'Kiali3'
+    istio_namespace: istio-system
+    istio_labels:
+      app_label_name: "app"
+      egress_gateway_label: "istio=egressgateway"
+      ingress_gateway_label: "istio=ingressgateway"
+      injection_label_name: "istio-injection"
+      injection_label_rev: "istio.io/rev"
+      version_label_name: "version"
+    # version: v1.73

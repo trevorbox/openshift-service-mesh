@@ -1,6 +1,6 @@
 requireMtls: false
 kiali:
-  namespace: kiali3
+  namespace: kiali
 tempo:
   enabled: false
   host: tempo-minio-dev-distributor.tempo-system.svc.cluster.local

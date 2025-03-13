@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - namespace-istio-cni.yaml
   - networkpolicy-istio-istiod-default.yaml
+  - serviceentry-kube-api.yaml
 
 helmCharts:
 - name: ossm3

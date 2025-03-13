@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - namespace-kiali.yaml
+  - networkpolicy-grafana.yaml
 
 helmCharts:
 - name: kiali

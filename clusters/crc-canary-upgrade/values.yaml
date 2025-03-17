@@ -66,7 +66,6 @@ applications:
       - CreateNamespace=false
       - SkipDryRunOnMissingResource=true
 
-
   service-mesh-operator:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
@@ -83,7 +82,8 @@ applications:
     destination:
       namespace: openshift-gitops
     source:
-      path: components/istio-member-namespaces
+      # path: components/istio-member-namespaces
+      path: clusters/crc-canary-upgrade/overlays/istio-member-namespaces
                          
   openshift-monitoring:
     annotations:

@@ -1,0 +1,17 @@
+members:
+  - istio-ingress
+  - golang-ex
+  - bookinfo
+  - nginx-echo-headers
+  - spring-boot-demo
+  - oauth2-proxy
+  # - spring-boot-demo2
+labels:
+  # istio.io/rev: ossm2
+  istio.io/rev: default-v1-24-3
+  argocd.argoproj.io/managed-by: openshift-gitops
+annotations:
+  argocd.argoproj.io/sync-options: Delete=false 
+smcp:
+  name: ossm2
+  namespace: istio-system

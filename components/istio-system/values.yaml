@@ -1,8 +1,0 @@
-smcp:
-  outboundPolicy: ALLOW_ANY
-  discoverySelectors:
-    - matchExpressions:
-        - key: istio.io/rev
-          operator: Exists
-    - matchLabels:
-        kubernetes.io/metadata.name: istio-system

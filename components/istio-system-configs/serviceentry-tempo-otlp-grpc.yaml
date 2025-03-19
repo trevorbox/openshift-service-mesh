@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1beta1
+kind: ServiceEntry
+metadata:
+  name: tempo-otlp-grpc
+  annotations:
+    argocd.argoproj.io/sync-wave: '4'
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  hosts:
+  - tempo-minio-dev-distributor.tempo-system.svc.cluster.local
+  location: MESH_EXTERNAL
+  ports:
+  - number: 4317
+    name: otlp-grpc
+    protocol: GRPC
+  resolution: DNS

@@ -1,0 +1,12 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: disable-mtls-for-tempo
+  annotations:
+    argocd.argoproj.io/sync-wave: '4'
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  host: tempo-minio-dev-distributor.tempo-system.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: DISABLE

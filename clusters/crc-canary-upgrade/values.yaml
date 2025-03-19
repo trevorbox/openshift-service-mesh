@@ -75,6 +75,24 @@ applications:
     source:
       path: components/service-mesh-operator
 
+  ossm2:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '1'
+    destination:
+      namespace: istio-system
+    source:
+      path: components/ossm2   
+
+  istio-system-configs:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '2'
+    destination:
+      namespace: istio-system
+    source:
+      path: components/istio-system-configs
+
   istio-member-namespaces:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
@@ -92,16 +110,7 @@ applications:
     destination:
       namespace: openshift-monitoring
     source:
-      path: components/openshift-monitoring
-
-  istio-system:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '2'
-    destination:
-      namespace: istio-system
-    source:
-      path: components/istio-system                          
+      path: components/openshift-monitoring               
 
   tempo-system:
     annotations:
@@ -231,6 +240,15 @@ applications:
     source:
       path: clusters/crc-canary-upgrade/overlays/servicemeshoperator3
       # path: components/servicemeshoperator3
+
+  istio-cni-configs:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '1'
+    destination:
+      namespace: istio-cni
+    source:
+      path: components/istio-cni-configs
 
   ossm3-istio-system:
     annotations:

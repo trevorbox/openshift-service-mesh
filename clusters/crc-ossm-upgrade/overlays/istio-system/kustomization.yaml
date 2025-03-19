@@ -10,6 +10,6 @@ helmCharts:
   repo: https://trevorbox.github.io/helm-charts
   namespace: istio-system
   valuesFile: values.yaml
-  version: ~2.6.6
+  version: ~2.6.7
   releaseName: istio-system
 

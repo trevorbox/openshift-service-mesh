@@ -33,7 +33,7 @@ revisions:
         pilot:
           resources:
             requests:
-              cpu: 200m
+              cpu: 100m
               memory: 128Mi
         global:
           proxy:
@@ -79,6 +79,28 @@ revisions:
       updateStrategy:
         type: RevisionBased
       values:
+        pilot:
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+        global:
+          proxy:
+            resources:
+              limits:
+                cpu: 100m
+                memory: 64Mi
+              requests:
+                cpu: 50m
+                memory: 32Mi
+          proxy_init:
+            resources:
+              limits:
+                cpu: 100m
+                memory: 64Mi
+              requests:
+                cpu: 50m
+                memory: 32Mi
         meshConfig:
           accessLogFile: /dev/stdout
           discoverySelectors:
@@ -106,6 +128,28 @@ revisions:
       updateStrategy:
         type: RevisionBased
       values:
+        pilot:
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+        global:
+          proxy:
+            resources:
+              limits:
+                cpu: 100m
+                memory: 64Mi
+              requests:
+                cpu: 50m
+                memory: 32Mi
+          proxy_init:
+            resources:
+              limits:
+                cpu: 100m
+                memory: 64Mi
+              requests:
+                cpu: 50m
+                memory: 32Mi
         meshConfig:
           accessLogFile: /dev/stdout
           discoverySelectors:

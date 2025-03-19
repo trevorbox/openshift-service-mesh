@@ -67,14 +67,14 @@ kiali:
           enabled: false
         istio_canary_revision:
           # Revision string of old Istio version
-          current: "v1-24-3"
+          current: "default-v1-24-3"
           # Revision string of new Istio version
-          upgrade: "v1-24-3"
-        # config_map_name: istio-default-v1-24-3
-        # istio_sidecar_injector_config_map_name: istio-sidecar-injector-default-v1-24-3
-        # istiod_deployment_name: istiod-default-v1-24-3
+          upgrade: "canary-v1-24-3"
+        config_map_name: istio-ossm2 # istio-default-v1-24-3
+        istio_sidecar_injector_config_map_name: istio-sidecar-injector-ossm2 # istio-sidecar-injector-default-v1-24-3
+        istiod_deployment_name: istiod-ossm2 # istiod-default-v1-24-3
         root_namespace: istio-system
-        url_service_version: 'http://istiod-default-v1-24-3.istio-system.svc.cluster.local:15014/version'
+        url_service_version: 'http://istiod-ossm2.istio-system.svc.cluster.local:15014/version' # 'http://istiod-default-v1-24-3.istio-system.svc.cluster.local:15014/version'
       prometheus:
         url: 'http://prometheus-server.prometheus.svc.cluster.local'
       tracing:

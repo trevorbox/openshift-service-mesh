@@ -78,7 +78,6 @@ kiali:
       prometheus:
         url: 'http://prometheus-server.prometheus.svc.cluster.local'
       tracing:
-      tracing:
         enabled: true
         # grpc port defaults to 9095
         grpc_port: 9095 

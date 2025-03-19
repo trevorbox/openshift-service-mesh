@@ -30,6 +30,23 @@ revisions:
       updateStrategy:
         type: RevisionBased
       values:
+        global:
+          proxy:
+            resources:
+              limits:
+                cpu: 100m
+                memory: 64Mi
+              requests:
+                cpu: 50m
+                memory: 32Mi
+          proxy_init:
+            resources:
+              limits:
+                cpu: 100m
+                memory: 64Mi
+              requests:
+                cpu: 50m
+                memory: 32Mi
         meshConfig:
           accessLogFile: /dev/stdout
           discoverySelectors:

@@ -18,7 +18,7 @@ istioCNI:
 istioRevisionTags: 
   # https://istio.io/latest/docs/setup/upgrade/canary/#default-tag
   default:
-    istioRevision: stable-v1-24-3 # default-v1-24-3
+    istioRevision: default-v1-24-3
   stable:
     istioRevision: stable-v1-24-3
   canary:

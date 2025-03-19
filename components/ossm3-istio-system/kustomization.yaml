@@ -2,11 +2,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-resources:
-  - namespace-istio-system.yaml
-  - namespace-istio-cni.yaml
-  - serviceentry-kube-api.yaml
-
 helmCharts:
 - name: ossm3
   repo: https://trevorbox.github.io/helm-charts

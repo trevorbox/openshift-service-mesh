@@ -30,6 +30,11 @@ revisions:
       updateStrategy:
         type: RevisionBased
       values:
+        pilot:
+          resources:
+            requests:
+              cpu: 200m
+              memory: 128Mi
         global:
           proxy:
             resources:

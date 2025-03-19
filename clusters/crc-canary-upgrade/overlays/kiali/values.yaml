@@ -78,12 +78,14 @@ kiali:
       prometheus:
         url: 'http://prometheus-server.prometheus.svc.cluster.local'
       tracing:
+      tracing:
         enabled: true
-        internal_url: 'http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:16685'
-        grpc_port: 16685
-        query_timeout: 30
-        url: 'https://jaeger-ui-proxy-tempo-system.apps-crc.testing'
+        # grpc port defaults to 9095
+        grpc_port: 9095 
+        internal_url: "http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200"
+        provider: "tempo"
         use_grpc: true
+        external_url: 'https://jaeger-ui-proxy-tempo-system.apps-crc.testing'
     installation_tag: 'Kiali3'
     istio_namespace: istio-system
     istio_labels:

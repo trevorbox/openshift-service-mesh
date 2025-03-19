@@ -8,6 +8,13 @@ kiali:
     auth:
       strategy: openshift
     deployment:
+      discovery_selectors:
+        default:
+          - matchExpressions:
+              - key: istio.io/rev
+                operator: Exists
+          - matchLabels:
+              kubernetes.io/metadata.name: istio-system
       resources:
         requests:
           cpu: 100m

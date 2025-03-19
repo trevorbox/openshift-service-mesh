@@ -1,41 +1,107 @@
-requireMtls: false
+requireMtls: true
 kiali:
   namespace: kiali
 tempo:
-  enabled: false
+  enabled: true
   host: tempo-minio-dev-distributor.tempo-system.svc.cluster.local
 networkpolicy:
   userWorkloadMonitoring:
-    enabled: false
+    enabled: true
 serviceMonitor:
-  enabled: false
+  enabled: true
 telemetry:
-  enabled: false
-istio:
-  name: default
-  spec:
-    namespace: istio-system
-    updateStrategy:
-      type: RevisionBased
-    values:
-      meshConfig:
-        accessLogFile: /dev/stdout
-        discoverySelectors:
-          - matchExpressions:
-              - key: istio.io/rev
-                operator: Exists
-        enableTracing: true
-        # TODO
-        # extensionProviders:
-        #   - name: otel-tracing
-        #     opentelemetry:
-        #       port: 4317
-        #       service: otel-collector.istio-system.svc.cluster.local
-        extensionProviders:
-          - name: tempo
-            opentelemetry:
-              service: tempo-minio-dev-distributor.tempo-system.svc.cluster.local
-              port: 4317
-        outboundTrafficPolicy:
-          mode: REGISTRY_ONLY # ALLOW_ANY
-    version: v1.24.3
+  enabled: true
+istioCNI:
+  version: v1.24.3
+  namespace: istio-cni
+# https://istio.io/latest/docs/setup/upgrade/canary/
+istioRevisionTags: 
+  # https://istio.io/latest/docs/setup/upgrade/canary/#default-tag
+  default:
+    istioRevision: default-v1-24-3
+  stable:
+    istioRevision: stable-v1-24-3
+  canary:
+    istioRevision: canary-v1-24-3
+revisions:
+  - name: default
+    spec:
+      namespace: istio-system
+      updateStrategy:
+        type: RevisionBased
+      values:
+        meshConfig:
+          accessLogFile: /dev/stdout
+          discoverySelectors:
+            - matchExpressions:
+                - key: istio.io/rev
+                  operator: Exists
+          enableTracing: true
+          # TODO
+          # extensionProviders:
+          #   - name: otel-tracing
+          #     opentelemetry:
+          #       port: 4317
+          #       service: otel-collector.istio-system.svc.cluster.local
+          extensionProviders:
+            - name: tempo
+              opentelemetry:
+                service: tempo-minio-dev-distributor.tempo-system.svc.cluster.local
+                port: 4317
+          outboundTrafficPolicy:
+            mode: REGISTRY_ONLY # ALLOW_ANY
+      version: v1.24.3
+  - name: canary
+    spec:
+      namespace: istio-system
+      updateStrategy:
+        type: RevisionBased
+      values:
+        meshConfig:
+          accessLogFile: /dev/stdout
+          discoverySelectors:
+            - matchExpressions:
+                - key: istio.io/rev
+                  operator: Exists
+          enableTracing: true
+          # TODO
+          # extensionProviders:
+          #   - name: otel-tracing
+          #     opentelemetry:
+          #       port: 4317
+          #       service: otel-collector.istio-system.svc.cluster.local
+          extensionProviders:
+            - name: tempo
+              opentelemetry:
+                service: tempo-minio-dev-distributor.tempo-system.svc.cluster.local
+                port: 4317
+          outboundTrafficPolicy:
+            mode: REGISTRY_ONLY # ALLOW_ANY
+      version: v1.24.3
+  - name: stable
+    spec:
+      namespace: istio-system
+      updateStrategy:
+        type: RevisionBased
+      values:
+        meshConfig:
+          accessLogFile: /dev/stdout
+          discoverySelectors:
+            - matchExpressions:
+                - key: istio.io/rev
+                  operator: Exists
+          enableTracing: true
+          # TODO
+          # extensionProviders:
+          #   - name: otel-tracing
+          #     opentelemetry:
+          #       port: 4317
+          #       service: otel-collector.istio-system.svc.cluster.local
+          extensionProviders:
+            - name: tempo
+              opentelemetry:
+                service: tempo-minio-dev-distributor.tempo-system.svc.cluster.local
+                port: 4317
+          outboundTrafficPolicy:
+            mode: REGISTRY_ONLY # ALLOW_ANY
+      version: v1.24.3

@@ -14,4 +14,4 @@ resources:
   - telemetry-mesh-default.yaml
   - serviceentry-kube-api.yaml
   - networkpolicy-istio-istiod-default.yaml
-
+  - destinationrule-api-server.yaml

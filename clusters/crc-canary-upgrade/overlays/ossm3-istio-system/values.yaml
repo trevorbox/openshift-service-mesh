@@ -33,8 +33,8 @@ revisions:
         pilot:
           resources:
             requests:
-              cpu: 100m
-              memory: 128Mi
+              cpu: 50m
+              memory: 32Mi
         global:
           proxy:
             resources:
@@ -82,8 +82,8 @@ revisions:
         pilot:
           resources:
             requests:
-              cpu: 100m
-              memory: 128Mi
+              cpu: 50m
+              memory: 32Mi
         global:
           proxy:
             resources:
@@ -131,8 +131,8 @@ revisions:
         pilot:
           resources:
             requests:
-              cpu: 100m
-              memory: 128Mi
+              cpu: 50m
+              memory: 32Mi
         global:
           proxy:
             resources:

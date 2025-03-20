@@ -87,6 +87,10 @@ kiali:
         provider: "tempo"
         use_grpc: true
         external_url: 'https://jaeger-ui-proxy-tempo-system.apps-crc.testing'
+        health_check_url: 'http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200'
+        tempo_config:
+          org_id: "1"
+          datasource_uid: "2aaa2e27-41bd-4e18-a253-2b328390e2bc"
     installation_tag: 'Kiali3'
     istio_namespace: istio-system
     istio_labels:

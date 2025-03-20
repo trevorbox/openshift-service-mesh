@@ -1,0 +1,16 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: tempo
+spec:
+  uid: "2aaa2e27-41bd-4e18-a253-2b328390e2bc"
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+  datasource:
+    name: Tempo
+    type: tempo
+    basicAuth: false
+    url: http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200
+    isDefault: false
+    editable: true

@@ -58,7 +58,7 @@ spec:
       enabled: true
       external_url: https://grafana-instance-route-grafana.apps-crc.testing
       # grpc_port: 9095
-      health_check_url: https://grafana-instance-route-grafana.apps-crc.testing
+      health_check_url: http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200/
       internal_url: >-
         http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200/
       provider: tempo

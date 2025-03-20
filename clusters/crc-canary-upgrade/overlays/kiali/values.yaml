@@ -83,8 +83,8 @@ kiali:
         enabled: true
         # grpc port defaults to 9095
         grpc_port: 9095 
-        # internal_url: "http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200"
-        internal_url: "http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:16686/jaeger"
+        internal_url: "http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200/"
+        # internal_url: "http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:16686/jaeger"
         provider: "tempo"
         # use_grpc: true
         use_grpc: false
@@ -94,6 +94,7 @@ kiali:
         tempo_config:
           org_id: "1"
           datasource_uid: "2aaa2e27-41bd-4e18-a253-2b328390e2bc"
+          url_format: "grafana"
     installation_tag: 'Kiali3'
     istio_namespace: istio-system
     istio_labels:

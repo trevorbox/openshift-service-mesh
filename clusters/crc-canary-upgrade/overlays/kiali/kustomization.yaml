@@ -11,7 +11,7 @@ helmCharts:
   namespace: kiali
   # valuesFile: ../../../../components/kiali/values.yaml
   valuesFile: values.yaml
-  version: ~2.0.1
+  version: ~2.0.2
   releaseName: kiali
   # additionalValuesFiles: 
   #   - values.yaml

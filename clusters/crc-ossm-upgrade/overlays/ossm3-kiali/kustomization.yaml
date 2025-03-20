@@ -9,5 +9,5 @@ helmCharts:
   repo: https://trevorbox.github.io/helm-charts
   namespace: kiali
   valuesFile: values.yaml
-  version: ~2.0.1
+  version: ~2.0.2
   releaseName: kiali

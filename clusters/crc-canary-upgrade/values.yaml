@@ -142,7 +142,7 @@ applications:
   istio-ingressgateway:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '3'
+      argocd.argoproj.io/sync-wave: '4'
     destination:
       namespace: istio-ingress
     source:

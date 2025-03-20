@@ -87,7 +87,8 @@ kiali:
         # internal_url: "http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200"
         # internal_url: "http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:16686/jaeger"
         internal_url: "http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:16685"
-        provider: "tempo"
+        # provider: "tempo"
+        provider: "jaeger"
         use_grpc: true
         # use_grpc: false
         external_url: 'https://jaeger-ui-proxy-tempo-system.apps-crc.testing'

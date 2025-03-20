@@ -76,7 +76,7 @@ spec:
       health_check_url: https://tempo-minio-dev-gateway-tempo-system.apps-crc.testing/api/traces/v1/dev/tempo/api/echo
       auth:
         ca_file: /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
-        insecure_skip_verify: false
+        insecure_skip_verify: true
         type: bearer
         use_kiali_token: true
       tempo_config:

@@ -9,7 +9,7 @@ spec:
       dashboards: "grafana"
   datasource:
     name: Tempo
-    type: tempo
+    # type: tempo
     basicAuth: false
     url: http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200
     isDefault: false

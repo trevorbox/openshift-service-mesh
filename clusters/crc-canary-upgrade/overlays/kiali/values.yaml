@@ -57,26 +57,26 @@ kiali:
           - name: "Istio Control Plane Dashboard"
           - name: "Istio Performance Dashboard"
           - name: "Istio Wasm Extension Dashboard"
-      istio:
-        component_status:
-          # components:
-          #   - app_label: istiod
-          #     is_core: true
-          #   - app_label: istio-ingressgateway
-          #     is_core: true
-          #     is_proxy: true
-          #     namespace: istio-ingress
-          enabled: false
-        istio_canary_revision:
-          # Revision string of old Istio version
-          current: "default-v1-24-3"
-          # Revision string of new Istio version
-          upgrade: "canary-v1-24-3"
-        config_map_name: istio-ossm2 # istio-default-v1-24-3
-        istio_sidecar_injector_config_map_name: istio-sidecar-injector-ossm2 # istio-sidecar-injector-default-v1-24-3
-        istiod_deployment_name: istiod-ossm2 # istiod-default-v1-24-3
-        root_namespace: istio-system
-        url_service_version: 'http://istiod-ossm2.istio-system.svc.cluster.local:15014/version' # 'http://istiod-default-v1-24-3.istio-system.svc.cluster.local:15014/version'
+      # istio:
+      #   component_status:
+      #     # components:
+      #     #   - app_label: istiod
+      #     #     is_core: true
+      #     #   - app_label: istio-ingressgateway
+      #     #     is_core: true
+      #     #     is_proxy: true
+      #     #     namespace: istio-ingress
+      #     enabled: false
+      #   istio_canary_revision:
+      #     # Revision string of old Istio version
+      #     current: "default-v1-24-3"
+      #     # Revision string of new Istio version
+      #     upgrade: "canary-v1-24-3"
+      #   config_map_name: istio-ossm2 # istio-default-v1-24-3
+      #   istio_sidecar_injector_config_map_name: istio-sidecar-injector-ossm2 # istio-sidecar-injector-default-v1-24-3
+      #   istiod_deployment_name: istiod-ossm2 # istiod-default-v1-24-3
+      #   root_namespace: istio-system
+      #   url_service_version: 'http://istiod-ossm2.istio-system.svc.cluster.local:15014/version' # 'http://istiod-default-v1-24-3.istio-system.svc.cluster.local:15014/version'
       prometheus:
         url: 'http://prometheus-server.prometheus.svc.cluster.local'
       tracing:

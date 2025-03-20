@@ -83,7 +83,7 @@ kiali:
         enabled: true
         # grpc port defaults to 9095
         grpc_port: 9095 
-        internal_url: "http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200"
+        internal_url: "http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:9095"
         provider: "tempo"
         use_grpc: true
         external_url: 'https://jaeger-ui-proxy-tempo-system.apps-crc.testing'

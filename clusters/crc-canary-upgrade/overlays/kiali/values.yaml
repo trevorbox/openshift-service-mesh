@@ -82,18 +82,19 @@ kiali:
       tracing:
         enabled: true
         # grpc port defaults to 9095
-        grpc_port: 9095 
+        # grpc_port: 9095 
         # grpc_port: 16685
-        # internal_url: "http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200"
+        internal_url: "http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200"
         # internal_url: "http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:16686/jaeger"
-        internal_url: "http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:16685"
-        # provider: "tempo"
-        provider: "jaeger"
-        use_grpc: true
-        # use_grpc: false
+        # internal_url: "http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:16685"
+        provider: "tempo"
+        # provider: "jaeger"
+        # use_grpc: true
+        use_grpc: false
         external_url: 'https://jaeger-ui-proxy-tempo-system.apps-crc.testing'
         # external_url: "http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200"
-        health_check_url: 'http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200'
+        # health_check_url: 'http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200'
+        health_check_url: 'https://grafana-instance-route-grafana.apps-crc.testing'
         tempo_config:
           org_id: "1"
           datasource_uid: "2aaa2e27-41bd-4e18-a253-2b328390e2bc"

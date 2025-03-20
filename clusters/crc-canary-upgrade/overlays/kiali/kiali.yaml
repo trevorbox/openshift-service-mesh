@@ -54,19 +54,33 @@ spec:
       internal_url: http://grafana-instance-service.grafana.svc:3000
     prometheus:
       url: http://prometheus-server.prometheus.svc.cluster.local
+    # tracing:
+    #   enabled: true
+    #   external_url: https://grafana-instance-route-grafana.apps-crc.testing
+    #   # grpc_port: 9095
+    #   health_check_url: http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200/ready
+    #   internal_url: >-
+    #     http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200/
+    #   provider: tempo
+    #   tempo_config:
+    #     datasource_uid: 2aaa2e27-41bd-4e18-a253-2b328390e2bc
+    #     org_id: '1'
+    #     url_format: grafana
+    #   use_grpc: false
     tracing:
       enabled: true
-      external_url: https://grafana-instance-route-grafana.apps-crc.testing
-      # grpc_port: 9095
-      health_check_url: http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200/ready
-      internal_url: >-
-        http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200/
       provider: tempo
-      tempo_config:
-        datasource_uid: 2aaa2e27-41bd-4e18-a253-2b328390e2bc
-        org_id: '1'
-        url_format: grafana
       use_grpc: false
+      internal_url: https://tempo-minio-dev-gateway.tempo-system.svc.cluster.local:8080/api/traces/v1/dev/tempo
+      external_url: https://tempo-minio-dev-gateway-tempo-system.apps-crc.testing/api/traces/v1/dev/search
+      health_check_url: https://tempo-minio-dev-gateway-tempo-system.apps-crc.testing/api/traces/v1/dev/tempo/api/echo
+      auth:
+        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
+        insecure_skip_verify: false
+        type: bearer
+        use_kiali_token: true
+      tempo_config:
+         url_format: "jaeger"
   installation_tag: Kiali3
   istio_labels:
     app_label_name: app

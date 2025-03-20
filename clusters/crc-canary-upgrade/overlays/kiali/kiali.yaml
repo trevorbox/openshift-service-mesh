@@ -57,10 +57,10 @@ spec:
     tracing:
       enabled: true
       external_url: https://grafana-instance-route-grafana.apps-crc.testing
-      grpc_port: 9095
+      # grpc_port: 9095
       health_check_url: https://grafana-instance-route-grafana.apps-crc.testing
       internal_url: >-
-        http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200
+        http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200/
       provider: tempo
       tempo_config:
         datasource_uid: 2aaa2e27-41bd-4e18-a253-2b328390e2bc

@@ -1,0 +1,18 @@
+
+approveManualInstallPlanViaHook: true
+
+installPlanApproverAndVerifyJobsImage: quay.io/openshift/origin-cli:4.14
+
+operatorGroups:
+- name: openshift-opentelemetry-operator
+  createNamespace: true
+
+operators:
+- channel: stable
+  installPlanApproval: Manual
+  name: opentelemetry-product
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  csv: opentelemetry-operator.v0.119.0-1
+  namespace: openshift-opentelemetry-operator
+  installPlanVerifierActiveDeadlineSeconds: 1200

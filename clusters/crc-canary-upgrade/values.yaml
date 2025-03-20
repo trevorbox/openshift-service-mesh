@@ -66,6 +66,15 @@ applications:
       - CreateNamespace=false
       - SkipDryRunOnMissingResource=true
 
+  opentelemetry-product:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '-1'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: components/opentelemetry-product
+
   service-mesh-operator:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous

@@ -22,7 +22,7 @@ spec:
       enabled: true
     instance_name: kiali
     logger:
-      log_level: debug
+      log_level: trace
     namespace: kiali
     pod_labels:
       maistra.io/expose-route: 'true'

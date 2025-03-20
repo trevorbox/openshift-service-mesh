@@ -3,7 +3,7 @@ kind: GrafanaDatasource
 metadata:
   name: tempo
 spec:
-  # uid: "2aaa2e27-41bd-4e18-a253-2b328390e2bc"
+  uid: "2aaa2e27-41bd-4e18-a253-2b328390e2bc"
   instanceSelector:
     matchLabels:
       dashboards: "grafana"

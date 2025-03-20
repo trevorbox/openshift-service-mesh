@@ -82,8 +82,8 @@ kiali:
       tracing:
         enabled: true
         # grpc port defaults to 9095
-        # grpc_port: 9095 
-        grpc_port: 16685
+        grpc_port: 9095 
+        # grpc_port: 16685
         # internal_url: "http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200"
         # internal_url: "http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:16686/jaeger"
         internal_url: "http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:16685"

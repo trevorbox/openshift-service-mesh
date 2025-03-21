@@ -8,22 +8,80 @@ spec:
     metrics: {}
   deploymentUpdateStrategy: {}
   config:
-    exporters:
-      otlp:
-        endpoint: 'tempo-minio-dev-distributor.tempo-system.svc.cluster.local:4317'
-        tls:
-          # insecure: true
-          insecure_skip_verify: true
+    # exporters:
+    #   otlp:
+    #     endpoint: 'tempo-minio-dev-distributor.tempo-system.svc.cluster.local:4317'
+    #     tls:
+    #       # insecure: true
+    #       insecure_skip_verify: true
     receivers:
       otlp:
         protocols:
           grpc:
             endpoint: '0.0.0.0:4317'
           http: {}
+    # service:
+    #   pipelines:
+    #     traces:
+    #       exporters:
+    #         - otlp
+    #       receivers:
+    #         - otlp
+    extensions:
+      bearertokenauth:
+        filename: "/var/run/secrets/kubernetes.io/serviceaccount/token"
+    exporters:
+      otlp: 
+        endpoint: tempo-minio-dev-gateway.tempo-system.svc.cluster.local:8090
+        tls:
+          insecure: false
+          ca_file: "/var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt"
+        auth:
+          authenticator: bearertokenauth
+        headers:
+          X-Scope-OrgID: "dev"
     service:
+      extensions: [bearertokenauth]
       pipelines:
         traces:
           exporters:
             - otlp
           receivers:
             - otlp
+
+# apiVersion: opentelemetry.io/v1alpha1
+# kind: OpenTelemetryCollector
+# metadata:
+#   name: cluster-collector
+#   namespace: opentelemetry-collector
+# spec:
+#   mode: deployment
+#   serviceAccount: otel-collector
+#   config: |
+#       extensions:
+#         bearertokenauth:
+#           filename: "/var/run/secrets/kubernetes.io/serviceaccount/token"
+#       exporters:
+#         otlp/dev: 
+#           endpoint: tempo-simplest-gateway.tempo.svc.cluster.local:8090
+#           tls:
+#             insecure: false
+#             ca_file: "/var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt"
+#           auth:
+#             authenticator: bearertokenauth
+#           headers:
+#             X-Scope-OrgID: "dev"
+#         otlphttp/dev: 
+#           endpoint: https://tempo-simplest-gateway.chainsaw-multitenancy.svc.cluster.local:8080/api/traces/v1/dev
+#           tls:
+#             insecure: false
+#             ca_file: "/var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt"
+#           auth:
+#             authenticator: bearertokenauth
+#           headers:
+#             X-Scope-OrgID: "dev"
+#       service:
+#         extensions: [bearertokenauth]
+#         pipelines:
+#           traces:
+#             exporters: [otlp/dev] 

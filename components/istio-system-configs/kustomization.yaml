@@ -4,11 +4,11 @@ kind: Kustomization
 
 resources:
   - namespace-istio-system.yaml
-  - destinationrule-disable-mtls-for-tempo.yaml
+  - destinationrule-disable-mtls-for-otel-collector.yaml
   - networkpolicy-allow-kiali.yaml
   - networkpolicy-user-workload-access.yaml
   - peerauthentication-mtls-strict.yaml
-  - serviceentry-tempo-otlp-grpc.yaml
+  - serviceentry-otel-collector.yaml
   - servicemonitor-istiod-monitor.yaml
   - telemetry-mesh-default.yaml
   - serviceentry-kube-api.yaml

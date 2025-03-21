@@ -10,7 +10,7 @@ spec:
   config:
     exporters:
       otlp:
-        endpoint: 'tempo-sample-distributor.tempo.svc.cluster.local:4317'
+        endpoint: 'tempo-minio-dev-distributor.tempo-system.svc.cluster.local:4317'
         tls:
           insecure: true
     receivers:

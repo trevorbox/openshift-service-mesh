@@ -1,0 +1,3 @@
+tempo:
+  enabled: true
+  host: otel-collector.istio-system.svc.cluster.local

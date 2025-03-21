@@ -12,7 +12,8 @@ spec:
       otlp:
         endpoint: 'tempo-minio-dev-distributor.tempo-system.svc.cluster.local:4317'
         tls:
-          insecure: true
+          # insecure: true
+          insecure_skip_verify: true
     receivers:
       otlp:
         protocols:

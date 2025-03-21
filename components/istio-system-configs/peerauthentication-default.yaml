@@ -1,0 +1,10 @@
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: default
+  annotations:
+    argocd.argoproj.io/sync-wave: '4'
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  mtls:
+    mode: STRICT

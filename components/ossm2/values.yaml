@@ -1,3 +1,3 @@
 tempo:
   enabled: true
-  host: otel-collector.istio-system.svc.cluster.local
+  host: otel-collector.opentelemetry-collector.svc.cluster.local

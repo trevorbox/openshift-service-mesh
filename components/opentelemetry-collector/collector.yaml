@@ -1,3 +1,5 @@
+# multitenancy -> https://docs.redhat.com/en/documentation/openshift_container_platform/4.16/html/distributed_tracing/distributed-tracing-platform-tempo#distr-tracing-tempo-config-multitenancy_distr-tracing-tempo-configuring
+# combined with example from ossm3 doc -> https://docs.redhat.com/en/documentation/red_hat_openshift_service_mesh/3.0/html/observability/distributed-tracing-and-service-mesh#ossm-config-otel_ossm-traces-assembly
 kind: OpenTelemetryCollector
 apiVersion: opentelemetry.io/v1beta1
 metadata:

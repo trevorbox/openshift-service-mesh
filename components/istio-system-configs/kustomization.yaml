@@ -7,7 +7,8 @@ resources:
   - destinationrule-disable-mtls-for-otel-collector.yaml
   - networkpolicy-allow-kiali.yaml
   - networkpolicy-user-workload-access.yaml
-  - peerauthentication-mtls-strict.yaml
+  # - peerauthentication-mtls-strict.yaml
+  - peerauthentication-default.yaml
   - serviceentry-otel-collector.yaml
   - servicemonitor-istiod-monitor.yaml
   - telemetry-mesh-default.yaml

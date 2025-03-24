@@ -64,7 +64,7 @@ applications:
     destination:
       namespace: istio-system
     source:
-      path: components/istio-system                          
+      path: components/ossm2                          
 
   tempo-system:
     annotations:

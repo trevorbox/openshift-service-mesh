@@ -57,6 +57,16 @@ applications:
     source:
       path: components/openshift-monitoring
 
+  istio-system-configs:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '0'
+    destination:
+      namespace: istio-system
+    source:
+      path: components/istio-system-configs
+
+
   ossm3-istio-system:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous

@@ -69,9 +69,11 @@ spec:
     #   use_grpc: false
     tracing:
       enabled: true
-      provider: tempo
+      # provider: tempo
+      provider: jaeger
       use_grpc: false
-      internal_url: https://tempo-minio-dev-gateway.tempo-system.svc.cluster.local:8080/api/traces/v1/dev/tempo
+      # internal_url: https://tempo-minio-dev-gateway.tempo-system.svc.cluster.local:8080/api/traces/v1/dev/tempo
+      internal_url: 'https://tempo-minio-dev-gateway.tempo-system.svc.cluster.local:8080/api/traces/v1/dev'
       # external_url: https://tempo-minio-dev-gateway-tempo-system.apps-crc.testing/api/traces/v1/dev/search
       external_url: https://tempo-minio-dev-gateway-tempo-system.apps-crc.testing/api/traces/v1/dev
       health_check_url: https://tempo-minio-dev-gateway-tempo-system.apps-crc.testing/api/traces/v1/dev/tempo/api/echo

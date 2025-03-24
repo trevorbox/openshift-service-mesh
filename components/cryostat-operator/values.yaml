@@ -13,6 +13,6 @@ operators:
   name: cryostat-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  csv: cryostat-operator.v3.0.1-10
+  csv: cryostat-operator.v4.0.0
   namespace: cryostat-operator
   installPlanVerifierActiveDeadlineSeconds: 1200

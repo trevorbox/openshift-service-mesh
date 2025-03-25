@@ -17,7 +17,10 @@ spec:
         maistra.io/expose-route: 'false'
         sidecar.istio.io/inject: 'true'
       annotations: 
-        proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'  
+        # proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
+        proxy.istio.io/config: |
+          proxyMetadata:
+            ISTIO_META_DNS_CAPTURE: "false"
   reportOptions:
     replicas: 1
     resources:

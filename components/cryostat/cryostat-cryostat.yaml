@@ -3,7 +3,7 @@ kind: Cryostat
 metadata:
   name: cryostat
 spec:
-  enableCertManager: false
+  enableCertManager: true
   authorizationOptions:
     openShiftSSO: # only effective when running on OpenShift
       disable: false # set this to `true` to disable OpenShift SSO integration

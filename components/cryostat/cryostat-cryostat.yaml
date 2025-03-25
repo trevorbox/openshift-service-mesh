@@ -21,6 +21,7 @@ spec:
         proxy.istio.io/config: |
           proxyMetadata:
             ISTIO_META_DNS_CAPTURE: "false"
+            ISTIO_META_DNS_AUTO_ALLOCATE: "false"
   reportOptions:
     replicas: 1
     resources:

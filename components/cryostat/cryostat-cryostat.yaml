@@ -77,4 +77,4 @@ spec:
         memory: 512Mi
   
   targetNamespaces:
-    - spring-boot-demo2
+    - spring-boot-demo

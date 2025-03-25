@@ -16,7 +16,8 @@ spec:
       labels:
         maistra.io/expose-route: 'false'
         sidecar.istio.io/inject: 'true'
-        proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
+      annotations: 
+        proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'  
   reportOptions:
     replicas: 1
     resources:

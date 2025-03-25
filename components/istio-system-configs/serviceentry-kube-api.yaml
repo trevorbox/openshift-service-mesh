@@ -1,5 +1,5 @@
 kind: ServiceEntry
-apiVersion: networking.istio.io/v1
+apiVersion: networking.istio.io/v1beta1
 metadata:
   name: kube-api
   namespace: istio-system

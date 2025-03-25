@@ -3,7 +3,7 @@ kind: Cryostat
 metadata:
   name: cryostat
 spec:
-  enableCertManager: true
+  enableCertManager: false
   authorizationOptions:
     openShiftSSO: # only effective when running on OpenShift
       disable: false # set this to `true` to disable OpenShift SSO integration
@@ -16,6 +16,7 @@ spec:
       labels:
         maistra.io/expose-route: 'false'
         sidecar.istio.io/inject: 'true'
+        proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
   reportOptions:
     replicas: 1
     resources:

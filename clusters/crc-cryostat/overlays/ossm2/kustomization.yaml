@@ -4,4 +4,4 @@ kind: Kustomization
 
 resources:
   - ../../../../components/ossm2
-  # - sidecar-allow-any-outbound.yaml
+  - sidecar-allow-any-outbound.yaml

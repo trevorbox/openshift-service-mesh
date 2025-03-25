@@ -1,0 +1,13 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+helmCharts:
+- name: smcp
+  repo: https://trevorbox.github.io/helm-charts
+  namespace: istio-system
+  valuesFile: values.yaml
+  version: ~2.6.8
+  releaseName: ossm2-smcp
+
+

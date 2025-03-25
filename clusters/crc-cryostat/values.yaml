@@ -82,7 +82,7 @@ applications:
     destination:
       namespace: istio-system
     source:
-      path: components/ossm2
+      path: clusters/crc-cryostat/overlays/ossm2
 
   grafana-istio:
     annotations:

@@ -16,12 +16,12 @@ spec:
       labels:
         maistra.io/expose-route: 'false'
         sidecar.istio.io/inject: 'true'
-      annotations: 
+      # annotations: 
         # proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
-        proxy.istio.io/config: |
-          proxyMetadata:
-            ISTIO_META_DNS_CAPTURE: "false"
-            ISTIO_META_DNS_AUTO_ALLOCATE: "false"
+        # proxy.istio.io/config: |
+        #   proxyMetadata:
+        #     ISTIO_META_DNS_CAPTURE: "false"
+        #     ISTIO_META_DNS_AUTO_ALLOCATE: "false"
   reportOptions:
     replicas: 1
     resources:

@@ -4,6 +4,7 @@ metadata:
   name: kiali-istio-system
   namespace: kiali
 spec:
+  version: v2.4.3
   auth:
     strategy: openshift
   deployment:

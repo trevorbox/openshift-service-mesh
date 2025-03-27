@@ -15,7 +15,7 @@ spec:
     helm:
       valuesObject:
         approveManualInstallPlanViaHook: true
-        installPlanApproverAndVerifyJobsImage: registry.redhat.io/openshift4/ose-cli-rhel9:v4.17.0-202503121206.p0.g0000b3e.assembly.stream.el9 # quay.io/openshift/origin-cli:4.14
+        installPlanApproverAndVerifyJobsImage: quay.io/trevorbox/installplanapproverandverifier:latest
         operatorGroups:
         - name: servicemeshoperator3
           createNamespace: true

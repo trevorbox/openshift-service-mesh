@@ -14,6 +14,7 @@ spec:
     targetRevision: HEAD
     helm:
       valuesObject:
+        installRequiredPythonLibraries: false
         approveManualInstallPlanViaHook: true
         installPlanApproverAndVerifyJobsImage: quay.io/trevorbox/installplanapproverandverifier:latest
         operatorGroups:

@@ -5,11 +5,11 @@ istioCNI:
 istioRevisionTags: 
   # https://istio.io/latest/docs/setup/upgrade/canary/#default-tag
   default:
-    istioRevision: canary-v1.24-latest
+    istioRevision: canary-v1-24-latest
   stable:
     istioRevision: stable-v1-24-3
   canary:
-    istioRevision: canary-v1.24-latest
+    istioRevision: canary-v1-24-latest
 revisions:
   - name: default
     spec:
@@ -17,15 +17,6 @@ revisions:
       updateStrategy:
         type: RevisionBased
       values:
-        sidecarInjectorWebhook:
-          alwaysInjectSelector:
-            - matchExpressions:
-                - key: istio.io/rev
-                  operator: In
-                  values:
-                    - default
-                - key: istio-injection
-                  operator: DoesNotExist
         pilot:
           autoscaleEnabled: true
           autoscaleMin: 1

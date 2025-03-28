@@ -5,7 +5,8 @@ resources:
   - namespace-minio-operator.yaml
 
 helmCharts:
-- name: minio-operator 
+- name: minio-operator
+  releaseName: minio-operator
   repo: https://operator.min.io
   valuesFile: values.yaml
   namespace: minio-operator

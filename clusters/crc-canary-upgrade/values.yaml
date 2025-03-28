@@ -84,14 +84,14 @@ applications:
     source:
       path: components/opentelemetry-collector
 
-  service-mesh-operator:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '-1'
-    destination:
-      namespace: openshift-gitops
-    source:
-      path: components/service-mesh-operator
+  # service-mesh-operator:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '-1'
+  #   destination:
+  #     namespace: openshift-gitops
+  #   source:
+  #     path: components/service-mesh-operator
 
   istio-system-configs:
     annotations:

@@ -232,3 +232,12 @@ stop siege, show results
 	"shortest_transaction":		        0.00
 }
 ```
+
+
+final steps
+```sh
+oc get smcp,smm,smmr -A # No resources found
+csv=$(oc get subscription servicemeshoperator -n openshift-operators -o yaml | grep currentCSV | cut -f 2 -d ':')
+# remove subscription/operatorgroup from argo
+oc get crds -o name | grep ".*\.maistra\.io" | xargs -r -n 1 oc delete
+```

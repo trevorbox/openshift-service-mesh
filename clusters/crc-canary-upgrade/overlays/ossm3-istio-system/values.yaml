@@ -59,16 +59,10 @@ revisions:
                 - key: istio.io/rev
                   operator: Exists
           enableTracing: true
-          # TODO
-          # extensionProviders:
-          #   - name: otel-tracing
-          #     opentelemetry:
-          #       port: 4317
-          #       service: otel-collector.istio-system.svc.cluster.local
           extensionProviders:
             - name: tempo
               opentelemetry:
-                service: tempo-minio-dev-distributor.tempo-system.svc.cluster.local
+                service: otel-collector.opentelemetry-collector.svc.cluster.local
                 port: 4317
           outboundTrafficPolicy:
             mode: REGISTRY_ONLY # ALLOW_ANY
@@ -108,16 +102,10 @@ revisions:
                 - key: istio.io/rev
                   operator: Exists
           enableTracing: true
-          # TODO
-          # extensionProviders:
-          #   - name: otel-tracing
-          #     opentelemetry:
-          #       port: 4317
-          #       service: otel-collector.istio-system.svc.cluster.local
           extensionProviders:
             - name: tempo
               opentelemetry:
-                service: tempo-minio-dev-distributor.tempo-system.svc.cluster.local
+                service: otel-collector.opentelemetry-collector.svc.cluster.local
                 port: 4317
           outboundTrafficPolicy:
             mode: REGISTRY_ONLY # ALLOW_ANY
@@ -157,16 +145,10 @@ revisions:
                 - key: istio.io/rev
                   operator: Exists
           enableTracing: true
-          # TODO
-          # extensionProviders:
-          #   - name: otel-tracing
-          #     opentelemetry:
-          #       port: 4317
-          #       service: otel-collector.istio-system.svc.cluster.local
           extensionProviders:
             - name: tempo
               opentelemetry:
-                service: tempo-minio-dev-distributor.tempo-system.svc.cluster.local
+                service: otel-collector.opentelemetry-collector.svc.cluster.local
                 port: 4317
           outboundTrafficPolicy:
             mode: REGISTRY_ONLY # ALLOW_ANY

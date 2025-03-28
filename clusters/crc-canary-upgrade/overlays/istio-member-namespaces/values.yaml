@@ -7,8 +7,8 @@ members:
   - oauth2-proxy
   # - spring-boot-demo2
 labels:
-  istio.io/rev: ossm2
-  # istio.io/rev: default
+  # istio.io/rev: ossm2
+  istio.io/rev: default
   argocd.argoproj.io/managed-by: openshift-gitops
 annotations:
   argocd.argoproj.io/sync-options: Delete=false 

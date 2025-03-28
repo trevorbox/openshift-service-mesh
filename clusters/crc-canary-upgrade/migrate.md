@@ -234,7 +234,10 @@ stop siege, show results
 ```
 
 
-final steps
+## final steps
+
+<https://docs.redhat.com/en/documentation/red_hat_openshift_service_mesh/3.0/html/migrating_from_service_mesh_2_to_service_mesh_3/completing-the-migration#ossm-migrating-complete-remove-2-6-operator-crds_ossm-migrating-complete>
+
 ```sh
 oc get smcp,smm,smmr -A # No resources found
 csv=$(oc get subscription servicemeshoperator -n openshift-operators -o yaml | grep currentCSV | cut -f 2 -d ':')

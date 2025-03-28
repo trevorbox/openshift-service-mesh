@@ -265,9 +265,8 @@ tbox@fedora:~/.local/bin$ siege -q -j https://spring-boot-demo-istio-ingress.app
 }
 ```
 
+## rollout known service mesh namespaces (istio.io/rev: default label)
+
 ```sh
-oc rollout restart deploy -n oauth2-proxy
-oc rollout restart deploy -n spring-boot-demo
-oc rollout restart deploy -n bookinfo
-oc rollout restart deploy -n istio-ingress
+./rollout-istio-rev-default.sh
 ```

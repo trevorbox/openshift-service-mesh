@@ -5,60 +5,60 @@ istioCNI:
 istioRevisionTags: 
   # https://istio.io/latest/docs/setup/upgrade/canary/#default-tag
   default:
-    istioRevision: canary-v1-24-latest
+    istioRevision: stable-v1-24-3
   stable:
     istioRevision: stable-v1-24-3
   canary:
     istioRevision: canary-v1-24-latest
 revisions:
-  # - name: default
-  #   spec:
-  #     namespace: istio-system
-  #     updateStrategy:
-  #       type: RevisionBased
-  #     values:
-  #       pilot:
-  #         autoscaleEnabled: true
-  #         autoscaleMin: 1
-  #         autoscaleMax: 2
-  #         resources:
-  #           requests:
-  #             cpu: 50m
-  #             memory: 32Mi
-  #       global:
-  #         proxy:
-  #           resources:
-  #             limits:
-  #               cpu: 100m
-  #               memory: 64Mi
-  #             requests:
-  #               cpu: 50m
-  #               memory: 32Mi
-  #         proxy_init:
-  #           resources:
-  #             limits:
-  #               cpu: 100m
-  #               memory: 64Mi
-  #             requests:
-  #               cpu: 50m
-  #               memory: 32Mi
-  #       meshConfig:
-  #         accessLogFile: /dev/stdout
-  #         discoverySelectors:
-  #           - matchExpressions:
-  #               - key: istio.io/rev
-  #                 operator: Exists
-  #           - matchLabels:
-  #               kubernetes.io/metadata.name: istio-system
-  #         enableTracing: true
-  #         extensionProviders:
-  #           - name: tempo
-  #             opentelemetry:
-  #               service: otel-collector.opentelemetry-collector.svc.cluster.local
-  #               port: 4317
-  #         outboundTrafficPolicy:
-  #           mode: REGISTRY_ONLY # ALLOW_ANY
-  #     version: v1.24.3
+  - name: default
+    spec:
+      namespace: istio-system
+      updateStrategy:
+        type: RevisionBased
+      values:
+        pilot:
+          autoscaleEnabled: true
+          autoscaleMin: 1
+          autoscaleMax: 2
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+        global:
+          proxy:
+            resources:
+              limits:
+                cpu: 100m
+                memory: 64Mi
+              requests:
+                cpu: 50m
+                memory: 32Mi
+          proxy_init:
+            resources:
+              limits:
+                cpu: 100m
+                memory: 64Mi
+              requests:
+                cpu: 50m
+                memory: 32Mi
+        meshConfig:
+          accessLogFile: /dev/stdout
+          discoverySelectors:
+            - matchExpressions:
+                - key: istio.io/rev
+                  operator: Exists
+            - matchLabels:
+                kubernetes.io/metadata.name: istio-system
+          enableTracing: true
+          extensionProviders:
+            - name: tempo
+              opentelemetry:
+                service: otel-collector.opentelemetry-collector.svc.cluster.local
+                port: 4317
+          outboundTrafficPolicy:
+            mode: REGISTRY_ONLY # ALLOW_ANY
+      version: v1.24.3
   - name: canary
     spec:
       namespace: istio-system
@@ -107,51 +107,51 @@ revisions:
           outboundTrafficPolicy:
             mode: REGISTRY_ONLY # ALLOW_ANY
       version: v1.24-latest
-  # - name: stable
-  #   spec:
-  #     namespace: istio-system
-  #     updateStrategy:
-  #       type: RevisionBased
-  #     values:
-  #       pilot:
-  #         autoscaleEnabled: true
-  #         autoscaleMin: 1
-  #         autoscaleMax: 2
-  #         resources:
-  #           requests:
-  #             cpu: 50m
-  #             memory: 32Mi
-  #       global:
-  #         proxy:
-  #           resources:
-  #             limits:
-  #               cpu: 100m
-  #               memory: 64Mi
-  #             requests:
-  #               cpu: 50m
-  #               memory: 32Mi
-  #         proxy_init:
-  #           resources:
-  #             limits:
-  #               cpu: 100m
-  #               memory: 64Mi
-  #             requests:
-  #               cpu: 50m
-  #               memory: 32Mi
-  #       meshConfig:
-  #         accessLogFile: /dev/stdout
-  #         discoverySelectors:
-  #           - matchExpressions:
-  #               - key: istio.io/rev
-  #                 operator: Exists
-  #           - matchLabels:
-  #               kubernetes.io/metadata.name: istio-system
-  #         enableTracing: true
-  #         extensionProviders:
-  #           - name: tempo
-  #             opentelemetry:
-  #               service: otel-collector.opentelemetry-collector.svc.cluster.local
-  #               port: 4317
-  #         outboundTrafficPolicy:
-  #           mode: REGISTRY_ONLY # ALLOW_ANY
-  #     version: v1.24.3
+  - name: stable
+    spec:
+      namespace: istio-system
+      updateStrategy:
+        type: RevisionBased
+      values:
+        pilot:
+          autoscaleEnabled: true
+          autoscaleMin: 1
+          autoscaleMax: 2
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+        global:
+          proxy:
+            resources:
+              limits:
+                cpu: 100m
+                memory: 64Mi
+              requests:
+                cpu: 50m
+                memory: 32Mi
+          proxy_init:
+            resources:
+              limits:
+                cpu: 100m
+                memory: 64Mi
+              requests:
+                cpu: 50m
+                memory: 32Mi
+        meshConfig:
+          accessLogFile: /dev/stdout
+          discoverySelectors:
+            - matchExpressions:
+                - key: istio.io/rev
+                  operator: Exists
+            - matchLabels:
+                kubernetes.io/metadata.name: istio-system
+          enableTracing: true
+          extensionProviders:
+            - name: tempo
+              opentelemetry:
+                service: otel-collector.opentelemetry-collector.svc.cluster.local
+                port: 4317
+          outboundTrafficPolicy:
+            mode: REGISTRY_ONLY # ALLOW_ANY
+      version: v1.24.3

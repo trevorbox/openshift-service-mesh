@@ -243,3 +243,24 @@ oc get smcp,smm,smmr -A # Expect No resources found
 # cleanly delete the service-mesh-operator app from argo
 oc get crds -o name | grep ".*\.maistra\.io" | xargs -r -n 1 oc delete
 ```
+
+results:
+
+```sh
+tbox@fedora:~/.local/bin$ siege -q -j https://spring-boot-demo-istio-ingress.apps-crc.testing/
+^C
+{
+	"transactions":			      348411,
+	"availability":			       99.94,
+	"elapsed_time":			     1041.44,
+	"data_transferred":		       12.99,
+	"response_time":		        0.07,
+	"transaction_rate":		      334.55,
+	"throughput":			        0.01,
+	"concurrency":			       24.94,
+	"successful_transactions":	      348411,
+	"failed_transactions":		         195,
+	"longest_transaction":		        2.87,
+	"shortest_transaction":		        0.00
+}
+```

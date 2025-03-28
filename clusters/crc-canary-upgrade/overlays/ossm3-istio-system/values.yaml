@@ -17,6 +17,7 @@ revisions:
       updateStrategy:
         type: RevisionBased
       values:
+        revision: default
         pilot:
           autoscaleEnabled: true
           autoscaleMin: 1
@@ -65,6 +66,7 @@ revisions:
       updateStrategy:
         type: RevisionBased
       values:
+        revision: canary
         pilot:
           autoscaleEnabled: true
           autoscaleMin: 1
@@ -113,6 +115,7 @@ revisions:
       updateStrategy:
         type: RevisionBased
       values:
+        revision: stable
         pilot:
           autoscaleEnabled: true
           autoscaleMin: 1

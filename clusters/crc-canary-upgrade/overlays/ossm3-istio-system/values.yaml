@@ -19,13 +19,13 @@ revisions:
       values:
         sidecarInjectorWebhook:
           alwaysInjectSelector:
-            matchExpressions:
-              - key: istio.io/rev
-                operator: In
-                values:
-                  - default
-              - key: istio-injection
-                operator: DoesNotExist
+            - matchExpressions:
+                - key: istio.io/rev
+                  operator: In
+                  values:
+                    - default
+                - key: istio-injection
+                  operator: DoesNotExist
         pilot:
           autoscaleEnabled: true
           autoscaleMin: 1

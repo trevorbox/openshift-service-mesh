@@ -5,8 +5,16 @@ operator:
     - name: MINIO_OPERATOR_RUNTIME
       value: "OpenShift"
   securityContext:
+    runAsUser: null
+    runAsGroup: null
     runAsNonRoot: true
+    fsGroup: null
+  ###
+  # The Kubernetes `SecurityContext <https://kubernetes.io/docs/tasks/configure-pod-container/security-context/>`__ to use for deploying Operator containers.
+  # You may need to modify these values to meet your cluster's security and access settings.
   containerSecurityContext:
+    runAsUser: null
+    runAsGroup: null
     runAsNonRoot: true
     allowPrivilegeEscalation: false
     capabilities:

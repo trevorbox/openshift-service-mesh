@@ -6,7 +6,7 @@ helmCharts:
   repo: "https://operator.min.io"
   valuesFile: values.yaml
   namespace: minio-tenant
-  version: ~5.0.14
+  version: ~7.0.1
 
 resources:
   - route.yaml

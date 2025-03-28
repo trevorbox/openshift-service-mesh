@@ -6,4 +6,4 @@ helmCharts:
   repo: https://operator.min.io
   valuesFile: values.yaml
   namespace: openshift-gitops
-  version: 7.0.1
+  version: 4.3.7

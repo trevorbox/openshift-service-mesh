@@ -17,7 +17,12 @@ revisions:
       updateStrategy:
         type: RevisionBased
       values:
-        # revision: default
+        sidecarInjectorWebhook:
+          matchExpressions:
+            - key: istio.io/rev
+              operator: In
+              values:
+                - default
         pilot:
           autoscaleEnabled: true
           autoscaleMin: 1

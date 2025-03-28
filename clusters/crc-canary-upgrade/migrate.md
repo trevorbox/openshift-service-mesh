@@ -264,3 +264,10 @@ tbox@fedora:~/.local/bin$ siege -q -j https://spring-boot-demo-istio-ingress.app
 	"shortest_transaction":		        0.00
 }
 ```
+
+```sh
+oc rollout restart deploy -n oauth2-proxy
+oc rollout restart deploy -n spring-boot-demo
+oc rollout restart deploy -n bookinfo
+oc rollout restart deploy -n istio-ingress
+```

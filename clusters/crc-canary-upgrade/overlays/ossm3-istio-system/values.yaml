@@ -5,7 +5,7 @@ istioCNI:
 istioRevisionTags: 
   # https://istio.io/latest/docs/setup/upgrade/canary/#default-tag
   default:
-    istioRevision: default-v1-24-3
+    istioRevision: default-v1-24-latest # default-v1-24-3
   stable:
     istioRevision: stable-v1-24-3
   canary:
@@ -58,7 +58,7 @@ revisions:
                 port: 4317
           outboundTrafficPolicy:
             mode: REGISTRY_ONLY # ALLOW_ANY
-      version: v1.24.3
+      version: v1.24-latest # v1.24.3
   - name: canary
     spec:
       namespace: istio-system

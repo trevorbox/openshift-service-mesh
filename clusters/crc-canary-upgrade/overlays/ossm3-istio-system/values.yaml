@@ -1,16 +1,3 @@
-requireMtls: true
-kiali:
-  namespace: kiali
-tempo:
-  enabled: true
-  host: tempo-minio-dev-distributor.tempo-system.svc.cluster.local
-networkpolicy:
-  userWorkloadMonitoring:
-    enabled: true
-serviceMonitor:
-  enabled: true
-telemetry:
-  enabled: true
 istioCNI:
   version: v1.24.3
   namespace: istio-cni
@@ -22,7 +9,7 @@ istioRevisionTags:
   stable:
     istioRevision: stable-v1-24-3
   canary:
-    istioRevision: canary-v1-24-3
+    istioRevision: canary-v1.24-latest
 revisions:
   - name: default
     spec:
@@ -31,6 +18,9 @@ revisions:
         type: RevisionBased
       values:
         pilot:
+          autoscaleEnabled: true
+          autoscaleMin: 1
+          autoscaleMax: 2
           resources:
             requests:
               cpu: 50m
@@ -58,6 +48,8 @@ revisions:
             - matchExpressions:
                 - key: istio.io/rev
                   operator: Exists
+            - matchLabels:
+                kubernetes.io/metadata.name: istio-system
           enableTracing: true
           extensionProviders:
             - name: tempo
@@ -74,6 +66,9 @@ revisions:
         type: RevisionBased
       values:
         pilot:
+          autoscaleEnabled: true
+          autoscaleMin: 1
+          autoscaleMax: 2
           resources:
             requests:
               cpu: 50m
@@ -101,6 +96,8 @@ revisions:
             - matchExpressions:
                 - key: istio.io/rev
                   operator: Exists
+            - matchLabels:
+                kubernetes.io/metadata.name: istio-system
           enableTracing: true
           extensionProviders:
             - name: tempo
@@ -109,7 +106,7 @@ revisions:
                 port: 4317
           outboundTrafficPolicy:
             mode: REGISTRY_ONLY # ALLOW_ANY
-      version: v1.24.3
+      version: v1.24-latest
   - name: stable
     spec:
       namespace: istio-system
@@ -117,6 +114,9 @@ revisions:
         type: RevisionBased
       values:
         pilot:
+          autoscaleEnabled: true
+          autoscaleMin: 1
+          autoscaleMax: 2
           resources:
             requests:
               cpu: 50m
@@ -144,6 +144,8 @@ revisions:
             - matchExpressions:
                 - key: istio.io/rev
                   operator: Exists
+            - matchLabels:
+                kubernetes.io/metadata.name: istio-system
           enableTracing: true
           extensionProviders:
             - name: tempo

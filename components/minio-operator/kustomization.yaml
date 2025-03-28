@@ -1,12 +1,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-resources:
-  - github.com/minio/operator?ref=v7.0.1
-
-# helmCharts:
-# - name: operators-installer
-#   repo: https://redhat-cop.github.io/helm-charts
-#   valuesFile: values.yaml
-#   namespace: openshift-gitops
-#   version: 3.0.1
+helmCharts:
+- name: minio-operator 
+  repo: https://operator.min.io
+  valuesFile: values.yaml
+  namespace: openshift-gitops
+  version: 7.0.1

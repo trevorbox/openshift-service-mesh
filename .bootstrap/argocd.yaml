@@ -333,7 +333,7 @@ spec:
       enabled: true
       # replicas: 3
       dynamicScalingEnabled: true
-      minShards: 1
+      minShards: 2
       maxShards: 2
       clustersPerShard: 1
     env:

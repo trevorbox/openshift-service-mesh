@@ -163,6 +163,8 @@ applications:
       argocd.argoproj.io/sync-wave: '4'
     destination:
       namespace: istio-ingress
+      server: https://kubernetes.default.svc?__team=team1
+    project: team1
     source:
       path: components/istio-ingressgateway
       # path: clusters/crc-canary-upgrade/overlays/istio-ingressgateway
@@ -173,6 +175,8 @@ applications:
   #     argocd.argoproj.io/sync-wave: '4'
   #   destination:
   #     namespace: golang-ex
+  #     server: https://kubernetes.default.svc?__team=team1
+  #   project: team1
   #   source:
   #     path: components/golang-ex
 
@@ -182,6 +186,8 @@ applications:
   #     argocd.argoproj.io/sync-wave: '4'
   #   destination:
   #     namespace: golang-ex
+  #     server: https://kubernetes.default.svc?__team=team1
+  #   project: team1
   #   source:
   #     path: clusters/crc-canary-upgrade/overlays/golang-ex-istio
 
@@ -200,6 +206,8 @@ applications:
       argocd.argoproj.io/sync-wave: '4'
     destination:
       namespace: spring-boot-demo
+      server: https://kubernetes.default.svc?__team=team1
+    project: team1
     source:
       path: components/spring-boot-demo
 
@@ -230,6 +238,8 @@ applications:
       argocd.argoproj.io/sync-wave: '4'
     destination:
       namespace: oauth2-proxy
+      server: https://kubernetes.default.svc?__team=team1
+    project: team1
     source:
       path: components/oauth2-proxy
 

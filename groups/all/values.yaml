@@ -54,7 +54,7 @@ projects:
     - https://github.com/redhat-cop/helm-charts
     destinations: |
       - namespace: '*'
-        server: https://kubernetes.default.svc:6443?__team=team1
+        server: https://kubernetes.default.svc?__team=team1
     extraFields: |
       clusterResourceWhitelist:
       - group: '*'
@@ -72,7 +72,7 @@ projects:
     - https://github.com/redhat-cop/helm-charts
     destinations: |
       - namespace: '*'
-        server: https://kubernetes.default.svc:6443?__team=team2
+        server: https://kubernetes.default.svc?__team=team2
     extraFields: |
       clusterResourceWhitelist:
       - group: '*'
@@ -90,7 +90,7 @@ projects:
     - https://github.com/redhat-cop/helm-charts
     destinations: |
       - namespace: '*'
-        server: https://kubernetes.default.svc:6443?__team=team3
+        server: https://kubernetes.default.svc?__team=team3
     extraFields: |
       clusterResourceWhitelist:
       - group: '*'

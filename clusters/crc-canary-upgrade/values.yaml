@@ -219,6 +219,7 @@ applications:
       argocd.argoproj.io/sync-wave: '4'
     destination:
       namespace: bookinfo
+      server: https://kubernetes.default.svc:6443?__team=team1
     project: team1
     source:
       path: clusters/crc/overlays/bookinfo

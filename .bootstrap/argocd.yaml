@@ -331,12 +331,13 @@ spec:
         memory: 1Gi
     sharding:
       enabled: true
-      # replicas: 3
-      dynamicScalingEnabled: true
-      minShards: 2
-      maxShards: 2
+      replicas: 2
+      # dynamicScalingEnabled: true
+      # minShards: 2
+      # maxShards: 2
       clustersPerShard: 1
     env:
       - name: ARGOCD_CONTROLLER_SHARDING_ALGORITHM
-        value: round-robin
+        # value: round-robin
+        value: consistent-hashing
     logLevel: debug

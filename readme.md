@@ -92,7 +92,21 @@ helm repo add redhat-cop https://redhat-cop.github.io/helm-charts
 helm upgrade -i openshift-gitops redhat-cop/operators-installer -f .bootstrap/values.yaml -n openshift-operators --create-namespace
 oc apply -f .bootstrap/cluster-rolebinding.yaml
 envsubst < .bootstrap/argocd.yaml | oc apply -f -
+
+# multi team sharding - need token
+oc apply -f .bootstrap/secret-controller-sa-token.yaml
+export token=$(oc get -n openshift-gitops secret/openshift-gitops-argocd-application-controller -o jsonpath='{.data.token}' | base64 --decode)
+envsubst < .bootstrap/secret-cluster.yaml | oc apply -f -
+
 envsubst < .bootstrap/root-application.yaml | oc apply -f -
+```
+
+### testing Vault HCP
+
+```sh
+# testing vault hcp (not in gitops)
+envsubst < .bootstrap/vault-hcp-configs/hcpauth-default.yaml | oc apply -f -
+oc apply -f .bootstrap/vault-hcp-configs/hcpvaultsecretsapp.yaml
 ```
 
 Note: for pedagogical reason this repo contains some example of components, groups and clusters, you will have to likely remove these examples and start adding the configurations you actually need.

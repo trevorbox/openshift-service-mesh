@@ -1,0 +1,13 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: HCPAuth
+metadata:
+  name: default
+  namespace: vault-secrets-operator
+spec:
+  allowedNamespaces:
+    - oauth2-proxy
+  method: servicePrincipal
+  organizationID: ${HCP_ORG_ID}
+  projectID: ${HCP_PROJECT_ID}
+  servicePrincipal:
+    secretRef: vso-demo-sp

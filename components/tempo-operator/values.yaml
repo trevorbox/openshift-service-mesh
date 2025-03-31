@@ -1,7 +1,7 @@
-
+installRequiredPythonLibraries: false
 approveManualInstallPlanViaHook: true
 
-installPlanApproverAndVerifyJobsImage: quay.io/openshift/origin-cli:4.14
+installPlanApproverAndVerifyJobsImage: quay.io/trevorbox/installplanapproverandverifier:4.16.0 # quay.io/openshift/origin-cli:4.16
 
 operatorGroups:
 - name: tempo-operator

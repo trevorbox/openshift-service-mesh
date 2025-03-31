@@ -163,8 +163,6 @@ applications:
       argocd.argoproj.io/sync-wave: '4'
     destination:
       namespace: istio-ingress
-      server: https://kubernetes.default.svc?__team=team1
-    project: team1
     source:
       path: components/istio-ingressgateway
       # path: clusters/crc-canary-upgrade/overlays/istio-ingressgateway

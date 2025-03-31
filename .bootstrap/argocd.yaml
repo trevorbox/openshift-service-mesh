@@ -334,7 +334,7 @@ spec:
       # replicas: 3
       dynamicScalingEnabled: true
       minShards: 1
-      maxShards: 4
+      maxShards: 2
       clustersPerShard: 1
     env:
       - name: ARGOCD_CONTROLLER_SHARDING_ALGORITHM

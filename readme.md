@@ -96,7 +96,7 @@ envsubst < .bootstrap/argocd.yaml | oc apply -f -
 # multi team sharding - need token
 oc apply -f .bootstrap/secret-controller-sa-token.yaml
 export token=$(oc get -n openshift-gitops secret/openshift-gitops-argocd-application-controller -o jsonpath='{.data.token}' | base64 --decode)
-envsubst < .bootstrap/secret-cluster.yaml | oc apply -f -
+envsubst < .bootstrap/secret-cluster-team1.yaml | oc apply -f -
 
 envsubst < .bootstrap/root-application.yaml | oc apply -f -
 ```

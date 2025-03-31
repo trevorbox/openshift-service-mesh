@@ -219,6 +219,7 @@ applications:
       argocd.argoproj.io/sync-wave: '4'
     destination:
       namespace: bookinfo
+    projectOverride: team1
     source:
       path: clusters/crc/overlays/bookinfo
 

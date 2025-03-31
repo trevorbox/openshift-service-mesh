@@ -42,6 +42,60 @@ projects:
       - group: '*'
         kind: '*'
 
+  team1:
+    annotations:
+      notifications.argoproj.io/subscribe.on-sync-failed.slack: cluster-gitops
+      notifications.argoproj.io/subscribe.on-health-degraded.slack: cluster-gitops
+      argocd.argoproj.io/sync-wave: '-100'
+    description: Project for overall cluster configuration
+    namespace: openshift-gitops
+    sourceRepos:
+    - https://github.com/trevorbox/openshift-service-mesh
+    - https://github.com/redhat-cop/helm-charts
+    destinations: |
+      - namespace: '*'
+        server: https://kubernetes.default.svc:6443?__team=team1
+    extraFields: |
+      clusterResourceWhitelist:
+      - group: '*'
+        kind: '*'
+
+  team2:
+    annotations:
+      notifications.argoproj.io/subscribe.on-sync-failed.slack: cluster-gitops
+      notifications.argoproj.io/subscribe.on-health-degraded.slack: cluster-gitops
+      argocd.argoproj.io/sync-wave: '-100'
+    description: Project for overall cluster configuration
+    namespace: openshift-gitops
+    sourceRepos:
+    - https://github.com/trevorbox/openshift-service-mesh
+    - https://github.com/redhat-cop/helm-charts
+    destinations: |
+      - namespace: '*'
+        server: https://kubernetes.default.svc:6443?__team=team2
+    extraFields: |
+      clusterResourceWhitelist:
+      - group: '*'
+        kind: '*'
+
+  team3:
+    annotations:
+      notifications.argoproj.io/subscribe.on-sync-failed.slack: cluster-gitops
+      notifications.argoproj.io/subscribe.on-health-degraded.slack: cluster-gitops
+      argocd.argoproj.io/sync-wave: '-100'
+    description: Project for overall cluster configuration
+    namespace: openshift-gitops
+    sourceRepos:
+    - https://github.com/trevorbox/openshift-service-mesh
+    - https://github.com/redhat-cop/helm-charts
+    destinations: |
+      - namespace: '*'
+        server: https://kubernetes.default.svc:6443?__team=team3
+    extraFields: |
+      clusterResourceWhitelist:
+      - group: '*'
+        kind: '*'
+
 applications:
 
   cert-manager-operator:

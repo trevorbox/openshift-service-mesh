@@ -1,0 +1,17 @@
+approveManualInstallPlanViaHook: true
+
+installPlanApproverAndVerifyJobsImage: registry.redhat.io/openshift4/ose-cli-rhel9:v4.17.0-202503121206.p0.g0000b3e.assembly.stream.el9 # quay.io/openshift/origin-cli:4.14
+
+operatorGroups:
+- name: vault-secrets-operator
+  createNamespace: true
+
+operators:
+- channel: stable
+  installPlanApproval: Manual
+  name: vault-secrets-operator
+  source: certified-operators
+  sourceNamespace: openshift-marketplace
+  csv: vault-secrets-operator.v0.10.0
+  namespace: vault-secrets-operator
+  installPlanVerifierActiveDeadlineSeconds: 1200

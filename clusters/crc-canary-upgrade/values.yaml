@@ -84,6 +84,15 @@ applications:
     source:
       path: components/opentelemetry-collector
 
+  vault-secrets-operator:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '-1'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: components/vault-secrets-operator
+
   service-mesh-operator:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous

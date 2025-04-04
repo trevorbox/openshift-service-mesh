@@ -30,8 +30,8 @@ spec:
           namespace: servicemeshoperator3
           installPlanVerifierActiveDeadlineSeconds: 1200
   syncPolicy:
-    # automated:
-    #   selfHeal: true
+    automated:
+      selfHeal: true
     retry:
       backoff:
         duration: 5s

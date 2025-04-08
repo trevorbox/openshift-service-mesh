@@ -1,5 +1,0 @@
-tempo:
-  enabled: true
-  host: otel-collector.opentelemetry-collector.svc.cluster.local
-smcp:
-  outboundPolicy: ALLOW_ANY # REGISTRY_ONLY

@@ -3,6 +3,8 @@ kind: Sidecar
 metadata:
   name: allow-any-outbound
   namespace: cryostat
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   outboundTrafficPolicy:
     mode: ALLOW_ANY

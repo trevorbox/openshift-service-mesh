@@ -4,6 +4,15 @@ metadata:
   name: cryostat
 spec:
   enableCertManager: false
+  networkPolicies:
+    coreConfig:
+      disabled: true
+    databaseConfig:
+      disabled: true
+    reportsConfig:
+      disabled: true
+    storageConfig:
+      disabled: true
   authorizationOptions:
     openShiftSSO: # only effective when running on OpenShift
       disable: false # set this to `true` to disable OpenShift SSO integration
@@ -29,9 +38,16 @@ spec:
         cpu: 300m
         memory: 512Mi
   storageOptions:
+    database:
+      spec:
+        resources:
+          requests:
+            storage: 10Gi
     pvc:
       spec:
-        resources: {}
+        resources:
+          requests:
+            storage: 50Gi
   resources:
     # Resource requirements for the auth proxy.
     authProxyResources:

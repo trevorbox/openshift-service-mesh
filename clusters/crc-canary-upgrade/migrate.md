@@ -233,16 +233,42 @@ stop siege, show results
 }
 ```
 
-
 ## final steps
 
 <https://docs.redhat.com/en/documentation/red_hat_openshift_service_mesh/3.0/html/migrating_from_service_mesh_2_to_service_mesh_3/completing-the-migration#ossm-migrating-complete-remove-2-6-operator-crds_ossm-migrating-complete>
 
-```sh
-oc get smcp,smm,smmr -A # Expect No resources found
-# cleanly delete the service-mesh-operator app from argo
-oc get crds -o name | grep ".*\.maistra\.io" | xargs -r -n 1 oc delete
-```
+1. Relabel all mesh-tenant and ingress gateway namespaces from `istio.io/rev: ossm2` to `istio.io/rev: default`
+2. Rollout all mesh-tenant and ingress gateway namespace deployments so that the new sidecars are injected (script matches on `istio.io/rev: default` label)
+   ```sh
+   ./rollout-istio-rev-default.sh
+   ```
+3. Verify the sidecars are on new control plane
+   ```sh
+   export ISTIOD_NAMESPACE="istio-system"
+   istioctl -i $ISTIOD_NAMESPACE ps -r ossm2 # should be none
+   istioctl -i $ISTIOD_NAMESPACE # to show all known proxies and their istiod controller from istio-system namespace
+   ```
+4. Find all Service Mesh 2.6 resources by running the following command
+   ```sh
+   oc get smcp,smm,smmr -A
+   ```
+5. Delete the resources found above (via gitops)
+6. Verify all resources are gone
+   ```sh
+   oc get smcp,smm,smmr -A # none should return
+   ```
+7. Delete the Subscription and CSV (via gitops)
+8. Verify subscription and csv are gone
+   ```sh
+   export OSSM2_OPERATOR_NAMESPACE="service-mesh-operator"
+   csv=$(oc get subscription servicemeshoperator -n $OSSM2_OPERATOR_NAMESPACE -o yaml | grep currentCSV | cut -f 2 -d ':')
+   oc delete subscription servicemeshoperator -n $OSSM2_OPERATOR_NAMESPACE
+   oc delete clusterserviceversion $csv -n $OSSM2_OPERATOR_NAMESPACE
+   ```
+9. Remove maistra CRDs by running the following command
+   ```sh
+   oc get crds -o name | grep ".*\.maistra\.io" | xargs -r -n 1 oc delete
+   ```
 
 results:
 
@@ -263,10 +289,4 @@ tbox@fedora:~/.local/bin$ siege -q -j https://spring-boot-demo-istio-ingress.app
 	"longest_transaction":		        2.87,
 	"shortest_transaction":		        0.00
 }
-```
-
-## rollout known service mesh namespaces (istio.io/rev: default label)
-
-```sh
-./rollout-istio-rev-default.sh
 ```

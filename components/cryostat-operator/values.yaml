@@ -1,7 +1,7 @@
 installRequiredPythonLibraries: false
 approveManualInstallPlanViaHook: true
 
-installPlanApproverAndVerifyJobsImage: quay.io/trevorbox/installplanapproverandverifier:4.16.0 # quay.io/openshift/origin-cli:4.16
+installPlanApproverAndVerifyJobsImage: quay.io/trevorbox/installplanapproverandverifier:4.16.1 # quay.io/openshift/origin-cli:4.16
 
 operatorGroups:
 - name: cryostat-operator

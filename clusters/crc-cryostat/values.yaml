@@ -132,14 +132,14 @@ applications:
     source:
       path: components/cryostat
 
-  kiali:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '3'
-    destination:
-      namespace: kiali
-    source:
-      path: clusters/crc-cryostat/overlays/kiali
+  # kiali:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '3'
+  #   destination:
+  #     namespace: kiali
+  #   source:
+  #     path: clusters/crc-cryostat/overlays/kiali
 
   prometheus:
     annotations:

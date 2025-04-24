@@ -39,14 +39,14 @@ applications:
     source:
       path: components/service-mesh-operator
 
-  cryostat-operator:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '-1'
-    destination:
-      namespace: openshift-gitops
-    source:
-      path: components/cryostat-operator
+  # cryostat-operator:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '-1'
+  #   destination:
+  #     namespace: openshift-gitops
+  #   source:
+  #     path: components/cryostat-operator
 
   istio-member-namespaces:
     annotations:

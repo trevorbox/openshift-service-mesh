@@ -3,6 +3,8 @@ kind: DestinationRule
 metadata:
   name: api-server
   namespace: istio-system
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   host: kubernetes.default.svc.cluster.local
   trafficPolicy:

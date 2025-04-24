@@ -25,6 +25,8 @@ revisions:
             requests:
               cpu: 50m
               memory: 32Mi
+          env:
+            PILOT_ENABLE_IP_AUTOALLOCATE: "true"
         global:
           proxy:
             resources:
@@ -43,6 +45,9 @@ revisions:
                 cpu: 50m
                 memory: 32Mi
         meshConfig:
+          defaultConfig:
+            proxyMetadata:
+              ISTIO_META_DNS_CAPTURE: "true"
           accessLogFile: /dev/stdout
           discoverySelectors:
             - matchExpressions:

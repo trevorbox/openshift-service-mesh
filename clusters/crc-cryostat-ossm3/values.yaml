@@ -194,7 +194,7 @@ applications:
     destination:
       namespace: cryostat
     source:
-      path: components/cryostat
+      path: clusters/crc-cryostat-ossm3/overlays/cryostat
 
   kiali:
     annotations:

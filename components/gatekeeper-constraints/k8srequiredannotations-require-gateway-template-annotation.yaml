@@ -1,7 +1,7 @@
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sRequiredAnnotations
 metadata:
-  name: require-sidecar-injection-annotation
+  name: require-gateway-template-annotation
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
@@ -13,11 +13,12 @@ spec:
       matchExpressions:
         - key: istio.io/rev
           operator: Exists
+    namespaces:
+      - istio-ingress  
     excludedNamespaces:
       - istio-system
   parameters:
-    message: "Service mesh member namespace Pods must have a `sidecar.istio.io/inject` annotation with a value of `true`."
+    message: "Pods in gateway namespaces must have a `inject.istio.io/templates` annotation with a value of `true`."
     annotations:
-      - key: sidecar.istio.io/inject
-        # Matches email address or github user
+      - key: inject.istio.io/templates
         allowedRegex: ^true$

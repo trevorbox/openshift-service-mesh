@@ -1,0 +1,21 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequiredLabels
+metadata:
+  name: require-sidecar-label
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+    namespaceSelector:
+      matchExpressions:
+        - key: istio.io/rev
+          operator: Exists
+    excludedNamespaces:
+      - istio-system
+  parameters:
+    message: "Pods must have a `sidecar.istio.io/inject` annotation with a value of `true`."
+    annotations:
+      - key: sidecar.istio.io/inject
+        # Matches email address or github user
+        allowedRegex: ^true$

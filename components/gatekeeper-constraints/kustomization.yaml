@@ -6,7 +6,8 @@ resources:
 
   - config-config.yaml
   - constrainttemplate-k8srequireistioproxysidecar.yaml
-  - k8srequiredannotations-require-sidecar-annotation.yaml
+  - k8srequiredannotations-require-gateway-template-annotation.yaml
+  - k8srequiredlabels-require-sidecar-label.yaml
   - k8srequiredcontainernames-require-istio-proxy.yaml
   - explicit-gateway-hosts
   - explicit-protocol-selection

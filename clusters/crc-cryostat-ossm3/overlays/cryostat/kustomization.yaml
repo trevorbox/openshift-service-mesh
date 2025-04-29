@@ -4,4 +4,4 @@ kind: Kustomization
 
 resources:
   - ../../../../components/cryostat
-  - namespace-cryostat
+  - namespace-cryostat.yaml

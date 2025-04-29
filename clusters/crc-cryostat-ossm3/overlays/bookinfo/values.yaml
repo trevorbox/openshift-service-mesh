@@ -1,2 +1,0 @@
-ingressgateway:
-  host: bookinfo-istio-ingress.apps-crc.testing

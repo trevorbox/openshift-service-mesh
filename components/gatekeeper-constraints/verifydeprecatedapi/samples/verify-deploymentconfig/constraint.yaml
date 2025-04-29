@@ -11,7 +11,7 @@ spec:
         kinds: ["DeploymentConfig"]
     namespaceSelector:
       matchExpressions:
-        - key: maistra.io/member-of
+        - key: istio.io/rev
           operator: Exists
   parameters:
     kvs: 

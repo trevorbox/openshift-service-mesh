@@ -3,4 +3,4 @@ kind: Namespace
 metadata:
   name: istio-ingress
   labels:
-    maistra.io/member-of: istio-system
+    istio.io/rev: default

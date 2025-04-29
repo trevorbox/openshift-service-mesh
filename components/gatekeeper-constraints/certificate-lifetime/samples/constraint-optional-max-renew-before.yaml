@@ -12,7 +12,7 @@ spec:
         kinds: ["Certificate"]
     namespaceSelector:
       matchExpressions:
-        - key: maistra.io/member-of
+        - key: istio.io/rev
           operator: Exists
   parameters:
     maxDuration: 2160h # 90d

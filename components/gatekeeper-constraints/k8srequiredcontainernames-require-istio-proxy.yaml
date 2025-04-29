@@ -11,7 +11,7 @@ spec:
         kinds: ["Pod"]
     namespaceSelector:
       matchExpressions:
-        - key: maistra.io/member-of
+        - key: istio.io/rev
           operator: Exists
     excludedNamespaces:
       - istio-system

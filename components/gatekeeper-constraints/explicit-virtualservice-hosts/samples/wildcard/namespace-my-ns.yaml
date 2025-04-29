@@ -3,4 +3,4 @@ kind: Namespace
 metadata:
   name: my-ns
   labels:
-    maistra.io/member-of: istio-system
+    istio.io/rev: default

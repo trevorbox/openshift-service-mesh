@@ -15,7 +15,7 @@ spec:
       - istio-system
   parameters:
     message: "Pods must have a `sidecar.istio.io/inject` annotation with a value of `true`."
-    annotations:
+    labels:
       - key: sidecar.istio.io/inject
         # Matches email address or github user
         allowedRegex: ^true$

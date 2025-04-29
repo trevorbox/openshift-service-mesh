@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace-grafana.yaml
+
+helmCharts:
+- name: grafana-istio
+  repo: https://trevorbox.github.io/helm-charts
+  namespace: grafana
+  version: ~1.20.11
+  releaseName: grafana-istio
+  additionalValuesFiles: 
+    - values.yaml

@@ -1,0 +1,19 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  # - namespace-istio-system3.yaml
+  - namespace-istio-cni.yaml
+  # - networkpolicy-istio-rev-default.yaml
+  # - networkpolicy-allow-any-istio-rev.yaml
+  - networkpolicy-istio-istiod-default.yaml
+
+helmCharts:
+- name: ossm3
+  repo: https://trevorbox.github.io/helm-charts
+  namespace: istio-system
+  valuesFile: values.yaml
+  version: ~2.0.2
+  releaseName: ossm3-istio-system
+

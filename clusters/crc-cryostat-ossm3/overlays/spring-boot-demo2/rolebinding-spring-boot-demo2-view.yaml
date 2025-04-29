@@ -1,0 +1,14 @@
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: spring-boot-demo-view2
+  namespace: cryostat
+subjects:
+  - kind: ServiceAccount
+    name: spring-boot-demo2
+    namespace: spring-boot-demo2
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view

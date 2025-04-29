@@ -14,7 +14,7 @@ spec:
         - key: istio.io/rev
           operator: Exists
     namespaces:
-      - istio-ingress  
+      - "*istio-ingress" 
     excludedNamespaces:
       - istio-system
   parameters:

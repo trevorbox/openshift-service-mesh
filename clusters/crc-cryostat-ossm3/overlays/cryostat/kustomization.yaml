@@ -4,4 +4,12 @@ kind: Kustomization
 
 resources:
   - ../../../../components/cryostat
-  - namespace-cryostat.yaml
+
+patches:
+  - target:
+      kind: Namespace
+      name: cryostat
+    patch: |-
+      - op: add
+        path: /metadata/labels
+        value: {"istio.io/rev": "default"}

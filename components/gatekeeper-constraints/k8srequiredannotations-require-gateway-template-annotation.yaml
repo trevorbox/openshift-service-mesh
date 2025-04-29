@@ -18,7 +18,7 @@ spec:
     excludedNamespaces:
       - istio-system
   parameters:
-    message: "Pods in gateway namespaces must have a `inject.istio.io/templates` annotation with a value of `true`."
+    message: "Pods in gateway namespaces must have a `inject.istio.io/templates` annotation with a value of `gateway`."
     annotations:
       - key: inject.istio.io/templates
-        allowedRegex: ^true$
+        allowedRegex: ^gateway$

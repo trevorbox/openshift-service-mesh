@@ -18,3 +18,4 @@ spec:
           operator: Exists
     excludedNamespaces:
       - istio-system
+      - cryostat

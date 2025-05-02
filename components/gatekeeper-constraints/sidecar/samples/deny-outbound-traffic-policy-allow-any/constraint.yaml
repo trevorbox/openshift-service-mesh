@@ -1,0 +1,20 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: SidecarDenyOutboundTrafficPolicyAllowAny
+metadata:
+  name: sidecar-deny-allow-any-outbound
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+    - apiGroups:
+      - networking.istio.io
+      kinds:
+      - Sidecar
+    namespaceSelector:
+      matchExpressions:
+        - key: istio.io/rev
+          operator: Exists
+    excludedNamespaces:
+      - istio-system

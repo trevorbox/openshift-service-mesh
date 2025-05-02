@@ -1,0 +1,38 @@
+kind: Suite
+apiVersion: test.gatekeeper.sh/v1alpha1
+metadata:
+  name: verify-sidecar
+tests:
+- name: verify-sidecar-outbound-traffic-policy
+  template: template.yaml
+  constraint: samples/deny-outbound-traffic-policy-allow-any/constraint.yaml
+  cases:
+  - name: example-allowed
+    object: samples/deny-outbound-traffic-policy-allow-any/sidecar-registry-only.yaml
+    inventory:
+    - samples/deny-outbound-traffic-policy-allow-any/namespace-default.yaml
+    assertions:
+    - violations: no
+  - name: example-disallowed
+    object: samples/deny-outbound-traffic-policy-allow-any/sidecar-allow-any.yaml
+    inventory:
+    - samples/deny-outbound-traffic-policy-allow-any/namespace-default.yaml
+    assertions:
+    - violations: 1
+      message: "Sidecar spec.outboundTrafficPolicy.mode must not be ALLOW_ANY"
+  - name: example-allowed-undefined-outboundtrafficpolicy
+    object: samples/deny-outbound-traffic-policy-allow-any/sidecar-undefined-outboundtrafficpolicy.yaml
+    inventory:
+    - samples/deny-outbound-traffic-policy-allow-any/namespace-default.yaml
+    assertions:
+    - violations: no
+- name: excluded-namespace-verify-sidecar-outbound-traffic-policy
+  template: template.yaml
+  constraint: samples/deny-outbound-traffic-policy-allow-any/constraint.yaml
+  cases:
+  - name: excluded-namespace-allowed
+    object: samples/deny-outbound-traffic-policy-allow-any/sidecar-allow-any.yaml
+    inventory:
+    - samples/deny-outbound-traffic-policy-allow-any/namespace-default-negative-match.yaml
+    assertions:
+    - violations: no

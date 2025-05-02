@@ -20,3 +20,4 @@ resources:
   - strict-mtls-peer-authentication
   - certificate-lifetime
   - verifydeprecatedapi
+  - sidecar

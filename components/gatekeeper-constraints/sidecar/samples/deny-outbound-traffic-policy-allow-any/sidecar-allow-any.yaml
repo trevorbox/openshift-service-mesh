@@ -1,0 +1,11 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: myapp
+  namespace: default
+spec:
+  workloadSelector:
+    labels:
+      app: myapp
+  outboundTrafficPolicy:
+    mode: ALLOW_ANY

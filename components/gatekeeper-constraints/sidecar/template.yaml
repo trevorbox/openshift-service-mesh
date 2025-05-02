@@ -1,0 +1,24 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  annotations:
+    description: Prohibits ALLOW_ANY outbound traffic policy in Sidecar
+  name: sidecardenyoutboundtrafficpolicyallowany
+spec:
+  crd:
+    spec:
+      names:
+        kind: SidecarDenyOutboundTrafficPolicyAllowAny
+  targets:
+  - target: admission.k8s.gatekeeper.sh
+    rego: |-
+      package sidecardenyoutboundtrafficpolicyallowany
+
+      violation[{"msg": msg}] {
+        sidecar := input.review.object
+        startswith(sidecar.apiVersion, "networking.istio.io/")
+        sidecar.kind == "Sidecar"
+        mode := sidecar.spec.outboundTrafficPolicy.mode
+        mode == "ALLOW_ANY"
+        msg := sprintf("Sidecar spec.outboundTrafficPolicy.mode must not be %v", [mode])
+      }

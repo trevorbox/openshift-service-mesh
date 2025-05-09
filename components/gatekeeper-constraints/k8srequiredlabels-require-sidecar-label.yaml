@@ -13,6 +13,7 @@ spec:
           operator: Exists
     excludedNamespaces:
       - istio-system
+      - a-test-injection
   parameters:
     message: "Pods must have a `sidecar.istio.io/inject` annotation with a value of `true`."
     labels:

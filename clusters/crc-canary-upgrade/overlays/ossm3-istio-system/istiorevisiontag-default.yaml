@@ -1,0 +1,8 @@
+apiVersion: sailoperator.io/v1
+kind: IstioRevisionTag
+metadata:
+  name: default
+spec:
+  targetRef:
+    kind: Istio   # can be either Istio or IstioRevision
+    name: default    # the name of the Istio/IstioRevision resource

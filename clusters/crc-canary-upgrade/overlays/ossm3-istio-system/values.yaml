@@ -4,8 +4,8 @@ istioCNI:
 # https://istio.io/latest/docs/setup/upgrade/canary/
 istioRevisionTags: 
   # https://istio.io/latest/docs/setup/upgrade/canary/#default-tag
-  default:
-    istioRevision: minor-v1-24-4
+  # default:
+  #   istioRevision: minor-v1-24-4
   # stable:
   #   istioRevision: stable-v1-24-3
   # canary:
@@ -66,61 +66,61 @@ revisions:
           outboundTrafficPolicy:
             mode: REGISTRY_ONLY # ALLOW_ANY
       version: v1.24.3
-  - name: minor
-    spec:
-      namespace: istio-system
-      updateStrategy:
-        type: RevisionBased
-        updateWorkloads: true
-        inactiveRevisionDeletionGracePeriodSeconds: 30
-      values:
-        pilot:
-          autoscaleEnabled: true
-          autoscaleMin: 1
-          autoscaleMax: 2
-          resources:
-            requests:
-              cpu: 50m
-              memory: 32Mi
-          env:
-            PILOT_ENABLE_IP_AUTOALLOCATE: "true"
-        global:
-          proxy:
-            resources:
-              limits:
-                cpu: 100m
-                memory: 64Mi
-              requests:
-                cpu: 50m
-                memory: 32Mi
-          proxy_init:
-            resources:
-              limits:
-                cpu: 100m
-                memory: 64Mi
-              requests:
-                cpu: 50m
-                memory: 32Mi
-        meshConfig:
-          defaultConfig:
-            proxyMetadata:
-              ISTIO_META_DNS_CAPTURE: "true"
-          accessLogFile: /dev/stdout
-          discoverySelectors:
-            - matchExpressions:
-                - key: istio.io/rev
-                  operator: Exists
-            - matchLabels:
-                kubernetes.io/metadata.name: istio-system
-          enableTracing: true
-          extensionProviders:
-            - name: tempo
-              opentelemetry:
-                service: otel-collector.opentelemetry-collector.svc.cluster.local
-                port: 4317
-          outboundTrafficPolicy:
-            mode: REGISTRY_ONLY # ALLOW_ANY
-      version: v1.24.4
+  # - name: minor
+  #   spec:
+  #     namespace: istio-system
+  #     updateStrategy:
+  #       type: RevisionBased
+  #       updateWorkloads: true
+  #       inactiveRevisionDeletionGracePeriodSeconds: 30
+  #     values:
+  #       pilot:
+  #         autoscaleEnabled: true
+  #         autoscaleMin: 1
+  #         autoscaleMax: 2
+  #         resources:
+  #           requests:
+  #             cpu: 50m
+  #             memory: 32Mi
+  #         env:
+  #           PILOT_ENABLE_IP_AUTOALLOCATE: "true"
+  #       global:
+  #         proxy:
+  #           resources:
+  #             limits:
+  #               cpu: 100m
+  #               memory: 64Mi
+  #             requests:
+  #               cpu: 50m
+  #               memory: 32Mi
+  #         proxy_init:
+  #           resources:
+  #             limits:
+  #               cpu: 100m
+  #               memory: 64Mi
+  #             requests:
+  #               cpu: 50m
+  #               memory: 32Mi
+  #       meshConfig:
+  #         defaultConfig:
+  #           proxyMetadata:
+  #             ISTIO_META_DNS_CAPTURE: "true"
+  #         accessLogFile: /dev/stdout
+  #         discoverySelectors:
+  #           - matchExpressions:
+  #               - key: istio.io/rev
+  #                 operator: Exists
+  #           - matchLabels:
+  #               kubernetes.io/metadata.name: istio-system
+  #         enableTracing: true
+  #         extensionProviders:
+  #           - name: tempo
+  #             opentelemetry:
+  #               service: otel-collector.opentelemetry-collector.svc.cluster.local
+  #               port: 4317
+  #         outboundTrafficPolicy:
+  #           mode: REGISTRY_ONLY # ALLOW_ANY
+  #     version: v1.24.4
   # - name: canary
   #   spec:
   #     namespace: istio-system

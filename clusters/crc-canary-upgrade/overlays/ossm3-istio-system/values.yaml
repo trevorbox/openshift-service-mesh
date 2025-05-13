@@ -16,6 +16,8 @@ revisions:
       namespace: istio-system
       updateStrategy:
         type: RevisionBased
+        updateWorkloads: true
+        inactiveRevisionDeletionGracePeriodSeconds: 30
       values:
         pilot:
           autoscaleEnabled: true

@@ -6,3 +6,4 @@ metadata:
 data:
   config.yaml: |
     enableUserWorkload: true
+    new: add me

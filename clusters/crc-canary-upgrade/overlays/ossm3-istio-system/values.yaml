@@ -51,6 +51,7 @@ revisions:
             proxyMetadata:
               ISTIO_META_DNS_CAPTURE: "true"
           accessLogFile: /dev/stdout
+          enablePrometheusMerge: true
           discoverySelectors:
             - matchExpressions:
                 - key: istio.io/rev

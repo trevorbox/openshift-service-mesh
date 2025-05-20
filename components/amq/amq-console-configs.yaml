@@ -9,8 +9,7 @@ spec:
   secretName: amq-console-cert
   # commonName: amq-console
   dnsNames:
-    # - amq-console-istio-ingress.apps-crc.testing
-    - foggle
+    - amq-console-istio-ingress.apps-crc.testing
   usages:
     - server auth
     - client auth  

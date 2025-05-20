@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: amq
+  annotations:
+    argocd.argoproj.io/sync-options: Delete=false
+    argocd.argoproj.io/sync-wave: '-10'
+  labels:
+    istio.io/rev: default

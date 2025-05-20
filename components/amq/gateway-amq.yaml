@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1
+kind: Gateway
+metadata:
+  name: amq
+  namespace: istio-ingress
+spec:
+  selector:
+    app: istio-ingressgateway
+  servers:
+    - hosts:
+        - istio-ingress-nodeport.istio-ingress.svc.cluster.local
+      port:
+        name: tcp-amq
+        number: 61616
+        protocol: TCP

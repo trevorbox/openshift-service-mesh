@@ -1,0 +1,18 @@
+installRequiredPythonLibraries: false
+approveManualInstallPlanViaHook: true
+
+installPlanApproverAndVerifyJobsImage: quay.io/trevorbox/installplanapproverandverifier:4.16.0 # quay.io/openshift/origin-cli:4.16
+
+operatorGroups:
+- name: amq-broker-rhel8
+  createNamespace: true
+
+operators:
+- channel: 7.12.x
+  installPlanApproval: Manual
+  name: amq-broker-rhel8
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  csv: amq-broker-operator.v7.12.4-opr-1-0.1747217191.p
+  namespace: amq-broker-rhel8
+  installPlanVerifierActiveDeadlineSeconds: 1200

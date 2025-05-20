@@ -1,0 +1,17 @@
+﻿apiVersion: broker.amq.io/v1beta1
+kind: ActiveMQArtemis
+metadata:
+  name: artemis-broker
+  namespace: amq
+spec:
+  deploymentPlan:
+    size: 2
+    persistenceEnabled: false
+    requireLogin: false
+    annotations:
+      traffic.sidecar.istio.io/excludeInboundPorts: '7800'
+    messageMigration: false
+    managementRBACEnabled: true
+    journalType: nio
+    jolokiaAgentEnabled: false
+    image: placeholder

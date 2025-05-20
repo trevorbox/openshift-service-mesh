@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: artemis-broker-nodeport
+  namespace: amq
+spec:
+  ports:
+    - name: tcp-amq
+      protocol: TCP
+      port: 61616
+      targetPort: 61616
+      nodePort: 31442
+  type: NodePort
+  selector:
+    ActiveMQArtemis: artemis-broker
+    application: artemis-broker-app

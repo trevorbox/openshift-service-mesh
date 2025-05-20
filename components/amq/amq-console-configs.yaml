@@ -1,0 +1,96 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: amq-console-cert
+  namespace: istio-ingress
+spec:
+  # Secret names are always required.
+  secretName: amq-console-cert
+  # commonName: amq-console
+  dnsNames:
+    # - amq-console-istio-ingress.apps-crc.testing
+    - foggle
+  usages:
+    - server auth
+    - client auth  
+  issuerRef:
+    name: internal-issuer
+    # We can reference ClusterIssuers by changing the kind here.
+    # The default value is Issuer (i.e. a locally namespaced Issuer)
+    kind: Issuer
+    # This is optional since cert-manager will default to this value however
+    # if you are using an external issuer, change this to that issuer group.
+    group: cert-manager.io
+...
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: amq-console
+spec:
+  host: artemis-broker-hdls-svc.amq.svc.cluster.local
+  subsets:
+  - labels:
+      version: v1
+    name: v1
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+      sni: artemis-broker-hdls-svc.amq.svc.cluster.local
+...
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: amq-console
+  namespace: istio-ingress
+spec:
+  selector:
+    app: istio-ingressgateway
+  servers:
+  - port:
+      number: 8443
+      name: https
+      protocol: HTTPS
+    hosts:
+      - amq-console-istio-ingress.apps-crc.testing
+    tls:
+      mode: SIMPLE
+      credentialName: amq-console-cert
+...
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: amq-console
+  namespace: istio-ingress
+spec:
+  port:
+    targetPort: https
+  tls:
+    termination: passthrough
+    insecureEdgeTerminationPolicy: Redirect
+  to:
+    kind: Service
+    name: istio-ingressgateway
+    weight: 100
+  wildcardPolicy: None
+...
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: amq-console
+spec:
+  gateways:
+  - istio-ingress/amq-console
+  hosts:
+  - amq-console-istio-ingress.apps-crc.testing
+  http:
+  - route:
+    - destination:
+        host: artemis-broker-hdls-svc.amq.svc.cluster.local
+        port:
+          number: 8161
+...

@@ -4,4 +4,4 @@ kind: Kustomization
 
 resources:
 - activemqartemis-artemis-broker.yaml
-- namespace-amq.yaml
+# - namespace-amq.yaml

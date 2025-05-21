@@ -5,7 +5,5 @@ kind: Kustomization
 resources:
 - activemqartemis-artemis-broker.yaml
 - amq-console-configs.yaml
-- gateway-amq.yaml
+- amq-nodeport-configs.yaml
 - service-artemis-broker-nodeport.yaml
-- service-istio-ingress-nodeport.yaml
-- virtualservice-amq.yaml

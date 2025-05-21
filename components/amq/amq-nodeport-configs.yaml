@@ -1,0 +1,117 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: amq-nodeport-cert
+  namespace: istio-ingress
+spec:
+  # Secret names are always required.
+  secretName: amq-nodeport-cert
+  # commonName: amq-nodeport
+  dnsNames:
+    - amq-nodeport-istio-ingress.apps-crc.testing
+  usages:
+    - server auth
+    - client auth  
+  issuerRef:
+    name: internal-issuer
+    # We can reference ClusterIssuers by changing the kind here.
+    # The default value is Issuer (i.e. a locally namespaced Issuer)
+    kind: Issuer
+    # This is optional since cert-manager will default to this value however
+    # if you are using an external issuer, change this to that issuer group.
+    group: cert-manager.io
+...
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: amq-nodeport
+  namespace: istio-ingress
+spec:
+  host: artemis-broker-hdls-svc.amq.svc.cluster.local
+  subsets:
+  - labels:
+      version: v1
+    name: v1
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+      sni: artemis-broker-hdls-svc.amq.svc.cluster.local
+...
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: amq-nodeport
+  namespace: istio-ingress
+spec:
+  selector:
+    app: istio-ingressgateway
+  servers:
+  - port:
+      name: tcp-amq
+      number: 61616
+      protocol: TCP
+    hosts:
+      - amq-nodeport-istio-ingress.apps-crc.testing
+    tls:
+      mode: SIMPLE
+      credentialName: amq-nodeport-cert
+...
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: amq-nodeport
+  namespace: istio-ingress
+spec:
+  port:
+    targetPort: https
+  tls:
+    termination: passthrough
+    insecureEdgeTerminationPolicy: Redirect
+  to:
+    kind: Service
+    name: istio-ingressgateway
+    weight: 100
+  wildcardPolicy: None
+...
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: amq-nodeport
+  namespace: istio-ingress
+spec:
+  gateways:
+  - istio-ingress/amq-nodeport
+  hosts:
+  - amq-nodeport-istio-ingress.apps-crc.testing
+  tcp:
+    - match:
+        - port: 61616
+      route:
+        - destination:
+            host: artemis-broker-hdls-svc.amq.svc.cluster.local
+            port:
+              number: 61616
+...
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: amq-nodeport
+  namespace: istio-ingress
+spec:
+  ports:
+    - name: tcp-amq
+      protocol: TCP
+      port: 61616
+      targetPort: 61616
+      nodePort: 31443
+  type: NodePort
+  selector:
+    app: istio-ingressgateway
+    istio: ingressgateway
+...

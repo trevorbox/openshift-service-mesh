@@ -55,9 +55,9 @@ spec:
       protocol: TCP
     hosts:
       - amq-nodeport-istio-ingress.apps-crc.testing
-    tls:
-      mode: SIMPLE
-      credentialName: amq-nodeport-cert
+    # tls:
+    #   mode: SIMPLE
+    #   credentialName: amq-nodeport-cert
 ...
 ---
 apiVersion: route.openshift.io/v1

@@ -1,27 +1,27 @@
----
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: amq-nodeport-cert
-  namespace: istio-ingress
-spec:
-  # Secret names are always required.
-  secretName: amq-nodeport-cert
-  # commonName: amq-nodeport
-  dnsNames:
-    - amq-nodeport-istio-ingress.apps-crc.testing
-  usages:
-    - server auth
-    - client auth  
-  issuerRef:
-    name: internal-issuer
-    # We can reference ClusterIssuers by changing the kind here.
-    # The default value is Issuer (i.e. a locally namespaced Issuer)
-    kind: Issuer
-    # This is optional since cert-manager will default to this value however
-    # if you are using an external issuer, change this to that issuer group.
-    group: cert-manager.io
-...
+# ---
+# apiVersion: cert-manager.io/v1
+# kind: Certificate
+# metadata:
+#   name: amq-nodeport-cert
+#   namespace: istio-ingress
+# spec:
+#   # Secret names are always required.
+#   secretName: amq-nodeport-cert
+#   # commonName: amq-nodeport
+#   dnsNames:
+#     - amq-nodeport-istio-ingress.apps-crc.testing
+#   usages:
+#     - server auth
+#     - client auth  
+#   issuerRef:
+#     name: internal-issuer
+#     # We can reference ClusterIssuers by changing the kind here.
+#     # The default value is Issuer (i.e. a locally namespaced Issuer)
+#     kind: Issuer
+#     # This is optional since cert-manager will default to this value however
+#     # if you are using an external issuer, change this to that issuer group.
+#     group: cert-manager.io
+# ...
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule

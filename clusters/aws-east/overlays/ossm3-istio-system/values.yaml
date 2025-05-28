@@ -1,0 +1,69 @@
+istioCNI:
+  version: v1.24.3
+  namespace: istio-cni
+# https://istio.io/latest/docs/setup/upgrade/canary/
+istioRevisionTags: 
+  # https://istio.io/latest/docs/setup/upgrade/canary/#default-tag
+  default:
+    istioRevision: default-v1-24-3
+revisions:
+  - name: default
+    spec:
+      namespace: istio-system
+      updateStrategy:
+        inactiveRevisionDeletionGracePeriodSeconds: 30
+        type: RevisionBased
+        updateWorkloads: false
+      values:
+        pilot:
+          autoscaleEnabled: true
+          autoscaleMin: 1
+          autoscaleMax: 2
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+          env:
+            PILOT_ENABLE_IP_AUTOALLOCATE: "true"
+        global:
+          meshID: mesh1
+          multiCluster:
+            clusterName: cluster1
+          network: network1
+          proxy:
+            resources:
+              limits:
+                cpu: 100m
+                memory: 64Mi
+              requests:
+                cpu: 50m
+                memory: 32Mi
+          proxy_init:
+            resources:
+              limits:
+                cpu: 100m
+                memory: 64Mi
+              requests:
+                cpu: 50m
+                memory: 32Mi
+        meshConfig:
+          defaultConfig:
+            proxyMetadata:
+              ISTIO_META_DNS_CAPTURE: "true"
+          accessLogFile: /dev/stdout
+          enablePrometheusMerge: true
+          discoverySelectors:
+            - matchExpressions:
+                - key: istio.io/rev
+                  operator: Exists
+            - matchLabels:
+                kubernetes.io/metadata.name: istio-system
+          enableTracing: true
+          extensionProviders:
+            - name: tempo
+              opentelemetry:
+                service: otel-collector.opentelemetry-collector.svc.cluster.local
+                port: 4317
+          outboundTrafficPolicy:
+            mode: REGISTRY_ONLY # ALLOW_ANY
+      version: v1.24.3

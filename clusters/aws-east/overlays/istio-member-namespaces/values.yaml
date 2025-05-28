@@ -1,0 +1,8 @@
+members:
+  - istio-ingress
+  - bookinfo
+labels:
+  istio.io/rev: default
+  argocd.argoproj.io/managed-by: openshift-gitops
+annotations:
+  argocd.argoproj.io/sync-options: Delete=false 

@@ -1,0 +1,85 @@
+apiVersion: kiali.io/v1alpha1
+kind: Kiali
+metadata:
+  name: kiali-istio-system
+  namespace: kiali
+spec:
+  version: v2.4
+  auth:
+    strategy: openshift
+  deployment:
+    cluster_wide_access: true
+    discovery_selectors:
+      default:
+        - matchExpressions:
+            - key: istio.io/rev
+              operator: Exists
+        - matchLabels:
+            kubernetes.io/metadata.name: istio-system
+        - matchLabels:
+            kubernetes.io/metadata.name: grafana
+    image_pull_policy: ''
+    ingress:
+      enabled: true
+    instance_name: kiali
+    logger:
+      log_level: debug
+    namespace: kiali
+    pod_labels:
+      maistra.io/expose-route: 'true'
+      sidecar.istio.io/inject: 'false'
+    replicas: 1
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+  external_services:
+    custom_dashboards:
+      namespace_label: kubernetes_namespace
+    grafana:
+      dashboards:
+        - name: Istio Service Dashboard
+          variables:
+            namespace: var-namespace
+            service: var-service
+        - name: Istio Workload Dashboard
+          variables:
+            namespace: var-namespace
+            workload: var-workload
+        - name: Istio Mesh Dashboard
+        - name: Istio Control Plane Dashboard
+        - name: Istio Performance Dashboard
+        - name: Istio Wasm Extension Dashboard
+      enabled: true
+      external_url: https://grafana-instance-route-grafana.apps.east.sandbox1784.opentlc.com
+      internal_url: http://grafana-instance-service.grafana.svc:3000
+    prometheus:
+      auth:
+        type: bearer
+        use_kiali_token: true
+      thanos_proxy:
+        enabled: true
+      url: https://thanos-querier.openshift-monitoring.svc.cluster.local:9091
+    tracing:
+      enabled: true
+      provider: jaeger
+      use_grpc: false
+      internal_url: 'https://tempo-minio-dev-gateway.tempo-system.svc.cluster.local:8080/api/traces/v1/dev'
+      external_url: https://tempo-minio-dev-gateway-tempo-system.apps.east.sandbox1784.opentlc.com/api/traces/v1/dev
+      health_check_url: https://tempo-minio-dev-gateway-tempo-system.apps.east.sandbox1784.opentlc.com/api/traces/v1/dev/tempo/api/echo
+      auth:
+        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
+        insecure_skip_verify: true
+        type: bearer
+        use_kiali_token: true
+      tempo_config:
+         url_format: "jaeger"
+  installation_tag: Kiali3
+  istio_labels:
+    app_label_name: app
+    egress_gateway_label: istio=egressgateway
+    ingress_gateway_label: istio=ingressgateway
+    injection_label_name: istio-injection
+    injection_label_rev: istio.io/rev
+    version_label_name: version
+  istio_namespace: istio-system

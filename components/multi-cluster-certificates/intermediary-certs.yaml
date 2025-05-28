@@ -1,0 +1,103 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: selfsigned
+  namespace: istio-system
+spec:
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+    name: root-ca
+    namespace: istio-system
+spec:
+  isCA: true
+  duration: 87600h # 10 years
+  secretName: root-ca
+  commonName: root-ca
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  subject:
+    organizations:
+      - cluster.local
+      - cert-manager
+  issuerRef:
+    name: selfsigned
+    kind: Issuer
+    group: cert-manager.io
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: root-ca
+  namespace: istio-system
+spec:
+  ca:
+    secretName: root-ca
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+    name: east-ca
+    namespace: istio-system
+spec:
+  isCA: true
+  duration: 87600h # 10 years
+  secretName: cacerts # east-ca
+  commonName: east-ca
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  subject:
+    organizations:
+      - cluster.local
+      - cert-manager
+  issuerRef:
+    name: root-ca
+    kind: Issuer
+    group: cert-manager.io
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: east-ca
+  namespace: istio-system
+spec:
+  ca:
+    secretName: cacerts # east-ca
+
+# This certificate we will copy over to the west cluster
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+    name: west-ca
+    namespace: istio-system
+spec:
+  isCA: true
+  duration: 87600h # 10 years
+  secretName: west-ca
+  commonName: west-ca
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  subject:
+    organizations:
+      - cluster.local
+      - cert-manager
+  issuerRef:
+    name: root-ca
+    kind: Issuer
+    group: cert-manager.io
+# ---
+# apiVersion: cert-manager.io/v1
+# kind: Issuer
+# metadata:
+#   name: west-ca
+#   namespace: istio-system
+# spec:
+#   ca:
+#     secretName: west-ca
+# ---

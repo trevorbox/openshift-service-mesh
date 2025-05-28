@@ -207,7 +207,7 @@ applications:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
       argocd.argoproj.io/sync-wave: '4'
     destination:
-      namespace: istio-ingress
+      namespace: istio-system
     source:
       path: clusters/aws-east/overlays/eastwestgateway-net1
 

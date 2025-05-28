@@ -155,7 +155,7 @@ applications:
     destination:
       namespace: grafana
     source:
-      path: components/grafana-istio
+      path: clusters/aws-east/overlays/grafana-istio
 
   istio-ingressgateway:
     annotations:

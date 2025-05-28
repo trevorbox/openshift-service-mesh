@@ -107,9 +107,18 @@ applications:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
       argocd.argoproj.io/sync-wave: '1'
     destination:
-      namespace: tempo-system
+      namespace: istio-system
     source:
       path: components/multi-cluster-certificates
+
+  cert-manager-istio-csr:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '1'
+    destination:
+      namespace: cert-manager
+    source:
+      path: components/cert-manager-istio-csr
 
   istio-member-namespaces:
     annotations:

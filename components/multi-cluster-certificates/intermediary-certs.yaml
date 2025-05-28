@@ -36,6 +36,9 @@ metadata:
 spec:
   ca:
     secretName: root-ca
+
+# oc get -n istio-system secret east-ca -o jsonpath='{.data.tls\.crt}' | base64 -d > ca.pem
+# oc create secret generic -n cert-manager istio-root-ca --from-file=ca.pem=ca.pem
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -45,7 +48,7 @@ metadata:
 spec:
   isCA: true
   duration: 87600h # 10 years
-  secretName: cacerts # east-ca
+  secretName: east-ca
   commonName: east-ca
   privateKey:
     algorithm: ECDSA
@@ -66,7 +69,7 @@ metadata:
   namespace: istio-system
 spec:
   ca:
-    secretName: cacerts # east-ca
+    secretName: east-ca
 
 # This certificate we will copy over to the west cluster
 ---

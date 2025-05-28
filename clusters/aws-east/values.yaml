@@ -137,7 +137,7 @@ applications:
     destination:
       namespace: minio-tenant
     source:
-      path: components/minio-tenant
+      path: clusters/aws-east/overlays/minio-tenant
 
   tempo-system:
     annotations:

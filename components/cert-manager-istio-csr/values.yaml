@@ -5,6 +5,16 @@ app:
     namespace: istio-system
     revisions: 
       - default-v1-24-3
+  runtimeConfiguration:
+    issuer:
+      # Issuer name set on created CertificateRequests for both istio-csr's
+      # serving certificate and incoming gRPC CSRs.
+      name: east-ca # istio-ca
+  certmanager:
+    issuer:
+      # Issuer name set on created CertificateRequests for both istio-csr's
+      # serving certificate and incoming gRPC CSRs.
+      name: east-ca # istio-ca
 volumeMounts:
   - name: root-ca
     mountPath: /var/run/secrets/istio-csr

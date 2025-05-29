@@ -1,0 +1,8 @@
+cookieSecret: supersecret
+datasource:
+  url: 'https://thanos-querier.openshift-monitoring.svc.cluster.local:9091'
+  jsonData:
+    customQueryParameters:
+consoleLink: 
+  enabled: true
+  route: "https://grafana-instance-route-grafana.apps.east.sandbox1784.opentlc.com"

@@ -10,13 +10,11 @@ We need to add the generic secret to cert-manager <https://docs.redhat.com/en/do
 #log into east cluster
 oc get -n istio-system secret west-ca -o jsonpath='{.data.tls\.crt}' | base64 -d > ca.pem
 
-oc get -n istio-system secret west-ca -o jsonpath='{.data.tls\.crt}' | base64 -d > tls.crt
-oc get -n istio-system secret west-ca -o jsonpath='{.data.ca\.crt}' | base64 -d > ca.crt
-oc get -n istio-system secret west-ca -o jsonpath='{.data.tls\.key}' | base64 -d > tls.key
-
+oc get -n istio-system secret west-ca -oyaml > west-ca.yaml
 
 #log into west cluster
 oc create secret generic -n cert-manager istio-root-ca --from-file=ca.pem=ca.pem
+oc create -f west-ca.yaml -n istio-system
 ```
 
 ## istio-csr verify 

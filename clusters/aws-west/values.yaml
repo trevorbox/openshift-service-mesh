@@ -118,7 +118,7 @@ applications:
     destination:
       namespace: cert-manager
     source:
-      path: components/cert-manager-istio-csr
+      path: clusters/aws-west/overlays/cert-manager-istio-csr
 
   istio-member-namespaces:
     annotations:

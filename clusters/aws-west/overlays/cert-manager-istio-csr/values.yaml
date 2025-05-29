@@ -1,0 +1,27 @@
+app:
+  tls:
+    rootCAFile: /var/run/secrets/istio-csr/ca.pem
+  istio:
+    namespace: istio-system
+    revisions: 
+      - default-v1-24-3
+  # https://github.com/cert-manager/istio-csr/issues/413
+  server:
+    clusterID: cluster1
+  runtimeConfiguration:
+    issuer:
+      # Issuer name set on created CertificateRequests for both istio-csr's
+      # serving certificate and incoming gRPC CSRs.
+      name: west-ca # istio-ca
+  certmanager:
+    issuer:
+      # Issuer name set on created CertificateRequests for both istio-csr's
+      # serving certificate and incoming gRPC CSRs.
+      name: west-ca # istio-ca
+volumeMounts:
+  - name: root-ca
+    mountPath: /var/run/secrets/istio-csr
+volumes:
+  - name: root-ca
+    secret: 
+      secretName: istio-root-ca

@@ -1,0 +1,8 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: west-ca
+  namespace: istio-system
+spec:
+  ca:
+    secretName: west-ca

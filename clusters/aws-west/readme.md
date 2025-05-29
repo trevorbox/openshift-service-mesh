@@ -7,7 +7,15 @@ in east we simulate an external issuer by create a root-ca and two intermediary 
 We need to add the generic secret to cert-manager <https://docs.redhat.com/en/documentation/red_hat_openshift_service_mesh/3.0/html/installing/ossm-cert-manager>
 
 ```sh
-oc get -n istio-system secret east-ca -o jsonpath='{.data.tls\.crt}' | base64 -d > ca.pem
+#log into east cluster
+oc get -n istio-system secret west-ca -o jsonpath='{.data.tls\.crt}' | base64 -d > ca.pem
+
+oc get -n istio-system secret west-ca -o jsonpath='{.data.tls\.crt}' | base64 -d > tls.crt
+oc get -n istio-system secret west-ca -o jsonpath='{.data.ca\.crt}' | base64 -d > ca.crt
+oc get -n istio-system secret west-ca -o jsonpath='{.data.tls\.key}' | base64 -d > tls.key
+
+
+#log into west cluster
 oc create secret generic -n cert-manager istio-root-ca --from-file=ca.pem=ca.pem
 ```
 

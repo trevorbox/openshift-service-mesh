@@ -8,4 +8,4 @@ metadata:
     argocd.argoproj.io/sync-wave: '-10'
   labels:
     argocd.argoproj.io/managed-by: openshift-gitops
-    topology.istio.io/network: network1
+    topology.istio.io/network: network2

@@ -100,7 +100,7 @@ applications:
     destination:
       namespace: istio-system
     source:
-      path: clusters/aws-east/overlays/istio-system-configs
+      path: clusters/aws-west/overlays/istio-system-configs
 
   multi-cluster-certificates:
     annotations:
@@ -128,7 +128,7 @@ applications:
       namespace: openshift-gitops
     source:
       # path: components/istio-member-namespaces
-      path: clusters/aws-east/overlays/istio-member-namespaces
+      path: clusters/aws-west/overlays/istio-member-namespaces
                          
   openshift-monitoring:
     annotations:
@@ -146,7 +146,7 @@ applications:
     destination:
       namespace: minio-tenant
     source:
-      path: clusters/aws-east/overlays/minio-tenant
+      path: clusters/aws-west/overlays/minio-tenant
 
   tempo-system:
     annotations:
@@ -164,7 +164,7 @@ applications:
     destination:
       namespace: grafana
     source:
-      path: clusters/aws-east/overlays/grafana-istio
+      path: clusters/aws-west/overlays/grafana-istio
 
   istio-ingressgateway:
     annotations:
@@ -182,7 +182,7 @@ applications:
     destination:
       namespace: kiali
     source:
-      path: clusters/aws-east/overlays/kiali
+      path: clusters/aws-west/overlays/kiali
 
   servicemeshoperator3:
     annotations:
@@ -209,16 +209,16 @@ applications:
     destination:
       namespace: istio-system
     source:
-      path: clusters/aws-east/overlays/ossm3-istio-system
+      path: clusters/aws-west/overlays/ossm3-istio-system
 
-  eastwestgateway-net1:
+  eastwestgateway-net2:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
       argocd.argoproj.io/sync-wave: '4'
     destination:
       namespace: istio-system
     source:
-      path: clusters/aws-east/overlays/eastwestgateway-net1
+      path: clusters/aws-west/overlays/eastwestgateway-net2
 
   bookinfo:
     annotations:
@@ -227,4 +227,4 @@ applications:
     destination:
       namespace: bookinfo
     source:
-      path: clusters/aws-east/overlays/bookinfo
+      path: clusters/aws-west/overlays/bookinfo

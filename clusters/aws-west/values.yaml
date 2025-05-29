@@ -102,14 +102,14 @@ applications:
     source:
       path: clusters/aws-west/overlays/istio-system-configs
 
-  multi-cluster-certificates:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '1'
-    destination:
-      namespace: istio-system
-    source:
-      path: components/multi-cluster-certificates
+  # multi-cluster-certificates:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '1'
+  #   destination:
+  #     namespace: istio-system
+  #   source:
+  #     path: components/multi-cluster-certificates
 
   cert-manager-istio-csr:
     annotations:

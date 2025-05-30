@@ -111,14 +111,14 @@ applications:
     source:
       path: components/multi-cluster-certificates
 
-  cert-manager-istio-csr:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '1'
-    destination:
-      namespace: cert-manager
-    source:
-      path: components/cert-manager-istio-csr
+  # cert-manager-istio-csr:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '1'
+  #   destination:
+  #     namespace: cert-manager
+  #   source:
+  #     path: components/cert-manager-istio-csr
 
   istio-member-namespaces:
     annotations:
@@ -193,14 +193,14 @@ applications:
     source:
       path: components/servicemeshoperator3
 
-  # istio-cni-configs:
-  #   annotations:
-  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
-  #     argocd.argoproj.io/sync-wave: '1'
-  #   destination:
-  #     namespace: istio-cni
-  #   source:
-  #     path: components/istio-cni-configs
+  istio-cni-configs:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '1'
+    destination:
+      namespace: istio-cni
+    source:
+      path: components/istio-cni-configs
 
   ossm3-istio-system:
     annotations:

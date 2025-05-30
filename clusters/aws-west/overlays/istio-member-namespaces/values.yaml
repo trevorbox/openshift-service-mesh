@@ -1,6 +1,7 @@
 members:
   - istio-ingress
   - bookinfo
+  - sample
 labels:
   istio.io/rev: default
   argocd.argoproj.io/managed-by: openshift-gitops

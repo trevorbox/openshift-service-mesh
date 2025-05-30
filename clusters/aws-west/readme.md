@@ -17,13 +17,21 @@ oc create secret generic -n cert-manager istio-root-ca --from-file=ca.pem=ca.pem
 oc create -f west-ca.yaml -n istio-system
 ```
 
-## istio-csr verify 
+# final steps establish trust
 
 ```sh
-# this will just show the certificate presented by the gateway (ok, dotn worry) 
-istioctl proxy-config secret -n istio-ingress $(oc get pods -n istio-ingress -o jsonpath='{.items..metadata.name}' --selector app=istio-ingressgateway) -o json | jq -r '.dynamicActiveSecrets[0].secret.tlsCertificate.certificateChain.inlineBytes' | base64 --decode | openssl x509 -text -noout
+# log into east
+export CTX_CLUSTER1=$(oc config current-context)
+# log into west
+export CTX_CLUSTER2=$(oc config current-context)
 
+istioctl create-remote-secret \
+    --context="${CTX_CLUSTER2}" \
+    --name=cluster2 | \
+    oc --context="${CTX_CLUSTER1}" apply -f -
 
-# will show Issuer: O=cert-manager + O=cluster.local, CN=east-ca after restarting the pod (Issuer: O=cluster.local before if deployed previously before istio-csr)
-istioctl proxy-config secret -n bookinfo $(oc get pods -n bookinfo -o jsonpath='{.items..metadata.name}' --selector app=productpage) -o json | jq -r '.dynamicActiveSecrets[0].secret.tlsCertificate.certificateChain.inlineBytes' | base64 --decode | openssl x509 -text -noout
+istioctl create-remote-secret \
+    --context="${CTX_CLUSTER1}" \
+    --name=cluster1 | \
+    oc --context="${CTX_CLUSTER2}" apply -f -
 ```

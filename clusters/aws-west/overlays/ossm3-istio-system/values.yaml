@@ -54,12 +54,12 @@ revisions:
               ISTIO_META_DNS_CAPTURE: "true"
           accessLogFile: /dev/stdout
           enablePrometheusMerge: true
-          # discoverySelectors:
-          #   - matchExpressions:
-          #       - key: istio.io/rev
-          #         operator: Exists
-          #   - matchLabels:
-          #       kubernetes.io/metadata.name: istio-system
+          discoverySelectors:
+            - matchExpressions:
+                - key: istio.io/rev
+                  operator: Exists
+            - matchLabels:
+                kubernetes.io/metadata.name: istio-system
           enableTracing: true
           extensionProviders:
             - name: tempo

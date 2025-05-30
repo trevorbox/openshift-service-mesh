@@ -17,7 +17,7 @@ oc create secret generic -n cert-manager istio-root-ca --from-file=ca.pem=ca.pem
 oc create -f west-ca.yaml -n istio-system
 ```
 
-# final steps establish trust
+# final steps kube api secrets
 
 ```sh
 # log into east

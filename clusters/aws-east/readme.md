@@ -1,28 +1,15 @@
+# multicluster configs east
+
+![east-kiali](./.img/east-kiali.png "Kiali east")
+
 # notes
 
-in east we simulate an external issuer by create a root-ca and two intermediary CAs (east-ca, west-ca) from ../../components/multi-cluster-certificates/
+in east we simulate an external issuer by create a root-ca and two intermediary CAs (east-ca, west-ca) 
 
-## manual steps
-
-We need to add the generic secret to cert-manager <https://docs.redhat.com/en/documentation/red_hat_openshift_service_mesh/3.0/html/installing/ossm-cert-manager>
 
 ```sh
-oc get -n istio-system secret east-ca -o jsonpath='{.data.tls\.crt}' | base64 -d > ca.pem
-oc create secret generic -n cert-manager istio-root-ca --from-file=ca.pem=ca.pem
-```
-
-## istio-csr verify 
-
-```sh
-# this will just show the certificate presented by the gateway (ok, dotn worry) 
-istioctl proxy-config secret -n istio-ingress $(oc get pods -n istio-ingress -o jsonpath='{.items..metadata.name}' --selector app=istio-ingressgateway) -o json | jq -r '.dynamicActiveSecrets[0].secret.tlsCertificate.certificateChain.inlineBytes' | base64 --decode | openssl x509 -text -noout
-
-
-# will show Issuer: O=cert-manager + O=cluster.local, CN=east-ca after restarting the pod (Issuer: O=cluster.local before if deployed previously before istio-csr)
-istioctl proxy-config secret -n bookinfo $(oc get pods -n bookinfo -o jsonpath='{.items..metadata.name}' --selector app=productpage) -o json | jq -r '.dynamicActiveSecrets[0].secret.tlsCertificate.certificateChain.inlineBytes' | base64 --decode | openssl x509 -text -noout
-```
-
-```sh
+rm -rf .certs
+mkdir .certs
 cd .certs
 openssl genrsa -out root-key.pem 4096
 cat >> root-ca.conf <<EOF
@@ -112,5 +99,43 @@ EOF
 openssl req -new -config west/intermediate.conf \
    -key west/ca-key.pem \
    -out west/cluster-ca.csr
+openssl x509 -req -sha256 -days 3650 \
+   -CA root-cert.pem \
+   -CAkey root-key.pem -CAcreateserial \
+   -extensions req_ext -extfile west/intermediate.conf \
+   -in west/cluster-ca.csr \
+   -out west/ca-cert.pem
+cat west/ca-cert.pem root-cert.pem > west/cert-chain.pem && cp root-cert.pem west
+```
 
+```sh
+oc get secret -n istio-system --context "${CTX_CLUSTER1}" cacerts || oc create secret generic cacerts -n istio-system --context "${CTX_CLUSTER1}" \
+  --from-file=east/ca-cert.pem \
+  --from-file=east/ca-key.pem \
+  --from-file=east/root-cert.pem \
+  --from-file=east/cert-chain.pem
+oc get secret -n istio-system --context "${CTX_CLUSTER2}" cacerts || oc create secret generic cacerts -n istio-system --context "${CTX_CLUSTER2}" \
+  --from-file=west/ca-cert.pem \
+  --from-file=west/ca-key.pem \
+  --from-file=west/root-cert.pem \
+  --from-file=west/cert-chain.pem
+```
+
+## (test) istio-csr verify 
+
+> works but not working for multicluster
+
+We need to add the generic secret to cert-manager <https://docs.redhat.com/en/documentation/red_hat_openshift_service_mesh/3.0/html/installing/ossm-cert-manager>
+
+```sh
+oc get -n istio-system secret east-ca -o jsonpath='{.data.tls\.crt}' | base64 -d > ca.pem
+oc create secret generic -n cert-manager istio-root-ca --from-file=ca.pem=ca.pem
+```
+
+```sh
+# this will just show the certificate presented by the gateway (ok, dotn worry) 
+istioctl proxy-config secret -n istio-ingress $(oc get pods -n istio-ingress -o jsonpath='{.items..metadata.name}' --selector app=istio-ingressgateway) -o json | jq -r '.dynamicActiveSecrets[0].secret.tlsCertificate.certificateChain.inlineBytes' | base64 --decode | openssl x509 -text -noout
+
+# will show Issuer: O=cert-manager + O=cluster.local, CN=east-ca after restarting the pod (Issuer: O=cluster.local before if deployed previously before istio-csr)
+istioctl proxy-config secret -n bookinfo $(oc get pods -n bookinfo -o jsonpath='{.items..metadata.name}' --selector app=productpage) -o json | jq -r '.dynamicActiveSecrets[0].secret.tlsCertificate.certificateChain.inlineBytes' | base64 --decode | openssl x509 -text -noout
 ```

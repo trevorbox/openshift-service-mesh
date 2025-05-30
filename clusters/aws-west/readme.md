@@ -41,3 +41,14 @@ istioctl create-remote-secret --create-service-account=false \
   --name=cluster1 | \
   oc --context="${CTX_CLUSTER2}" apply -f -
 ```
+
+## verify 
+
+```sh
+for i in {0..9}; do \
+  oc --context="${CTX_CLUSTER1}" exec -n sample deploy/sleep -c sleep -- curl -sS helloworld.sample:5000/hello; \
+done
+for i in {0..9}; do \
+  oc --context="${CTX_CLUSTER2}" exec -n sample deploy/sleep -c sleep -- curl -sS helloworld.sample:5000/hello; \
+done
+```

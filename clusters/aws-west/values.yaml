@@ -111,14 +111,14 @@ applications:
   #   source:
   #     path: components/multi-cluster-certificates
 
-  cert-manager-istio-csr:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '1'
-    destination:
-      namespace: cert-manager
-    source:
-      path: clusters/aws-west/overlays/cert-manager-istio-csr
+  # cert-manager-istio-csr:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '1'
+  #   destination:
+  #     namespace: cert-manager
+  #   source:
+  #     path: clusters/aws-west/overlays/cert-manager-istio-csr
 
   istio-member-namespaces:
     annotations:

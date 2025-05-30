@@ -1,0 +1,13 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: eastwestgateway-allow-external
+  namespace: istio-system
+spec:
+  podSelector:
+    matchLabels:
+      istio: eastwestgateway
+  ingress:
+    - {}
+  policyTypes:
+    - Ingress

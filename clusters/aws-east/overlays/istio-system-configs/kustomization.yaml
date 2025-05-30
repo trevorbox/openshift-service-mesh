@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
 - ../../../../components/istio-system-configs
+- networkpolicy-eastwestgateway-allow-external.yaml
 
 patches:
 - path: namespace-istio-system.yaml

@@ -266,7 +266,7 @@ applications:
     destination:
       namespace: istio-ingress
     source:
-      path: clusters/crc-amq/overlays/envoy-filter
+      path: components/envoy-filter
 
   envoy-filter-another-istio-ingress:
     annotations:
@@ -275,4 +275,4 @@ applications:
     destination:
       namespace: another-istio-ingress
     source:
-      path: clusters/crc-amq/overlays/envoy-filter
+      path: components/envoy-filter

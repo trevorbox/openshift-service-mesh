@@ -210,7 +210,7 @@ applications:
     destination:
       namespace: istio-system
     source:
-      path: components/ossm3-istio-system
+      path: clusters/crc-amq/overlays/ossm3-istio-system
 
   amq:
     annotations:

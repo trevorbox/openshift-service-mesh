@@ -10,3 +10,4 @@ helmCharts:
 
 resources:
   - networkpolicy-allow-from-openshift-ingress.yaml
+  - clusterissuer-self-signer.yaml

@@ -2,7 +2,7 @@ members:
   - istio-ingress
   - amq
   - bookinfo
-  - istio-ingress2
+  - another-istio-ingress
   - golang-ex
 labels:
   # istio.io/rev: ossm2

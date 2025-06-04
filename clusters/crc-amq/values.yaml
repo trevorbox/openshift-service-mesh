@@ -255,7 +255,7 @@ applications:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
       argocd.argoproj.io/sync-wave: '4'
     destination:
-      namespace: istio-ingress2
+      namespace: another-istio-ingress
     source:
       path: clusters/crc-amq/overlays/istio-ingressgateway2
 
@@ -268,11 +268,11 @@ applications:
     source:
       path: clusters/crc-amq/overlays/envoy-filter
 
-  envoy-filter-istio-ingress2:
+  envoy-filter-another-istio-ingress:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
       argocd.argoproj.io/sync-wave: '4'
     destination:
-      namespace: istio-ingress2
+      namespace: another-istio-ingress
     source:
       path: clusters/crc-amq/overlays/envoy-filter

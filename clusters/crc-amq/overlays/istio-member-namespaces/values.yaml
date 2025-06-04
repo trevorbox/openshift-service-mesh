@@ -2,6 +2,8 @@ members:
   - istio-ingress
   - amq
   - bookinfo
+  - istio-ingress2
+  - golang-ex
 labels:
   # istio.io/rev: ossm2
   istio.io/rev: default

@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+helmCharts:
+- name: golang-ex-istio
+  repo: https://trevorbox.github.io/helm-charts
+  valuesFile: values.yaml
+  namespace: golang-ex
+  version: ~0.1.0
+  releaseName: golang-ex-istio

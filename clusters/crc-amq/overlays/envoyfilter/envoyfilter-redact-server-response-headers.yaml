@@ -1,0 +1,29 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: redact-server-response-headers
+  namespace: istio-ingress2
+spec:
+  configPatches:
+    - applyTo: NETWORK_FILTER
+      match:
+        listener:
+          filterChain:
+            filter:
+              name: envoy.filters.network.http_connection_manager
+      patch:
+        operation: MERGE
+        value:
+          typed_config:
+            '@type': type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+            server_header_transformation: PASS_THROUGH
+    - applyTo: ROUTE_CONFIGURATION
+      patch:
+        operation: MERGE
+        value:
+          response_headers_to_remove:
+            - x-envoy-upstream-service-time
+            - server
+  workloadSelector:
+    labels:
+      istio: ingressgateway

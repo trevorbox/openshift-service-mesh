@@ -9,5 +9,4 @@ helmCharts:
   releaseName: istio-ingressgateway
 
 resources:
-  # - clusterissuer-self-signer.yaml
   - networkpolicy-allow-from-openshift-ingress.yaml

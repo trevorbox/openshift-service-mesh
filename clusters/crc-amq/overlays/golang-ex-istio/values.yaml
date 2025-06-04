@@ -7,10 +7,10 @@ context:
 features:
   stable:
     svc: golang-ex-stable
-    host: 
+    host: golang-ex-stable-another-istio-ingress.apps-crc.testing
   high:
     svc: golang-ex-high
-    host: 
+    host: golang-ex-high-another-istio-ingress.apps-crc.testing
   featurea:
     svc: golang-ex-featurea
-    host: 
+    host: golang-ex-featurea-another-istio-ingress.apps-crc.testing

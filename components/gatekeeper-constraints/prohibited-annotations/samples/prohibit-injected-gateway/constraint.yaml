@@ -14,7 +14,7 @@ spec:
         - key: istio.io/rev
           operator: Exists
     excludedNamespaces:
-      - istio-ingress
+      - "*istio-ingress*"
   parameters:
     message: "Disallow `inject.istio.io/templates` annotation with a value of `gateway` for non ingress namespaces."
     annotations:

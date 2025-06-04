@@ -220,3 +220,15 @@ applications:
       namespace: openshift-gitops
     source:
       path: components/amq
+
+  bookinfo:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: bookinfo
+      server: https://kubernetes.default.svc?__team=team1
+    project: team1
+    source:
+      path: clusters/crc/overlays/bookinfo
+

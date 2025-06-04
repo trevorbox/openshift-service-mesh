@@ -1,6 +1,6 @@
 ingressgateway:
   name: ingressgateway
-  namespace: istio-ingress
+  namespace: another-istio-ingress
 context: 
   name: golang-ex
   namespace: golang-ex

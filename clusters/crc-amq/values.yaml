@@ -268,11 +268,11 @@ applications:
     source:
       path: components/envoy-filter
 
-  envoy-filter-another-istio-ingress:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '4'
-    destination:
-      namespace: another-istio-ingress
-    source:
-      path: components/envoy-filter
+  # envoy-filter-another-istio-ingress:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '4'
+  #   destination:
+  #     namespace: another-istio-ingress
+  #   source:
+  #     path: components/envoy-filter

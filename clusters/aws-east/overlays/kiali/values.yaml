@@ -1,6 +1,6 @@
 consoleLink: 
   enabled: true
-  route: "https://kiali-kiali.apps.east.sandbox1784.opentlc.com"
+  route: "https://kiali-kiali.apps.east.sandbox1919.opentlc.com"
 ossmconsole:
   enabled: false
 kiali:
@@ -45,7 +45,7 @@ kiali:
         # Grafana service name is "grafana" and is in the "telemetry" namespace.
         internal_url: 'http://grafana-instance-service.grafana.svc:3000'
         # Public facing URL of Grafana
-        external_url: 'https://grafana-instance-route-grafana.apps.east.sandbox1784.opentlc.com'
+        external_url: 'https://grafana-instance-route-grafana.apps.east.sandbox1919.opentlc.com'
         dashboards:
           - name: "Istio Service Dashboard"
             variables:
@@ -93,10 +93,10 @@ kiali:
         # provider: "jaeger"
         # use_grpc: true
         use_grpc: false
-        external_url: 'https://grafana-instance-route-grafana.apps.east.sandbox1784.opentlc.com'
+        external_url: 'https://grafana-instance-route-grafana.apps.east.sandbox1919.opentlc.com'
         # external_url: "http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200"
         # health_check_url: 'http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200'
-        health_check_url: 'https://grafana-instance-route-grafana.apps.east.sandbox1784.opentlc.com'
+        health_check_url: 'https://grafana-instance-route-grafana.apps.east.sandbox1919.opentlc.com'
         tempo_config:
           org_id: "1"
           datasource_uid: "2aaa2e27-41bd-4e18-a253-2b328390e2bc"

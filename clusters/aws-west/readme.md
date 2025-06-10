@@ -52,3 +52,19 @@ for i in {0..9}; do \
   oc --context="${CTX_CLUSTER2}" exec -n sample deploy/sleep -c sleep -- curl -sS helloworld.sample:5000/hello; \
 done
 ```
+
+## verify endpoints
+
+<https://istio.io/latest/docs/ops/diagnostic-tools/multicluster/#step-by-step-diagnosis>
+
+```sh
+tbox@fedora:~/git/trevorbox/openshift-service-mesh$ istioctl --context $CTX_CLUSTER1 proxy-config endpoint details-v1-547cc67476-qpvcj.bookinfo | grep productpage
+10.129.2.48:9080                                        HEALTHY     OK                outbound|9080|v1|productpage.bookinfo.svc.cluster.local
+10.129.2.48:9080                                        HEALTHY     OK                outbound|9080||productpage.bookinfo.svc.cluster.local
+44.226.201.253:15443                                    HEALTHY     OK                outbound|9080|v1|productpage.bookinfo.svc.cluster.local
+44.226.201.253:15443                                    HEALTHY     OK                outbound|9080||productpage.bookinfo.svc.cluster.local
+44.240.185.234:15443                                    HEALTHY     OK                outbound|9080|v1|productpage.bookinfo.svc.cluster.local
+44.240.185.234:15443                                    HEALTHY     OK                outbound|9080||productpage.bookinfo.svc.cluster.local
+52.25.251.159:15443                                     HEALTHY     OK                outbound|9080|v1|productpage.bookinfo.svc.cluster.local
+52.25.251.159:15443                                     HEALTHY     OK                outbound|9080||productpage.bookinfo.svc.cluster.local
+```

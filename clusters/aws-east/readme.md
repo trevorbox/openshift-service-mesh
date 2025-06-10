@@ -109,12 +109,12 @@ cat west/ca-cert.pem root-cert.pem > west/cert-chain.pem && cp root-cert.pem wes
 ```
 
 ```sh
-oc get secret -n istio-system --context "${CTX_CLUSTER1}" cacerts || oc create secret generic cacerts -n istio-system --context "${CTX_CLUSTER1}" \
+oc create secret generic cacerts -n istio-system --context "${CTX_CLUSTER1}" \
   --from-file=east/ca-cert.pem \
   --from-file=east/ca-key.pem \
   --from-file=east/root-cert.pem \
   --from-file=east/cert-chain.pem
-oc get secret -n istio-system --context "${CTX_CLUSTER2}" cacerts || oc create secret generic cacerts -n istio-system --context "${CTX_CLUSTER2}" \
+oc create secret generic cacerts -n istio-system --context "${CTX_CLUSTER2}" \
   --from-file=west/ca-cert.pem \
   --from-file=west/ca-key.pem \
   --from-file=west/root-cert.pem \

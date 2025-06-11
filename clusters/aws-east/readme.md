@@ -194,15 +194,21 @@ export EXEC_AUTH_JSON=
 ./kiali-prepare-remote-cluster.sh
 ```
 
-Verify the secret kiali-remote-cluster-secret-cluster2 should work
 
-# grab the ca info in the k8s secret created in the east cluster in the kiali namespace, decode it and make sure the pem is correct
+
+# Verify the secret kiali-remote-cluster-secret-cluster2 should work
+
+Grab the ca info in the k8s secret created in the east cluster in the kiali namespace, decode it and make sure the pem is correct
 
 ```sh
 curl --cacert out.pem https://api.west.sandbox2975.opentlc.com:6443
 oc login --token='MY_TOKEN' https://api.west.sandbox2975.opentlc.com:6443
 
-tbox@fedora:~/git/trevorbox/openshift-service-mesh/clusters/aws-east$ for i in Pods ConfigMap Deployment Service ReplicaSet StatefulSet DaemonSet Endpoints; do echo -n "GET [$i] (COUNT): "; oc get $i -o name --all-namespaces | wc -l; echo -n "CAN-I WATCH [$i]? "; oc auth can-i watch $i; done
+tbox@fedora:~/git/trevorbox/openshift-service-mesh/clusters/aws-east$ for i in VirtualService DestinationRule Pods ConfigMap Deployment Service ReplicaSet StatefulSet DaemonSet Endpoints; do echo -n "GET [$i] (COUNT): "; oc get $i -o name --all-namespaces | wc -l; echo -n "CAN-I WATCH [$i]? "; oc auth can-i watch $i; done
+GET [VirtualService] (COUNT): 1
+CAN-I WATCH [VirtualService]? yes
+GET [DestinationRule] (COUNT): 6
+CAN-I WATCH [DestinationRule]? yes
 GET [Pods] (COUNT): 329
 CAN-I WATCH [Pods]? yes
 GET [ConfigMap] (COUNT): 646
@@ -219,4 +225,10 @@ GET [DaemonSet] (COUNT): 18
 CAN-I WATCH [DaemonSet]? yes
 GET [Endpoints] (COUNT): 147
 CAN-I WATCH [Endpoints]? yes
+```
+
+Currently getting the error
+
+```sh
+2025-06-11T05:40:11Z ERR K8s Client [cluster2] is not found or is not accessible for Kiali
 ```

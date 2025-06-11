@@ -33,12 +33,12 @@ revisions:
             clusterName: cluster1
           network: network1
           meshNetworks:
-            # network1:
-            #   endpoints:
-            #   - fromRegistry: cluster1
-            #   gateways:
-            #   - address: istio-eastwestgateway.istio-system.svc.cluster.local
-            #     port: 15443
+            network1:
+              endpoints:
+              - fromRegistry: cluster1
+              gateways:
+              - address: istio-eastwestgateway.istio-system.svc.cluster.local
+                port: 15443
             network2:
               endpoints:
               - fromRegistry: cluster2

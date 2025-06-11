@@ -184,7 +184,7 @@ export HELM=helm
 export KIALI_CLUSTER_CONTEXT=$CTX_CLUSTER1
 export KIALI_CLUSTER_NAMESPACE=kiali
 export KIALI_RESOURCE_NAME=kiali-remote-access
-export KIALI_VERSION="2.7.1"
+export KIALI_VERSION="2.4.0"
 export REMOTE_CLUSTER_CONTEXT=$CTX_CLUSTER2
 export REMOTE_CLUSTER_NAME=cluster2
 export REMOTE_CLUSTER_NAMESPACE=kiali
@@ -194,6 +194,25 @@ export EXEC_AUTH_JSON=
 ./kiali-prepare-remote-cluster.sh
 ```
 
+```sh
+export CLIENT_EXE=oc
+export PROCESS_KIALI_SECRET=true
+export PROCESS_REMOTE_RESOURCES=true
+export DELETE=false
+export DRY_RUN=false
+export HELM=helm
+export KIALI_CLUSTER_CONTEXT=$CTX_CLUSTER1
+export KIALI_CLUSTER_NAMESPACE=kiali
+export KIALI_RESOURCE_NAME=kiali-remote-access
+export KIALI_VERSION="2.4."
+export REMOTE_CLUSTER_CONTEXT=$CTX_CLUSTER2
+export REMOTE_CLUSTER_NAME=cluster1
+export REMOTE_CLUSTER_NAMESPACE=kiali
+export REMOTE_CLUSTER_URL=https://api.east.sandbox1919.opentlc.com:6443
+export VIEW_ONLY=false
+export EXEC_AUTH_JSON=
+./kiali-prepare-remote-cluster.sh
+```
 
 
 # Verify the secret kiali-remote-cluster-secret-cluster2 should work

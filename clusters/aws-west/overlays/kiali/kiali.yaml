@@ -4,6 +4,8 @@ metadata:
   name: kiali-istio-system
   namespace: kiali
 spec:
+  kubernetes_config:
+    cluster_name: cluster2
   version: v2.4
   auth:
     strategy: openshift

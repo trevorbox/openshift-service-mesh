@@ -4,6 +4,10 @@ metadata:
   name: kiali-istio-system
   namespace: kiali
 spec:
+  clustering:
+    autodetect_secrets:
+      enabled: true
+      label: "kiali.io/multiCluster=true"
   version: v2.4
   auth:
     strategy: openshift

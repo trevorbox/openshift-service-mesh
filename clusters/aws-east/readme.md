@@ -140,7 +140,39 @@ istioctl proxy-config secret -n istio-ingress $(oc get pods -n istio-ingress -o 
 istioctl proxy-config secret -n bookinfo $(oc get pods -n bookinfo -o jsonpath='{.items..metadata.name}' --selector app=productpage) -o json | jq -r '.dynamicActiveSecrets[0].secret.tlsCertificate.certificateChain.inlineBytes' | base64 --decode | openssl x509 -text -noout
 ```
 
-## kiali 
+## kiali multi-cluster
+
+In west cluster, create the following for test purposes
+
+```yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: kiali-remote-access-create-oauthclient
+subjects:
+  - kind: ServiceAccount
+    name: kiali-remote-access
+    namespace: kiali
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kiali-remote-access-create-oauthclient
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: kiali-remote-access-create-oauthclient
+rules:
+  - verbs:
+      - get
+      - create
+      - watch
+      - delete
+    apiGroups:
+      - oauth.openshift.io
+    resources:
+      - oauthclients
+```
 
 ```sh
 export CLIENT_EXE=oc
@@ -151,8 +183,8 @@ export DRY_RUN=false
 export HELM=helm
 export KIALI_CLUSTER_CONTEXT=$CTX_CLUSTER1
 export KIALI_CLUSTER_NAMESPACE=kiali
-export KIALI_RESOURCE_NAME=kiali-istio-system
-export KIALI_VERSION=v2.4
+export KIALI_RESOURCE_NAME=kiali-remote-access
+export KIALI_VERSION="2.4.0"
 export REMOTE_CLUSTER_CONTEXT=$CTX_CLUSTER2
 export REMOTE_CLUSTER_NAME=cluster2
 export REMOTE_CLUSTER_NAMESPACE=kiali
@@ -162,20 +194,11 @@ export EXEC_AUTH_JSON=
 ./kiali-prepare-remote-cluster.sh
 ```
 
-In west cluster create the follow for test purposes
+Verify the secret kiali-remote-cluster-secret-cluster2 should work
 
-```yaml
-kind: ClusterRoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: kiali-cluster-admin
-subjects:
-  - kind: ServiceAccount
-    name: kiali-istio-system
-    namespace: kiali
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: cluster-admin
+# grab the ca info in the k8s secret created in the east cluster in the kiali namespace, decode it and make sure the pem is correct
 
+```sh
+curl --cacert out.pem https://api.west.sandbox2975.opentlc.com:6443
+oc login --token='MY_TOKEN' https://api.west.sandbox2975.opentlc.com:6443
 ```

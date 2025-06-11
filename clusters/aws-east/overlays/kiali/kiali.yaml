@@ -4,10 +4,19 @@ metadata:
   name: kiali-istio-system
   namespace: kiali
 spec:
+  kubernetes_config:
+    cluster_name: cluster1
   clustering:
     autodetect_secrets:
       enabled: true
       label: "kiali.io/multiCluster=true"
+    clusters:
+      name: cluster2
+    kiali_urls:
+      cluster_name: cluster2
+      instance_name: kiali-istio-system
+      namespace: kiali
+      url: https://kiali-kiali.apps.west.sandbox2975.opentlc.com
   version: v2.4
   auth:
     strategy: openshift

@@ -139,3 +139,43 @@ istioctl proxy-config secret -n istio-ingress $(oc get pods -n istio-ingress -o 
 # will show Issuer: O=cert-manager + O=cluster.local, CN=east-ca after restarting the pod (Issuer: O=cluster.local before if deployed previously before istio-csr)
 istioctl proxy-config secret -n bookinfo $(oc get pods -n bookinfo -o jsonpath='{.items..metadata.name}' --selector app=productpage) -o json | jq -r '.dynamicActiveSecrets[0].secret.tlsCertificate.certificateChain.inlineBytes' | base64 --decode | openssl x509 -text -noout
 ```
+
+## kiali 
+
+```sh
+export CLIENT_EXE=oc
+export PROCESS_KIALI_SECRET=true
+export PROCESS_REMOTE_RESOURCES=true
+export DELETE=false
+export DRY_RUN=false
+export HELM=helm
+export KIALI_CLUSTER_CONTEXT=$CTX_CLUSTER1
+export KIALI_CLUSTER_NAMESPACE=kiali
+export KIALI_RESOURCE_NAME=kiali-istio-system
+export KIALI_VERSION=v2.4
+export REMOTE_CLUSTER_CONTEXT=$CTX_CLUSTER2
+export REMOTE_CLUSTER_NAME=cluster2
+export REMOTE_CLUSTER_NAMESPACE=kiali
+export REMOTE_CLUSTER_URL=https://api.west.sandbox2975.opentlc.com:6443
+export VIEW_ONLY=false
+export EXEC_AUTH_JSON=
+./kiali-prepare-remote-cluster.sh
+```
+
+In west cluster create the follow for test purposes
+
+```yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: kiali-cluster-admin
+subjects:
+  - kind: ServiceAccount
+    name: kiali-istio-system
+    namespace: kiali
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+
+```

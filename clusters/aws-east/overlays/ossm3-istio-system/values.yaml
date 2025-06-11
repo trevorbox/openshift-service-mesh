@@ -47,10 +47,12 @@ revisions:
                 port: 443
                 # locality: us-west-2
               - address: 52.88.118.178
-                port: 443
+                # port: 443
+                port: 32298
                 # locality: us-west-2
               - address: 44.238.172.8
-                port: 443
+                # port: 443
+                port: 32298
                 # locality: us-west-2
               - registryServiceName: istio-eastwestgateway.istio-system.svc.cluster.local
                 port: 15443

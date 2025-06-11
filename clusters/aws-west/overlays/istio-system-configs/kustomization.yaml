@@ -7,6 +7,7 @@ resources:
 - podmonitor-istio-proxies-monitor.yaml
 - route-ewgateway.yaml
 - serviceentry-ewgateway-east.yaml
+- serviceentry-ewgateway-west.yaml
 
 patches:
 - path: namespace-istio-system.yaml

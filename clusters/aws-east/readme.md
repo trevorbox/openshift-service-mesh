@@ -142,7 +142,7 @@ istioctl proxy-config secret -n bookinfo $(oc get pods -n bookinfo -o jsonpath='
 
 ## kiali multi-cluster
 
-In west cluster, create the following for test purposes
+In west and east cluster, create the following for test purposes
 
 ```yaml
 kind: ClusterRoleBinding
@@ -174,7 +174,9 @@ rules:
       - oauthclients
 ```
 
+
 ```sh
+# log into east
 export CLIENT_EXE=oc
 export PROCESS_KIALI_SECRET=true
 export PROCESS_REMOTE_RESOURCES=true
@@ -195,17 +197,18 @@ export EXEC_AUTH_JSON=
 ```
 
 ```sh
+# log into west
 export CLIENT_EXE=oc
 export PROCESS_KIALI_SECRET=true
 export PROCESS_REMOTE_RESOURCES=true
 export DELETE=false
 export DRY_RUN=false
 export HELM=helm
-export KIALI_CLUSTER_CONTEXT=$CTX_CLUSTER1
+export KIALI_CLUSTER_CONTEXT=$CTX_CLUSTER2
 export KIALI_CLUSTER_NAMESPACE=kiali
 export KIALI_RESOURCE_NAME=kiali-remote-access
-export KIALI_VERSION="2.4."
-export REMOTE_CLUSTER_CONTEXT=$CTX_CLUSTER2
+export KIALI_VERSION="2.4.0"
+export REMOTE_CLUSTER_CONTEXT=$CTX_CLUSTER1
 export REMOTE_CLUSTER_NAME=cluster1
 export REMOTE_CLUSTER_NAMESPACE=kiali
 export REMOTE_CLUSTER_URL=https://api.east.sandbox1919.opentlc.com:6443

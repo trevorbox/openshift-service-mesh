@@ -43,8 +43,18 @@ revisions:
               endpoints:
               - fromRegistry: cluster2
               gateways:
-              - registryServiceName: ewgateway.apps.west.sandbox2975.opentlc.com
+              - address: ewgateway.apps.west.sandbox2975.opentlc.com
                 port: 443
+                locality: us-west-2
+              - address: 52.88.118.178
+                port: 443
+                locality: us-west-2
+              - address: 44.238.172.8
+                port: 443
+                locality: us-west-2
+              - registryServiceName: istio-eastwestgateway.istio-system.svc.cluster.local
+                port: 15443
+                locality: us-west-2
           proxy:
             resources:
               limits:

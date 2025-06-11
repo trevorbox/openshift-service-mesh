@@ -39,16 +39,16 @@ revisions:
               gateways:
               - address: ewgateway.apps.east.sandbox1919.opentlc.com
                 port: 443
-                locality: us-east-2
+                # locality: us-east-2
               - address: 18.118.96.37
                 port: 443
-                locality: us-east-2
+                # locality: us-east-2
               - address: 3.132.77.158
                 port: 443
-                locality: us-east-2
+                # locality: us-east-2
               - registryServiceName: istio-eastwestgateway.istio-system.svc.cluster.local
                 port: 15443
-                locality: us-east-2
+                # locality: us-east-2
             network2:
               endpoints:
               - fromRegistry: cluster2

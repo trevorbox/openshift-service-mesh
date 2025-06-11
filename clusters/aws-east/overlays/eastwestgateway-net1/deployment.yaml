@@ -242,6 +242,6 @@ spec:
     app: istio-eastwestgateway
     istio: eastwestgateway
     topology.istio.io/network: network1
-  # type: LoadBalancer
+  type: LoadBalancer
 
 ---

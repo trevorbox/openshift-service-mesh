@@ -1,0 +1,12 @@
+apiVersion: networking.istio.io/v1
+kind: ServiceEntry
+metadata:
+  name: ewgateway-east
+spec:
+  hosts:
+    - ewgateway.apps.east.sandbox1919.opentlc.com
+  ports:
+    - name: https
+      number: 443
+      protocol: HTTPS
+  resolution: DNS

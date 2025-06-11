@@ -6,8 +6,8 @@ resources:
 - networkpolicy-eastwestgateway-allow-external.yaml
 - podmonitor-istio-proxies-monitor.yaml
 - route-ewgateway.yaml
-- serviceentry-ewgateway-east.yaml
-- serviceentry-ewgateway-west.yaml
+# - serviceentry-ewgateway-east.yaml
+# - serviceentry-ewgateway-west.yaml
 
 patches:
 - path: namespace-istio-system.yaml

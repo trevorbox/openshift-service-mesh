@@ -184,7 +184,7 @@ export HELM=helm
 export KIALI_CLUSTER_CONTEXT=$CTX_CLUSTER1
 export KIALI_CLUSTER_NAMESPACE=kiali
 export KIALI_RESOURCE_NAME=kiali-remote-access
-export KIALI_VERSION="2.4.0"
+export KIALI_VERSION="2.7.1"
 export REMOTE_CLUSTER_CONTEXT=$CTX_CLUSTER2
 export REMOTE_CLUSTER_NAME=cluster2
 export REMOTE_CLUSTER_NAMESPACE=kiali
@@ -201,4 +201,22 @@ Verify the secret kiali-remote-cluster-secret-cluster2 should work
 ```sh
 curl --cacert out.pem https://api.west.sandbox2975.opentlc.com:6443
 oc login --token='MY_TOKEN' https://api.west.sandbox2975.opentlc.com:6443
+
+tbox@fedora:~/git/trevorbox/openshift-service-mesh/clusters/aws-east$ for i in Pods ConfigMap Deployment Service ReplicaSet StatefulSet DaemonSet Endpoints; do echo -n "GET [$i] (COUNT): "; oc get $i -o name --all-namespaces | wc -l; echo -n "CAN-I WATCH [$i]? "; oc auth can-i watch $i; done
+GET [Pods] (COUNT): 329
+CAN-I WATCH [Pods]? yes
+GET [ConfigMap] (COUNT): 646
+CAN-I WATCH [ConfigMap]? yes
+GET [Deployment] (COUNT): 107
+CAN-I WATCH [Deployment]? yes
+GET [Service] (COUNT): 148
+CAN-I WATCH [Service]? yes
+GET [ReplicaSet] (COUNT): 152
+CAN-I WATCH [ReplicaSet]? yes
+GET [StatefulSet] (COUNT): 7
+CAN-I WATCH [StatefulSet]? yes
+GET [DaemonSet] (COUNT): 18
+CAN-I WATCH [DaemonSet]? yes
+GET [Endpoints] (COUNT): 147
+CAN-I WATCH [Endpoints]? yes
 ```

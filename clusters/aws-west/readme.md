@@ -58,6 +58,18 @@ done
 <https://istio.io/latest/docs/ops/diagnostic-tools/multicluster/#step-by-step-diagnosis>
 
 ```sh
+tbox@fedora:~/git/trevorbox/openshift-service-mesh$ nslookup $(oc --context $CTX_CLUSTER2 get svc istio-eastwestgateway -n istio-system -o go-template="{{(index .status.loadBalancer.ingress 0).hostname }}")
+Server:         127.0.0.53
+Address:        127.0.0.53#53
+
+Non-authoritative answer:
+Name:   af486e1dbe4a44ac9994f8a98ce3376e-999950728.us-west-2.elb.amazonaws.com
+Address: 52.25.251.159
+Name:   af486e1dbe4a44ac9994f8a98ce3376e-999950728.us-west-2.elb.amazonaws.com
+Address: 44.240.185.234
+Name:   af486e1dbe4a44ac9994f8a98ce3376e-999950728.us-west-2.elb.amazonaws.com
+Address: 44.226.201.253
+
 tbox@fedora:~/git/trevorbox/openshift-service-mesh$ istioctl --context $CTX_CLUSTER1 proxy-config endpoint details-v1-547cc67476-qpvcj.bookinfo | grep productpage
 10.129.2.48:9080                                        HEALTHY     OK                outbound|9080|v1|productpage.bookinfo.svc.cluster.local
 10.129.2.48:9080                                        HEALTHY     OK                outbound|9080||productpage.bookinfo.svc.cluster.local

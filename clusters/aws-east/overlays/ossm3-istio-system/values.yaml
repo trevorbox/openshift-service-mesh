@@ -92,8 +92,8 @@ revisions:
             mode: REGISTRY_ONLY # ALLOW_ANY
           # defaultDestinationRuleExportTo:
           #   - '.'
-          defaultServiceExportTo:
-            - '.'
+          # defaultServiceExportTo:
+          #   - '.'
           # defaultVirtualServiceExportTo:
           #   - '.'
       version: v1.24.3

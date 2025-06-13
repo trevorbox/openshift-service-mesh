@@ -90,8 +90,8 @@ revisions:
                 port: 4317
           outboundTrafficPolicy:
             mode: REGISTRY_ONLY # ALLOW_ANY
-          defaultDestinationRuleExportTo:
-            - '.'
+          # defaultDestinationRuleExportTo:
+          #   - '.'
           defaultServiceExportTo:
             - '.'
           # defaultVirtualServiceExportTo:

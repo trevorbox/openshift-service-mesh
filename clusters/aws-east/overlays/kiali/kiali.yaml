@@ -16,7 +16,7 @@ spec:
   #     - cluster_name: cluster2
   #       instance_name: kiali-istio-system
   #       namespace: kiali
-  #       url: https://kiali-kiali.apps.west.sandbox2975.opentlc.com
+  #       url: https://kiali-kiali.apps.west.sandbox1.opentlc.com
   version: v2.4
   auth:
     strategy: openshift
@@ -64,7 +64,7 @@ spec:
         - name: Istio Performance Dashboard
         - name: Istio Wasm Extension Dashboard
       enabled: true
-      external_url: https://grafana-instance-route-grafana.apps.east.sandbox1919.opentlc.com
+      external_url: https://grafana-instance-route-grafana.apps.east.sandbox2729.opentlc.com
       internal_url: http://grafana-instance-service.grafana.svc:3000
     prometheus:
       auth:
@@ -78,8 +78,8 @@ spec:
       provider: jaeger
       use_grpc: false
       internal_url: 'https://tempo-minio-dev-gateway.tempo-system.svc.cluster.local:8080/api/traces/v1/dev'
-      external_url: https://tempo-minio-dev-gateway-tempo-system.apps.east.sandbox1919.opentlc.com/api/traces/v1/dev/search
-      health_check_url: https://tempo-minio-dev-gateway-tempo-system.apps.east.sandbox1919.opentlc.com/api/traces/v1/dev/tempo/api/echo
+      external_url: https://tempo-minio-dev-gateway-tempo-system.apps.east.sandbox2729.opentlc.com/api/traces/v1/dev/search
+      health_check_url: https://tempo-minio-dev-gateway-tempo-system.apps.east.sandbox2729.opentlc.com/api/traces/v1/dev/tempo/api/echo
       auth:
         ca_file: /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
         insecure_skip_verify: true

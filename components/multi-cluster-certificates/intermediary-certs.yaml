@@ -1,106 +1,241 @@
+# apiVersion: cert-manager.io/v1
+# kind: Issuer
+# metadata:
+#   name: selfsigned
+#   namespace: istio-system
+# spec:
+#   selfSigned: {}
+# ---
+# apiVersion: cert-manager.io/v1
+# kind: Certificate
+# metadata:
+#     name: root-ca
+#     namespace: istio-system
+# spec:
+#   isCA: true
+#   duration: 87600h # 10 years
+#   secretName: root-ca
+#   commonName: root-ca
+#   privateKey:
+#     algorithm: ECDSA
+#     size: 256
+#   subject:
+#     organizations:
+#       - cluster.local
+#       - cert-manager
+#   issuerRef:
+#     name: selfsigned
+#     kind: Issuer
+#     group: cert-manager.io
+# ---
+# apiVersion: cert-manager.io/v1
+# kind: Issuer
+# metadata:
+#   name: root-ca
+#   namespace: istio-system
+# spec:
+#   ca:
+#     secretName: root-ca
+
+# # oc get -n istio-system secret east-ca -o jsonpath='{.data.tls\.crt}' | base64 -d > ca.pem
+# # oc create secret generic -n cert-manager istio-root-ca --from-file=ca.pem=ca.pem
+# ---
+# apiVersion: cert-manager.io/v1
+# kind: Certificate
+# metadata:
+#     name: east-ca
+#     namespace: istio-system
+# spec:
+#   isCA: true
+#   duration: 87600h # 10 years
+#   secretName: east-ca
+#   commonName: east-ca
+#   privateKey:
+#     algorithm: ECDSA
+#     size: 256
+#   subject:
+#     organizations:
+#       - cluster.local
+#       - cert-manager
+#   issuerRef:
+#     name: root-ca
+#     kind: Issuer
+#     group: cert-manager.io
+# ---
+# apiVersion: cert-manager.io/v1
+# kind: Issuer
+# metadata:
+#   name: east-ca
+#   namespace: istio-system
+# spec:
+#   ca:
+#     secretName: east-ca
+
+# # This certificate we will copy over to the west cluster
+# ---
+# apiVersion: cert-manager.io/v1
+# kind: Certificate
+# metadata:
+#     name: west-ca
+#     namespace: istio-system
+# spec:
+#   isCA: true
+#   duration: 87600h # 10 years
+#   secretName: west-ca
+#   commonName: west-ca
+#   privateKey:
+#     algorithm: ECDSA
+#     size: 256
+#   subject:
+#     organizations:
+#       - cluster.local
+#       - cert-manager
+#   issuerRef:
+#     name: root-ca
+#     kind: Issuer
+#     group: cert-manager.io
+# # ---
+# # apiVersion: cert-manager.io/v1
+# # kind: Issuer
+# # metadata:
+# #   name: west-ca
+# #   namespace: istio-system
+# # spec:
+# #   ca:
+# #     secretName: west-ca
+# # ---
+
+
+---
 apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
-  name: selfsigned
-  namespace: istio-system
+  name: istio-root-ca
 spec:
   selfSigned: {}
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-    name: root-ca
-    namespace: istio-system
+  name: istio-root-ca
 spec:
+  commonName: Istio Root Certificate
+  duration: 87600h
+  emailAddresses:
+    - someone@example.com
+  encodeUsagesInRequest: true
   isCA: true
-  duration: 87600h # 10 years
-  secretName: root-ca
-  commonName: root-ca
+  issuerRef:
+    group: cert-manager.io
+    kind: Issuer
+    name: istio-root-ca
   privateKey:
     algorithm: ECDSA
     size: 256
+  secretName: istio-ca-root-secret
   subject:
+    countries:
+      - US
+    organizationalUnits:
+      - Istio Lab
     organizations:
-      - cluster.local
-      - cert-manager
-  issuerRef:
-    name: selfsigned
-    kind: Issuer
-    group: cert-manager.io
+      - Example
+  usages:
+    - crl sign
+    - cert sign
+    - signing
+    - digital signature
+
 ---
 apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
-  name: root-ca
-  namespace: istio-system
+  name: istio-intermediate-ca-east
 spec:
   ca:
-    secretName: root-ca
-
-# oc get -n istio-system secret east-ca -o jsonpath='{.data.tls\.crt}' | base64 -d > ca.pem
-# oc create secret generic -n cert-manager istio-root-ca --from-file=ca.pem=ca.pem
+    secretName: istio-ca-root-secret # Reference the root CA secret
+    # Optional: Add the root CA certificate to the intermediate CA's
 ---
+
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-    name: east-ca
-    namespace: istio-system
+  name: istio-intermediate-ca-east
 spec:
+  commonName: Example Intermediate Certificate East
+  duration: 87600h
+  emailAddresses:
+    - someone@example.com
+  encodeUsagesInRequest: true
   isCA: true
-  duration: 87600h # 10 years
-  secretName: east-ca
-  commonName: east-ca
+  issuerRef:
+    group: cert-manager.io
+    kind: Issuer
+    name: istio-intermediate-ca-east
   privateKey:
     algorithm: ECDSA
     size: 256
+  secretName: istio-intermediate-ca-east
   subject:
+    countries:
+      - US
+    organizationalUnits:
+      - Example Lab
+      - East
+      - Istio
     organizations:
-      - cluster.local
-      - cert-manager
-  issuerRef:
-    name: root-ca
-    kind: Issuer
-    group: cert-manager.io
+      - Example
+  usages:
+    - signing
+    - digital signature
+    - cert sign
+    - client auth
+    - server auth
+    - email protection
+
 ---
 apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
-  name: east-ca
-  namespace: istio-system
+  name: istio-intermediate-ca-west
 spec:
   ca:
-    secretName: east-ca
-
-# This certificate we will copy over to the west cluster
+    secretName: istio-ca-root-secret # Reference the root CA secret
+    # Optional: Add the root CA certificate to the intermediate CA's
 ---
+
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-    name: west-ca
-    namespace: istio-system
+  name: istio-intermediate-ca-west
 spec:
+  commonName: Example Intermediate Certificate West
+  duration: 87600h
+  emailAddresses:
+    - someone@example.com
+  encodeUsagesInRequest: true
   isCA: true
-  duration: 87600h # 10 years
-  secretName: west-ca
-  commonName: west-ca
+  issuerRef:
+    group: cert-manager.io
+    kind: Issuer
+    name: istio-intermediate-ca-west
   privateKey:
     algorithm: ECDSA
     size: 256
+  secretName: istio-intermediate-ca-west
   subject:
+    countries:
+      - US
+    organizationalUnits:
+      - Example Lab
+      - West
+      - Istio
     organizations:
-      - cluster.local
-      - cert-manager
-  issuerRef:
-    name: root-ca
-    kind: Issuer
-    group: cert-manager.io
-# ---
-# apiVersion: cert-manager.io/v1
-# kind: Issuer
-# metadata:
-#   name: west-ca
-#   namespace: istio-system
-# spec:
-#   ca:
-#     secretName: west-ca
-# ---
+      - Example
+  usages:
+    - signing
+    - digital signature
+    - cert sign
+    - client auth
+    - server auth
+    - email protection

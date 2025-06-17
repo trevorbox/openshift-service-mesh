@@ -111,6 +111,7 @@ apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
   name: istio-root-ca
+  namespace: my-pki
 spec:
   selfSigned: {}
 ---
@@ -118,6 +119,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: istio-root-ca
+  namespace: my-pki
 spec:
   commonName: Istio Root Certificate
   duration: 87600h
@@ -151,6 +153,7 @@ apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
   name: istio-intermediate-ca-east
+  namespace: my-pki
 spec:
   ca:
     secretName: istio-ca-root-secret # Reference the root CA secret
@@ -161,6 +164,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: istio-intermediate-ca-east
+  namespace: my-pki
 spec:
   commonName: Example Intermediate Certificate East
   duration: 87600h
@@ -198,6 +202,7 @@ apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
   name: istio-intermediate-ca-west
+  namespace: my-pki
 spec:
   ca:
     secretName: istio-ca-root-secret # Reference the root CA secret
@@ -208,6 +213,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: istio-intermediate-ca-west
+  namespace: my-pki
 spec:
   commonName: Example Intermediate Certificate West
   duration: 87600h
@@ -233,6 +239,9 @@ spec:
     organizations:
       - Example
   usages:
+    # - digital signature
+    # - key encipherment
+    # - cert sign
     - signing
     - digital signature
     - cert sign

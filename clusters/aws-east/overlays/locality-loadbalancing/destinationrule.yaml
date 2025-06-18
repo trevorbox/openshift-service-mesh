@@ -1,0 +1,21 @@
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: helloworld
+spec:
+  host: helloworld.sample.svc.cluster.local
+  trafficPolicy:
+    connectionPool:
+      http:
+        maxRequestsPerConnection: 1
+    loadBalancer:
+      simple: ROUND_ROBIN
+      localityLbSetting:
+        enabled: true
+        failover:
+          - from: cluster1
+            to: cluster2
+    outlierDetection:
+      consecutive5xxErrors: 1
+      interval: 1s
+      baseEjectionTime: 1m

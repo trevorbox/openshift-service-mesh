@@ -246,3 +246,93 @@ spec:
     - client auth
     - server auth
     - email protection
+
+#### rotate ROOT
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: istio-root-ca2
+  namespace: my-pki
+spec:
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: istio-root-ca2
+  namespace: my-pki
+spec:
+  commonName: Istio Root Certificate2
+  duration: 87600h
+  emailAddresses:
+    - someone@example.com
+  encodeUsagesInRequest: true
+  isCA: true
+  issuerRef:
+    group: cert-manager.io
+    kind: Issuer
+    name: istio-root-ca2
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  secretName: istio-ca-root-secret2
+  subject:
+    countries:
+      - US
+    organizationalUnits:
+      - Istio Lab
+    organizations:
+      - Example
+  usages:
+    - crl sign
+    - cert sign
+    - signing
+    - digital signature
+
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: istio-intermediate-ca-east2
+  namespace: my-pki
+spec:
+  ca:
+    secretName: istio-ca-root-secret2 # Reference the root CA secret
+    # Optional: Add the root CA certificate to the intermediate CA's
+---
+
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: istio-intermediate-ca-east2
+  namespace: my-pki
+spec:
+  commonName: Example Intermediate Certificate East NEW
+  duration: 87600h
+  emailAddresses:
+    - someone@example.com
+  encodeUsagesInRequest: true
+  isCA: true
+  issuerRef:
+    group: cert-manager.io
+    kind: Issuer
+    name: istio-intermediate-ca-east2
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  secretName: istio-intermediate-ca-east2
+  subject:
+    countries:
+      - US
+    organizationalUnits:
+      - East NEW
+    organizations:
+      - Test
+  usages:
+    - signing
+    - digital signature
+    - cert sign
+    - client auth
+    - server auth
+    - email protection

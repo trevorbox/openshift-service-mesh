@@ -9,8 +9,8 @@ spec:
       http:
         maxRequestsPerConnection: 1
     loadBalancer:
-      consistentHash:
-        useSourceIp: true
+      # consistentHash:
+      #   useSourceIp: true
       localityLbSetting:
         enabled: true
         failover:

@@ -8,7 +8,6 @@ spec:
     connectionPool:
       http:
         maxRequestsPerConnection: 1
-        maxRetries: 1
     loadBalancer:
       simple: ROUND_ROBIN
       localityLbSetting:
@@ -19,4 +18,6 @@ spec:
     outlierDetection:
       consecutive5xxErrors: 1
       interval: 1s
-      baseEjectionTime: 1m
+      baseEjectionTime: 1s
+      splitExternalLocalOriginErrors: true
+      consecutiveLocalOriginFailures: 1

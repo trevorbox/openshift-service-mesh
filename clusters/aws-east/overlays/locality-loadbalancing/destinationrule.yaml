@@ -21,4 +21,4 @@ spec:
       # consecutive5xxErrors: 1
       # consecutiveGatewayErrors: 1
       interval: 100ms
-      # maxEjectionPercent: 100
+      maxEjectionPercent: 100

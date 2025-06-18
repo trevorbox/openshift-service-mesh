@@ -14,8 +14,8 @@ spec:
       localityLbSetting:
         enabled: true
         failover:
-        - from: us-east-2
-          to: us-west-2
+        - from: us-east-2/*
+          to: us-west-2/*
     outlierDetection:
       baseEjectionTime: 1s
       consecutive5xxErrors: 0

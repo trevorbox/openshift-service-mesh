@@ -234,7 +234,7 @@ spec:
       - US
     organizationalUnits:
       - Example Lab
-      - West
+      - West2
       - Istio
     organizations:
       - Example

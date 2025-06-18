@@ -18,7 +18,7 @@ spec:
           to: us-west-2/*
     outlierDetection:
       baseEjectionTime: 1s
-      consecutive5xxErrors: 0
-      consecutiveGatewayErrors: 0
+      consecutive5xxErrors: 1
+      consecutiveGatewayErrors: 1
       interval: 100ms
-      maxEjectionPercent: 0
+      maxEjectionPercent: 100

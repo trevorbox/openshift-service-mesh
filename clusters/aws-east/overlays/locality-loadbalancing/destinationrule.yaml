@@ -19,6 +19,6 @@ spec:
     outlierDetection:
       baseEjectionTime: 30s
       consecutive5xxErrors: 1
-      consecutiveGatewayErrors: 1
-      interval: 100ms
+      # consecutiveGatewayErrors: 1
+      interval: 1ms
       maxEjectionPercent: 100

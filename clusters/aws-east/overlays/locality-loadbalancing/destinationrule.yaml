@@ -9,6 +9,8 @@ spec:
       http:
         maxRequestsPerConnection: 1
     loadBalancer:
+      consistentHash:
+        useSourceIp: true
       simple: ROUND_ROBIN
       localityLbSetting:
         enabled: true

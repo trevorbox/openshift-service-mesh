@@ -265,8 +265,16 @@ Currently getting the error
 
 
 ```sh
-oc rsh -n bookinfo ratings-v1-58f45bd6d5-gpnw7
-while true; do curl -SI http://details.bookinfo.svc.cluster.local:9080/details/0 && echo && echo ; done
+
+# log into east
+export CTX_CLUSTER1=$(oc config current-context)
+# log into west
+export CTX_CLUSTER2=$(oc config current-context)
+
+kubectl exec --context="${CTX_CLUSTER1}" -n sample -c curl \
+  "$(kubectl get pod --context="${CTX_CLUSTER1}" -n sample -l \
+  app=curl -o jsonpath='{.items[0].metadata.name}')" \
+  -- curl -sSL helloworld.sample:5000/hello
 
 
 ```

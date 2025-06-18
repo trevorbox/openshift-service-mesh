@@ -166,7 +166,7 @@ metadata:
   name: istio-intermediate-ca-east
   namespace: my-pki
 spec:
-  commonName: Example Intermediate Certificate East
+  commonName: Example Intermediate Certificate East2
   duration: 87600h
   emailAddresses:
     - someone@example.com
@@ -184,11 +184,9 @@ spec:
     countries:
       - US
     organizationalUnits:
-      - Example Lab
-      - East
-      - Istio
+      - East2
     organizations:
-      - Example
+      - Test
   usages:
     - signing
     - digital signature

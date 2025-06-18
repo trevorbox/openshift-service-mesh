@@ -11,7 +11,7 @@ spec:
     loadBalancer:
       consistentHash:
         useSourceIp: true
-      simple: ROUND_ROBIN
+      # simple: ROUND_ROBIN
       localityLbSetting:
         enabled: true
         failover:

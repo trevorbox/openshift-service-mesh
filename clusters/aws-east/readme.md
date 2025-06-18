@@ -278,6 +278,11 @@ kubectl exec --context="${CTX_CLUSTER1}" -n sample -c curl \
   app=curl -o jsonpath='{.items[0].metadata.name}')" \
   -- /bin/sh -c 'while true; do curl -sSL helloworld.sample:5000/hello && date; done'
 
+kubectl exec --context="${CTX_CLUSTER1}" -n sample -c curl \
+  "$(kubectl get pod --context="${CTX_CLUSTER1}" -n sample -l \
+  app=curl -o jsonpath='{.items[0].metadata.name}')" \
+  -- /bin/sh -c 'curl -v helloworld.sample:5000/hello'
+
 # Failover to cluster2
 
 kubectl --context="${CTX_CLUSTER1}" exec \
@@ -405,6 +410,225 @@ tbox@fedora:~/git/trevorbox/openshift-service-mesh$ istioctl pc endpoints curl-5
     - name: rq_timeout
     - name: rq_total
       value: "33"
+    - name: cx_active
+      type: GAUGE
+    - name: rq_active
+      type: GAUGE
+    weight: 1
+  name: outbound|5000||helloworld.sample.svc.cluster.local
+  observabilityName: outbound|5000||helloworld.sample.svc.cluster.local;
+```
+
+
+During ejection...
+
+`istioctl pc endpoints curl-5dcfb4c4dc-wbd5v.sample --cluster "outbound|5000||he
+lloworld.sample.svc.cluster.local" -o yaml`
+
+```yaml
+- addedViaApi: true
+  circuitBreakers:
+    thresholds:
+    - maxConnections: 4294967295
+      maxPendingRequests: 4294967295
+      maxRequests: 4294967295
+      maxRetries: 4294967295
+    - maxConnections: 1024
+      maxPendingRequests: 1024
+      maxRequests: 1024
+      maxRetries: 3
+      priority: HIGH
+  edsServiceName: outbound|5000||helloworld.sample.svc.cluster.local
+  hostStatuses:
+  - address:
+      socketAddress:
+        address: 34.208.93.49
+        portValue: 15443
+    healthStatus:
+      edsHealthStatus: HEALTHY
+    locality:
+      region: us-west-2
+      zone: us-west-2a
+    stats:
+    - name: cx_connect_fail
+    - name: cx_total
+      value: "146"
+    - name: rq_error
+    - name: rq_success
+      value: "145"
+    - name: rq_timeout
+    - name: rq_total
+      value: "146"
+    - name: cx_active
+      type: GAUGE
+      value: "1"
+    - name: rq_active
+      type: GAUGE
+      value: "1"
+    weight: 1
+  - address:
+      socketAddress:
+        address: 34.217.156.252
+        portValue: 15443
+    healthStatus:
+      edsHealthStatus: HEALTHY
+    locality:
+      region: us-west-2
+      zone: us-west-2a
+    stats:
+    - name: cx_connect_fail
+    - name: cx_total
+      value: "172"
+    - name: rq_error
+    - name: rq_success
+      value: "172"
+    - name: rq_timeout
+    - name: rq_total
+      value: "172"
+    - name: cx_active
+      type: GAUGE
+    - name: rq_active
+      type: GAUGE
+    weight: 1
+  - address:
+      socketAddress:
+        address: 44.225.167.2
+        portValue: 15443
+    healthStatus:
+      edsHealthStatus: HEALTHY
+    locality:
+      region: us-west-2
+      zone: us-west-2a
+    stats:
+    - name: cx_connect_fail
+    - name: cx_total
+      value: "151"
+    - name: rq_error
+    - name: rq_success
+      value: "151"
+    - name: rq_timeout
+    - name: rq_total
+      value: "151"
+    - name: cx_active
+      type: GAUGE
+    - name: rq_active
+      type: GAUGE
+    weight: 1
+  name: outbound|5000||helloworld.sample.svc.cluster.local
+  observabilityName: outbound|5000||helloworld.sample.svc.cluster.local;
+```
+
+```yaml
+- addedViaApi: true
+  circuitBreakers:
+    thresholds:
+    - maxConnections: 4294967295
+      maxPendingRequests: 4294967295
+      maxRequests: 4294967295
+      maxRetries: 4294967295
+    - maxConnections: 1024
+      maxPendingRequests: 1024
+      maxRequests: 1024
+      maxRetries: 3
+      priority: HIGH
+  edsServiceName: outbound|5000||helloworld.sample.svc.cluster.local
+  hostStatuses:
+  - address:
+      socketAddress:
+        address: 10.128.2.104
+        portValue: 5000
+    healthStatus:
+      edsHealthStatus: HEALTHY
+    locality:
+      region: us-east-2
+      zone: us-east-2a
+    stats:
+    - name: cx_connect_fail
+    - name: cx_total
+      value: "1099"
+    - name: rq_error
+    - name: rq_success
+      value: "1098"
+    - name: rq_timeout
+    - name: rq_total
+      value: "1099"
+    - name: cx_active
+      type: GAUGE
+      value: "1"
+    - name: rq_active
+      type: GAUGE
+      value: "1"
+    weight: 3
+  - address:
+      socketAddress:
+        address: 34.208.93.49
+        portValue: 15443
+    healthStatus:
+      edsHealthStatus: HEALTHY
+    locality:
+      region: us-west-2
+      zone: us-west-2a
+    priority: 1
+    stats:
+    - name: cx_connect_fail
+    - name: cx_total
+      value: "234"
+    - name: rq_error
+    - name: rq_success
+      value: "234"
+    - name: rq_timeout
+    - name: rq_total
+      value: "234"
+    - name: cx_active
+      type: GAUGE
+    - name: rq_active
+      type: GAUGE
+    weight: 1
+  - address:
+      socketAddress:
+        address: 34.217.156.252
+        portValue: 15443
+    healthStatus:
+      edsHealthStatus: HEALTHY
+    locality:
+      region: us-west-2
+      zone: us-west-2a
+    priority: 1
+    stats:
+    - name: cx_connect_fail
+    - name: cx_total
+      value: "251"
+    - name: rq_error
+    - name: rq_success
+      value: "251"
+    - name: rq_timeout
+    - name: rq_total
+      value: "251"
+    - name: cx_active
+      type: GAUGE
+    - name: rq_active
+      type: GAUGE
+    weight: 1
+  - address:
+      socketAddress:
+        address: 44.225.167.2
+        portValue: 15443
+    healthStatus:
+      edsHealthStatus: HEALTHY
+    locality:
+      region: us-west-2
+      zone: us-west-2a
+    priority: 1
+    stats:
+    - name: cx_connect_fail
+    - name: cx_total
+      value: "219"
+    - name: rq_error
+    - name: rq_success
+      value: "219"
+    - name: rq_timeout
+    - name: rq_total
+      value: "219"
     - name: cx_active
       type: GAUGE
     - name: rq_active

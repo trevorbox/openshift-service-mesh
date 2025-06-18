@@ -294,19 +294,21 @@ kubectl --context="${CTX_CLUSTER1}" exec \
 kubectl exec --context="${CTX_CLUSTER1}" -n sample -c curl \
   "$(kubectl get pod --context="${CTX_CLUSTER1}" -n sample -l \
   app=curl -o jsonpath='{.items[0].metadata.name}')" \
-  -- /bin/sh -c 'for i in `seq 1 100`; do curl -sSL helloworld.sample:5000/hello && sleep 1s; done'
+  -- /bin/sh -c 'while true; do curl -sSL helloworld.sample:5000/hello && date; done'
 ```
 
-reset, make local healthy again
+to reset fail back, make local helloworld healthy again
 ```sh
 oc scale --replicas=0 deploy/helloworld-v1 -n sample
-# argo will scale this back to 1 for me
+# argo will scale this back to 1 automatically
 ```
 
 During ejection...
 
 `istioctl pc endpoints curl-5dcfb4c4dc-wbd5v.sample --cluster "outbound|5000||he
 lloworld.sample.svc.cluster.local" -o yaml`
+
+local pod ip is removed from endpoints.
 
 ```yaml
 - addedViaApi: true
@@ -335,19 +337,17 @@ lloworld.sample.svc.cluster.local" -o yaml`
     stats:
     - name: cx_connect_fail
     - name: cx_total
-      value: "146"
+      value: "284"
     - name: rq_error
     - name: rq_success
-      value: "145"
+      value: "284"
     - name: rq_timeout
     - name: rq_total
-      value: "146"
+      value: "284"
     - name: cx_active
       type: GAUGE
-      value: "1"
     - name: rq_active
       type: GAUGE
-      value: "1"
     weight: 1
   - address:
       socketAddress:
@@ -361,15 +361,16 @@ lloworld.sample.svc.cluster.local" -o yaml`
     stats:
     - name: cx_connect_fail
     - name: cx_total
-      value: "172"
+      value: "312"
     - name: rq_error
     - name: rq_success
-      value: "172"
+      value: "311"
     - name: rq_timeout
     - name: rq_total
-      value: "172"
+      value: "311"
     - name: cx_active
       type: GAUGE
+      value: "1"
     - name: rq_active
       type: GAUGE
     weight: 1
@@ -385,13 +386,13 @@ lloworld.sample.svc.cluster.local" -o yaml`
     stats:
     - name: cx_connect_fail
     - name: cx_total
-      value: "151"
+      value: "255"
     - name: rq_error
     - name: rq_success
-      value: "151"
+      value: "255"
     - name: rq_timeout
     - name: rq_total
-      value: "151"
+      value: "255"
     - name: cx_active
       type: GAUGE
     - name: rq_active
@@ -400,6 +401,8 @@ lloworld.sample.svc.cluster.local" -o yaml`
   name: outbound|5000||helloworld.sample.svc.cluster.local
   observabilityName: outbound|5000||helloworld.sample.svc.cluster.local;
 ```
+
+After recovering local pod ip is back in endpoints....
 
 ```yaml
 - addedViaApi: true
@@ -418,7 +421,7 @@ lloworld.sample.svc.cluster.local" -o yaml`
   hostStatuses:
   - address:
       socketAddress:
-        address: 10.128.2.104
+        address: 10.128.2.115
         portValue: 5000
     healthStatus:
       edsHealthStatus: HEALTHY
@@ -428,13 +431,13 @@ lloworld.sample.svc.cluster.local" -o yaml`
     stats:
     - name: cx_connect_fail
     - name: cx_total
-      value: "1099"
+      value: "84"
     - name: rq_error
     - name: rq_success
-      value: "1098"
+      value: "83"
     - name: rq_timeout
     - name: rq_total
-      value: "1099"
+      value: "84"
     - name: cx_active
       type: GAUGE
       value: "1"
@@ -455,13 +458,13 @@ lloworld.sample.svc.cluster.local" -o yaml`
     stats:
     - name: cx_connect_fail
     - name: cx_total
-      value: "234"
+      value: "351"
     - name: rq_error
     - name: rq_success
-      value: "234"
+      value: "351"
     - name: rq_timeout
     - name: rq_total
-      value: "234"
+      value: "351"
     - name: cx_active
       type: GAUGE
     - name: rq_active
@@ -480,13 +483,13 @@ lloworld.sample.svc.cluster.local" -o yaml`
     stats:
     - name: cx_connect_fail
     - name: cx_total
-      value: "251"
+      value: "378"
     - name: rq_error
     - name: rq_success
-      value: "251"
+      value: "378"
     - name: rq_timeout
     - name: rq_total
-      value: "251"
+      value: "378"
     - name: cx_active
       type: GAUGE
     - name: rq_active
@@ -505,13 +508,13 @@ lloworld.sample.svc.cluster.local" -o yaml`
     stats:
     - name: cx_connect_fail
     - name: cx_total
-      value: "219"
+      value: "305"
     - name: rq_error
     - name: rq_success
-      value: "219"
+      value: "305"
     - name: rq_timeout
     - name: rq_total
-      value: "219"
+      value: "305"
     - name: cx_active
       type: GAUGE
     - name: rq_active

@@ -263,44 +263,10 @@ Currently getting the error
 
 ## locality load balancing test
 
-```yaml
-apiVersion: networking.istio.io/v1
-kind: DestinationRule
-metadata:
-  name: details
-  namespace: bookinfo
-spec:
-  host: details
-  subsets:
-    - labels:
-        version: v1
-      name: v1
-    - labels:
-        version: v2
-      name: v2
-  trafficPolicy:
-    tls:
-      mode: ISTIO_MUTUAL
-    connectionPool:
-      http:
-        maxRequestsPerConnection: 1
-    loadBalancer:
-      simple: ROUND_ROBIN
-      localityLbSetting:
-        enabled: true
-        failover:
-          - from: cluster1
-            to: cluster2
-    outlierDetection:
-      consecutive5xxErrors: 1
-      interval: 1s
-      baseEjectionTime: 1m
-```
-
 
 ```sh
 oc rsh -n bookinfo ratings-v1-58f45bd6d5-gpnw7
-while true; do curl -S http://details.bookinfo.svc.cluster.local:9080/details/0 && echo; done
+while true; do curl -SI http://details.bookinfo.svc.cluster.local:9080/details/0 && echo && echo ; done
 
 
 ```

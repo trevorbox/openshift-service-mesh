@@ -5,21 +5,20 @@ metadata:
 spec:
   host: helloworld.sample.svc.cluster.local
   trafficPolicy:
-    connectionPool:
+    connectionPool: 
       http:
         maxRequestsPerConnection: 1
     loadBalancer:
       consistentHash:
         useSourceIp: true
-      # simple: ROUND_ROBIN
       localityLbSetting:
         enabled: true
         failover:
-          - from: network1
-            to: network2
+        - from: us-east-2
+          to: us-west-2
     outlierDetection:
-      consecutive5xxErrors: 1
-      interval: 1s
       baseEjectionTime: 1s
-      splitExternalLocalOriginErrors: true
-      consecutiveLocalOriginFailures: 1
+      consecutive5xxErrors: 0
+      consecutiveGatewayErrors: 0
+      interval: 100ms
+      maxEjectionPercent: 0

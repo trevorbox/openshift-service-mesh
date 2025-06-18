@@ -271,10 +271,145 @@ export CTX_CLUSTER1=$(oc config current-context)
 # log into west
 export CTX_CLUSTER2=$(oc config current-context)
 
+
+# Verify traffic stays in cluster1
 kubectl exec --context="${CTX_CLUSTER1}" -n sample -c curl \
   "$(kubectl get pod --context="${CTX_CLUSTER1}" -n sample -l \
   app=curl -o jsonpath='{.items[0].metadata.name}')" \
-  -- curl -sSL helloworld.sample:5000/hello
+  -- /bin/sh -c 'while true; do curl -sSL helloworld.sample:5000/hello && date; done'
+
+# Failover to cluster2
+
+kubectl --context="${CTX_CLUSTER1}" exec \
+  "$(kubectl get pod --context="${CTX_CLUSTER1}" -n sample -l app=helloworld \
+  -l version=v1 -o jsonpath='{.items[0].metadata.name}')" \
+  -n sample -c istio-proxy -- curl -sSL -X POST 127.0.0.1:15000/drain_listeners
+
+# Verify traffic fails to cluster2
+kubectl exec --context="${CTX_CLUSTER1}" -n sample -c curl \
+  "$(kubectl get pod --context="${CTX_CLUSTER1}" -n sample -l \
+  app=curl -o jsonpath='{.items[0].metadata.name}')" \
+  -- /bin/sh -c 'for i in `seq 1 100`; do curl -sSL helloworld.sample:5000/hello && sleep 1s; done'
+```
 
 
+```sh
+tbox@fedora:~/git/trevorbox/openshift-service-mesh$ istioctl pc endpoints curl-57f5bd8955-gdk2z.sample --cluster "outbound|5000||helloworld.sample.svc.cluster.local" -o yaml
+- addedViaApi: true
+  circuitBreakers:
+    thresholds:
+    - maxConnections: 4294967295
+      maxPendingRequests: 4294967295
+      maxRequests: 4294967295
+      maxRetries: 4294967295
+    - maxConnections: 1024
+      maxPendingRequests: 1024
+      maxRequests: 1024
+      maxRetries: 3
+      priority: HIGH
+  edsServiceName: outbound|5000||helloworld.sample.svc.cluster.local
+  hostStatuses:
+  - address:
+      socketAddress:
+        address: 10.128.2.86
+        portValue: 5000
+    healthStatus:
+      edsHealthStatus: HEALTHY
+    locality:
+      region: us-east-2
+      zone: us-east-2a
+    stats:
+    - name: cx_connect_fail
+    - name: cx_total
+      value: "1587"
+    - name: rq_error
+    - name: rq_success
+      value: "1586"
+    - name: rq_timeout
+    - name: rq_total
+      value: "1587"
+    - name: cx_active
+      type: GAUGE
+      value: "1"
+    - name: rq_active
+      type: GAUGE
+      value: "1"
+    weight: 3
+  - address:
+      socketAddress:
+        address: 34.208.93.49
+        portValue: 15443
+    healthStatus:
+      edsHealthStatus: HEALTHY
+    locality:
+      region: us-west-2
+      zone: us-west-2a
+    priority: 1
+    stats:
+    - name: cx_connect_fail
+    - name: cx_total
+      value: "33"
+    - name: rq_error
+    - name: rq_success
+      value: "33"
+    - name: rq_timeout
+    - name: rq_total
+      value: "33"
+    - name: cx_active
+      type: GAUGE
+    - name: rq_active
+      type: GAUGE
+    weight: 1
+  - address:
+      socketAddress:
+        address: 34.217.156.252
+        portValue: 15443
+    healthStatus:
+      edsHealthStatus: HEALTHY
+    locality:
+      region: us-west-2
+      zone: us-west-2a
+    priority: 1
+    stats:
+    - name: cx_connect_fail
+    - name: cx_total
+      value: "34"
+    - name: rq_error
+    - name: rq_success
+      value: "34"
+    - name: rq_timeout
+    - name: rq_total
+      value: "34"
+    - name: cx_active
+      type: GAUGE
+    - name: rq_active
+      type: GAUGE
+    weight: 1
+  - address:
+      socketAddress:
+        address: 44.225.167.2
+        portValue: 15443
+    healthStatus:
+      edsHealthStatus: HEALTHY
+    locality:
+      region: us-west-2
+      zone: us-west-2a
+    priority: 1
+    stats:
+    - name: cx_connect_fail
+    - name: cx_total
+      value: "33"
+    - name: rq_error
+    - name: rq_success
+      value: "33"
+    - name: rq_timeout
+    - name: rq_total
+      value: "33"
+    - name: cx_active
+      type: GAUGE
+    - name: rq_active
+      type: GAUGE
+    weight: 1
+  name: outbound|5000||helloworld.sample.svc.cluster.local
+  observabilityName: outbound|5000||helloworld.sample.svc.cluster.local;
 ```

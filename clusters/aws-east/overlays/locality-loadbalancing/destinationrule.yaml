@@ -8,6 +8,7 @@ spec:
     connectionPool:
       http:
         maxRequestsPerConnection: 1
+        maxRetries: 0
     loadBalancer:
       simple: ROUND_ROBIN
       localityLbSetting:

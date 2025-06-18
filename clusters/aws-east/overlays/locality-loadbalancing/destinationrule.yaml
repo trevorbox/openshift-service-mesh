@@ -9,8 +9,6 @@ spec:
       http:
         maxRequestsPerConnection: 1
     loadBalancer:
-      # consistentHash:
-      #   useSourceIp: true
       localityLbSetting:
         enabled: true
         failover:
@@ -19,6 +17,5 @@ spec:
     outlierDetection:
       baseEjectionTime: 1m
       consecutive5xxErrors: 1
-      # consecutiveGatewayErrors: 1
       interval: 100ms
       maxEjectionPercent: 100

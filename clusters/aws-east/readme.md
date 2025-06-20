@@ -523,3 +523,96 @@ After recovering local pod ip is back in endpoints....
   name: outbound|5000||helloworld.sample.svc.cluster.local
   observabilityName: outbound|5000||helloworld.sample.svc.cluster.local;
 ```
+
+## vault
+
+<https://developer.hashicorp.com/vault/tutorials/archive/kubernetes-cert-manager>
+
+```sh
+vault secrets enable pki
+
+vault secrets tune -max-lease-ttl=8760h pki
+
+vault write pki/root/generate/internal \
+    common_name=example.com \
+    ttl=8760h
+
+vault write pki/config/urls \
+    issuing_certificates="http://vault.vault:8200/v1/pki/ca" \
+    crl_distribution_points="http://vault.vault:8200/v1/pki/crl"
+
+vault write pki/roles/example-dot-com \
+    allowed_domains=example.com \
+    allow_subdomains=true \
+    max_ttl=72h
+
+vault policy write pki - <<EOF
+path "pki*"                        { capabilities = ["read", "list"] }
+path "pki/sign/example-dot-com"    { capabilities = ["create", "update"] }
+path "pki/issue/example-dot-com"   { capabilities = ["create"] }
+EOF
+
+
+vault auth enable kubernetes
+vault write auth/kubernetes/config \
+    kubernetes_host="https://kubernetes.default.svc:443"
+
+vault write auth/kubernetes/role/issuer \
+    bound_service_account_names=issuer \
+    bound_service_account_namespaces=istio-system \
+    policies=pki \
+    ttl=20m
+
+oc create serviceaccount issuer -n istio-system
+
+cat >> issuer-secret.yaml <<EOF
+apiVersion: v1
+kind: Secret
+metadata:
+  name: issuer-token
+  namespace: istio-system
+  annotations:
+    kubernetes.io/service-account.name: issuer
+type: kubernetes.io/service-account-token
+EOF
+
+oc apply -f issuer-secret.yaml
+
+cat > vault-issuer.yaml <<EOF
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: vault-issuer
+  namespace: istio-system
+spec:
+  vault:
+    server: http://vault.vault:8200
+    path: pki/sign/example-dot-com
+    auth:
+      kubernetes:
+        mountPath: /v1/auth/kubernetes
+        role: issuer
+        secretRef:
+          name: issuer-token
+          key: token
+EOF
+
+oc apply --filename vault-issuer.yaml
+
+cat > example-com-cert.yaml <<EOF
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: example-com
+  namespace: istio-system
+spec:
+  secretName: example-com-tls
+  issuerRef:
+    name: vault-issuer
+  commonName: www.example.com
+  dnsNames:
+  - www.example.com
+EOF
+
+oc apply --filename example-com-cert.yaml
+```

@@ -5,6 +5,9 @@ global:
 ui:
   enabled: true
 
+injector:
+  enabled: false
+
 server:
 
   volumes:    

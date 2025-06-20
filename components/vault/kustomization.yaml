@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - namespace-vault.yaml
+  - rolebinding-admin.yaml
 
 helmCharts:
 - name: vault

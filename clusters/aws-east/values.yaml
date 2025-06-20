@@ -93,6 +93,15 @@ applications:
     source:
       path: components/vault-secrets-operator
 
+  vault:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '-1'
+    destination:
+      namespace: vault
+    source:
+      path: components/vault
+
   istio-system-configs:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous

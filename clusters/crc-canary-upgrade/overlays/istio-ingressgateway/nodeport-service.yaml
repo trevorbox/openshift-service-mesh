@@ -1,0 +1,21 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: istio-ingressgateway-nodeport
+  namespace: istio-ingress
+spec:
+  ports:
+    - name: http2
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+      nodePort: 32076
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 8443
+      nodePort: 31938
+  type: NodePort
+  selector:
+    app: istio-ingressgateway
+    istio: ingressgateway

@@ -272,3 +272,67 @@ tbox@fedora:~/git/trevorbox/openshift-service-mesh$ curl -k -s -H 'X-Forwarded-F
 ```
 
 The 'x-envoy-external-address', '192.168.130.1' matches the ip in our AuthorizationPolicy's remoteIpBlocks.
+
+## Nodeport example
+
+```sh
+# we need to send the request with SNI
+tbox@fedora:~/git/trevorbox/openshift-service-mesh$ curl -k --resolve golang-ex-featurea-istio-ingress.apps-crc.testing:31938:198.168.130.11 https://golang-ex-featurea-istio-ingress.apps-crc.testing
+{
+ "request_headers": {
+  "Accept": [
+   "*/*"
+  ],
+  "Traceparent": [
+   "00-4d5f0002e721275e6ed72ccf78187663-659230f7c0d2ef13-01"
+  ],
+  "Tracestate": [
+   ""
+  ],
+  "User-Agent": [
+   "curl/8.6.0"
+  ],
+  "X-Envoy-Attempt-Count": [
+   "1"
+  ],
+  "X-Envoy-Internal": [
+   "true"
+  ],
+  "X-Forwarded-Client-Cert": [
+   "By=spiffe://cluster.local/ns/golang-ex/sa/golang-ex;Hash=9e94f9b9bda36e972e2622a5e901b94d38952bfc0c7c60704f68ae409920eb24;Subject=\"\";URI=spiffe://cluster.local/ns/istio-ingress/sa/istio-ingressgateway"
+  ],
+  "X-Forwarded-For": [
+   "10.217.0.2"
+  ],
+  "X-Forwarded-Proto": [
+   "https"
+  ],
+  "X-Request-Id": [
+   "494cf418-a326-9404-9fcc-18efab14be49"
+  ]
+ },
+ "response_headers": {
+  "ETag": [
+   "W/\"0815\""
+  ],
+  "Set-Cookie": [
+   "id=a3fWa; Max-Age=2592000",
+   "id=b3fWa; Max-Age=3592000"
+  ],
+  "Test": [
+   "test"
+  ],
+  "X-Content-Type-Options": [
+   ""
+  ],
+  "X-Powered-By": [
+   "Go"
+  ],
+  "X-XSS-Protection": [
+   "0"
+  ]
+ },
+ "status": "Returned headers from the RESPONSE_HEADERS environment variable for GET request.",
+ "usage": "Usage: Set the RESPONSE_HEADERS environment variable to always return custom response headers for a GET request, else static default headers will be returned. Alternatively, send a POST or PUT request with the headers you want returned. Example: curl -i -X POST localhost:8080 -d '{\"k1\":[\"v1\"],\"k2\":[\"v3\",\"v4\"]}'"
+}
+```

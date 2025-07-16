@@ -6,6 +6,6 @@ helmCharts:
 - name: ossm3
   repo: https://trevorbox.github.io/helm-charts
   namespace: istio-system
-  version: ~2.0.6
+  version: ~2.0.7
   releaseName: ossm3-istio-system
 

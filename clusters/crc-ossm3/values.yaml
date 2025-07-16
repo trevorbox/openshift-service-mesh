@@ -146,7 +146,8 @@ applications:
     destination:
       namespace: kiali
     source:
-      path: clusters/crc-ossm3/overlays/kiali
+      # path: clusters/crc-ossm3/overlays/kiali
+      path: clusters/crc-canary-upgrade/overlays/kiali
 
   golang-ex-istio:
     annotations:

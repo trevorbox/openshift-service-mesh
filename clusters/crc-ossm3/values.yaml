@@ -66,6 +66,14 @@ applications:
     source:
       path: components/istio-system-configs
 
+  istio-cni-configs:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '1'
+    destination:
+      namespace: istio-cni
+    source:
+      path: components/istio-cni-configs
 
   ossm3-istio-system:
     annotations:

@@ -110,7 +110,7 @@ applications:
       namespace: istio-ingress
     source:
       # path: components/istio-ingressgateway
-      path: ../clusters/crc-canary-upgrade/overlays/istio-ingressgateway
+      path: clusters/crc-canary-upgrade/overlays/istio-ingressgateway
 
   golang-ex:
     annotations:

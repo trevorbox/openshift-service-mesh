@@ -37,7 +37,7 @@ revisions:
           #     endpoints:
           #     - fromRegistry: cluster1
           #     gateways:
-          #     - address: ewgateway.apps.east.sandbox2729.opentlc.com
+          #     - address: ewgateway.apps.east.sandbox2174.opentlc.com
           #       port: 443
           #     - address: 18.118.96.37
           #       port: 443

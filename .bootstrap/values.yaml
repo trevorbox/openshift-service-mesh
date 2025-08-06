@@ -13,7 +13,7 @@ operators:
   name: openshift-gitops-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  csv: openshift-gitops-operator.v1.16.0-0.1746014725.p
+  csv: openshift-gitops-operator.v1.16.1
   namespace: openshift-gitops-operator
   installPlanVerifierActiveDeadlineSeconds: 1200
   config:

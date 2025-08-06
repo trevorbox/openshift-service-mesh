@@ -13,6 +13,6 @@ operators:
   name: opentelemetry-product
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  csv: opentelemetry-operator.v0.119.0-2
+  csv: opentelemetry-operator.v0.127.0-2
   namespace: opentelemetry-operator
   installPlanVerifierActiveDeadlineSeconds: 1200

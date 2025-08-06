@@ -13,6 +13,6 @@ operators:
   name: gatekeeper-operator-product
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  csv: gatekeeper-operator-product.v3.18.0
+  csv: gatekeeper-operator-product.v3.19.0
   namespace: gatekeeper-operator
   installPlanVerifierActiveDeadlineSeconds: 1200

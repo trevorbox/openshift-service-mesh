@@ -7,3 +7,7 @@ helmCharts:
   valuesFile: values.yaml
   namespace: openshift-gitops
   version: 3.0.1
+
+resources:
+  - namespace-cert-manager.yaml
+  - servicemonitor-cert-manager.yaml

@@ -348,10 +348,23 @@ kubectl exec --context="${CTX_CLUSTER1}" -n sample -c curl \
 
 to reset fail back, make local helloworld healthy again
 ```sh
-oc scale --replicas=0 deploy/helloworld-v1 -n sample
+oc scale --replicas=0 deploy/helloworld-v1 -n sample --context="${CTX_CLUSTER1}"
 # argo will scale this back to 1 automatically
 ```
 
+
+```sh
+# fail cluster2
+kubectl --context="${CTX_CLUSTER2}" exec \
+  "$(kubectl get pod --context="${CTX_CLUSTER2}" -n sample -l app=helloworld \
+  -l version=v2 -o jsonpath='{.items[0].metadata.name}')" \
+  -n sample -c istio-proxy -- curl -sSL -X POST 127.0.0.1:15000/drain_listeners
+
+# reset
+
+oc scale --replicas=0 deploy/helloworld-v2 -n sample --context="${CTX_CLUSTER2}"
+
+```
 During ejection...
 
 `istioctl pc endpoints curl-5dcfb4c4dc-wbd5v.sample --cluster "outbound|5000||he

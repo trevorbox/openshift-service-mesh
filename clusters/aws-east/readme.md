@@ -4,8 +4,57 @@
 
 # notes
 
-in east we simulate an external issuer by create a root-ca and two intermediary CAs (east-ca, west-ca) 
+## setup
 
+```sh
+# log into east
+export CTX_CLUSTER1=$(oc config current-context)
+# log into west
+export CTX_CLUSTER2=$(oc config current-context)
+```
+
+### Option 2 - manually create intermediary certs from cert-manager
+
+Use the cert-manager certs (copy CAs manually since I don't have an external vault yet)
+
+```sh
+# east
+oc get secret istio-intermediate-ca-east -n my-pki --context "${CTX_CLUSTER1}" -o json | \
+jq 'del(.metadata["namespace","creationTimestamp","resourceVersion","selfLink","uid","ownerReferences","annotations","labels"]) | .metadata.name = "cacerts"' | \
+oc apply -n istio-system --context "${CTX_CLUSTER1}" -f -
+
+# make istio pick up new intermediary
+oc rollout restart deploy istiod-default-v1-24-3 -n istio-system --context "${CTX_CLUSTER1}"
+oc rollout status deploy -n istio-system --timeout 10m --context "${CTX_CLUSTER1}"
+
+# rollout all other deployments to get new workload certificates
+oc rollout restart deploy istio-eastwestgateway -n istio-system --context "${CTX_CLUSTER1}"
+oc rollout restart deploy -n sample --context "${CTX_CLUSTER1}"
+oc rollout restart deploy -n bookinfo --context "${CTX_CLUSTER1}"
+oc rollout restart deploy -n istio-ingress --context "${CTX_CLUSTER1}"
+
+# west
+oc get secret istio-intermediate-ca-west -n my-pki --context "${CTX_CLUSTER1}" -o json | \
+jq 'del(.metadata["namespace","creationTimestamp","resourceVersion","selfLink","uid","ownerReferences","annotations","labels"]) | .metadata.name = "cacerts"' | \
+oc apply -n istio-system --context "${CTX_CLUSTER2}" -f -
+
+# make istio pick up new intermediary
+oc rollout restart deploy istiod-default-v1-24-3 -n istio-system --context "${CTX_CLUSTER2}"
+oc rollout status deploy -n istio-system --timeout 10m --context "${CTX_CLUSTER2}"
+
+# rollout all other deployments to get new workload certificates
+oc rollout restart deploy istio-eastwestgateway -n istio-system --context "${CTX_CLUSTER2}"
+oc rollout restart deploy -n sample --context "${CTX_CLUSTER2}"
+oc rollout restart deploy -n bookinfo --context "${CTX_CLUSTER2}"
+oc rollout restart deploy -n istio-ingress --context "${CTX_CLUSTER2}"
+
+# test connectivity
+siege https://bookinfo-istio-ingress.apps.east.sandbox1734.opentlc.com/productpage
+```
+
+### Option 2 - manually create intermediary certs
+
+In east, we simulate an external issuer by creating a root-ca and two intermediary CAs (east-ca, west-ca) 
 
 ```sh
 rm -rf .certs

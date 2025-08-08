@@ -25,11 +25,12 @@ export CTX_CLUSTER1=$(oc config current-context)
 # log into west
 export CTX_CLUSTER2=$(oc config current-context)
 
-oc --context="${CTX_CLUSTER1}" create serviceaccount istio-reader-service-account -n istio-system
-oc --context="${CTX_CLUSTER2}" create serviceaccount istio-reader-service-account -n istio-system
+# handled via GitOps now...
+# oc --context="${CTX_CLUSTER1}" create serviceaccount istio-reader-service-account -n istio-system
+# oc --context="${CTX_CLUSTER2}" create serviceaccount istio-reader-service-account -n istio-system
 
-oc --context="${CTX_CLUSTER1}" adm policy add-cluster-role-to-user cluster-reader -z istio-reader-service-account -n istio-system
-oc --context="${CTX_CLUSTER2}" adm policy add-cluster-role-to-user cluster-reader -z istio-reader-service-account -n istio-system
+# oc --context="${CTX_CLUSTER1}" adm policy add-cluster-role-to-user cluster-reader -z istio-reader-service-account -n istio-system
+# oc --context="${CTX_CLUSTER2}" adm policy add-cluster-role-to-user cluster-reader -z istio-reader-service-account -n istio-system
 
 istioctl create-remote-secret --create-service-account=false \
   --context="${CTX_CLUSTER2}" \

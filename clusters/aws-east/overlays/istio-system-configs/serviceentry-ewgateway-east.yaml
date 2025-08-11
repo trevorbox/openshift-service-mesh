@@ -5,7 +5,7 @@ metadata:
   namespace: istio-system
 spec:
   hosts:
-    - ewgateway.apps.east.sandbox1734.opentlc.com
+    - ewgateway.apps.east.sandbox1434.opentlc.com
   ports:
     - name: https
       number: 443

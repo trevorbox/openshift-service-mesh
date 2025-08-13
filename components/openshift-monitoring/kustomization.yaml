@@ -4,3 +4,4 @@ kind: Kustomization
 namespace: openshift-monitoring
 resources:
   - configmap-cluster-monitoring-config.yaml
+  - configmap-user-workload-monitoring-config.yaml # enable alertmanager in openshift-user-workload-monitoring

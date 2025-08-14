@@ -1,0 +1,61 @@
+apiVersion: monitoring.coreos.com/v1beta1
+kind: AlertmanagerConfig
+metadata:
+  name: example
+  namespace: bookinfo
+spec:
+  route:
+    groupBy:
+    - namespace
+    receiver: gmail
+  receivers:
+  - name: gmail
+    emailConfigs:
+    - from: <email_address>
+      to: <email_address>
+      smarthost: smtp.gmail.com:587
+      # https://myaccount.google.com/apppasswords
+      authPassword:
+        key: app-password # k8s secret key
+        name: gmail # k8s secret name in same namespace as AlertManagerConfig
+      authUsername: <email_address>
+      authIdentity: <email_address>
+      sendResolved: true
+  - name: msteams
+    msteamsConfigs:
+    - webhookUrl: 
+        key: url # 
+        name: my-workflow-webhook # k8s secret name in same namespace as AlertManagerConfig
+      sendResolved: true
+      title: |2-
+        [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}]
+        (cluster: {{ .CommonLabels.cluster }})
+      text: |2-
+        {{ range $index, $alert := .Alerts -}}{{ if $index }}---{{ end }}
+        {{ if $alert.Labels.alertname }}
+        **Alertname**: {{ $alert.Labels.alertname }}
+        {{ end }}
+        Labels:
+        {{ if $alert.Labels.severity }}
+        - Severity: {{ $alert.Labels.severity }}
+        {{ end }}
+        {{ if $alert.Labels.instance }}
+        - Instance: {{ $alert.Labels.instance }}
+        {{ end }}
+        {{ if $alert.Labels.namespace }}
+        - Namespace: {{ $alert.Labels.namespace }}
+        {{ end }}
+        {{ if $alert.Labels.pod }}
+        - Pod: {{ $alert.Labels.pod }}
+        {{ end }}
+        Annotations: 
+        {{ if $alert.Annotations.description }}
+        - Description: {{ $alert.Annotations.description }}
+        {{ end }}
+        {{ if $alert.Annotations.summary }}
+        - Summary: {{ $alert.Annotations.summary }}
+        {{ end }}
+        {{ if $alert.GeneratorURL }}
+        Source: {{ $alert.GeneratorURL }}
+        {{ end }}
+        {{ end }}

@@ -4,3 +4,7 @@ kind: Kustomization
 resources:
   - configmap-cluster-monitoring-config.yaml
   - configmap-user-workload-monitoring-config.yaml # enable alertmanager in openshift-user-workload-monitoring
+  # examples
+  # - alertmanagerconfig-receiver.yaml
+  # - rolebinding-alert-routing-edit.yaml
+  # - rolebinding-monitoring-rules-edit.yaml

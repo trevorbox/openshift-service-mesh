@@ -39,7 +39,7 @@ spec:
     image_pull_policy: ''
     ingress:
       enabled: true
-    instance_name: kiali-remote_cluster_resources_only
+    instance_name: kiali-remote-cluster-resources-only
     logger:
       log_level: debug
     namespace: kiali

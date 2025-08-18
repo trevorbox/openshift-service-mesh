@@ -10,6 +10,7 @@ spec:
   auth:
     strategy: openshift
   deployment:
+    remote_cluster_resources_only: true
     cluster_wide_access: true
     discovery_selectors:
       default:

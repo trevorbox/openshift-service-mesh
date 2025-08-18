@@ -7,4 +7,4 @@ spec:
   version: v2.11
   deployment:
     remote_cluster_resources_only: true
-    instance_name: kiali-remote_cluster_resources_only
+    instance_name: kiali-remote-cluster-resources-only

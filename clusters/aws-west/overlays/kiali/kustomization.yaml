@@ -8,6 +8,7 @@ resources:
   - namespace-kiali.yaml
   - networkpolicy-grafana.yaml
   - tempostack-rbac.yaml
+  - kiali-remote-cluster-resources-only.yaml
 
 # helmCharts:
 # - name: kiali

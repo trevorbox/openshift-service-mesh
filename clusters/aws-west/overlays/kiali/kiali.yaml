@@ -9,12 +9,12 @@ spec:
   version: v2.4
   auth:
     strategy: openshift
-    openshift:
-      redirect_uris:
-        - https://kiali-kiali.apps.west.sandbox2306.opentlc.com/api/auth/callback
+    # openshift:
+    #   redirect_uris:
+    #     - https://kiali-kiali.apps.west.sandbox2306.opentlc.com/api/auth/callback
         # - https://kiali-kiali.apps.east.sandbox2071.opentlc.com/api/auth/callback
   deployment:
-    remote_cluster_resources_only: true
+    # remote_cluster_resources_only: true
     cluster_wide_access: true
     discovery_selectors:
       default:

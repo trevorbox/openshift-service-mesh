@@ -1,31 +1,20 @@
 apiVersion: kiali.io/v1alpha1
 kind: Kiali
 metadata:
-  name: kiali-istio-system
+  name: kiali-remote-cluster-resources-only
   namespace: kiali
 spec:
   kubernetes_config:
-    cluster_name: cluster1
-  # clustering:
-  #   autodetect_secrets:
-  #     enabled: true
-  #     label: "kiali.io/multiCluster=true"
-  #   clusters:
-  #     - name: cluster2
-  #   kiali_urls:
-  #     - cluster_name: cluster2
-  #       instance_name: kiali-istio-system
-  #       namespace: kiali
-  #       url: https://kiali-kiali.apps.west.sandbox2306.opentlc.com 
-  version: v2.11
+    cluster_name: cluster2
+  version: v2.4
   auth:
     strategy: openshift
-    # openshift:
-      # redirect_uris:
-        # - https://kiali-kiali.apps.west.sandbox2306.opentlc.com/api/auth/callback
+    openshift:
+      redirect_uris:
+        - https://kiali-kiali.apps.west.sandbox2306.opentlc.com/api/auth/callback
         # - https://kiali-kiali.apps.east.sandbox2071.opentlc.com/api/auth/callback
   deployment:
-    # remote_cluster_resources_only: true
+    remote_cluster_resources_only: true
     cluster_wide_access: true
     discovery_selectors:
       default:
@@ -39,7 +28,7 @@ spec:
     image_pull_policy: ''
     ingress:
       enabled: true
-    instance_name: kiali
+    instance_name: kiali-remote-cluster-resources-only
     logger:
       log_level: debug
     namespace: kiali
@@ -69,7 +58,7 @@ spec:
         - name: Istio Performance Dashboard
         - name: Istio Wasm Extension Dashboard
       enabled: true
-      external_url: https://grafana-instance-route-grafana.apps.east.sandbox2071.opentlc.com
+      external_url: https://grafana-instance-route-grafana.apps.west.sandbox2306.opentlc.com 
       internal_url: http://grafana-instance-service.grafana.svc:3000
     prometheus:
       auth:
@@ -83,8 +72,8 @@ spec:
       provider: jaeger
       use_grpc: false
       internal_url: 'https://tempo-minio-dev-gateway.tempo-system.svc.cluster.local:8080/api/traces/v1/dev'
-      external_url: https://tempo-minio-dev-gateway-tempo-system.apps.east.sandbox2071.opentlc.com/api/traces/v1/dev/search
-      health_check_url: https://tempo-minio-dev-gateway-tempo-system.apps.east.sandbox2071.opentlc.com/api/traces/v1/dev/tempo/api/echo
+      external_url: https://tempo-minio-dev-gateway-tempo-system.apps.west.sandbox2306.opentlc.com /api/traces/v1/dev/search
+      health_check_url: https://tempo-minio-dev-gateway-tempo-system.apps.west.sandbox2306.opentlc.com /api/traces/v1/dev/tempo/api/echo
       auth:
         ca_file: /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
         insecure_skip_verify: true

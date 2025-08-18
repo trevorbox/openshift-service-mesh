@@ -1,7 +1,7 @@
 apiVersion: kiali.io/v1alpha1
 kind: Kiali
 metadata:
-  name: kiali-istio-system
+  name: kiali-remote-cluster-resources-only
   namespace: kiali
 spec:
   kubernetes_config:
@@ -20,12 +20,12 @@ spec:
   version: v2.11
   auth:
     strategy: openshift
-    # openshift:
-      # redirect_uris:
+    openshift:
+      redirect_uris:
         # - https://kiali-kiali.apps.west.sandbox2306.opentlc.com/api/auth/callback
-        # - https://kiali-kiali.apps.east.sandbox2071.opentlc.com/api/auth/callback
+        - https://kiali-kiali.apps.east.sandbox2071.opentlc.com/api/auth/callback
   deployment:
-    # remote_cluster_resources_only: true
+    remote_cluster_resources_only: true
     cluster_wide_access: true
     discovery_selectors:
       default:
@@ -39,7 +39,7 @@ spec:
     image_pull_policy: ''
     ingress:
       enabled: true
-    instance_name: kiali
+    instance_name: kiali-remote_cluster_resources_only
     logger:
       log_level: debug
     namespace: kiali

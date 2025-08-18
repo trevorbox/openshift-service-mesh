@@ -44,7 +44,7 @@ revisions:
           #     endpoints:
           #     - fromRegistry: cluster2
           #     gateways:
-          #     - address: ewgateway.apps.west.sandbox275.opentlc.com 
+          #     - address: ewgateway.apps.west.sandbox2306.opentlc.com 
           #       port: 443
           #       locality: us-west-2
           #     - address: 52.88.118.178

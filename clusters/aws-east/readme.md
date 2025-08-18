@@ -49,7 +49,7 @@ oc rollout restart deploy -n bookinfo --context "${CTX_CLUSTER2}"
 oc rollout restart deploy -n istio-ingress --context "${CTX_CLUSTER2}"
 
 # test connectivity
-siege https://bookinfo-istio-ingress.apps.east.sandbox1434.opentlc.com/productpage
+siege https://bookinfo-istio-ingress.apps.east.sandbox2071.opentlc.com/productpage
 ```
 
 ### Option 2 - manually create intermediary certs
@@ -259,7 +259,7 @@ export KIALI_VERSION="2.11.0"
 export REMOTE_CLUSTER_CONTEXT=$CTX_CLUSTER2
 export REMOTE_CLUSTER_NAME=cluster2
 export REMOTE_CLUSTER_NAMESPACE=kiali
-export REMOTE_CLUSTER_URL=https://api.west.sandbox275.opentlc.com :6443
+export REMOTE_CLUSTER_URL=https://api.west.sandbox2306.opentlc.com :6443
 export VIEW_ONLY=false
 export EXEC_AUTH_JSON=
 ./kiali-prepare-remote-cluster.sh
@@ -280,7 +280,7 @@ export KIALI_VERSION="2.11.0"
 export REMOTE_CLUSTER_CONTEXT=$CTX_CLUSTER1
 export REMOTE_CLUSTER_NAME=cluster1
 export REMOTE_CLUSTER_NAMESPACE=kiali
-export REMOTE_CLUSTER_URL=https://api.east.sandbox1434.opentlc.com:6443
+export REMOTE_CLUSTER_URL=https://api.east.sandbox2071.opentlc.com:6443
 export VIEW_ONLY=false
 export EXEC_AUTH_JSON=
 ./kiali-prepare-remote-cluster.sh
@@ -292,8 +292,8 @@ export EXEC_AUTH_JSON=
 Grab the ca info in the k8s secret created in the east cluster in the kiali namespace, decode it and make sure the pem is correct
 
 ```sh
-curl --cacert out.pem https://api.west.sandbox275.opentlc.com :6443
-oc login --token='MY_TOKEN' https://api.west.sandbox275.opentlc.com :6443
+curl --cacert out.pem https://api.west.sandbox2306.opentlc.com :6443
+oc login --token='MY_TOKEN' https://api.west.sandbox2306.opentlc.com :6443
 
 tbox@fedora:~/git/trevorbox/openshift-service-mesh/clusters/aws-east$ for i in VirtualService DestinationRule Pods ConfigMap Deployment Service ReplicaSet StatefulSet DaemonSet Endpoints; do echo -n "GET [$i] (COUNT): "; oc get $i -o name --all-namespaces | wc -l; echo -n "CAN-I WATCH [$i]? "; oc auth can-i watch $i; done
 GET [VirtualService] (COUNT): 1

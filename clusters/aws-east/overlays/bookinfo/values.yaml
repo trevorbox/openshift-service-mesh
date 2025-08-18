@@ -1,2 +1,2 @@
 ingressgateway:
-  host: bookinfo-istio-ingress.apps.east.sandbox1434.opentlc.com
+  host: bookinfo-istio-ingress.apps.east.sandbox2071.opentlc.com

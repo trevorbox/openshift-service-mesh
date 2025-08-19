@@ -11,7 +11,7 @@ spec:
     strategy: openshift
     openshift:
       redirect_uris:
-        - https://kiali-kiali.apps.west.sandbox2306.opentlc.com/api/auth/callback
+        # - https://kiali-kiali.apps.west.sandbox2306.opentlc.com/api/auth/callback
         - https://kiali-kiali.apps.east.sandbox2071.opentlc.com/api/auth/callback
   deployment:
     # remote_cluster_resources_only: true

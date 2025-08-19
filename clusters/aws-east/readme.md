@@ -259,7 +259,7 @@ export KIALI_VERSION="2.11.0"
 export REMOTE_CLUSTER_CONTEXT=$CTX_CLUSTER2
 export REMOTE_CLUSTER_NAME=cluster2
 export REMOTE_CLUSTER_NAMESPACE=kiali
-export REMOTE_CLUSTER_URL=https://api.west.sandbox2306.opentlc.com :6443
+export REMOTE_CLUSTER_URL=https://api.west.sandbox2306.opentlc.com:6443
 export VIEW_ONLY=false
 export EXEC_AUTH_JSON=
 ./kiali-prepare-remote-cluster.sh

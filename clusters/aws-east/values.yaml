@@ -266,14 +266,14 @@ applications:
     source:
       path: clusters/aws-east/overlays/locality-loadbalancing
 
-  golang-ex:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '4'
-    destination:
-      namespace: golang-ex
-    source:
-      path: components/golang-ex
+  # golang-ex:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '4'
+  #   destination:
+  #     namespace: golang-ex
+  #   source:
+  #     path: components/golang-ex
 
   golang-ex-istio:
     annotations:

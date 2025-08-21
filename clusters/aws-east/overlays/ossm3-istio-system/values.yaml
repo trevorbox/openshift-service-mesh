@@ -71,6 +71,11 @@ revisions:
                 cpu: 50m
                 memory: 32Mi
         meshConfig:
+          localityLbSetting:
+            enabled: true
+            failover:
+              - from: cluster1
+                to: cluster2
           defaultConfig:
             proxyMetadata:
               ISTIO_META_DNS_CAPTURE: "true"

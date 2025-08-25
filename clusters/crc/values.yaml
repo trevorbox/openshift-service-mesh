@@ -209,3 +209,13 @@ applications:
       namespace: prometheus
     source:
       path: components/prometheus
+
+  spring-boot-demo:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: spring-boot-demo
+    source:
+      # path: components/spring-boot-demo
+      path: components/spring-boot-demo

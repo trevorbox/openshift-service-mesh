@@ -9,7 +9,7 @@ spec:
     strategy: openshift
     openshift:
       redirect_uris:
-        - https://kiali-kiali.apps.east.sandbox2071.opentlc.com/api/auth/callback
+        - https://kiali-kiali.apps.east.sandbox5519.opentlc.com/api/auth/callback
   deployment:
     remote_cluster_resources_only: true
     instance_name: kiali-remote-cluster-resources-only

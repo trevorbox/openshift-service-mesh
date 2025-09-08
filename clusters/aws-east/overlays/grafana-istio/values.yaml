@@ -5,4 +5,4 @@ datasource:
     customQueryParameters:
 consoleLink: 
   enabled: true
-  route: "https://grafana-instance-route-grafana.apps.east.sandbox2071.opentlc.com"
+  route: "https://grafana-instance-route-grafana.apps.east.sandbox5519.opentlc.com"

@@ -9,7 +9,7 @@ helmCharts:
 - name: grafana-istio
   repo: https://trevorbox.github.io/helm-charts
   namespace: grafana
-  version: ~1.21.8
+  version: ~1.21.9
   releaseName: grafana-istio
   additionalValuesFiles: 
     - values.yaml

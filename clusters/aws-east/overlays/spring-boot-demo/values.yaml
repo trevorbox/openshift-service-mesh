@@ -1,0 +1,10 @@
+istio:
+  enabled: true
+ingressgateway:
+  host: spring-boot-demo-istio-ingress.apps.east.sandbox5519.opentlc.com
+replicaCount: 1
+cryostat:
+  agent:
+    enabled: false
+  jmx:
+    enabled: true

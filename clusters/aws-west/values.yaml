@@ -255,4 +255,4 @@ applications:
       namespace: spring-boot-demo
     source:
       # path: components/spring-boot-demo
-      path: components/spring-boot-demo
+      path: clusters/aws-west/overlays/spring-boot-demo

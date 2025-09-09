@@ -3,6 +3,7 @@ members:
   - bookinfo
   - sample
   - golang-ex
+  - spring-boot-demo
 labels:
   istio.io/rev: default
   argocd.argoproj.io/managed-by: openshift-gitops

@@ -283,3 +283,13 @@ applications:
       namespace: golang-ex
     source:
       path: clusters/aws-east/overlays/golang-ex-istio
+
+  spring-boot-demo:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: spring-boot-demo
+    source:
+      # path: components/spring-boot-demo
+      path: components/spring-boot-demo

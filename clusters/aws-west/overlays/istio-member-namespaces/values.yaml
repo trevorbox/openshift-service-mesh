@@ -2,6 +2,7 @@ members:
   - istio-ingress
   - bookinfo
   - sample
+  - spring-boot-demo
 labels:
   istio.io/rev: default
   argocd.argoproj.io/managed-by: openshift-gitops

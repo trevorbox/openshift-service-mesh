@@ -246,3 +246,13 @@ applications:
       namespace: sample
     source:
       path: components/curl
+
+  spring-boot-demo:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: spring-boot-demo
+    source:
+      # path: components/spring-boot-demo
+      path: components/spring-boot-demo

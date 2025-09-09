@@ -13,6 +13,20 @@ export CTX_CLUSTER1=$(oc config current-context)
 export CTX_CLUSTER2=$(oc config current-context)
 ```
 
+## create k8s secrets
+
+```sh
+istioctl create-remote-secret --create-service-account=false \
+  --context="${CTX_CLUSTER2}" \
+  --name=cluster2 | \
+  oc --context="${CTX_CLUSTER1}" apply -f -
+
+istioctl create-remote-secret --create-service-account=false \
+  --context="${CTX_CLUSTER1}" \
+  --name=cluster1 | \
+  oc --context="${CTX_CLUSTER2}" apply -f -
+```
+
 ### Option 1 - manually create intermediary certs from cert-manager
 
 Use the cert-manager certs (copy CAs manually since I don't have an external vault yet)
@@ -168,20 +182,6 @@ oc create secret generic cacerts -n istio-system --context "${CTX_CLUSTER2}" \
   --from-file=west/ca-key.pem \
   --from-file=west/root-cert.pem \
   --from-file=west/cert-chain.pem
-```
-
-## create k8s secrets
-
-```sh
-istioctl create-remote-secret --create-service-account=false \
-  --context="${CTX_CLUSTER2}" \
-  --name=cluster2 | \
-  oc --context="${CTX_CLUSTER1}" apply -f -
-
-istioctl create-remote-secret --create-service-account=false \
-  --context="${CTX_CLUSTER1}" \
-  --name=cluster1 | \
-  oc --context="${CTX_CLUSTER2}" apply -f -
 ```
 
 ## (test) istio-csr verify 
@@ -361,11 +361,11 @@ kubectl exec --context="${CTX_CLUSTER1}" -n sample -c curl \
 ```
 
 to reset fail back, make local helloworld healthy again
+
 ```sh
 oc scale --replicas=0 deploy/helloworld-v1 -n sample --context="${CTX_CLUSTER1}"
 # argo will scale this back to 1 automatically
 ```
-
 
 ```sh
 # fail cluster2
@@ -377,8 +377,8 @@ kubectl --context="${CTX_CLUSTER2}" exec \
 # reset
 
 oc scale --replicas=0 deploy/helloworld-v2 -n sample --context="${CTX_CLUSTER2}"
-
 ```
+
 During ejection...
 
 `istioctl pc endpoints curl-5dcfb4c4dc-wbd5v.sample --cluster "outbound|5000||he

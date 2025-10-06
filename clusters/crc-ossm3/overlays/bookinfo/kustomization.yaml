@@ -14,12 +14,12 @@ helmCharts:
 patches:
 - target:
     kind: Deployment
-    name: productpage-v1
+    name: productpage
   patch: |
     apiVersion: apps/v1
     kind: Deployment
     metadata:
-      name: productpage-v1
+      name: productpage
     spec:
       template:
         metadata:

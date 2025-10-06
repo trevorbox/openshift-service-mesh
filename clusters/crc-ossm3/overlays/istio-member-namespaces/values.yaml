@@ -11,6 +11,7 @@ members:
   - bookinfo
   - nginx-echo-headers
   - oauth2-proxy
+  - sample
 labels:
   istio.io/rev: default
   argocd.argoproj.io/managed-by: openshift-gitops

@@ -7,6 +7,7 @@ helmCharts:
   namespace: istio-ingress
   version: ~1.18.6
   releaseName: istio-ingressgateway
+  valuesFile: values.yaml
 
 resources:
   - clusterissuer-self-signer.yaml

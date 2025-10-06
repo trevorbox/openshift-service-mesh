@@ -10,3 +10,18 @@ helmCharts:
   releaseName: bookinfo
   additionalValuesFiles: 
     - values.yaml
+
+patches:
+- target:
+    kind: Deployment
+    name: productpage-v1
+  patch: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: productpage-v1
+    spec:
+      template:
+        metadata:
+          annotations:
+            sidecar.istio.io/logLevel: 'rbac:debug,jwt:debug'  # enable RBAC and JWT debug logging

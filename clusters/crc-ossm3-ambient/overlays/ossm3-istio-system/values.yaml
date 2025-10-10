@@ -63,6 +63,8 @@ revisions:
                   operator: Exists
             - matchLabels:
                 kubernetes.io/metadata.name: istio-system
+            - matchLabels:
+                kubernetes.io/metadata.name: ztunnel
           enableTracing: true
           extensionProviders:
             - name: tempo

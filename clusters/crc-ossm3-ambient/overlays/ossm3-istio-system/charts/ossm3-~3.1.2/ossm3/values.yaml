@@ -1,0 +1,192 @@
+istioCNI:
+  spec:
+    version: v1.24.6
+    namespace: istio-cni
+    # profile: ambient
+# https://istio.io/latest/docs/setup/upgrade/canary/
+istioRevisionTags: 
+  # https://istio.io/latest/docs/setup/upgrade/canary/#default-tag
+  default:
+    istioRevision: default-v1-24-6
+  # stable:
+  #   istioRevision: stable-v1-24-6
+  # canary:
+  #   istioRevision: canary-v1-24-6
+ztunnel:
+  enabled: false
+  spec:
+    namespace: ztunnel
+    profile: ambient
+revisions:
+  - name: default
+    spec:
+      namespace: istio-system
+      updateStrategy:
+        type: RevisionBased
+      values:
+        pilot:
+          autoscaleEnabled: true
+          autoscaleMin: 1
+          autoscaleMax: 2
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+          # https://istio.io/v1.24/docs/ops/configuration/traffic-management/dns-proxy/#dns-auto-allocation-v2
+          env:
+            # Enable automatic address allocation, optional
+            PILOT_ENABLE_IP_AUTOALLOCATE: "true"
+        global:
+          proxy:
+            resources:
+              limits:
+                cpu: 100m
+                memory: 64Mi
+              requests:
+                cpu: 50m
+                memory: 32Mi
+          proxy_init:
+            resources:
+              limits:
+                cpu: 100m
+                memory: 64Mi
+              requests:
+                cpu: 50m
+                memory: 32Mi
+        meshConfig:
+          enablePrometheusMerge: true
+          # https://istio.io/v1.24/docs/ops/configuration/traffic-management/dns-proxy/#dns-auto-allocation-v2
+          defaultConfig:
+            proxyMetadata:
+              # Enable basic DNS proxying
+              ISTIO_META_DNS_CAPTURE: "true"
+          accessLogFile: /dev/stdout
+          discoverySelectors:
+            - matchExpressions:
+                - key: istio.io/rev
+                  operator: Exists
+            - matchLabels:
+                kubernetes.io/metadata.name: istio-system
+          enableTracing: true
+          extensionProviders:
+            - name: tempo
+              opentelemetry:
+                service: otel-collector.opentelemetry-collector.svc.cluster.local
+                port: 4317
+          outboundTrafficPolicy:
+            mode: REGISTRY_ONLY # ALLOW_ANY
+      version: v1.24.6
+  # - name: canary
+  #   spec:
+  #     namespace: istio-system
+  #     updateStrategy:
+  #       type: RevisionBased
+  #     values:
+  #       pilot:
+  #         autoscaleEnabled: true
+  #         autoscaleMin: 1
+  #         autoscaleMax: 2
+  #         resources:
+  #           requests:
+  #             cpu: 50m
+  #             memory: 32Mi
+  #         # https://istio.io/v1.24/docs/ops/configuration/traffic-management/dns-proxy/#dns-auto-allocation-v2
+  #         env:
+  #           # Enable automatic address allocation, optional
+  #           PILOT_ENABLE_IP_AUTOALLOCATE: "true"
+  #       global:
+  #         proxy:
+  #           resources:
+  #             limits:
+  #               cpu: 100m
+  #               memory: 64Mi
+  #             requests:
+  #               cpu: 50m
+  #               memory: 32Mi
+  #         proxy_init:
+  #           resources:
+  #             limits:
+  #               cpu: 100m
+  #               memory: 64Mi
+  #             requests:
+  #               cpu: 50m
+  #               memory: 32Mi
+  #       meshConfig:
+  #         # https://istio.io/v1.24/docs/ops/configuration/traffic-management/dns-proxy/#dns-auto-allocation-v2
+  #         defaultConfig:
+  #           proxyMetadata:
+  #             # Enable basic DNS proxying
+  #             ISTIO_META_DNS_CAPTURE: "true"
+  #         accessLogFile: /dev/stdout
+  #         discoverySelectors:
+  #           - matchExpressions:
+  #               - key: istio.io/rev
+  #                 operator: Exists
+  #           - matchLabels:
+  #               kubernetes.io/metadata.name: istio-system
+  #         enableTracing: true
+  #         extensionProviders:
+  #           - name: tempo
+  #             opentelemetry:
+  #               service: otel-collector.opentelemetry-collector.svc.cluster.local
+  #               port: 4317
+  #         outboundTrafficPolicy:
+  #           mode: REGISTRY_ONLY # ALLOW_ANY
+  #     version: v1.24.6
+  # - name: stable
+  #   spec:
+  #     namespace: istio-system
+  #     updateStrategy:
+  #       type: RevisionBased
+  #     values:
+  #       pilot:
+  #         autoscaleEnabled: true
+  #         autoscaleMin: 1
+  #         autoscaleMax: 2
+  #         resources:
+  #           requests:
+  #             cpu: 50m
+  #             memory: 32Mi
+  #         # https://istio.io/v1.24/docs/ops/configuration/traffic-management/dns-proxy/#dns-auto-allocation-v2
+  #         env:
+  #           # Enable automatic address allocation, optional
+  #           PILOT_ENABLE_IP_AUTOALLOCATE: "true"
+  #       global:
+  #         proxy:
+  #           resources:
+  #             limits:
+  #               cpu: 100m
+  #               memory: 64Mi
+  #             requests:
+  #               cpu: 50m
+  #               memory: 32Mi
+  #         proxy_init:
+  #           resources:
+  #             limits:
+  #               cpu: 100m
+  #               memory: 64Mi
+  #             requests:
+  #               cpu: 50m
+  #               memory: 32Mi
+  #       meshConfig:
+  #         # https://istio.io/v1.24/docs/ops/configuration/traffic-management/dns-proxy/#dns-auto-allocation-v2
+  #         defaultConfig:
+  #           proxyMetadata:
+  #             # Enable basic DNS proxying
+  #             ISTIO_META_DNS_CAPTURE: "true"
+  #         accessLogFile: /dev/stdout
+  #         discoverySelectors:
+  #           - matchExpressions:
+  #               - key: istio.io/rev
+  #                 operator: Exists
+  #           - matchLabels:
+  #               kubernetes.io/metadata.name: istio-system
+  #         enableTracing: true
+  #         extensionProviders:
+  #           - name: tempo
+  #             opentelemetry:
+  #               service: otel-collector.opentelemetry-collector.svc.cluster.local
+  #               port: 4317
+  #         outboundTrafficPolicy:
+  #           mode: REGISTRY_ONLY # ALLOW_ANY
+  #     version: v1.24.6

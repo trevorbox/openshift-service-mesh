@@ -1,0 +1,12 @@
+{{- range $k, $v := .Values.istioRevisionTags }}
+---
+apiVersion: sailoperator.io/v1
+kind: IstioRevisionTag
+metadata:
+  name: {{ $k }}
+spec:
+  targetRef:
+    kind: IstioRevision
+    name: {{ $v.istioRevision }}
+...
+{{- end }}

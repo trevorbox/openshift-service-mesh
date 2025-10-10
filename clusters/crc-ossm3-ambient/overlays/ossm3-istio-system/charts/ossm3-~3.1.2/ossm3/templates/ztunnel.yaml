@@ -1,0 +1,10 @@
+{{- if .Values.ztunnel.enabled }}
+apiVersion: sailoperator.io/v1alpha1
+kind: ZTunnel
+metadata:
+  name: default
+spec:
+{{- with .Values.ztunnel.spec }}
+  {{- . | toYaml | nindent 2}}
+{{- end }}
+{{- end }}

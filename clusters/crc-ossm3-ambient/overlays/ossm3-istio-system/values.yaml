@@ -1,11 +1,11 @@
 istioCNI:
   spec:
-    version: v1.24.6
+    version: v1.26.2
     namespace: istio-cni
     profile: ambient # Changed to ambient
 istioRevisionTags:
   default:
-    istioRevision: default-v1-24-6
+    istioRevision: default-v1-26-2
 ztunnel:
   enabled: true # Changed to true
   spec:
@@ -71,4 +71,4 @@ revisions:
                 port: 4317
           outboundTrafficPolicy:
             mode: REGISTRY_ONLY # ALLOW_ANY
-      version: v1.24.6
+      version: v1.26.2

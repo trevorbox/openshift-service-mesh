@@ -11,6 +11,10 @@ ztunnel:
   spec:
     namespace: ztunnel
     profile: ambient
+    values:
+      ztunnel:
+        xdsAddress: istiod-default-v1-26-2.istio-system.svc:15012
+        caAddress: istiod-default-v1-26-2.istio-system.svc:15012
 revisions:
   - name: default
     spec:

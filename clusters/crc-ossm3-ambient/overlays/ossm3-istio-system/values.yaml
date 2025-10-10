@@ -11,6 +11,7 @@ ztunnel:
   spec:
     namespace: ztunnel
     profile: ambient
+    version: v1.26.4
     values:
       ztunnel:
         xdsAddress: istiod-default-v1-26-4.istio-system.svc:15012

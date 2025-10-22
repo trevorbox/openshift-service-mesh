@@ -12,6 +12,7 @@ members:
   - nginx-echo-headers
   - oauth2-proxy
   - sample
+  - authz-custom
 labels:
   istio.io/rev: default
   argocd.argoproj.io/managed-by: openshift-gitops

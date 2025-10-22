@@ -82,7 +82,8 @@ applications:
     destination:
       namespace: istio-system
     source:
-      path: components/ossm3-istio-system                         
+      # path: components/ossm3-istio-system
+      path: clusters/crc-ossm3/overlays/ossm3-istio-system 
 
   tempo-system:
     annotations:
@@ -147,6 +148,15 @@ applications:
       namespace: oauth2-proxy
     source:
       path: components/oauth2-proxy
+
+  authz-custom:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: authz-custom
+    source:
+      path: components/authz-custom
 
   kiali:
     annotations:

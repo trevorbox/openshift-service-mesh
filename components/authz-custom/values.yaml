@@ -1,0 +1,62 @@
+config:
+  existingSecret: oauth2-proxy
+  configFile: |-
+    provider = "oidc"
+    redirect_url = "https://authz-custom-istio-ingress.apps-crc.testing/oauth2/callback"
+    oidc_issuer_url = "https://dev-tqolyn342htgbviz.us.auth0.com/"
+
+    # https://github.com/oauth2-proxy/oauth2-proxy/issues/1250#issuecomment-866185985
+    # auth0 requires you set an audience param when authorizing tokens, else the returned jwt is opaque - see https://auth0.com/docs/secure/tokens/access-tokens#opaque-access-tokens
+    # so we need to set an audience. we can manually control this and not rely on oidc discovery
+    oidc_jwks_url = "https://dev-tqolyn342htgbviz.us.auth0.com/.well-known/jwks.json"
+    login_url = "https://dev-tqolyn342htgbviz.us.auth0.com/authorize?audience=http%3A%2F%2Fmy-api"
+    redeem_url = "https://dev-tqolyn342htgbviz.us.auth0.com/oauth/token"
+
+    email_domains = "*"
+
+    http_address = "0.0.0.0:4180"
+    cookie_csrf_per_request = true
+    cookie_csrf_expire = "5m"
+
+    upstreams = [
+      "static://200"
+    ]
+
+    cookie_domains = [
+      ".apps-crc.testing"
+    ]
+    cookie_samesite = lax
+    cookie_refresh = 1h
+    cookie_expire = 4h
+    set_xauthrequest = true
+    reverse_proxy = true
+    set_authorization_header = true # Authorization: Bearer <JWT>
+    pass_authorization_header = true # pass OIDC IDToken to upstream via Authorization Bearer header
+    pass_user_headers = true
+    pass_host_header = true # pass the request Host Header to upstream
+    pass_access_token = true
+    scope = "openid email"
+    skip_provider_button = true
+    whitelist_domains = [
+      "*.apps-crc.testing"
+    ]
+    skip_oidc_discovery = true
+    standard_logging = true
+    auth_logging = true
+    request_logging = true
+podLabels: 
+  sidecar.istio.io/inject: 'true'
+podAnnotations: 
+  sidecar.istio.io/inject: 'true'
+securityContext:
+  enabled: true
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 
+  runAsGroup: 
+  seccompProfile:
+    type: RuntimeDefault

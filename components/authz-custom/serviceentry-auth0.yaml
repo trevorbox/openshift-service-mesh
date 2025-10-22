@@ -4,7 +4,6 @@ metadata:
   name: auth0
 spec:
   exportTo:
-  - "."
   hosts:
   - dev-tqolyn342htgbviz.us.auth0.com
   location: MESH_EXTERNAL

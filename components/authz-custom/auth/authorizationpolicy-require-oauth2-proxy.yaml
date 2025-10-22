@@ -1,0 +1,17 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: require-oauth2-proxy
+spec:
+  action: CUSTOM
+  # selector:
+  #   matchLabels:
+  #     app: 
+  provider:
+    name: "oauth2-proxy"
+  rules:
+  - to:
+    - operation:
+        hosts:
+        # TODO: try wildcards
+        - "nginx-echo-headers-istio-ingress.apps-crc.testing"

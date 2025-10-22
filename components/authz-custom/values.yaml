@@ -48,6 +48,7 @@ podLabels:
   sidecar.istio.io/inject: 'true'
 podAnnotations: 
   sidecar.istio.io/inject: 'true'
+  sidecar.istio.io/logLevel": "debug"
 securityContext:
   enabled: true
   allowPrivilegeEscalation: false

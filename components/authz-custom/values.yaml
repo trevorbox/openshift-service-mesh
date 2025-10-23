@@ -48,8 +48,10 @@ config:
 podLabels: 
   sidecar.istio.io/inject: 'true'
 podAnnotations: 
-  sidecar.istio.io/inject: 'true'
   sidecar.istio.io/logLevel: 'rbac:debug,jwt:debug'
+  # prometheus.io/path: /
+  prometheus.io/port: "44180"
+  prometheus.io/scrape: "true"
 securityContext:
   enabled: true
   allowPrivilegeEscalation: false
@@ -62,3 +64,17 @@ securityContext:
   runAsGroup: 
   seccompProfile:
     type: RuntimeDefault
+replicaCount: 2
+resources:
+  limits:
+    cpu: 100m
+    memory: 300Mi
+  requests:
+    cpu: 100m
+    memory: 300Mi
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80

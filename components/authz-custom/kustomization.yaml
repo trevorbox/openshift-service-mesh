@@ -13,3 +13,14 @@ resources:
   # - secret-oauth2-proxy.yaml
   - serviceentry-auth0.yaml
   - auth
+
+patchesJson6902:
+  - target:
+      group: policy
+      version: v1beta1
+      kind: 'PodDisruptionBudget'
+      name: '.*'
+    patch: |-
+      - op: replace
+        path: "/apiVersion"
+        value: policy/v1

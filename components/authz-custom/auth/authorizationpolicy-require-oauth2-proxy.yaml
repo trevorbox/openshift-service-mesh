@@ -16,3 +16,4 @@ spec:
         hosts:
         # TODO: try wildcards
         - "nginx-echo-headers-istio-ingress.apps-crc.testing"
+        - "https://golang-ex-stable-istio-ingress.apps-crc.testing"

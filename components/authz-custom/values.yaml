@@ -2,6 +2,7 @@ config:
   existingSecret: oauth2-proxy
   configFile: |-
     provider = "oidc"
+    # if you leave this blank then the redirect will use the original host header and /oauth2/callback 
     # redirect_url = "https://authz-custom-istio-ingress.apps-crc.testing/oauth2/callback"
     oidc_issuer_url = "https://dev-tqolyn342htgbviz.us.auth0.com/"
 

@@ -10,10 +10,6 @@ helmCharts:
   releaseName: oauth2-proxy
 
 resources:
-  - certificate-authz-custom.yaml
-  - gateway-authz-custom.yaml
-  - route-authz-custom.yaml
   # - secret-oauth2-proxy.yaml
   - serviceentry-auth0.yaml
-  - virtualservice-authz-custom.yaml
   - auth

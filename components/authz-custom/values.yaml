@@ -49,7 +49,7 @@ podLabels:
   sidecar.istio.io/inject: 'true'
 podAnnotations: 
   sidecar.istio.io/inject: 'true'
-  sidecar.istio.io/logLevel: "debug"
+  sidecar.istio.io/logLevel: 'rbac:debug,jwt:debug'
 securityContext:
   enabled: true
   allowPrivilegeEscalation: false

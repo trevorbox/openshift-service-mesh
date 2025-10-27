@@ -61,3 +61,13 @@ spec:
         sidecar.istio.io/inject: 'true'
         sidecar.istio.io/logLevel: 'rbac:debug,jwt:debug'  
 ```
+
+## Scalability
+
+Since the external authz provider is not provided as a CRD, control plane admin would need to add the provider
+
+<https://github.com/istio/istio/issues/35165>
+
+It is possible to define a custom EnvoyFilter however in liue of needing the provider defined, though this is not supportable.
+
+[envoyfilter-authz-custom.yaml](./envoyfilter-authz-custom.yaml)

@@ -1,0 +1,107 @@
+# https://github.com/istio/istio/issues/35165#issuecomment-1166456093
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: authz-custom
+spec:
+  workloadSelector:
+    labels:
+      # authz-custom: "enabled"
+      app: istio-ingressgateway
+  configPatches:
+  - applyTo: HTTP_FILTER
+    match:
+      # context: SIDECAR_INBOUND
+      context: GATEWAY
+      listener:
+        filterChain:
+          filter:
+            name: "envoy.filters.network.http_connection_manager"
+    patch:
+      operation: INSERT_FIRST
+      value: # cluster specification
+        name: my.envoy.filters.http.ext_authz
+        typedConfig:
+          '@type': type.googleapis.com/envoy.extensions.filters.http.ext_authz.v3.ExtAuthz
+          failureModeAllow: false
+          httpService:
+            authorizationRequest:
+              allowedHeaders:
+                patterns:
+                - exact: cookie
+                  ignore_case: true
+                - exact: authorization
+                  ignore_case: true
+            authorizationResponse:
+              allowedUpstreamHeaders:
+                patterns:
+                - exact: authorization
+                  ignore_case: true
+                - exact: path
+                  ignore_case: true
+                - exact: x-auth-request-user
+                  ignore_case: true
+                - exact: x-auth-request-email
+                  ignore_case: true
+                - exact: x-auth-request-access-token
+                  ignore_case: true
+              allowedClientHeaders:
+                patterns:
+                - exact: set-cookie
+                  ignore_case: true
+                - exact: content-type
+                  ignore_case: true
+              allowedClientHeadersOnSuccess:
+                patterns:
+                - exact: set-cookie
+                  ignore_case: true
+            serverUri:
+              cluster: outbound|80||oauth2-proxy.authz-custom.svc.cluster.local
+              timeout: 600s
+              uri: http://oauth2-proxy.authz-custom.svc.cluster.local
+          transport_api_version: "V3"
+          filter_enabled_metadata:
+            filter: "envoy.filters.http.rbac"
+            path:
+              - key: "istio_ext_authz_shadow_effective_policy_id"
+            value:
+              string_match:
+                prefix: "istio-ext-authz"
+  - applyTo: HTTP_FILTER
+    match:
+      # context: SIDECAR_INBOUND
+      context: GATEWAY
+      listener:
+        filterChain:
+          filter:
+            name: "envoy.filters.network.http_connection_manager"
+    patch:
+      operation: INSERT_FIRST
+      value: 
+       name: my.envoy.filters.http.rbac
+       typed_config:
+          "@type": "type.googleapis.com/envoy.extensions.filters.http.rbac.v3.RBAC"
+          shadow_rules:
+            action: DENY
+            policies:
+              "istio-ext-authz-ns[authz-custom]-policy[oauth2-proxy]-rule[0]":
+                permissions:
+                  - and_rules:
+                      rules:
+                        - or_rules:
+                            rules:
+                            - header:
+                                name: ":authority"
+                                string_match:
+                                  exact: "nginx-echo-headers-istio-ingress.apps-crc.testing"
+                                  ignore_case: true
+                            - header:
+                                name: ":authority"
+                                string_match:
+                                  exact: "golang-ex-stable-istio-ingress.apps-crc.testing"
+                                  ignore_case: true
+                principals:
+                  - and_ids:
+                     ids:
+                      - any: true
+          shadow_rules_stat_prefix: "istio_ext_authz_"

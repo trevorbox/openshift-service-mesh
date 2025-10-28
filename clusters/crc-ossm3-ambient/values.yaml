@@ -46,7 +46,7 @@ applications:
     destination:
       namespace: openshift-gitops
     source:
-      path: clusters/crc-ossm3/overlays/istio-member-namespaces
+      path: clusters/crc-ossm3-ambient/overlays/istio-member-namespaces
                          
   openshift-monitoring:
     annotations:

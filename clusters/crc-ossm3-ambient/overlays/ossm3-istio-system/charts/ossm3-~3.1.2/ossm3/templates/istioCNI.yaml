@@ -1,8 +1,0 @@
-kind: IstioCNI
-apiVersion: sailoperator.io/v1
-metadata:
-  name: default
-spec:
-{{- with .Values.istioCNI.spec }}
-  {{- . | toYaml | nindent 2}}
-{{- end }}

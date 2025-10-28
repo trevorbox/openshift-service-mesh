@@ -37,6 +37,8 @@ revisions:
           env:
             # Enable automatic address allocation, optional
             PILOT_ENABLE_IP_AUTOALLOCATE: "true"
+            # https://github.com/istio/istio/issues/51214 Then set Label in K8s service istio.io/ingress-use-waypoint: "true" to enable waypoint routing for ingress gateways
+            ENABLE_INGRESS_WAYPOINT_ROUTING: "true"
         global:
           proxy:
             resources:

@@ -10,3 +10,9 @@ helmCharts:
   releaseName: istio-member-namespaces
   additionalValuesFiles: 
     - values.yaml
+
+patches:
+- path: patch-namespace-istio-ingress.yaml
+  target:
+    kind: Namespace
+    name: istio-ingress

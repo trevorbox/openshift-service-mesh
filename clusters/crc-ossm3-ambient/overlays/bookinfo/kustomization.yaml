@@ -23,6 +23,17 @@ patches:
         metadata:
           annotations:
             sidecar.istio.io/logLevel: 'rbac:debug,jwt:debug'  # enable RBAC and JWT debug logging
+- target:
+    kind: Service
+    name: productpage
+    # istio.io/ingress-use-waypoint: "true"
+  patch: |
+    kind: Service
+    apiVersion: v1
+    metadata:
+      name: productpage
+      labels:
+        istio.io/ingress-use-waypoint: "true"
 - path: patch-remove-sidecar-inject-label.yaml
   target:
     kind: Deployment

@@ -146,7 +146,7 @@ applications:
     destination:
       namespace: bookinfo
     source:
-      path: clusters/crc-ossm3/overlays/bookinfo
+      path: clusters/crc-ossm3-ambient/overlays/bookinfo
 
   oauth2-proxy:
     annotations:

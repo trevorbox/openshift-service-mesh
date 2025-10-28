@@ -17,5 +17,6 @@ labels:
   istio.io/rev: default
   argocd.argoproj.io/managed-by: openshift-gitops
   istio.io/dataplane-mode: ambient
+  istio-injection: disabled
 annotations:
   argocd.argoproj.io/sync-options: Delete=false 

@@ -148,14 +148,14 @@ applications:
     source:
       path: clusters/crc-ossm3-ambient/overlays/bookinfo
 
-  oauth2-proxy:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '4'
-    destination:
-      namespace: oauth2-proxy
-    source:
-      path: components/oauth2-proxy
+  # oauth2-proxy:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '4'
+  #   destination:
+  #     namespace: oauth2-proxy
+  #   source:
+  #     path: components/oauth2-proxy
 
   kiali:
     annotations:

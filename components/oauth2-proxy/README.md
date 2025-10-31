@@ -1,7 +1,5 @@
 # oauth2-proxy in front of UI
 
---- DEPRECATED - use authz-custom component instead ---
-
 ![Kiali Auth Graph](./oauth2-proxy.png)
 
 ## configure auth0

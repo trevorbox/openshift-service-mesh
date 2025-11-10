@@ -6,7 +6,7 @@ helmCharts:
   repo: https://trevorbox.github.io/helm-charts
   namespace: default
   valuesFile: values.yaml
-  version: ~1.2.0
+  version: ~1.2.1
   releaseName: ossm3-member-namespaces
   additionalValuesFiles: 
     - values.yaml

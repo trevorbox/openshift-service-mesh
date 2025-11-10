@@ -187,14 +187,14 @@ applications:
     source:
       path: clusters/crc-ossm3/overlays/nginx-echo-headers
 
-  prometheus:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '2'
-    destination:
-      namespace: prometheus
-    source:
-      path: components/prometheus
+  # prometheus:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '2'
+  #   destination:
+  #     namespace: prometheus
+  #   source:
+  #     path: components/prometheus
   
   helloworld:
     annotations:

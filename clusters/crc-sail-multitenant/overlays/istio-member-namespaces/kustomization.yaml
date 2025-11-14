@@ -6,5 +6,5 @@ helmCharts:
   repo: https://trevorbox.github.io/helm-charts
   namespace: default
   valuesFile: values.yaml
-  version: ~1.2.3
+  version: ~1.2.5
   releaseName: istio-member-namespaces

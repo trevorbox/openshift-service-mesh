@@ -13,6 +13,6 @@ operators:
   name: kiali-ossm
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  csv: kiali-operator.v2.11.4
+  csv: kiali-operator.v2.17.1
   namespace: kiali-operator
   installPlanVerifierActiveDeadlineSeconds: 1200

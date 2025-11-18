@@ -7,3 +7,6 @@ helmCharts:
   valuesFile: values.yaml
   namespace: azure-workload-identity
   version: 1.5.1
+
+resources:
+  - namespace-azure-workload-identity.yaml

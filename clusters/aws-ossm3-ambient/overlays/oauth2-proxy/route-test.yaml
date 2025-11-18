@@ -2,10 +2,9 @@
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  name: oauth-bookinfo
-  namespace: istio-ingress
+  name: test
+  namespace: test
 spec:
-  host: oauth-bookinfo-istio-ingress.apps.sandbox3242.opentlc.com
   port:
     targetPort: https
   tls:

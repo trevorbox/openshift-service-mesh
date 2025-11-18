@@ -5,15 +5,16 @@ helmCharts:
 - name: oauth2-proxy
   repo: https://oauth2-proxy.github.io/manifests
   valuesFile: values.yaml
-  namespace: oauth2-proxy
+  namespace: test
   version: ~7.12.0
   releaseName: oauth2-proxy
 
 resources:
-  - certificate-oauth-bookinfo-cert.yaml
-  - gateway-oauth-bookinfo.yaml
-  - route-oauth-bookinfo.yaml
+  # - certificate-oauth-bookinfo-cert.yaml
+  # - gateway-oauth-bookinfo.yaml
+  - route-test.yaml
+  - namespace-test.yaml
   # - secret-oauth2-proxy.yaml
-  - serviceentry-auth0.yaml
-  - virtualservice-oauth-bookinfo.yaml
-  - auth
+  # - serviceentry-auth0.yaml
+  # - virtualservice-oauth-bookinfo.yaml
+  # - auth

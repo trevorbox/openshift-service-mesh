@@ -5,7 +5,7 @@ metadata:
   name: oauth-bookinfo
   namespace: istio-ingress
 spec:
-  host: oauth-bookinfo-istio-ingress.apps-crc.testing
+  host: oauth-bookinfo-istio-ingress.apps.sandbox3242.opentlc.com
   port:
     targetPort: https
   tls:

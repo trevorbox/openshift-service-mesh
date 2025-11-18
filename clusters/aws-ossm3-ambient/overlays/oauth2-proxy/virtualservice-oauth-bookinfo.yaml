@@ -7,7 +7,7 @@ spec:
   gateways:
   - istio-ingress/oauth-bookinfo
   hosts:
-  - oauth-bookinfo-istio-ingress.apps-crc.testing
+  - oauth-bookinfo-istio-ingress.apps.sandbox3242.opentlc.com
   http:
   - match:
     - uri:

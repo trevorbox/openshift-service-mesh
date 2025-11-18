@@ -109,7 +109,7 @@ applications:
     destination:
       namespace: grafana
     source:
-      path: clusters/crc-ossm3/overlays/grafana-istio
+      path: clusters/aws-ossm3-ambient/overlays/grafana-istio
 
   istio-ingressgateway:
     annotations:
@@ -173,7 +173,7 @@ applications:
     destination:
       namespace: golang-ex
     source:
-      path: clusters/crc-ossm3/overlays/golang-ex-istio
+      path: clusters/aws-ossm3-ambient/overlays/golang-ex-istio
 
   nginx-echo-headers:
     annotations:
@@ -182,7 +182,7 @@ applications:
     destination:
       namespace: nginx-echo-headers
     source:
-      path: clusters/crc-ossm3/overlays/nginx-echo-headers
+      path: clusters/aws-ossm3-ambient/overlays/nginx-echo-headers
 
   prometheus:
     annotations:
@@ -210,3 +210,12 @@ applications:
       namespace: sample
     source:
       path: components/curl
+
+  az-wi:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: azure-workload-identity
+    source:
+      path: clusters/aws-ossm3-ambient/overlays/az-wi

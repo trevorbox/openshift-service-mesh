@@ -9,7 +9,7 @@ spec:
   secretName: oauth-bookinfo-cert
   commonName: oauth-bookinfo
   dnsNames:
-    - oauth-bookinfo-istio-ingress.apps-crc.testing
+    - oauth-bookinfo-istio-ingress.apps.sandbox3242.opentlc.com
   usages:
     - server auth
     - client auth  

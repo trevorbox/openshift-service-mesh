@@ -10,8 +10,9 @@ config:
 
 
     upstreams = [
-        "http://productpage.bookinfo.svc.cluster.local:9080"
+      "static://200"
     ]
+    
     email_domains = "*"
     skip_provider_button = false
     # Note: use the following for testing within a container

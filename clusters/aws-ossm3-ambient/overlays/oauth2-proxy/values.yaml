@@ -12,7 +12,7 @@ config:
     upstreams = [
       "static://200"
     ]
-    
+
     email_domains = "*"
     skip_provider_button = false
     # Note: use the following for testing within a container
@@ -21,10 +21,10 @@ config:
     cookie_csrf_expire = "5m"
     pass_access_token = true
 podLabels: 
-  sidecar.istio.io/inject: 'true'
+  # sidecar.istio.io/inject: 'true'
   azure.workload.identity/use: "true"
-podAnnotations: 
-  sidecar.istio.io/inject: 'true'
+# podAnnotations: 
+  # sidecar.istio.io/inject: 'true'
 securityContext:
   enabled: true
   allowPrivilegeEscalation: false

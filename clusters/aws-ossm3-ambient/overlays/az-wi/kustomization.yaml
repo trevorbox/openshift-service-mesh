@@ -10,3 +10,8 @@ helmCharts:
 
 resources:
   - namespace-azure-workload-identity.yaml
+
+patches:
+- path: patch-remove-securitycontext.yaml
+  target:
+    kind: Deployment

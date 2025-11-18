@@ -1,0 +1,40 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+helmCharts:
+- name: bookinfo
+  repo: https://trevorbox.github.io/helm-charts
+  valuesFile: values.yaml
+  namespace: bookinfo
+  version: ~2.4.0
+  releaseName: bookinfo
+
+patches:
+- target:
+    kind: Deployment
+    name: productpage-v1
+  patch: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: productpage-v1
+    spec:
+      template:
+        metadata:
+          annotations:
+            sidecar.istio.io/logLevel: 'rbac:debug,jwt:debug'  # enable RBAC and JWT debug logging
+- target:
+    kind: Service
+    name: productpage
+    # istio.io/ingress-use-waypoint: "true"
+  patch: |
+    kind: Service
+    apiVersion: v1
+    metadata:
+      name: productpage
+      labels:
+        istio.io/ingress-use-waypoint: "true"
+- path: patch-remove-sidecar-inject-label.yaml
+  target:
+    kind: Deployment
+

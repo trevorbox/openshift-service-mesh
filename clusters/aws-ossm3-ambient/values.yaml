@@ -46,7 +46,7 @@ applications:
     destination:
       namespace: openshift-gitops
     source:
-      path: clusters/crc-ossm3-ambient/overlays/istio-member-namespaces
+      path: clusters/aws-ossm3-ambient/overlays/istio-member-namespaces
                          
   openshift-monitoring:
     annotations:
@@ -64,7 +64,7 @@ applications:
     destination:
       namespace: istio-system
     source:
-      path: clusters/crc-ossm3-ambient/overlays/istio-system-configs
+      path: clusters/aws-ossm3-ambient/overlays/istio-system-configs
 
   ztunnel:
     annotations:
@@ -91,7 +91,7 @@ applications:
     destination:
       namespace: istio-system
     source:
-      path: clusters/crc-ossm3-ambient/overlays/ossm3-istio-system                   
+      path: clusters/aws-ossm3-ambient/overlays/ossm3-istio-system                   
 
   tempo-system:
     annotations:
@@ -146,16 +146,16 @@ applications:
     destination:
       namespace: bookinfo
     source:
-      path: clusters/crc-ossm3-ambient/overlays/bookinfo
+      path: clusters/aws-ossm3-ambient/overlays/bookinfo
 
-  # oauth2-proxy:
-  #   annotations:
-  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
-  #     argocd.argoproj.io/sync-wave: '4'
-  #   destination:
-  #     namespace: oauth2-proxy
-  #   source:
-  #     path: components/oauth2-proxy
+  oauth2-proxy:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: oauth2-proxy
+    source:
+      path: clusters/aws-ossm3-ambient/overlays/oauth2-proxy
 
   kiali:
     annotations:
@@ -164,7 +164,7 @@ applications:
     destination:
       namespace: kiali
     source:
-      path: clusters/crc-ossm3-ambient/overlays/kiali
+      path: clusters/aws-ossm3-ambient/overlays/kiali
 
   golang-ex-istio:
     annotations:

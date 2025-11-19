@@ -5,11 +5,11 @@ helmCharts:
 - name: workload-identity-webhook
   repo: https://azure.github.io/azure-workload-identity/charts
   valuesFile: values.yaml
-  namespace: test
+  namespace: azure-workload-identity
   version: 1.5.1
 
-# resources:
-#   - namespace-azure-workload-identity.yaml
+resources:
+  - namespace-azure-workload-identity.yaml
 
 patches:
 - path: patch-remove-securitycontext.yaml

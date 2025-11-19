@@ -18,3 +18,9 @@ resources:
   # - serviceentry-auth0.yaml
   # - virtualservice-oauth-bookinfo.yaml
   # - auth
+
+patches:
+- path: patch-deployment.yaml
+  target:
+    kind: Deployment
+    name: oauth2-proxy

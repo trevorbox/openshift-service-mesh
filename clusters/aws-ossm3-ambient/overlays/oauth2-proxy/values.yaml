@@ -8,7 +8,7 @@ config:
     entra_id_federated_token_auth=true
     redirect_url = "https://test-test.apps.ambient.sandbox3242.opentlc.com/oauth2/callback"
 
-    auth-request-response-mode="id_token"
+    auth_request_response_mode="id_token"
     
     upstreams = [
       "static://200"

@@ -19,14 +19,14 @@ config:
     # cookie_csrf_per_request = true
     # cookie_csrf_expire = "5m"
     # pass_access_token = true
-    skip-oidc-discovery = true
+    skip_oidc_discovery = true
     login_url = "https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize"
     oidc_issuer_url = "https://login.microsoftonline.com/organizations/v2.0"
     redeem_url = "https://login.microsoftonline.com/organizations/oauth2/v2.0/token"
     oidc_jwks_url = "https://login.microsoftonline.com/organizations/discovery/v2.0/keys"
     insecure_oidc_skip_issuer_verification = true
     insecure_oidc_allow_unverified_email = true
-    entra_id_allowed_tenant = "0fbc2b12-aa64-4908-8476-edefe66b2877"
+    entra_id_allowed_tenants = ["0fbc2b12-aa64-4908-8476-edefe66b2877"]
     scope = "openid profile email"
     set_xauthrequest = true
     set_authorization_header = true

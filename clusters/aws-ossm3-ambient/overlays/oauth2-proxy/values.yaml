@@ -33,7 +33,7 @@ config:
     entra_id_allowed_tenants = ["0fbc2b12-aa64-4908-8476-edefe66b2877"]
     scope = "openid profile email"
     set_xauthrequest = true
-    set-authorization-header = true
+    set_authorization_header = true
     pass_access_token = true
     pass_authorization_header = true
     pass_user_headers = true

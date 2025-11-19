@@ -38,6 +38,6 @@ securityContext:
 
 serviceAccount:
   annotations: 
-    azure.workload.identity/client-id: d42d45b4-893e-46e9-a13a-2b7a3dd8e160
+    azure.workload.identity/client-id: 50455563-8d98-4b22-93c0-90462260b3f8
 
 proxyVarsAsSecrets: true

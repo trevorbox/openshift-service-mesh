@@ -1,0 +1,12 @@
+apiVersion: config.openshift.io/v1
+kind: Authentication
+metadata:
+  name: cluster
+spec:
+  oauthMetadata:
+    name: ''
+  serviceAccountIssuer: 'https://oidc-default.apps.ambient.sandbox3242.opentlc.com/'
+  type: ''
+  webhookTokenAuthenticator:
+    kubeConfig:
+      name: webhook-authentication-integrated-oauth

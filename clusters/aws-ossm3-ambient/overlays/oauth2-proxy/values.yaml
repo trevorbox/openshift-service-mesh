@@ -4,7 +4,7 @@ config:
     provider="entra-id"
     oidc_issuer_url="https://login.microsoftonline.com/0fbc2b12-aa64-4908-8476-edefe66b2877/v2.0"
     client_id="d42d45b4-893e-46e9-a13a-2b7a3dd8e160"
-    scope="openid User.Read email profile"
+    scope="openid profile email User.Read"
     entra_id_federated_token_auth=true
     redirect_url = "https://test-test.apps.ambient.sandbox3242.opentlc.com/oauth2/callback"
 

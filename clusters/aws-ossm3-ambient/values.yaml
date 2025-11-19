@@ -219,3 +219,12 @@ applications:
       namespace: azure-workload-identity
     source:
       path: clusters/aws-ossm3-ambient/overlays/az-wi
+
+  authentication:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: clusters/aws-ossm3-ambient/overlays/authentication

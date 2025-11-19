@@ -1,42 +1,42 @@
 config:
   existingSecret: oauth2-proxy
-  # configFile: |-
-  #   provider="entra-id"
-  #   oidc_issuer_url="https://login.microsoftonline.com/0fbc2b12-aa64-4908-8476-edefe66b2877/v2.0"
-  #   client_id="50455563-8d98-4b22-93c0-90462260b3f8"
-  #   scope="openid profile email User.Read"
-  #   entra_id_federated_token_auth=true
-   
-  #   upstreams = [
-  #     "static://200"
-  #   ]
-
-  #   email_domains = "*"
-  #   skip_provider_button = false
-  #   # Note: use the following for testing within a container
-  #   http_address = "0.0.0.0:4180"
-  #   cookie_csrf_per_request = true
-  #   cookie_csrf_expire = "5m"
-  #   pass_access_token = true
   configFile: |-
-    client_id = "7f6f266b-924d-444c-a117-087fba553c4e"
+    provider="entra-id"
+    oidc_issuer_url="https://login.microsoftonline.com/0fbc2b12-aa64-4908-8476-edefe66b2877/v2.0"
+    
+    scope="openid profile email"
+    entra_id_federated_token_auth=true
+   
+    upstreams = [
+      "static://200"
+    ]
+
     email_domains = "*"
-    provider = "entra-id"
-    skip_oidc_discovery = true
-    login_url = "https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize"
-    oidc_issuer_url = "https://login.microsoftonline.com/organizations/v2.0"
-    redeem_url = "https://login.microsoftonline.com/organizations/oauth2/v2.0/token"
-    oidc_jwks_url = "https://login.microsoftonline.com/organizations/discovery/v2.0/keys"
-    insecure_oidc_skip_issuer_verification = true
-    insecure_oidc_allow_unverified_email = true
-    entra_id_federated_token_auth = true
-    entra_id_allowed_tenants = ["0fbc2b12-aa64-4908-8476-edefe66b2877"]
-    scope = "openid profile email"
-    set_xauthrequest = true
-    set_authorization_header = true
+    skip_provider_button = false
+    # Note: use the following for testing within a container
+    http_address = "0.0.0.0:4180"
+    cookie_csrf_per_request = true
+    cookie_csrf_expire = "5m"
     pass_access_token = true
-    pass_authorization_header = true
-    pass_user_headers = true
+  # configFile: |-
+  #   client_id = "7f6f266b-924d-444c-a117-087fba553c4e"
+  #   email_domains = "*"
+  #   provider = "entra-id"
+  #   skip_oidc_discovery = true
+  #   login_url = "https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize"
+  #   oidc_issuer_url = "https://login.microsoftonline.com/organizations/v2.0"
+  #   redeem_url = "https://login.microsoftonline.com/organizations/oauth2/v2.0/token"
+  #   oidc_jwks_url = "https://login.microsoftonline.com/organizations/discovery/v2.0/keys"
+  #   insecure_oidc_skip_issuer_verification = true
+  #   insecure_oidc_allow_unverified_email = true
+  #   entra_id_federated_token_auth = true
+  #   entra_id_allowed_tenants = ["0fbc2b12-aa64-4908-8476-edefe66b2877"]
+  #   scope = "openid profile email"
+  #   set_xauthrequest = true
+  #   set_authorization_header = true
+  #   pass_access_token = true
+  #   pass_authorization_header = true
+  #   pass_user_headers = true
 podLabels: 
   # sidecar.istio.io/inject: 'true'
   azure.workload.identity/use: "true"
@@ -55,8 +55,8 @@ securityContext:
   seccompProfile:
     type: RuntimeDefault
 
-# serviceAccount:
-#   annotations: 
-#     azure.workload.identity/client-id: "7f6f266b-924d-444c-a117-087fba553c4e"
+serviceAccount:
+  annotations: 
+    azure.workload.identity/client-id: "37188326-362f-48ba-bebc-19bf738beb67"
 
 proxyVarsAsSecrets: true

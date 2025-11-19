@@ -42,4 +42,4 @@ serviceAccount:
   annotations: 
     azure.workload.identity/client-id: d42d45b4-893e-46e9-a13a-2b7a3dd8e160
 
-proxyVarsAsSecrets: false
+proxyVarsAsSecrets: true

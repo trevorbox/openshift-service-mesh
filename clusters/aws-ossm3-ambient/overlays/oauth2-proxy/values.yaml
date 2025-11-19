@@ -20,7 +20,7 @@ config:
   #   pass_access_token = true
   configFile: |-
     client_id = "7f6f266b-924d-444c-a117-087fba553c4e"
-    email_domain = "*"
+    email_domains = "*"
     provider = "entra-id"
     skip_oidc_discovery = true
     login_url = "https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize"

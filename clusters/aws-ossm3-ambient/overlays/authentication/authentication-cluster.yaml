@@ -5,7 +5,7 @@ metadata:
 spec:
   oauthMetadata:
     name: ''
-  serviceAccountIssuer: 'https://oidc-default.apps.ambient.sandbox3242.opentlc.com/'
+  serviceAccountIssuer: 'https://trevorbox.github.io/helm-charts/'
   type: ''
   webhookTokenAuthenticator:
     kubeConfig:

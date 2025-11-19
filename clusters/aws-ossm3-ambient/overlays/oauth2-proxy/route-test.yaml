@@ -5,14 +5,13 @@ metadata:
   name: test
   namespace: test
 spec:
-  port:
-    targetPort: https
-  tls:
-    termination: passthrough
-    insecureEdgeTerminationPolicy: Redirect
   to:
     kind: Service
-    name: istio-ingressgateway
+    name: oauth2-proxy
     weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: edge
   wildcardPolicy: None
 ...

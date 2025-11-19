@@ -55,8 +55,8 @@ securityContext:
   seccompProfile:
     type: RuntimeDefault
 
-serviceAccount:
-  annotations: 
-    azure.workload.identity/client-id: "7f6f266b-924d-444c-a117-087fba553c4e"
+# serviceAccount:
+#   annotations: 
+#     azure.workload.identity/client-id: "7f6f266b-924d-444c-a117-087fba553c4e"
 
 proxyVarsAsSecrets: true

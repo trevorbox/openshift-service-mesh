@@ -59,4 +59,4 @@ serviceAccount:
   annotations: 
     azure.workload.identity/client-id: "37188326-362f-48ba-bebc-19bf738beb67"
 
-proxyVarsAsSecrets: true
+proxyVarsAsSecrets: false

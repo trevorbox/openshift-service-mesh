@@ -3,7 +3,7 @@ config:
   configFile: |-
     provider="entra-id"
     oidc_issuer_url="https://login.microsoftonline.com/0fbc2b12-aa64-4908-8476-edefe66b2877/v2.0"
-    
+    client_id= "37188326-362f-48ba-bebc-19bf738beb67"
     scope="openid profile email"
     entra_id_federated_token_auth=true
    

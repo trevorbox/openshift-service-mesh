@@ -2,12 +2,11 @@ config:
   existingSecret: oauth2-proxy
   configFile: |-
     provider="entra-id"
-    # oidc_issuer_url="https://login.microsoftonline.com/0fbc2b12-aa64-4908-8476-edefe66b2877/v2.0"
+    oidc_issuer_url="https://login.microsoftonline.com/0fbc2b12-aa64-4908-8476-edefe66b2877/v2.0"
     client_id="d42d45b4-893e-46e9-a13a-2b7a3dd8e160"
-    # scope="openid"
+    scope="openid profile email User.Read"
     entra_id_federated_token_auth=true
-    # redirect_url = "https://test-test.apps.ambient.sandbox3242.opentlc.com/oauth2/callback"
-    
+   
     upstreams = [
       "static://200"
     ]
@@ -16,23 +15,9 @@ config:
     skip_provider_button = false
     # Note: use the following for testing within a container
     http_address = "0.0.0.0:4180"
-    # cookie_csrf_per_request = true
-    # cookie_csrf_expire = "5m"
-    # pass_access_token = true
-    skip_oidc_discovery = true
-    login_url = "https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize"
-    oidc_issuer_url = "https://login.microsoftonline.com/organizations/v2.0"
-    redeem_url = "https://login.microsoftonline.com/organizations/oauth2/v2.0/token"
-    oidc_jwks_url = "https://login.microsoftonline.com/organizations/discovery/v2.0/keys"
-    insecure_oidc_skip_issuer_verification = true
-    insecure_oidc_allow_unverified_email = true
-    entra_id_allowed_tenants = ["0fbc2b12-aa64-4908-8476-edefe66b2877"]
-    scope = "openid profile email"
-    set_xauthrequest = true
-    set_authorization_header = true
+    cookie_csrf_per_request = true
+    cookie_csrf_expire = "5m"
     pass_access_token = true
-    pass_authorization_header = true
-    pass_user_headers = true
 podLabels: 
   # sidecar.istio.io/inject: 'true'
   azure.workload.identity/use: "true"

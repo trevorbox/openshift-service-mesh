@@ -4,10 +4,24 @@ metadata:
   name: kiali-istio-system
   namespace: kiali
 spec:
+  kubernetes_config:
+    cluster_name: cluster1
+  # clustering:
+  #   autodetect_secrets:
+  #     enabled: true
+  #     label: "kiali.io/multiCluster=true"
+  #   clusters:
+  #     - name: cluster2
+  #   kiali_urls:
+  #     - cluster_name: cluster2
+  #       instance_name: kiali-istio-system
+  #       namespace: kiali
+  #       url: https://kiali-kiali.apps.west.sandbox5367.opentlc.com 
   version: v2.11
   auth:
     strategy: openshift
   deployment:
+    # remote_cluster_resources_only: true
     cluster_wide_access: true
     discovery_selectors:
       default:
@@ -18,8 +32,6 @@ spec:
             kubernetes.io/metadata.name: istio-system
         - matchLabels:
             kubernetes.io/metadata.name: grafana
-        - matchLabels:
-            kubernetes.io/metadata.name: ztunnel
     image_pull_policy: ''
     ingress:
       enabled: true
@@ -56,29 +68,18 @@ spec:
       external_url: https://grafana-instance-route-grafana.apps.ambient.sandbox3242.opentlc.com
       internal_url: http://grafana-instance-service.grafana.svc:3000
     prometheus:
-      url: http://prometheus-server.prometheus.svc.cluster.local
-    # tracing:
-    #   enabled: true
-    #   external_url: https://grafana-instance-route-grafana.apps.ambient.sandbox3242.opentlc.com
-    #   # grpc_port: 9095
-    #   health_check_url: http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200/ready
-    #   internal_url: >-
-    #     http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200/
-    #   provider: tempo
-    #   tempo_config:
-    #     datasource_uid: 2aaa2e27-41bd-4e18-a253-2b328390e2bc
-    #     org_id: '1'
-    #     url_format: grafana
-    #   use_grpc: false
+      auth:
+        type: bearer
+        use_kiali_token: true
+      thanos_proxy:
+        enabled: true
+      url: https://thanos-querier.openshift-monitoring.svc.cluster.local:9091
     tracing:
       enabled: true
-      # provider: tempo
       provider: jaeger
       use_grpc: false
-      # internal_url: https://tempo-minio-dev-gateway.tempo-system.svc.cluster.local:8080/api/traces/v1/dev/tempo
       internal_url: 'https://tempo-minio-dev-gateway.tempo-system.svc.cluster.local:8080/api/traces/v1/dev'
-      # external_url: https://tempo-minio-dev-gateway-tempo-system.apps.ambient.sandbox3242.opentlc.com/api/traces/v1/dev/search
-      external_url: https://tempo-minio-dev-gateway-tempo-system.apps.ambient.sandbox3242.opentlc.com/api/traces/v1/dev
+      external_url: https://tempo-minio-dev-gateway-tempo-system.apps.ambient.sandbox3242.opentlc.com/api/traces/v1/dev/search
       health_check_url: https://tempo-minio-dev-gateway-tempo-system.apps.ambient.sandbox3242.opentlc.com/api/traces/v1/dev/tempo/api/echo
       auth:
         ca_file: /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
@@ -87,7 +88,7 @@ spec:
         use_kiali_token: true
       tempo_config:
          url_format: "jaeger"
-  installation_tag: Kiali
+  installation_tag: Kiali3
   istio_labels:
     app_label_name: app
     egress_gateway_label: istio=egressgateway

@@ -93,7 +93,6 @@ kiali:
         # provider: "jaeger"
         # use_grpc: true
         use_grpc: false
-        # external_url: 'https://jaeger-ui-proxy-tempo-system.apps.ambient.sandbox3242.opentlc.com'
         external_url: 'https://grafana-instance-route-grafana.apps.ambient.sandbox3242.opentlc.com'
         # external_url: "http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200"
         # health_check_url: 'http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200'

@@ -20,3 +20,5 @@ labels:
   istio-injection: disabled
 annotations:
   argocd.argoproj.io/sync-options: Delete=false 
+ambient:
+  enabled: true

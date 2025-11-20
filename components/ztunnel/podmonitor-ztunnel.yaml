@@ -1,0 +1,13 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: ztunnel
+  namespace: ztunnel
+spec:
+  podMetricsEndpoints:
+    - interval: 30s
+      path: /stats/prometheus
+      port: ztunnel-stats
+  selector:
+    matchLabels:
+      app: ztunnel

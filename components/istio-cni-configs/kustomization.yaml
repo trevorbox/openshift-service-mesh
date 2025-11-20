@@ -3,3 +3,4 @@ kind: Kustomization
 
 resources:
   - namespace-istio-cni.yaml
+  - podmonitor-istio-cni-node-monitor.yaml

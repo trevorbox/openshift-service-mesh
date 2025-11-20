@@ -31,6 +31,8 @@ spec:
         - matchLabels:
             kubernetes.io/metadata.name: istio-system
         - matchLabels:
+            kubernetes.io/metadata.name: ztunnel
+        - matchLabels:
             kubernetes.io/metadata.name: grafana
     image_pull_policy: ''
     ingress:

@@ -5,5 +5,5 @@ kind: Kustomization
 resources:
   - ../../../../components/istio-system-configs
 
-patches:
-  - path: patch-delete-peerauthentication-default.yaml
+# patches:
+#   - path: patch-delete-peerauthentication-default.yaml

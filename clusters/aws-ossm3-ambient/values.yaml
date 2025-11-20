@@ -155,7 +155,7 @@ applications:
     destination:
       namespace: oauth2-proxy
     source:
-      path: clusters/aws-ossm3-ambient/overlays/oauth2-proxy
+      path: components/oauth2-proxy-entraid
 
   kiali:
     annotations:

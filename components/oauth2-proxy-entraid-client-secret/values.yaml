@@ -1,0 +1,43 @@
+config:
+  existingSecret: oauth2-proxy
+  configFile: |-
+    provider="entra-id"
+    oidc_issuer_url="https://login.microsoftonline.com/0fbc2b12-aa64-4908-8476-edefe66b2877/v2.0"
+    client_id= "81856e18-e059-49f0-b89b-6f156f44a72d"
+    scope="openid"
+    entra_id_federated_token_auth=true
+   
+    upstreams = [
+      "static://200"
+    ]
+
+    email_domains = "*"
+    skip_provider_button = false
+    # Note: use the following for testing within a container
+    http_address = "0.0.0.0:4180"
+    cookie_csrf_per_request = true
+    cookie_csrf_expire = "5m"
+    pass_access_token = true
+podLabels: 
+  # sidecar.istio.io/inject: 'true'
+  # azure.workload.identity/use: "true"
+# podAnnotations: 
+  # sidecar.istio.io/inject: 'true'
+securityContext:
+  enabled: true
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 
+  runAsGroup: 
+  seccompProfile:
+    type: RuntimeDefault
+
+# serviceAccount:
+#   annotations: 
+#     azure.workload.identity/client-id: "81856e18-e059-49f0-b89b-6f156f44a72d"
+
+proxyVarsAsSecrets: true

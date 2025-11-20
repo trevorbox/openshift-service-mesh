@@ -1,0 +1,20 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: oauth-bookinfo
+  namespace: istio-ingress
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    hosts:
+      - oauth-bookinfo-istio-ingress.apps.sandbox3242.opentlc.com
+    tls:
+      mode: SIMPLE
+      credentialName: oauth-bookinfo-cert
+...

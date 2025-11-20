@@ -1,2 +1,2 @@
 ingressgateway:
-  host: nginx-echo-headers-istio-ingress.apps.sandbox3242.opentlc.com
+  host: nginx-echo-headers-istio-ingress.apps.ambient.sandbox3242.opentlc.com

@@ -5,7 +5,7 @@ metadata:
 spec:
   oauthMetadata:
     name: ''
-  serviceAccountIssuer: 'https://trevorbox-bad.github.io/helm-charts/'
+  serviceAccountIssuer: 'https://trevorbox.github.io/helm-charts/'
   type: ''
   webhookTokenAuthenticator:
     kubeConfig:

@@ -17,7 +17,7 @@ spec:
   #       instance_name: kiali-istio-system
   #       namespace: kiali
   #       url: https://kiali-kiali.apps.west.sandbox5367.opentlc.com 
-  version: v2.11
+  version: v2.17
   auth:
     strategy: openshift
   deployment:

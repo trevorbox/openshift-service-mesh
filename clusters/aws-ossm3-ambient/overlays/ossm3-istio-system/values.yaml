@@ -24,6 +24,37 @@ revisions:
         type: RevisionBased
       values:
         profile: ambient # Added profile ambient
+        gatewayClasses:
+          istio:
+            deployment:
+              spec:
+                replicas: 2
+                template:
+                  spec:
+                    containers:
+                    - name: istio-proxy
+                      resources:
+                        limits:
+                          cpu: '1'
+                          memory: 1Gi
+                        requests:
+                          cpu: 100m
+                          memory: 128Mi
+          istio-waypoint:
+            deployment:
+              spec:
+                replicas: 2
+                template:
+                  spec:
+                    containers:
+                    - name: istio-proxy
+                      resources:
+                        limits:
+                          cpu: '1'
+                          memory: 1Gi
+                        requests:
+                          cpu: 100m
+                          memory: 128Mi
         pilot:
           trustedZtunnelNamespace: ztunnel # Added trustedZtunnelNamespace
           autoscaleEnabled: true

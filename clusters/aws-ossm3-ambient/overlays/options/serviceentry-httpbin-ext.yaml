@@ -1,0 +1,14 @@
+apiVersion: networking.istio.io/v1
+kind: ServiceEntry
+metadata:
+  labels:
+    istio.io/use-waypoint: waypoint
+  name: httpbin-ext
+spec:
+  hosts:
+    - httpbin.org
+  ports:
+    - name: http
+      number: 80
+      protocol: HTTP
+  resolution: DNS

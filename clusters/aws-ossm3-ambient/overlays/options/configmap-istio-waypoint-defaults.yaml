@@ -1,0 +1,30 @@
+# https://istio.io/latest/docs/tasks/traffic-management/ingress/gateway-api/#automated-deployment
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: istio-waypoint-defaults
+  namespace: istio-system
+  labels:
+    gateway.istio.io/defaults-for-class: istio-waypoint
+data:
+  deployment: |
+    metadata:
+      annotations:
+        additional-annotation: some-value
+    spec:
+      replicas: 2
+      template:
+        spec:
+          containers:
+          - name: istio-proxy
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: "1"
+                memory: 1Gi
+  horizontalPodAutoscaler: |
+    spec:
+      minReplicas: 2
+      maxReplicas: 5

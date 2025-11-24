@@ -1,0 +1,15 @@
+apiVersion: kiali.io/v1alpha1
+kind: Kiali
+metadata:
+  name: kiali-remote-cluster-resources-only
+  namespace: kiali
+spec:
+  version: v2.11
+  auth:
+    strategy: openshift
+    openshift:
+      redirect_uris:
+        - https://kiali-kiali.apps-crc.testing/api/auth/callback
+  deployment:
+    remote_cluster_resources_only: true
+    instance_name: kiali-remote-cluster-resources-only

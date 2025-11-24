@@ -1,0 +1,2 @@
+- op: remove
+  path: /spec/template/metadata/labels/sidecar.istio.io~1inject

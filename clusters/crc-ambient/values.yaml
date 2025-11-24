@@ -46,7 +46,7 @@ applications:
     destination:
       namespace: openshift-gitops
     source:
-      path: clusters/aws-ossm3-ambient/overlays/istio-member-namespaces
+      path: clusters/crc-ambient/overlays/istio-member-namespaces
                          
   openshift-monitoring:
     annotations:
@@ -64,7 +64,7 @@ applications:
     destination:
       namespace: istio-system
     source:
-      path: clusters/aws-ossm3-ambient/overlays/istio-system-configs
+      path: clusters/crc-ambient/overlays/istio-system-configs
 
   ztunnel:
     annotations:
@@ -91,7 +91,7 @@ applications:
     destination:
       namespace: istio-system
     source:
-      path: clusters/aws-ossm3-ambient/overlays/ossm3-istio-system                   
+      path: clusters/crc-ambient/overlays/ossm3-istio-system                   
 
   tempo-system:
     annotations:
@@ -109,7 +109,7 @@ applications:
     destination:
       namespace: grafana
     source:
-      path: clusters/aws-ossm3-ambient/overlays/grafana-istio
+      path: clusters/crc-ambient/overlays/grafana-istio
 
   istio-ingressgateway:
     annotations:
@@ -146,7 +146,7 @@ applications:
     destination:
       namespace: bookinfo
     source:
-      path: clusters/aws-ossm3-ambient/overlays/bookinfo
+      path: clusters/crc-ambient/overlays/bookinfo
 
   oauth2-proxy:
     annotations:
@@ -173,7 +173,7 @@ applications:
     destination:
       namespace: kiali
     source:
-      path: clusters/aws-ossm3-ambient/overlays/kiali
+      path: clusters/crc-ambient/overlays/kiali
 
   golang-ex-istio:
     annotations:
@@ -182,7 +182,7 @@ applications:
     destination:
       namespace: golang-ex
     source:
-      path: clusters/aws-ossm3-ambient/overlays/golang-ex-istio
+      path: clusters/crc-ambient/overlays/golang-ex-istio
 
   nginx-echo-headers:
     annotations:
@@ -191,7 +191,7 @@ applications:
     destination:
       namespace: nginx-echo-headers
     source:
-      path: clusters/aws-ossm3-ambient/overlays/nginx-echo-headers
+      path: clusters/crc-ambient/overlays/nginx-echo-headers
 
   # prometheus:
   #   annotations:
@@ -219,21 +219,3 @@ applications:
       namespace: sample
     source:
       path: components/curl
-
-  az-wi:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '4'
-    destination:
-      namespace: azure-workload-identity
-    source:
-      path: components/az-wi
-
-  authentication:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '4'
-    destination:
-      namespace: openshift-gitops
-    source:
-      path: components/authentication

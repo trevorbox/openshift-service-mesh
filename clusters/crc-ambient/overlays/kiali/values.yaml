@@ -1,0 +1,113 @@
+consoleLink: 
+  enabled: true
+  route: "https://kiali-kiali.apps-crc.testing"
+ossmconsole:
+  enabled: false
+kiali:
+  spec:
+    auth:
+      strategy: openshift
+    deployment:
+      discovery_selectors:
+        default:
+          - matchExpressions:
+              - key: istio.io/rev
+                operator: Exists
+          - matchLabels:
+              kubernetes.io/metadata.name: istio-system
+          - matchLabels:
+              kubernetes.io/metadata.name: grafana
+      resources:
+        requests:
+          cpu: 100m
+          memory: 256Mi
+      image_pull_policy: ''
+      cluster_wide_access: true
+      logger:
+        log_level: debug
+      ingress:
+        enabled: true
+      instance_name: kiali
+      pod_labels:
+        # maistra.io/expose-route: 'true'
+        sidecar.istio.io/inject: 'false'
+      namespace: kiali
+      replicas: 1
+    kiali_feature_flags:
+      # Turns on canary upgrade support
+      # istio_upgrade_action: true
+      istio_upgrade_action: false
+    external_services:
+      custom_dashboards:
+        namespace_label: kubernetes_namespace
+      grafana:
+        enabled: true
+        # Grafana service name is "grafana" and is in the "telemetry" namespace.
+        internal_url: 'http://grafana-instance-service.grafana.svc:3000'
+        # Public facing URL of Grafana
+        external_url: 'https://grafana-instance-route-grafana.apps-crc.testing'
+        dashboards:
+          - name: "Istio Service Dashboard"
+            variables:
+              namespace: "var-namespace"
+              service: "var-service"
+          - name: "Istio Workload Dashboard"
+            variables:
+              namespace: "var-namespace"
+              workload: "var-workload"
+          - name: "Istio Mesh Dashboard"
+          - name: "Istio Control Plane Dashboard"
+          - name: "Istio Performance Dashboard"
+          - name: "Istio Wasm Extension Dashboard"
+      # istio:
+      #   component_status:
+      #     # components:
+      #     #   - app_label: istiod
+      #     #     is_core: true
+      #     #   - app_label: istio-ingressgateway
+      #     #     is_core: true
+      #     #     is_proxy: true
+      #     #     namespace: istio-ingress
+      #     enabled: false
+      #   istio_canary_revision:
+      #     # Revision string of old Istio version
+      #     current: "default-v1-24-3"
+      #     # Revision string of new Istio version
+      #     upgrade: "canary-v1-24-3"
+      #   config_map_name: istio-ossm2 # istio-default-v1-24-3
+      #   istio_sidecar_injector_config_map_name: istio-sidecar-injector-ossm2 # istio-sidecar-injector-default-v1-24-3
+      #   istiod_deployment_name: istiod-ossm2 # istiod-default-v1-24-3
+      #   root_namespace: istio-system
+      #   url_service_version: 'http://istiod-ossm2.istio-system.svc.cluster.local:15014/version' # 'http://istiod-default-v1-24-3.istio-system.svc.cluster.local:15014/version'
+      prometheus:
+        url: 'http://prometheus-server.prometheus.svc.cluster.local'
+      tracing:
+        enabled: true
+        # grpc port defaults to 9095
+        # grpc_port: 9095 
+        # grpc_port: 16685
+        internal_url: "http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200"
+        # internal_url: "http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:16686/jaeger"
+        # internal_url: "http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:16685"
+        provider: "tempo"
+        # provider: "jaeger"
+        # use_grpc: true
+        use_grpc: false
+        external_url: 'https://grafana-instance-route-grafana.apps-crc.testing'
+        # external_url: "http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200"
+        # health_check_url: 'http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200'
+        health_check_url: 'https://grafana-instance-route-grafana.apps-crc.testing'
+        tempo_config:
+          org_id: "1"
+          datasource_uid: "2aaa2e27-41bd-4e18-a253-2b328390e2bc"
+          url_format: "grafana"
+    installation_tag: 'Kiali3'
+    istio_namespace: istio-system
+    istio_labels:
+      app_label_name: "app"
+      egress_gateway_label: "istio=egressgateway"
+      ingress_gateway_label: "istio=ingressgateway"
+      injection_label_name: "istio-injection"
+      injection_label_rev: "istio.io/rev"
+      version_label_name: "version"
+    # version: v1.73

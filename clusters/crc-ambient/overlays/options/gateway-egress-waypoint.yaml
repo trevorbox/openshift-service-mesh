@@ -1,0 +1,16 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: egress-waypoint
+spec:
+  gatewayClassName: istio-waypoint
+  listeners:
+    - allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              istio.io/rev: default
+      name: mesh
+      port: 15008
+      protocol: HBONE

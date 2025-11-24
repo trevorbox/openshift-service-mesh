@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - consolelink.yaml
+  - crb.yaml
+  - kiali.yaml
+  - namespace-kiali.yaml
+  - networkpolicy-grafana.yaml
+  - tempostack-rbac.yaml
+# - kiali-remote-cluster-resources-only.yaml # Does not seem to work
+
+# helmCharts:
+# - name: kiali
+#   repo: https://trevorbox.github.io/helm-charts
+#   namespace: kiali
+#   # valuesFile: ../../../../components/kiali/values.yaml
+#   valuesFile: values.yaml
+#   version: ~2.0.2
+#   releaseName: kiali
+#   # additionalValuesFiles: 
+#   #   - values.yaml

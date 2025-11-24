@@ -1,0 +1,12 @@
+apiVersion: config.openshift.io/v1
+kind: Authentication
+metadata:
+  name: cluster
+spec:
+  oauthMetadata:
+    name: ''
+  serviceAccountIssuer: 'https://trevorbox.github.io/helm-charts/'
+  type: ''
+  webhookTokenAuthenticator:
+    kubeConfig:
+      name: webhook-authentication-integrated-oauth

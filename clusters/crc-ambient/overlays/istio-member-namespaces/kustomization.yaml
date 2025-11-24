@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+helmCharts:
+- name: istio-member-namespaces
+  repo: https://trevorbox.github.io/helm-charts
+  namespace: default
+  valuesFile: values.yaml
+  version: ~1.2.9
+  releaseName: istio-member-namespaces
+  additionalValuesFiles: 
+    - values.yaml
+
+patches:
+- path: patch-namespace-istio-ingress.yaml
+  target:
+    kind: Namespace
+    name: istio-ingress

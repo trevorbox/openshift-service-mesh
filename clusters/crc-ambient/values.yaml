@@ -30,6 +30,15 @@ default:
 
 applications:
 
+  ambient-ovn-routing-via-host:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '-1'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: components/ambient-ovn-routing-via-host
+
   servicemeshoperator3:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous

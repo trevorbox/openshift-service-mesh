@@ -30,6 +30,15 @@ default:
 
 applications:
 
+  metallb-operator:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '-1'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: components/metallb-operator
+
   ambient-ovn-routing-via-host:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous

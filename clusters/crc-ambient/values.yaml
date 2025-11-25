@@ -57,6 +57,15 @@ applications:
     source:
       path: components/servicemeshoperator3
 
+  metallb:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '1'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: components/metallb
+
   istio-member-namespaces:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous

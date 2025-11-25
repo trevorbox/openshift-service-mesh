@@ -1,0 +1,29 @@
+apiVersion: metallb.io/v1beta1
+kind: MetalLB
+metadata:
+  name: metallb
+  namespace: metallb-system
+  controllerConfig:
+    resources:
+      limits:
+        cpu: "200m"
+    priorityClassName: high-priority
+    affinity:
+      podAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+             app: metallb
+          topologyKey: kubernetes.io/hostname
+  speakerConfig:
+    resources:
+      limits:
+        cpu: "300m"
+    priorityClassName: high-priority
+    affinity:
+      podAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+             app: metallb
+          topologyKey: kubernetes.io/hostname

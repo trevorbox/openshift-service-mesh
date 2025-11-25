@@ -3,6 +3,7 @@ kind: MetalLB
 metadata:
   name: metallb
   namespace: metallb-system
+spec:
   controllerConfig:
     resources:
       limits:

@@ -21,8 +21,4 @@ spec:
       matches:
         - path:
             type: PathPrefix
-            value: /status
-        - path:
-            type: PathPrefix
-            value: /headers
-
+            value: /

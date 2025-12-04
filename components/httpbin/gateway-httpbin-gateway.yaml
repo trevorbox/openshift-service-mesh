@@ -13,3 +13,12 @@ spec:
     allowedRoutes:
       namespaces:
         from: All
+  infrastructure:
+    annotations:
+      some-key: some-value
+    labels:
+      key: value
+    parametersRef:
+      group: ""
+      kind: ConfigMap
+      name: httpbin-gateway-params

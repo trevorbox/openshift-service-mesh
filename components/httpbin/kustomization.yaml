@@ -9,3 +9,4 @@ resources:
   - httproute-httpbin-ingress.yaml
   - httproute-httpbin-waypoint-route.yaml
   - networkpolicy-httpbin-gateway-allow-external.yaml
+  - configmap-httpbin-gateway-params.yaml

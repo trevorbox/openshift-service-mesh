@@ -21,15 +21,15 @@ data:
 
   deployment: |
     metadata:
-      annotations:
+      labels:
         app: httpbin-gateway
     spec:
       replicas: 2
       template:
-        spec:
-          metadata:
-            annotations:
-              app: httpbin-gateway
+        metadata:
+          labels:
+            app: httpbin-gateway
+        spec:         
           containers:
           - name: istio-proxy
             resources:

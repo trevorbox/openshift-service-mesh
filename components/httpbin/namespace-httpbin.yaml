@@ -2,12 +2,5 @@ kind: Namespace
 apiVersion: v1
 metadata:
   name: httpbin
-  annotations:
-    argocd.argoproj.io/sync-options: Delete=false
-    argocd.argoproj.io/sync-wave: '-10'
   labels:
-    istio.io/dataplane-mode: ambient
     istio.io/use-waypoint: httpbin-waypoint
-    istio.io/rev: default
-    istio-injection: disabled
-    argocd.argoproj.io/managed-by: openshift-gitops

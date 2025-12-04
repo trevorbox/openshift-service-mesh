@@ -1,0 +1,10 @@
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: crc
+  namespace: metallb-system
+spec:
+  addresses:
+    - 192.168.130.200-192.168.130.249
+  autoAssign: true
+  avoidBuggyIPs: false

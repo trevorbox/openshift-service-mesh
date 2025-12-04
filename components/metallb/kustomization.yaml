@@ -4,3 +4,5 @@ kind: Kustomization
 resources:
   - priotiryclass-high-priority.yaml
   - metallb-metallb.yaml
+  - ipaddresspool-crc.yaml
+  - l2advertisement-crc.yaml

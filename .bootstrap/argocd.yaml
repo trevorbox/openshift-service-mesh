@@ -33,19 +33,36 @@ spec:
     service:
       type: ""
   resourceHealthChecks:
-    - group: certmanager.k8s.io
-      kind: Certificate
+    - group: argoproj.io
+      kind: ApplicationSet
       check: |
-        hs = {}
+        local hs = {}
+
         if obj.status ~= nil then
           if obj.status.conditions ~= nil then
-            for i, condition in ipairs(obj.status.conditions) do
-              if condition.type == "Ready" and condition.status == "False" then
+            for i, condition in pairs(obj.status.conditions) do
+              if condition.type == "ErrorOccurred" and condition.status == "True" then
                 hs.status = "Degraded"
                 hs.message = condition.message
                 return hs
               end
-              if condition.type == "Ready" and condition.status == "True" then
+            end
+            for i, condition in pairs(obj.status.conditions) do
+              if condition.type == "ResourcesUpToDate" and condition.status == "False" then
+                hs.status = "Degraded"
+                hs.message = condition.message
+                return hs
+              end
+            end
+            for i, condition in pairs(obj.status.conditions) do
+              if condition.type == "RolloutProgressing" and condition.status == "True" then
+                hs.status = "Progressing"
+                hs.message = condition.message
+                return hs
+              end
+            end
+            for i, condition in pairs(obj.status.conditions) do
+              if condition.type == "ResourcesUpToDate" and condition.status == "True" then
                 hs.status = "Healthy"
                 hs.message = condition.message
                 return hs
@@ -53,8 +70,9 @@ spec:
             end
           end
         end
+
         hs.status = "Progressing"
-        hs.message = "Waiting for certificate"
+        hs.message = "Waiting for the status to be reported"
         return hs
     - group: argoproj.io
       kind: Application
@@ -71,10 +89,34 @@ spec:
           end
         end
         return hs
-    - group: certmanager.k8s.io
+    - group: cert-manager.io
       kind: ClusterIssuer
       check: |
-        hs = {}
+        local hs = {}
+        if obj.status ~= nil then
+          if obj.status.conditions ~= nil then
+            for i, condition in ipairs(obj.status.conditions) do
+              if condition.type == "Ready" and condition.status == "False" then
+                hs.status = "Degraded"
+                hs.message = condition.message
+                return hs
+              end
+              if condition.type == "Ready" and condition.status == "True" then
+                hs.status = "Healthy"
+                hs.message = condition.message
+                return hs
+              end
+            end
+          end
+        end
+
+        hs.status = "Progressing"
+        hs.message = "Initializing ClusterIssuer"
+        return hs
+    - group: cert-manager.io
+      kind: Issuer
+      check: |
+        local hs = {}
         if obj.status ~= nil then
           if obj.status.conditions ~= nil then
             for i, condition in ipairs(obj.status.conditions) do
@@ -95,15 +137,49 @@ spec:
         hs.status = "Progressing"
         hs.message = "Initializing issuer"
         return hs
+    - group: cert-manager.io
+      kind: Certificate
+      check: |
+        local hs = {}
+        if obj.status ~= nil then
+          if obj.status.conditions ~= nil then
+
+            -- Always Handle Issuing First to ensure consistent behaviour
+            for i, condition in ipairs(obj.status.conditions) do
+              if condition.type == "Issuing" and condition.status == "True" then
+                hs.status = "Progressing"
+                hs.message = condition.message
+                return hs
+              end
+            end
+
+            for i, condition in ipairs(obj.status.conditions) do
+              if condition.type == "Ready" and condition.status == "False" then
+                hs.status = "Degraded"
+                hs.message = condition.message
+                return hs
+              end
+              if condition.type == "Ready" and condition.status == "True" then
+                hs.status = "Healthy"
+                hs.message = condition.message
+                return hs
+              end
+            end
+          end
+        end
+
+        hs.status = "Progressing"
+        hs.message = "Waiting for certificate"
+        return hs
     - group: route.openshift.io
       kind: Route
       check: |
-        health_status = {}
+        local health_status = {}
         if obj.status ~= nil then
           if obj.status.ingress ~= nil then
-            numIngressRules = 0
-            numTrue = 0
-            numFalse = 0
+            local numIngressRules = 0
+            local numTrue = 0
+            local numFalse = 0
             for _, ingressRules in pairs(obj.status.ingress) do
                 numIngressRules = numIngressRules + 1
                 if obj.status.ingress ~= nil then
@@ -138,42 +214,58 @@ spec:
     - group: operators.coreos.com
       kind: Subscription
       check: |
-        health_status = {}
+        local health_status = {}
         if obj.status ~= nil then
-            if obj.status.conditions ~= nil then
-                numDegraded = 0
-                numPending = 0
-                msg = ""
-                for i, condition in pairs(obj.status.conditions) do
-                    msg = msg .. i .. ": " .. condition.type .. " | " .. condition.status .. "\n"
-                    if condition.type == "InstallPlanPending" and condition.status == "True" then
-                        numPending = numPending + 1
-                    elseif (condition.type == "InstallPlanMissing" and condition.reason ~= "ReferencedInstallPlanNotFound") then
-                        numDegraded = numDegraded + 1
-                    elseif (condition.type == "CatalogSourcesUnhealthy" or condition.type == "InstallPlanFailed" or condition.type == "ResolutionFailed") and condition.status == "True" then
-                        numDegraded = numDegraded + 1
-                    end
-                end
+          if obj.status.conditions ~= nil then
+            local numDegraded = 0
+            local numPending = 0
+            local msg = ""
+            for i, condition in pairs(obj.status.conditions) do
+              msg = msg .. i .. ": " .. condition.type .. " | " .. condition.status .. "\n"
+              if condition.type == "InstallPlanPending" and condition.status == "True" then
+                numPending = numPending + 1
+              elseif (condition.type == "InstallPlanMissing" and condition.reason ~= "ReferencedInstallPlanNotFound") then
+                numDegraded = numDegraded + 1
+              elseif (condition.type == "CatalogSourcesUnhealthy" or condition.type == "InstallPlanFailed" or condition.type == "ResolutionFailed") and condition.status == "True" then
+                numDegraded = numDegraded + 1
+              end
             end
-            if numDegraded == 0 and numPending == 0 then
-                health_status.status = "Healthy"
-                health_status.message = msg
-                return health_status
-            elseif numPending > 0 and numDegraded == 0 and obj.spec.installPlanApproval == "Manual" then
-                health_status.status = "Healthy"
-                health_status.message = "An install plan for a subscription is pending installation but install plan approval is set to manual so considering this as healthy: " .. msg
-                return health_status
-            elseif numPending > 0 and numDegraded == 0 then
-                health_status.status = "Progressing"
-                health_status.message = "An install plan for a subscription is pending installation"
-                return health_status
+
+            -- Available states: undef/nil, UpgradeAvailable, UpgradePending, UpgradeFailed, AtLatestKnown
+            -- Source: https://github.com/openshift/operator-framework-olm/blob/5e2c73b7663d0122c9dc3e59ea39e515a31e2719/staging/api/pkg/operators/v1alpha1/subscription_types.go#L17-L23
+            if obj.status.state == nil  then
+              numPending = numPending + 1
+              msg = msg .. ".status.state not yet known\n"
+            elseif obj.status.state == "" or obj.status.state == "UpgradeAvailable" or obj.status.state == "UpgradePending" then
+              numPending = numPending + 1
+              msg = msg .. ".status.state is '" .. obj.status.state .. "'\n"
+            elseif obj.status.state == "UpgradeFailed" then
+              numDegraded = numDegraded + 1
+              msg = msg .. ".status.state is '" .. obj.status.state .. "'\n"
             else
-                health_status.status = "Degraded"
-                health_status.message = msg
-                return health_status
+              -- Last possiblity of .status.state: AtLatestKnown
+              msg =  msg .. ".status.state is '" .. obj.status.state .. "'\n"
             end
+        
+            if numDegraded == 0 and numPending == 0 then
+              health_status.status = "Healthy"
+              health_status.message = msg
+              return health_status
+            elseif numPending > 0 and numDegraded == 0 then
+              health_status.status = "Progressing"
+              health_status.message = msg
+              return health_status
+            else
+              health_status.status = "Degraded"
+              health_status.message = msg
+              return health_status
+            end
+          end
         end
+        health_status.status = "Progressing"
+        health_status.message = "An install plan for a subscription is pending installation"
         return health_status
+
     - group: operators.coreos.com
       kind: InstallPlan
       check: |
@@ -478,6 +570,338 @@ spec:
         hs.status = "Progressing"
         hs.message = "Waiting for Gateway status"
         return hs
+    - group: kiali.io
+      kind: Kiali
+      check: |
+        local health_status = {}
+        if obj.status ~= nil then
+          if obj.status.conditions ~= nil then
+            for i, condition in ipairs(obj.status.conditions) do
+              health_status.message = condition.message
+              if condition.type == "Successful" and condition.status == "True" then
+                health_status.status = "Healthy"
+                return health_status
+              end
+              if condition.type == "Failure" and condition.status == "True" then
+                health_status.status = "Degraded"
+                return health_status
+              end
+              if condition.type == "Running" and condition.reason == "Running" then
+                health_status.status = "Progressing"
+                return health_status
+              end
+            end
+          end
+        end
+        health_status.status = "Progressing"
+        health_status.message = "Waiting for Kiali"
+        return health_status
+    - group: minio.min.io
+      kind: Tenant
+      check: |
+        local health_status = {}
+        if obj.status ~= nil then
+            if obj.status.currentState ~= nil then
+                if obj.status.currentState == "Initialized" then
+                    health_status.status = "Healthy"
+                    health_status.message = obj.status.currentState
+                    return health_status
+                end
+                if obj.status.currentState:find("^Provisioning") ~= nil then
+                    health_status.status = "Progressing"
+                    health_status.message = obj.status.currentState
+                    return health_status
+                end
+                if obj.status.currentState:find("^Waiting") ~= nil then
+                    health_status.status = "Progressing"
+                    health_status.message = obj.status.currentState
+                    return health_status
+                end
+                if obj.status.currentState:find("^Updating") ~= nil then
+                    health_status.status = "Progressing"
+                    health_status.message = obj.status.currentState
+                    return health_status
+                end
+                if obj.status.currentState == "Restarting MinIO" then
+                    health_status.status = "Progressing"
+                    health_status.message = obj.status.currentState
+                    return health_status
+                end
+                if obj.status.currentState == "Statefulset not controlled by operator" then
+                    health_status.status = "Degraded"
+                    health_status.message = obj.status.currentState
+                    return health_status
+                end
+                if obj.status.currentState == "Another MinIO Tenant already exists in the namespace" then
+                    health_status.status = "Degraded"
+                    health_status.message = obj.status.currentState
+                    return health_status
+                end
+                if obj.status.currentState == "Tenant credentials are not set properly" then
+                    health_status.status = "Degraded"
+                    health_status.message = obj.status.currentState
+                    return health_status
+                end
+                if obj.status.currentState == "Different versions across MinIO Pools" then
+                    health_status.status = "Degraded"
+                    health_status.message = obj.status.currentState
+                    return health_status
+                end
+                if obj.status.currentState == "Pool Decommissioning Not Allowed" then
+                    health_status.status = "Degraded"
+                    health_status.message = obj.status.currentState
+                    return health_status
+                end
+                health_status.status = "Progressing"
+                health_status.message = obj.status.currentState
+                return health_status
+            end
+        end
+        health_status.status = "Progressing"
+        health_status.message = "No status info available"
+        return health_status
+
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      check: |
+        local hs = {}
+
+        -- Check if CRD is terminating
+        if obj.metadata.deletionTimestamp ~= nil then
+            hs.status = "Progressing"
+            hs.message = "CRD is terminating"
+            return hs
+        end
+
+        if obj.status.conditions == nil then
+            hs.status = "Progressing"
+            hs.message = "Status conditions not found"
+            return hs
+        end
+
+        if #obj.status.conditions == 0 then
+            hs.status = "Progressing"
+            hs.message = "Status conditions not found"
+            return hs
+        end
+
+        local isEstablished
+        local conditionMsg = ""
+
+        for _, condition in pairs(obj.status.conditions) do
+
+            -- Check if CRD is terminating
+            if condition.type == "Terminating" and condition.status == "True" then
+                hs.status = "Progressing"
+                hs.message = "CRD is terminating: " .. condition.message
+                return hs
+            end
+
+            -- Check if K8s has accepted names for this CRD
+            if condition.type == "NamesAccepted" and condition.status == "False" then
+                hs.status = "Degraded"
+                hs.message = "CRD names have not been accepted: " .. condition.message
+                return hs
+            end
+
+            -- Checking if CRD has violations
+            if condition.type == "NonStructuralSchema" and condition.status == "True" then
+                hs.status = "Degraded"
+                hs.message = "Schema violations found: " .. condition.message
+                return hs
+            end
+
+            -- Checking if CRD is established
+            if condition.type == "Established" and condition.status == "True" then
+                isEstablished = true
+                conditionMsg = condition.message
+            end
+        end
+
+        if not isEstablished then
+            hs.status = "Degraded"
+            hs.message = "CRD is not established"
+            return hs
+        end
+
+        hs.status = "Healthy"
+        hs.message = "CRD is healthy"
+        return hs
+
+    - group: monitoring.coreos.com
+      kind: Prometheus
+      check: |
+        local hs={ status = "Progressing", message = "Waiting for initialization" }
+
+        if obj.status ~= nil then
+          if obj.status.conditions ~= nil then
+            for i, condition in ipairs(obj.status.conditions) do
+
+              if condition.type == "Available" and condition.status ~= "True" then
+                if condition.reason == "SomePodsNotReady" then
+                  hs.status = "Progressing"
+                else
+                  hs.status = "Degraded"
+                end
+                hs.message = condition.message or condition.reason
+              end
+              if condition.type == "Available" and condition.status == "True" then
+                hs.status = "Healthy"
+                hs.message = "All instances are available"
+              end
+            end
+          end
+        end
+
+        return hs
+    - group: grafana.integreatly.org
+      kind: Grafana
+      check: |
+        -- if no status info available yet, assume progressing
+        if obj.status == nil or obj.status.stageStatus == nil then
+          return {
+            status = "Progressing",
+            message = "Waiting for Grafana status info",
+          }
+        end
+
+        -- if last stage failed, we are stuck here
+        if obj.status.stageStatus == "failed" then
+          return {
+            status = "Degraded",
+            message = "Failed at stage " .. obj.status.stage,
+          }
+        end
+
+        -- only if "complete" stage was successful, Grafana can be considered healthy
+        if obj.status.stage == "complete" and obj.status.stageStatus == "success" then
+          return {
+            status = "Healthy",
+            message = "",
+          }
+        end
+
+        -- no final status yet, assume progressing
+        return {
+          status = "Progressing",
+          message = obj.status.stage,
+        }
+    - group: grafana.integreatly.org
+      kind: GrafanaDashboard
+      check: |
+        -- Reference CRD can be found here:
+        -- https://grafana.github.io/grafana-operator/docs/api/#grafanadashboard
+
+        function getStatusFromConditions(obj, hs)
+          if obj.status ~= nil and obj.status.conditions ~= nil then
+              for i, condition in ipairs(obj.status.conditions) do
+                  if condition.status ~= nil then
+                    if hs.message ~= "" then
+                      hs.message = hs.message .. ", "
+                    end
+
+                    if condition.reason ~= nil then
+                      hs.message = hs.message .. condition.reason
+                      if condition.type ~= nil then
+                          hs.message = hs.message .. " for " .. condition.type
+                        if condition.message ~= nil then
+                            hs.message = hs.message .. " because " .. condition.message
+                        end
+                      end
+                    end
+
+                    if condition.status == "False" then
+                      hs.status = "Degraded"
+                      return hs
+                    end
+
+                    if condition.status == "True" then
+                      hs.status = "Healthy"
+                    end
+                  end
+              end
+          end
+
+          return hs
+        end
+
+        local hs = {}
+        hs.status = "Progressing"
+        hs.message = ""
+
+        hs = getStatusFromConditions(obj, hs)
+
+        return hs
+
+    - group: grafana.integreatly.org
+      kind: GrafanaDataSource
+      check: |
+        -- if UID not yet created, we are progressing
+        if obj.status == nil or obj.status.uid == "" then
+          return {
+            status = "Progressing",
+            message = "",
+          }
+        end
+
+        -- NoMatchingInstances distinguishes if we are healthy or degraded
+        if obj.status.NoMatchingInstances then
+          return {
+            status = "Degraded",
+            message = "can't find matching grafana instance",
+          }
+        end
+        return {
+          status = "Healthy",
+          message = "",
+        }
+    - group: grafana.integreatly.org
+      kind: GrafanaFolder
+      check: |
+        -- Reference CRD can be found here:
+        -- https://grafana.github.io/grafana-operator/docs/api/#grafanafolder
+
+        function getStatusFromConditions(obj, hs)
+          if obj.status ~= nil and obj.status.conditions ~= nil then
+              for i, condition in ipairs(obj.status.conditions) do
+                  if condition.status ~= nil then
+                    if hs.message ~= "" then
+                      hs.message = hs.message .. ", "
+                    end
+
+                    if condition.reason ~= nil then
+                      hs.message = hs.message .. condition.reason
+                      if condition.type ~= nil then
+                          hs.message = hs.message .. " for " .. condition.type
+                        if condition.message ~= nil then
+                            hs.message = hs.message .. " because " .. condition.message
+                        end
+                      end
+                    end
+
+                    if condition.status == "False" then
+                      hs.status = "Degraded"
+                      return hs
+                    end
+
+                    if condition.status == "True" then
+                      hs.status = "Healthy"
+                    end
+                  end
+              end
+          end
+
+          return hs
+        end
+
+        local hs = {}
+        hs.status = "Progressing"
+        hs.message = ""
+
+        hs = getStatusFromConditions(obj, hs)
+
+        return hs
+
   grafana:
     enabled: false
     ingress:

@@ -1,0 +1,10 @@
+{
+  "consent-telemetry": "no",
+  "cpus": 14,
+  "disk-size": 300,
+  "enable-cluster-monitoring": true,
+  "kubeadmin-password": "$kubeadmin_password",
+  "memory": 40060,
+  "network-mode": "system",
+  "pull-secret-file": "$pull_secret_path"
+}

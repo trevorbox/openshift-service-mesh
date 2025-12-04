@@ -175,6 +175,15 @@ applications:
     source:
       path: clusters/crc-ambient/overlays/bookinfo
 
+  httpbin:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: httpbin
+    source:
+      path: components/httpbin
+
   oauth2-proxy:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous

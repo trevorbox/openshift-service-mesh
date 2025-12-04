@@ -1,0 +1,20 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: ingress
+  namespace: istio-ingress
+spec:
+  gatewayClassName: istio
+  listeners:
+  - name: default
+    hostname: "bookinfo-waypoint-istio-ingress.apps-crc.testing"
+    port: 443
+    protocol: HTTPS
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - name: istio-ingress-certs
+        kind: Secret
+    allowedRoutes:
+      namespaces:
+        from: All

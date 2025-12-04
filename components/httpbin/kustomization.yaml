@@ -7,3 +7,4 @@ resources:
   - httpbin.yaml
   - httproute-httpbin-ingress.yaml
   - httproute-httpbin-waypoint-route.yaml
+  - networkpolicy-httpbin-allow-external.yaml

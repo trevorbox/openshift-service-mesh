@@ -1,13 +1,13 @@
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: httpbin-allow-external
+  name: httpbin-gateway-allow-external
   namespace: httpbin
 spec:
   policyTypes:
   - Ingress
   podSelector:
     matchLabels:
-      app: httpbin
+      gateway.networking.k8s.io/gateway-name: httpbin-gateway
   ingress:
     - {}

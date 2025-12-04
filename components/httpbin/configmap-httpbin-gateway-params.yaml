@@ -47,11 +47,11 @@ data:
               matchLabels:
                 app: httpbin-gateway
 
-  # service: |
-  #   spec:
-  #     ports:
-  #     - "\$patch": delete
-  #       port: 15021
+  service: |
+    spec:
+      ports:
+      - "\$patch": delete
+        port: 15021
 
   # podDisruptionBudget: |
   #   spec:

@@ -27,8 +27,8 @@ metadata:
   labels:
     app: httpbin
     service: httpbin
+    istio.io/ingress-use-waypoint: "true"
 spec:
-  type: LoadBalancer
   ports:
   - name: http
     port: 8000

@@ -75,3 +75,10 @@ while IFS=$"\n" read -r namespace; do
 done
 oc get namespace -l istio.io/dataplane-mode=ambient
 ```
+
+## testing
+
+```sh
+curl -i -v -H Host:httpbin.example.com http://192.168.130.200:80/headers
+curl -k https://bookinfo-istio-ingress.apps-crc.testing/productpage
+```

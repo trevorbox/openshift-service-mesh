@@ -13,6 +13,6 @@ operators:
   name: metallb-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  csv: metallb-operator.v4.20.0-202511181524
+  csv: metallb-operator.v4.20.0-202511250912
   namespace: metallb-system
   installPlanVerifierActiveDeadlineSeconds: 1200

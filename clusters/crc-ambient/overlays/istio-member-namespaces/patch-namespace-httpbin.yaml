@@ -1,0 +1,3 @@
+- op: add
+  path: /metadata/labels/istio.io%2Fuse-waypoint
+  value: httpbin-waypoint

@@ -1,6 +1,0 @@
-kind: Namespace
-apiVersion: v1
-metadata:
-  name: httpbin
-  labels:
-    istio.io/use-waypoint: httpbin-waypoint

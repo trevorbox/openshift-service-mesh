@@ -16,3 +16,7 @@ patches:
   target:
     kind: Namespace
     name: istio-ingress
+- path: patch-namespace-httpbin.yaml
+  target:
+    kind: Namespace
+    name: httpbin

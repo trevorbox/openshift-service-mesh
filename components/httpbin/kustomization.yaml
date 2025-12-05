@@ -3,12 +3,6 @@ kind: Kustomization
 namespace: httpbin
 
 resources:
-  - gateway-httpbin-gateway.yaml
   - gateway-httpbin-waypoint.yaml
   - httpbin.yaml
-  - httproute-httpbin-ingress.yaml
   - httproute-httpbin-waypoint-route.yaml
-  - networkpolicy-httpbin-gateway-allow-external.yaml
-  - configmap-httpbin-gateway-params.yaml
-  - clusterissuer-self-signer.yaml
-  - certificate-httpbin-gateway-cert.yaml

@@ -54,7 +54,7 @@ data:
       ports:
       - $patch: delete
         port: 15021
-      type: ClusterIP
+      # type: ClusterIP # uncomment to avoid LoadBalancer service type in favor of OCP Routes
 
   podDisruptionBudget: |
     spec:

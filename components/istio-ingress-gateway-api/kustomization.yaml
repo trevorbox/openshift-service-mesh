@@ -9,3 +9,4 @@ resources:
 - httproute-httpbin-istio-ingress.yaml
 - httproute-nginx-echo-headers-ingress.yaml
 - networkpolicy-ingress-gateway-allow-external.yaml
+- ingress-example-routes.yaml

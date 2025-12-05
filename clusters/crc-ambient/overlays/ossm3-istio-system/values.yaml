@@ -7,6 +7,7 @@ istioCNI:
       cni:
         ambient:
           reconcileIptablesOnStartup: true
+# for ambient mode, revisionBased updateStrategy not supported and no custom IstioRevisionTag is needed. The default IstioRevisionTag will be automatically created by the operator for InPlace updateStrategy.
 istioRevisionTags: null
   # default:
   #   istioRevision: default-v1-27-3
@@ -20,6 +21,7 @@ ztunnel:
       ztunnel:
         logLevel: info
         terminationGracePeriodSeconds: 30
+        # Below settings would be needed if using revisionBased updateStrategy, but that is not supported in ambient mode.
         # xdsAddress: istiod-default-v1-27-3.istio-system.svc:15012
         # caAddress: istiod-default-v1-27-3.istio-system.svc:15012
 revisions:

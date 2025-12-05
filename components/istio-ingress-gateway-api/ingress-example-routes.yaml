@@ -3,9 +3,9 @@ apiVersion: networking.k8s.io/v1
 metadata:
   name: example-routes
   namespace: istio-ingress
-  annotations:
-    route.openshift.io/termination: "passthrough"
-    route.openshift.io/insecureEdgeTerminationPolicy: redirect
+  # annotations:
+  #   route.openshift.io/termination: "passthrough"
+  #   route.openshift.io/insecureEdgeTerminationPolicy: redirect
 spec:
   rules:
     - host: httpbin.example.com

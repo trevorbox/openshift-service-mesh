@@ -11,4 +11,4 @@ resources:
   - networkpolicy-httpbin-gateway-allow-external.yaml
   - configmap-httpbin-gateway-params.yaml
   - clusterissuer-self-signer.yaml
-  - certificate-httpbin-gateway-cert.yaml
+  # - certificate-httpbin-gateway-cert.yaml

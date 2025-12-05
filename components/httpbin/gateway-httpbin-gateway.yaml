@@ -3,6 +3,8 @@ kind: Gateway
 metadata:
   name: httpbin-gateway
   namespace: httpbin
+  annotations:
+    cert-manager.io/issuer: internal-issuer
 spec:
   gatewayClassName: istio
   listeners:

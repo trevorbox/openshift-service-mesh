@@ -8,7 +8,7 @@ metadata:
 spec:
   gatewayClassName: istio
   listeners:
-  - name: https
+  - name: https-httpbin
     hostname: "httpbin.example.com"
     port: 443
     protocol: HTTPS
@@ -21,7 +21,7 @@ spec:
       - group: ''	
         kind: Secret
         name: httpbin-gateway-cert
-  - name: https
+  - name: https-nginx-echo-headers
     hostname: "nginx-echo-headers.example.com"
     port: 443
     protocol: HTTPS

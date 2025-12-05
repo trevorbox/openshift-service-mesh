@@ -1,9 +1,9 @@
-# Create a machineconfig that runs a script on worker nodes using systemd ono a schedule
+# Create a machineconfig that runs a script on master nodes using systemd ono a schedule
 
 Generate Maching config from butane...
 
 ```sh
-butane 99-worker-myscript-job.bu -o 99-worker-myscript-job.yaml
+butane 99-master-myscript-job.bu -o 99-master-myscript-job.yaml
 ```
 
 Verify on node...

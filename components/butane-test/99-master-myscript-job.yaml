@@ -8,12 +8,12 @@ metadata:
 spec:
   config:
     ignition:
-      version: 3.5.0
+      version: 3.4.0
     storage:
       files:
         - contents:
-            compression: ""
-            source: data:;base64,IyEvYmluL2Jhc2gKZWNobyAiU3lzdGVtZCBqb2IgcmFuIGF0ICQoZGF0ZSkiID4+IC92YXIvbG9nLzk5LXdvcmtlci1teXNjcmlwdC1qb2IubG9nIDI+JjEK
+            compression: gzip
+            source: data:;base64,H4sIAAAAAAAC/5TNMQ6CMBSH8Z1T/K3G6PBsdGNh8wSe4LU0UKQUX18UEg/vYtzdv3y/7ca6OFnHpa+C7zPMbS0aUoshOwhPYMXu0LKGo0HTwD5Z7Jg7W9f0ynIPQmktXuKsNGR3GnOHS7M/V78vyMN4iV5HzAXEoILrEjW0oAfeWFi6AhJ8I0n/QKb6BAAA//9Ljdl0xAAAAA==
           mode: 493
           overwrite: true
           path: /usr/local/bin/myscript.sh

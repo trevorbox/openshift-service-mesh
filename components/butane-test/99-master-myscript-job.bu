@@ -1,9 +1,9 @@
 variant: openshift
 version: 4.18.0 # Use the appropriate OpenShift version you are running (e.g., 4.15.0, 4.16.0)
 metadata:
-  name: 99-worker-myscript-job
+  name: 99-master-myscript-job
   labels:
-    machineconfiguration.openshift.io/role: worker
+    machineconfiguration.openshift.io/role: master
 storage:
   files:
     # Create the script file
@@ -13,7 +13,8 @@ storage:
       contents:
         inline: |
           #!/bin/bash
-          echo "Systemd job ran at $(date)" >> /var/log/99-worker-myscript-job.log 2>&1
+          echo "Systemd job ran at $(date)" >> /var/log/99-master-myscript-job.log 2>&1
+          /bin/bash -c "crictl ps -a -s Exited -q | xargs -r crictl rm >> /var/log/99-master-myscript-job.log 2>&1"
 systemd:
   units:
     - name: myscript.service

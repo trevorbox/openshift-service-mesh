@@ -7,7 +7,7 @@ istioCNI:
       cni:
         ambient:
           reconcileIptablesOnStartup: true
-# for ambient mode, revisionBased updateStrategy not supported and no custom IstioRevisionTag is needed. The default IstioRevisionTag will be automatically created by the operator for InPlace updateStrategy.
+# for ambient mode, RevisionBased updateStrategy not supported and no custom IstioRevisionTag is needed.
 istioRevisionTags: null
   # default:
   #   istioRevision: default-v1-27-3

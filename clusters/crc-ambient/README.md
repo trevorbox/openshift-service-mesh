@@ -80,8 +80,12 @@ oc get namespace -l istio.io/dataplane-mode=ambient
 
 ```sh
 # curl -i -v -H Host:httpbin.example.com http://192.168.130.200:80/headers
+#external load balancer
 curl -ivk -H Host:httpbin.example.com --resolve "httpbin.example.com:443:192.168.130.200" https://httpbin.example.com:443/headers
 curl -ivk -H Host:nginx-echo-headers.example.com --resolve "nginx-echo-headers.example.com:443:192.168.130.200" https://nginx-echo-headers.example.com:443
+
+#route
+curl -ivk -H Host:nginx-echo-headers.example.com --resolve "nginx-echo-headers.example.com:443:192.168.130.11" https://nginx-echo-headers.example.com:443
 
 curl -k https://bookinfo-istio-ingress.apps-crc.testing/productpage
 ```

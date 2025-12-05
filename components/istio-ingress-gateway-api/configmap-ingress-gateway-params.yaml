@@ -54,6 +54,7 @@ data:
       ports:
       - $patch: delete
         port: 15021
+      type: ClusterIP
 
   podDisruptionBudget: |
     spec:

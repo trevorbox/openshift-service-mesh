@@ -21,7 +21,7 @@ ztunnel:
       ztunnel:
         logLevel: info
         terminationGracePeriodSeconds: 30
-        # Below settings would be needed if using revisionBased updateStrategy, but that is not supported in ambient mode.
+        # Below settings would be needed if using RevisionBased updateStrategy, but that is not supported in ambient mode.
         # xdsAddress: istiod-default-v1-27-3.istio-system.svc:15012
         # caAddress: istiod-default-v1-27-3.istio-system.svc:15012
 revisions:

@@ -6,7 +6,7 @@ metadata:
 spec:
   gatewayClassName: istio
   listeners:
-  - name: default
+  - name: https
     hostname: "httpbin.example.com"
     port: 443
     protocol: HTTPS
@@ -14,10 +14,9 @@ spec:
       namespaces:
         from: All
     tls:
+      mode: Terminate
       certificateRefs:
-      - kind: Secret
-        group: ""
-        name: httpbin-gateway-cert
+      - name: httpbin-gateway-cert
   infrastructure:
     annotations:
       some-key: some-value

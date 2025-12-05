@@ -6,7 +6,7 @@ metadata:
 spec:
   # Secret names are always required.
   secretName: httpbin-gateway-cert
-  # commonName: nginx-echo-headers
+  commonName: httpbin
   dnsNames:
     - httpbin.example.com
   usages:
@@ -20,6 +20,4 @@ spec:
     # This is optional since cert-manager will default to this value however
     # if you are using an external issuer, change this to that issuer group.
     group: cert-manager.io
-  additionalOutputFormats:
-    - type: CombinedPEM
 ...

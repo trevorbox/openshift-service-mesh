@@ -20,7 +20,7 @@ spec:
             - key: kubernetes.io/metadata.name
               operator: In
               values:
-                # - httpbin
+                - httpbin
                 - nginx-echo-headers
     # allowedRoutes:
     #   namespaces:
@@ -37,7 +37,14 @@ spec:
     protocol: HTTPS
     allowedRoutes:
       namespaces:
-        from: All
+        from: Selector
+        selector:
+          matchExpressions:
+            - key: kubernetes.io/metadata.name
+              operator: In
+              values:
+                - httpbin
+                - nginx-echo-headers
     tls:
       mode: Terminate
       certificateRefs:

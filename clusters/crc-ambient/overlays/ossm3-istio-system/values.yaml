@@ -3,6 +3,10 @@ istioCNI:
     version: v1.27.3
     namespace: istio-cni
     profile: ambient # Changed to ambient
+    values:
+      cni:
+        ambient:
+          reconcileIptablesOnStartup: true
 istioRevisionTags:
   default:
     istioRevision: default-v1-27-3
@@ -14,14 +18,17 @@ ztunnel:
     version: v1.27.3
     values:
       ztunnel:
-        xdsAddress: istiod-default-v1-27-3.istio-system.svc:15012
-        caAddress: istiod-default-v1-27-3.istio-system.svc:15012
+        logLevel: info
+        terminationGracePeriodSeconds: 30
+        # xdsAddress: istiod-default-v1-27-3.istio-system.svc:15012
+        # caAddress: istiod-default-v1-27-3.istio-system.svc:15012
 revisions:
   - name: default
     spec:
       namespace: istio-system
       updateStrategy:
-        type: RevisionBased
+        inactiveRevisionDeletionGracePeriodSeconds: 30
+        type: InPlace
       values:
         profile: ambient # Added profile ambient
         pilot:

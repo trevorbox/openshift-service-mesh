@@ -16,7 +16,9 @@ spec:
     tls:
       mode: Terminate
       certificateRefs:
-      - name: httpbin-gateway-cert
+      - group: ''	
+        kind: Secret
+        name: httpbin-gateway-cert
   infrastructure:
     annotations:
       some-key: some-value

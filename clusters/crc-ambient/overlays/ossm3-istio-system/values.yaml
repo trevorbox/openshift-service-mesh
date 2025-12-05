@@ -7,7 +7,7 @@ istioCNI:
       cni:
         ambient:
           reconcileIptablesOnStartup: true
-istioRevisionTags: {}
+istioRevisionTags: null
   # default:
   #   istioRevision: default-v1-27-3
 ztunnel:

@@ -8,11 +8,16 @@ spec:
   listeners:
   - name: default
     hostname: "httpbin.example.com"
-    port: 80
+    port: 443
     protocol: HTTP
     allowedRoutes:
       namespaces:
         from: All
+    tls:
+      certificateRefs:
+      - kind: Secret
+        group: ""
+        name: httpbin-gateway-cert
   infrastructure:
     annotations:
       some-key: some-value

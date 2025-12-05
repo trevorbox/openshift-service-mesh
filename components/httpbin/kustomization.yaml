@@ -10,3 +10,4 @@ resources:
   - httproute-httpbin-waypoint-route.yaml
   - networkpolicy-httpbin-gateway-allow-external.yaml
   - configmap-httpbin-gateway-params.yaml
+  - certificate-httpbin-gateway-cert.yaml

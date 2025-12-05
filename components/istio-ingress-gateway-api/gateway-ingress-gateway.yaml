@@ -20,7 +20,7 @@ spec:
             - key: kubernetes.io/metadata.name
               operator: In
               values:
-                - httpbin
+                # - httpbin
                 - nginx-echo-headers
     # allowedRoutes:
     #   namespaces:

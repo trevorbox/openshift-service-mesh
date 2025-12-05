@@ -184,6 +184,15 @@ applications:
     source:
       path: components/httpbin
 
+  istio-ingress-gateway-api:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: istio-ingress
+    source:
+      path: components/istio-ingress-gateway-api
+
   oauth2-proxy:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous

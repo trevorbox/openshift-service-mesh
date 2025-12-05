@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ingress-gateway-params
+  namespace: istio-ingress
+data:
+  horizontalPodAutoscaler: |
+    spec:
+      scaleTargetRef:
+        kind: Deployment
+        name: ingress-gateway-istio
+        apiVersion: apps/v1
+      minReplicas: 2
+      maxReplicas: 5
+      metrics:
+      - type: Resource
+        resource:
+          name: cpu
+          target:
+            type: Utilization
+            averageUtilization: 80
+
+  deployment: |
+    metadata:
+      labels:
+        app: ingress-gateway
+    spec:
+      replicas: 2
+      template:
+        metadata:
+          labels:
+            app: ingress-gateway
+        spec:         
+          containers:
+          - name: istio-proxy
+            resources:
+              limits:
+                cpu: 100m
+                memory: 128Mi
+              requests:
+                cpu: 50m
+                memory: 64Mi
+          topologySpreadConstraints:
+          - maxSkew: 1
+            topologyKey: kubernetes.io/hostname
+            whenUnsatisfiable: ScheduleAnyway
+            labelSelector:
+              matchLabels:
+                app: ingress-gateway
+
+  # remove status port 15021 in k8s service /healthz/ready
+  service: |
+    spec:
+      ports:
+      - $patch: delete
+        port: 15021
+
+  podDisruptionBudget: |
+    spec:
+      selector:
+        matchLabels:
+          app: ingress-gateway
+      minAvailable: 1

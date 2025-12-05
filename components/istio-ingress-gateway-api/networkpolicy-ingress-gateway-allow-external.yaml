@@ -1,0 +1,13 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: ingress-gateway-allow-external
+  namespace: istio-ingress
+spec:
+  policyTypes:
+  - Ingress
+  podSelector:
+    matchLabels:
+      gateway.networking.k8s.io/gateway-name: ingress-gateway
+  ingress:
+    - {}

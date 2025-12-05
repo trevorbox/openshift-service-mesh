@@ -6,6 +6,6 @@ resources:
 - certificate-nginx-echo-headers-gateway-cert.yaml
 - configmap-ingress-gateway-params.yaml
 - gateway-ingress-gateway.yaml
-- httproute-httpbin-ingress.yaml
+- httproute-httpbin-istio-ingress.yaml
 - httproute-nginx-echo-headers-ingress.yaml
 - networkpolicy-ingress-gateway-allow-external.yaml

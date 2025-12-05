@@ -2,11 +2,11 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: nginx-echo-headers-cert
+  name: nginx-echo-headers-gateway-cert
   namespace: istio-ingress
 spec:
   # Secret names are always required.
-  secretName: nginx-echo-headers-cert
+  secretName: nginx-echo-headers-gateway-cert
   commonName: nginx-echo-headers
   dnsNames:
     - nginx-echo-headers.example.com

@@ -33,7 +33,7 @@ spec:
       certificateRefs:
       - group: ''	
         kind: Secret
-        name: nginx-echo-headers-cert
+        name: nginx-echo-headers-gateway-cert
   infrastructure:
     annotations:
       some-key: some-value

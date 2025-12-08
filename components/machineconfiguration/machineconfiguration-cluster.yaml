@@ -6,10 +6,6 @@ spec:
   nodeDisruptionPolicy:
     units:
     - actions:
-      - reload:
-          serviceName: myscript.service
-        type: Reload
-      - type: DaemonReload
       - restart:
           serviceName: myscript.service
         type: Restart
@@ -21,10 +17,6 @@ spec:
       name: myscript.timer
     files:     
     - actions:
-      - reload:
-          serviceName: myscript.service
-        type: Reload
-      - type: DaemonReload
       - restart:
           serviceName: myscript.service
         type: Restart

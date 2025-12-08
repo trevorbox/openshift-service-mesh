@@ -4,19 +4,14 @@ metadata:
   name: cluster
 spec:
   nodeDisruptionPolicy:
-    # files:
-    #   - actions:
-    #     - restart:
-    #         serviceName: myscript.service
-    #       type: Restart
-    #     path: /usr/local/bin/myscript.sh
     units:
-      - name: myscript.service
-        actions:
-          - type: Reload
-            reload:
-              serviceName: myscript.service
-          # - type: DaemonReload
-          - type: Restart
-            restart:
-              serviceName: myscript.service
+    - actions:
+      # - type: Drain
+      - reload:
+          serviceName: myscript.service
+        type: Reload
+      - type: DaemonReload
+      - restart:
+          serviceName: myscript.service
+        type: Restart
+      name: myscript.service

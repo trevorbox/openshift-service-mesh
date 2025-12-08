@@ -17,10 +17,10 @@ spec:
       name: myscript.service
     - actions:
       # - type: Drain
-      - reload:
-          serviceName: myscript.timer
-        type: Reload
-      - type: DaemonReload
+      # - reload:
+      #     serviceName: myscript.timer
+      #   type: Reload
+      # - type: DaemonReload
       - restart:
           serviceName: myscript.timer
         type: Restart

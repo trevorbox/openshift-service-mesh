@@ -26,7 +26,7 @@ spec:
             Description=Run myscript.service every 2 minutes
 
             [Timer]
-            OnCalendar=*:0/2
+            OnCalendar=*:0/3
 
             [Install]
             WantedBy=multi-user.target

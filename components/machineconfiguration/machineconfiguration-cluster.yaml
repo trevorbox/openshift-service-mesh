@@ -15,3 +15,13 @@ spec:
           serviceName: myscript.service
         type: Restart
       name: myscript.service
+    - actions:
+      # - type: Drain
+      - reload:
+          serviceName: myscript.timer
+        type: Reload
+      - type: DaemonReload
+      - restart:
+          serviceName: myscript.timer
+        type: Restart
+      name: myscript.timer

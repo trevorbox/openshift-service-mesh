@@ -16,7 +16,7 @@ spec:
           - type: Reload
             reload:
               serviceName: myscript.service
-          - type: DaemonReload
+          # - type: DaemonReload
           - type: Restart
             restart:
               serviceName: myscript.service

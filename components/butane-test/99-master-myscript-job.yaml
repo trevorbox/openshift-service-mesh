@@ -21,7 +21,7 @@ spec:
       units:
         - contents: |
             [Unit]
-            Description=My custom systemd script service
+            Description=My custom systemd script service that runs /usr/local/bin/myscript.sh
 
             [Service]
             Type=oneshot

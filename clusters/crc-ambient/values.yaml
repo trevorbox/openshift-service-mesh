@@ -265,6 +265,15 @@ applications:
     source:
       path: components/curl
 
+  machineconfiguration:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '1'
+    destination:
+      namespace: default
+    source:
+      path: components/machineconfiguration
+
   # butane-test:
   #   annotations:
   #     argocd.argoproj.io/compare-options: IgnoreExtraneous

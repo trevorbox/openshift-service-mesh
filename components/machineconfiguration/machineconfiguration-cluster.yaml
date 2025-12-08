@@ -1,0 +1,17 @@
+apiVersion: operator.openshift.io/v1
+kind: MachineConfiguration
+metadata:
+  name: cluster
+spec:
+  nodeDisruptionPolicy:
+    units:
+      - name: myscript.service
+        actions:
+          - type: Drain
+          - type: Reload
+            reload:
+              serviceName: myscript.service
+          - type: DaemonReload
+          - type: Restart
+            restart:
+              serviceName: myscript.service

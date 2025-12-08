@@ -193,14 +193,23 @@ applications:
     source:
       path: components/istio-ingress-gateway-api
 
-  oauth2-proxy:
+  # oauth2-proxy:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '4'
+  #   destination:
+  #     namespace: oauth2-proxy
+  #   source:
+  #     path: components/oauth2-proxy-entraid
+
+  authz-custom:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
       argocd.argoproj.io/sync-wave: '4'
     destination:
-      namespace: oauth2-proxy
+      namespace: authz-custom
     source:
-      path: components/oauth2-proxy-entraid
+      path: components/authz-custom
 
   oauth2-proxy-client-secret:
     annotations:

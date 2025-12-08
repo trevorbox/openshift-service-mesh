@@ -7,7 +7,6 @@ spec:
     units:
       - name: myscript.service
         actions:
-          - type: Drain
           - type: Reload
             reload:
               serviceName: myscript.service

@@ -9,6 +9,14 @@ spec:
   config:
     ignition:
       version: 3.4.0
+    storage:
+      files:
+        - contents:
+            compression: gzip
+            source: data:;base64,H4sIAAAAAAAC/5zOPQ6CQBBH8Z5T/EVjtFg32tHQeQJPMPshLGFZnJkYSDy8jZ2V9i8vv+3GujRZR9JX0fcF9W0VjTlgKA5ME0ixOwTSeKzRtrBPYjuWzjaNySQa2eRVPKdZzVDcaSwdLu3+XHlOXkfMAkMwguuSNAaYB15YiDuBYXwizj+tv6H3NCXpY/hb+w4AAP//N+xdFQgBAAA=
+          mode: 493
+          overwrite: true
+          path: /usr/local/bin/myscript.sh
     systemd:
       units:
         - contents: |
@@ -17,16 +25,15 @@ spec:
 
             [Service]
             Type=oneshot
-            ExecStartPre=/bin/bash -c "echo \"Systemd job ran at $(date)\" >> /var/log/99-master-myscript-job.log 2>&1"
-            ExecStart=/bin/bash -c "crictl ps -a -s Exited -q | xargs -r crictl rm >> /var/log/99-master-myscript-job.log 2>&1"
-            ExecStartPost=/bin/bash -c "echo \"Systemd job finished at $(date)\" >> /var/log/99-master-myscript-job.log 2>&1"
+
+            ExecStart=/usr/local/bin/myscript.sh
           name: myscript.service
         - contents: |-
             [Unit]
-            Description=Run myscript.service every 4 minutes
+            Description=Run myscript.service every 3 minutes
 
             [Timer]
-            OnCalendar=*:0/4
+            OnCalendar=*:0/3
 
             [Install]
             WantedBy=multi-user.target

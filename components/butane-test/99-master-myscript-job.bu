@@ -4,17 +4,18 @@ metadata:
   name: 99-master-myscript-job
   labels:
     machineconfiguration.openshift.io/role: master
-# storage:
-#   files:
-#     # Create the script file
-#     - path: /usr/local/bin/myscript.sh
-#       mode: 0755 # Make the script executable
-#       overwrite: true
-#       contents:
-#         inline: |
-#           #!/bin/bash
-#           echo "Systemd job ran at $(date)" >> /var/log/99-master-myscript-job.log 2>&1
-#           /bin/bash -c "crictl ps -a -s Exited -q | xargs -r crictl rm >> /var/log/99-master-myscript-job.log 2>&1"
+storage:
+  files:
+    # Create the script file
+    - path: /usr/local/bin/myscript.sh
+      mode: 0755 # Make the script executable
+      overwrite: true
+      contents:
+        inline: |
+          #!/bin/bash
+          echo "Systemd job ran at $(date)" >> /var/log/99-master-myscript-job.log 2>&1
+          crictl ps -a -s Exited -q | xargs -r crictl rm >> /var/log/99-master-myscript-job.log 2>&1
+          echo "Systemd job finished at $(date)" >> /var/log/99-master-myscript-job.log 2>&1
 systemd:
   units:
     - name: myscript.service
@@ -24,17 +25,27 @@ systemd:
 
         [Service]
         Type=oneshot
-        ExecStartPre=/bin/bash -c "echo \"Systemd job ran at $(date)\" >> /var/log/99-master-myscript-job.log 2>&1"
-        ExecStart=/bin/bash -c "crictl ps -a -s Exited -q | xargs -r crictl rm >> /var/log/99-master-myscript-job.log 2>&1"
-        ExecStartPost=/bin/bash -c "echo \"Systemd job finished at $(date)\" >> /var/log/99-master-myscript-job.log 2>&1"
+
+        ExecStart=/usr/local/bin/myscript.sh
+    # - name: myscript.service
+    #   contents: |
+    #     [Unit]
+    #     Description=My custom systemd script service
+
+    #     [Service]
+    #     Type=oneshot
+
+    #     ExecStartPre=/bin/bash -c "echo \"Systemd job ran at $(date)\" >> /var/log/99-master-myscript-job.log 2>&1"
+    #     ExecStart=/bin/bash -c "crictl ps -a -s Exited -q | xargs -r crictl rm >> /var/log/99-master-myscript-job.log 2>&1"
+    #     ExecStartPost=/bin/bash -c "echo \"Systemd job finished at $(date)\" >> /var/log/99-master-myscript-job.log 2>&1"
     - name: myscript.timer
       enabled: true
       contents: |
         [Unit]
-        Description=Run myscript.service every 4 minutes
+        Description=Run myscript.service every 3 minutes
 
         [Timer]
-        OnCalendar=*:0/4
+        OnCalendar=*:0/3
 
         [Install]
         WantedBy=multi-user.target

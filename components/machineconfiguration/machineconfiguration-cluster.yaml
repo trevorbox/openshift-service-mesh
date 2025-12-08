@@ -6,7 +6,6 @@ spec:
   nodeDisruptionPolicy:
     units:
     - actions:
-      # - type: Drain
       - reload:
           serviceName: myscript.service
         type: Reload
@@ -16,12 +15,17 @@ spec:
         type: Restart
       name: myscript.service
     - actions:
-      # - type: Drain
-      # - reload:
-      #     serviceName: myscript.timer
-      #   type: Reload
-      # - type: DaemonReload
       - restart:
           serviceName: myscript.timer
         type: Restart
       name: myscript.timer
+    files:     
+    - actions:
+      - reload:
+          serviceName: myscript.service
+        type: Reload
+      - type: DaemonReload
+      - restart:
+          serviceName: myscript.service
+        type: Restart
+      path: /usr/local/bin/myscript.sh

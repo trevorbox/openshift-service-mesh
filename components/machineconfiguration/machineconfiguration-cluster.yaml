@@ -4,6 +4,12 @@ metadata:
   name: cluster
 spec:
   nodeDisruptionPolicy:
+    files:
+    - actions:
+      - restart:
+          serviceName: myscript.service
+        type: Restart
+      path: /usr/local/bin/myscript.sh
     units:
       - name: myscript.service
         actions:

@@ -265,11 +265,11 @@ applications:
     source:
       path: components/curl
 
-  butane-test:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '4'
-    destination:
-      namespace: default
-    source:
-      path: components/butane-test
+  # butane-test:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '4'
+  #   destination:
+  #     namespace: default
+  #   source:
+  #     path: components/butane-test

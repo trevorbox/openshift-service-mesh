@@ -3,3 +3,4 @@ kind: Kustomization
 
 resources:
   - authorizationpolicy-require-oauth2-proxy.yaml
+  - authorizationpolicy-require-authz-custom.yaml

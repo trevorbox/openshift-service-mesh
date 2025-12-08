@@ -9,14 +9,6 @@ spec:
   config:
     ignition:
       version: 3.4.0
-    storage:
-      files:
-        - contents:
-            compression: gzip
-            source: data:;base64,H4sIAAAAAAAC/5TNMY7CMBBG4T6n+Ne7WkExWNClSccJOMHYsRJHcRxmRiiRODwNoqd/et/vjw958YF1bFIcK9xtV0ulx1QDhBew4e/Qs6WjQ9fBP1j8XAfftlRYLQmVXaPk1Wiq4TTXAZfu/9x8vqAIFyVHm7EqiEGK65Yt9aA7nthYBgUJ3pGUbyDXvAIAAP//HXFSF8QAAAA=
-          mode: 493
-          overwrite: true
-          path: /usr/local/bin/myscript.sh
     systemd:
       units:
         - contents: |
@@ -25,7 +17,9 @@ spec:
 
             [Service]
             Type=oneshot
-            ExecStart=/usr/local/bin/myscript.sh
+            ExecStartPre=/bin/bash -c "echo \"Systemd job ran at $(date)\" >> /var/log/99-master-myscript-job.log 2>&1"
+            ExecStart=/bin/bash -c "crictl ps -a -s Exited -q | xargs -r crictl rm >> /var/log/99-master-myscript-job.log 2>&1"
+            ExecStartPost=/bin/bash -c "echo \"Systemd job finished at $(date)\" >> /var/log/99-master-myscript-job.log 2>&1"
           name: myscript.service
         - contents: |-
             [Unit]

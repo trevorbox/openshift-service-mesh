@@ -31,10 +31,10 @@ systemd:
       enabled: true
       contents: |
         [Unit]
-        Description=Run myscript.service every 2 minutes
+        Description=Run myscript.service every 4 minutes
 
         [Timer]
-        OnCalendar=*:0/3
+        OnCalendar=*:0/4
 
         [Install]
         WantedBy=multi-user.target

@@ -23,9 +23,9 @@ config:
       "static://200"
     ]
 
-    cookie_domains = [
-      ".apps-crc.testing"
-    ]
+    # cookie_domains = [
+    #   ".apps-crc.testing"
+    # ]
     cookie_samesite = "lax"
     cookie_refresh = "1h"
     cookie_expire = "4h"

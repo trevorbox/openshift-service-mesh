@@ -88,3 +88,63 @@ az storage blob upload \
 ```sh
 curl -s "https://${AZURE_STORAGE_ACCOUNT}.blob.core.windows.net/${AZURE_STORAGE_CONTAINER}/openid/v1/jwks"
 ```
+
+## rotate kube-api signing key and update JWKS
+
+<https://azure.github.io/azure-workload-identity/docs/topics/self-managed-clusters/service-account-key-rotation.html>
+
+<https://docs.redhat.com/en/documentation/openshift_container_platform/4.20/html/postinstallation_configuration/changing-cloud-credentials-configuration#rotating-bound-service-keys_key-rotation-azure>
+
+To cause the Kubernetes API server to create a new bound service account signing key, you delete the next bound service account signing key.
+
+```sh
+oc delete secrets/next-bound-service-account-signing-key \
+  -n openshift-kube-apiserver-operator
+```
+
+To ensure that all pods on the cluster use the new key, you must restart them.
+
+Important
+This step maintains uptime for services that are configured for high availability across multiple nodes, but might cause downtime for any services that are not.
+
+Restart all of the pods in the cluster by running the following command:
+
+```sh
+oc adm reboot-machine-config-pool mcp/master
+```
+
+Verify the new JWT
+
+```sh
+cat << EOF | oc apply -f -
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    azure.workload.identity/client-id: dummy
+  name: workload-identity-sa
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dummy-pod
+  labels:
+    azure.workload.identity/use: "true"
+spec:
+  serviceAccountName: workload-identity-sa
+  containers:
+    - name: busybox
+      image: busybox
+      command:
+        - sleep
+        - "3600"
+EOF
+
+oc exec dummy-pod -- cat /var/run/secrets/azure/tokens/azure-identity-token
+
+```
+
+> if you don't update the JWKS blob with the new key then you will get sign in errors
+
+![Entra App registration Federated Credential](./.images/entra-admin-center-sign-in-logs-invalid-jwks-after-kube-api-rotation.png)
+

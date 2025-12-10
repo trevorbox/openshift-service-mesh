@@ -209,7 +209,7 @@ applications:
     destination:
       namespace: authz-custom
     source:
-      path: components/authz-custom
+      path: clusters/crc-ambient/overlays/authz-custom
 
   oauth2-proxy-client-secret:
     annotations:

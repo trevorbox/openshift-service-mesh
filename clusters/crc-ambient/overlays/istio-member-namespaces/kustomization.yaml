@@ -12,10 +12,14 @@ helmCharts:
     - values.yaml
 
 patches:
-- path: patch-namespace-istio-ingress.yaml
+- path: patch-namespace-remove-istio-injection.yaml
   target:
     kind: Namespace
     name: istio-ingress
+- path: patch-namespace-remove-istio-injection.yaml
+  target:
+    kind: Namespace
+    name: istio-egress
 - path: patch-namespace-httpbin.yaml
   target:
     kind: Namespace

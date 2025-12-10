@@ -291,3 +291,21 @@ applications:
       namespace: default
     source:
       path: components/butane-test
+
+  az-wi:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: azure-workload-identity
+    source:
+      path: components/az-wi
+
+  authentication:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: components/authentication

@@ -10,13 +10,6 @@ helmCharts:
   releaseName: oauth2-proxy
 
 resources:
-  # - certificate-oauth-bookinfo-cert.yaml
-  # - gateway-oauth-bookinfo.yaml
-  - route-test.yaml
-  - namespace-test.yaml
-  # - secret-oauth2-proxy.yaml
-  # - serviceentry-auth0.yaml
-  # - virtualservice-oauth-bookinfo.yaml
   - auth
 
 patches:

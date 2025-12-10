@@ -211,14 +211,14 @@ applications:
     source:
       path: clusters/crc-ambient/overlays/authz-custom
 
-  oauth2-proxy-client-secret:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '4'
-    destination:
-      namespace: test2
-    source:
-      path: components/oauth2-proxy-entraid-client-secret
+  # oauth2-proxy-client-secret:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '4'
+  #   destination:
+  #     namespace: test2
+  #   source:
+  #     path: components/oauth2-proxy-entraid-client-secret
 
   kiali:
     annotations:

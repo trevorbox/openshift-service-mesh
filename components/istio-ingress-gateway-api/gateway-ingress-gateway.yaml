@@ -22,6 +22,7 @@ spec:
               values:
                 - httpbin
                 - nginx-echo-headers
+                - authz-custom
     # allowedRoutes:
     #   namespaces:
     #     from: All
@@ -45,6 +46,7 @@ spec:
               values:
                 - httpbin
                 - nginx-echo-headers
+                - authz-custom
     tls:
       mode: Terminate
       certificateRefs:

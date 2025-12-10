@@ -16,10 +16,10 @@ spec:
           name: httpbin
           port: 8000
           weight: 1
-      matches:
-        - path:
-            type: PathPrefix
-            value: /status
-        - path:
-            type: PathPrefix
-            value: /headers
+      # matches:
+      #   - path:
+      #       type: PathPrefix
+      #       value: /status
+      #   - path:
+      #       type: PathPrefix
+      #       value: /headers

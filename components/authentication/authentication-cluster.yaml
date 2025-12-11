@@ -3,11 +3,4 @@ kind: Authentication
 metadata:
   name: cluster
 spec:
-  oauthMetadata:
-    name: ''
-  # serviceAccountIssuer: 'https://oidcissuer43658698.blob.core.windows.net/$web/'
-  serviceAccountIssuer: 'foo.bar.com'
-  type: ''
-  webhookTokenAuthenticator:
-    kubeConfig:
-      name: webhook-authentication-integrated-oauth
+  serviceAccountIssuer: 'https://oidcissuer43658698.blob.core.windows.net/$web/'

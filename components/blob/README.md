@@ -102,6 +102,40 @@ oc delete secrets/next-bound-service-account-signing-key \
   -n openshift-kube-apiserver-operator
 ```
 
+Add new jwks key to blob
+
+```sh
+export AZURE_STORAGE_ACCOUNT="oidcissuer43658698"
+export AZURE_STORAGE_CONTAINER="\$web"
+export TEMPDIR="./tmp"
+
+mkdir ${TEMPDIR}
+oc get secret/next-bound-service-account-signing-key \
+  -n openshift-kube-apiserver-operator \
+  -ojsonpath='{ .data.service-account\.pub }' | base64 \
+  -d > ${TEMPDIR}/serviceaccount-signer.public
+ccoctl aws create-identity-provider \
+  --dry-run \
+  --output-dir ${TEMPDIR} \
+  --public-key-file=${TEMPDIR}/serviceaccount-signer.public \
+  --name fake \
+  --region us-east-1
+cp ${TEMPDIR}/03-keys.json ${TEMPDIR}/jwks.new.json
+az storage blob download \
+  --container-name ${AZURE_STORAGE_CONTAINER} \
+  --account-name ${AZURE_STORAGE_ACCOUNT} \
+  --name 'openid/v1/jwks' \
+  -f ${TEMPDIR}/jwks.current.json
+jq -s '{ keys: map(.keys[])}' ${TEMPDIR}/jwks.current.json ${TEMPDIR}/jwks.new.json > ${TEMPDIR}/jwks.combined.json
+az storage blob upload \
+  --overwrite \
+  --account-name ${AZURE_STORAGE_ACCOUNT} \
+  --container-name ${AZURE_STORAGE_CONTAINER} \
+  --name 'openid/v1/jwks' \
+  -f ${TEMPDIR}/jwks.combined.json
+oc adm wait-for-stable-cluster
+```
+
 To ensure that all pods on the cluster use the new key, you must restart them.
 
 Important

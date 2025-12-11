@@ -6,7 +6,7 @@ spec:
   oauthMetadata:
     name: ''
   # serviceAccountIssuer: 'https://oidcissuer43658698.blob.core.windows.net/$web/'
-  serviceAccountIssuer: ''
+  serviceAccountIssuer: 'foo.bar.com'
   type: ''
   webhookTokenAuthenticator:
     kubeConfig:

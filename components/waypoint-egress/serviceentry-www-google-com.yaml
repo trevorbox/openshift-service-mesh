@@ -1,0 +1,13 @@
+apiVersion: networking.istio.io/v1
+kind: ServiceEntry
+metadata:
+  name: www-google-com
+  namespace: istio-egress
+spec:
+  hosts:
+  - www.google.com
+  ports:
+  - number: 80
+    name: http-port
+    protocol: HTTP
+  resolution: DNS

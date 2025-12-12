@@ -1,0 +1,3 @@
+- op: add
+  path: /metadata/labels/istio.io~1use-waypoint
+  value: egress-gateway

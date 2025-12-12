@@ -27,4 +27,4 @@ patches:
 - path: patch-namespace-use-waypoint-egress-gateway.yaml
   target:
     kind: Namespace
-    name: sample
+    name: istio-egress

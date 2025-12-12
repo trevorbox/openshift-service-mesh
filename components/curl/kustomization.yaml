@@ -10,5 +10,7 @@ helmCharts:
   version: ~0.0.2
   releaseName: curl
 
-# resources:
+resources:
+  - serviceentry-httpbin-org.yaml
+  - serviceentry-www-google-com.yaml
   # - netoworkpolicies.yaml

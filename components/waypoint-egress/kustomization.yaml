@@ -3,5 +3,3 @@ kind: Kustomization
 
 resources:
   - gateway-egress-gateway.yaml
-  - serviceentry-httpbin-org.yaml
-  - serviceentry-www-google-com.yaml

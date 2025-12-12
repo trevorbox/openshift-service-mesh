@@ -1,11 +1,13 @@
 apiVersion: networking.istio.io/v1
 kind: ServiceEntry
 metadata:
-  name: httpbin-org
-  namespace: istio-egress
+  name: www-google-com
+  labels:
+    istio.io/use-waypoint: egress-gateway
+    istio.io/use-waypoint-namespace: istio-egress
 spec:
   hosts:
-  - httpbin.org
+  - www.google.com
   ports:
   - number: 80
     name: http-port

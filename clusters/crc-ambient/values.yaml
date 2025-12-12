@@ -309,3 +309,12 @@ applications:
       namespace: openshift-gitops
     source:
       path: components/authentication
+
+  waypoint-egress:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: components/waypoint-egress

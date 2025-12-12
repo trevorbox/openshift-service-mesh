@@ -6,6 +6,8 @@ metadata:
     istio.io/use-waypoint: egress-gateway
     istio.io/use-waypoint-namespace: istio-egress
 spec:
+  exportTo:
+  - "."
   hosts:
   - www.google.com
   ports:

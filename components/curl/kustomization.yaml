@@ -10,5 +10,5 @@ helmCharts:
   version: ~0.0.2
   releaseName: curl
 
-resources:
-  - netoworkpolicies.yaml
+# resources:
+  # - netoworkpolicies.yaml

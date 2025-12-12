@@ -4,7 +4,7 @@ kind: Kustomization
 
 resources:
   - ../../../../components/istio-system-configs
-  - authorizationpolicy-allow-nothing-istio-waypoint.yaml
+  # - authorizationpolicy-allow-nothing-istio-waypoint.yaml
 
 # patches:
 #   - path: patch-delete-peerauthentication-default.yaml

@@ -1,0 +1,28 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: default-deny-egress
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: istio-egress
+spec:
+  podSelector: {}
+  egress:
+  - ports:
+    - protocol: TCP
+      port: 15008
+  - ports:
+    - protocol: TCP
+      port: 15012
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: istio-egress
+  policyTypes:
+  - Egress

@@ -24,3 +24,7 @@ patches:
   target:
     kind: Namespace
     name: httpbin
+- path: patch-namespace-use-waypoint-egress-gateway.yaml
+  target:
+    kind: Namespace
+    name: sample

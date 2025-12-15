@@ -7,22 +7,15 @@ spec:
   policyTypes:
     - Egress
 ---
-apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
 metadata:
-  name: allow-egress-gateway
+  name: allow-istio-egress-control
 spec:
   podSelector: {}
   egress:
-  - ports:
-    - protocol: TCP
-      port: 15008
-  - ports:
-    - protocol: TCP
-      port: 15012
-  - to:
-    - namespaceSelector:
-        matchLabels:
-          kubernetes.io/metadata.name: istio-egress
+    - to:
+        - ipBlock:
+            cidr: 10.217.0.0/22 # oc get network cluster -o=jsonpath='{.spec.clusterNetwork[0].cidr}'
   policyTypes:
-  - Egress
+    - Egress

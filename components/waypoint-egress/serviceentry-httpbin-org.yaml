@@ -2,9 +2,9 @@ apiVersion: networking.istio.io/v1
 kind: ServiceEntry
 metadata:
   name: httpbin-org
-  labels:
-    istio.io/use-waypoint: egress-gateway
-    istio.io/use-waypoint-namespace: istio-egress
+  # labels:
+  #   istio.io/use-waypoint: egress-gateway
+  #   istio.io/use-waypoint-namespace: istio-egress
 spec:
   exportTo:
   - "."

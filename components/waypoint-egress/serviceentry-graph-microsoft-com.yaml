@@ -2,12 +2,12 @@
 apiVersion: networking.istio.io/v1
 kind: ServiceEntry
 metadata:
-  name: login-microsoftonline-com
+  name: graph-microsoft-com
 spec:
   exportTo:
   - "."
   hosts:
-  - login.microsoftonline.com
+  - graph.microsoft.com
   ports:
   - number: 443
     name: https-port

@@ -9,3 +9,4 @@ resources:
   - serviceentry-www-google-com.yaml
   - authorizationpolicy-www.google.com.yaml
   - serviceentry-login-microsoftonline-com.yaml
+  - serviceentry-graph-microsoft-com.yaml

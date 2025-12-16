@@ -319,14 +319,14 @@ applications:
     source:
       path: components/waypoint-egress
 
-  waypoint-egress2:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '3'
-    destination:
-      namespace: openshift-gitops
-    source:
-      path: clusters/crc-ambient/overlays/waypoint-egress2
+  # waypoint-egress2:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '3'
+  #   destination:
+  #     namespace: openshift-gitops
+  #   source:
+  #     path: clusters/crc-ambient/overlays/waypoint-egress2
 
   blob:
     annotations:

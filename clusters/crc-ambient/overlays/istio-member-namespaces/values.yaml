@@ -15,7 +15,7 @@ members:
   - authz-custom
   - httpbin
   - istio-egress
-  - istio-egress2
+  # - istio-egress2
 labels:
   istio.io/rev: default
   argocd.argoproj.io/managed-by: openshift-gitops

@@ -8,6 +8,7 @@ spec:
   - "."
   hosts:
   - login.microsoftonline.com
+  - graph.microsoft.com
   ports:
   - number: 443
     name: https-port

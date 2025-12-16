@@ -28,8 +28,22 @@ patches:
   target:
     kind: Namespace
     name: istio-egress
+- path: patch-namespace-use-waypoint-egress-gateway.yaml
+  target:
+    kind: Namespace
+    name: istio-egress2
 - path: patch-delete-allow-egress-clusternetwork-cidr.yaml
   target:
     kind: NetworkPolicy
     name: allow-egress-clusternetwork-cidr
     namespace: istio-egress
+- path: patch-delete-allow-egress-clusternetwork-cidr.yaml
+  target:
+    kind: NetworkPolicy
+    name: allow-egress-clusternetwork-cidr
+    namespace: istio-egress
+- path: patch-delete-allow-egress-clusternetwork-cidr.yaml
+  target:
+    kind: NetworkPolicy
+    name: allow-egress-clusternetwork-cidr
+    namespace: istio-egress2

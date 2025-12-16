@@ -17,6 +17,7 @@ spec:
               operator: In
               values:
                 # - httpbin
-                - nginx-echo-headers
-                - authz-custom
-                - sample
+                # - nginx-echo-headers
+                # - authz-custom
+                # - sample
+                - istio-egress

@@ -15,7 +15,7 @@ ztunnel:
   enabled: true # Changed to true
   spec:
     namespace: ztunnel
-    profile: ambient
+    # profile: ambient
     version: v1.27.3
     values:
       ztunnel:

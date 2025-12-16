@@ -10,3 +10,5 @@ resources:
   - authorizationpolicy-www.google.com.yaml
   - serviceentry-login-microsoftonline-com.yaml
   - serviceentry-graph-microsoft-com.yaml
+  - authorizationpolicy-login-microsoftonline-com.yaml
+  - authorizationpolicy-graph-microsoft-com.yaml

@@ -14,7 +14,7 @@ spec:
   # Allow only certain apps access
   - from:
     - source:
-        principals: ["cluster.local/ns/auth2-custom/sa/oauth2-proxy"]
+        principals: ["cluster.local/ns/authz-custom/sa/oauth2-proxy"]
   # - from:
   #   - source:
   #       principals: ["cluster.local/ns/sample/sa/curl"]

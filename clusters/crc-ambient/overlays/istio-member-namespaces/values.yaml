@@ -24,3 +24,5 @@ annotations:
   argocd.argoproj.io/sync-options: Delete=false 
 ambient:
   enabled: true
+egressControl:
+  enabled: true

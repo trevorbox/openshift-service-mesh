@@ -1,0 +1,21 @@
+
+
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: www-google-com
+  namespace: istio-egress
+spec:
+  targetRefs:
+  - kind: ServiceEntry
+    group: networking.istio.io
+    name: www-google-com
+  action: ALLOW
+  rules:
+  # Allow only certain apps access
+  - from:
+    - source:
+        principals: ["cluster.local/ns/httpbin/sa/default"]
+  - from:
+    - source:
+        principals: ["cluster.local/ns/sample/sa/curl"]

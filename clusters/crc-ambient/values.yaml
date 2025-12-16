@@ -283,14 +283,14 @@ applications:
     source:
       path: components/machineconfiguration
 
-  butane-test:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '4'
-    destination:
-      namespace: default
-    source:
-      path: components/butane-test
+  # butane-test:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '4'
+  #   destination:
+  #     namespace: default
+  #   source:
+  #     path: components/butane-test
 
   az-wi:
     annotations:

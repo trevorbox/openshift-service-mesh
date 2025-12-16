@@ -12,9 +12,9 @@ spec:
   action: ALLOW
   rules:
   # Allow only certain apps access
-  # - from:
-  #   - source:
-  #       principals: ["cluster.local/ns/auth2-custom/sa/oauth2-proxy"]
   - from:
     - source:
-        principals: ["cluster.local/ns/sample/sa/curl"]
+        principals: ["cluster.local/ns/auth2-custom/sa/oauth2-proxy"]
+  # - from:
+  #   - source:
+  #       principals: ["cluster.local/ns/sample/sa/curl"]

@@ -24,7 +24,8 @@ patches:
   target:
     kind: Namespace
     name: httpbin
-# - path: patch-namespace-use-waypoint-egress-gateway.yaml
-#   target:
-#     kind: Namespace
-#     name: istio-egress
+- path: delete-networkpolicy.yaml
+  target:
+    kind: NetworkPolicy
+    name: patch-delete-allow-egress-clusternetwork-cidr.yaml
+    namespace: istio-egress

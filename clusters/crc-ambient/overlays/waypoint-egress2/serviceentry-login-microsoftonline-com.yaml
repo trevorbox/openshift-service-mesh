@@ -1,0 +1,15 @@
+
+apiVersion: networking.istio.io/v1
+kind: ServiceEntry
+metadata:
+  name: login-microsoftonline-com
+spec:
+  exportTo:
+  - "."
+  hosts:
+  - login.microsoftonline.com
+  ports:
+  - number: 443
+    name: https-port
+    protocol: HTTPS
+  resolution: DNS

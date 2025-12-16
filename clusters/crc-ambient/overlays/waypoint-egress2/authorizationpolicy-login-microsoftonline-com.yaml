@@ -1,0 +1,20 @@
+
+
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: login-microsoftonline-com
+spec:
+  targetRefs:
+  - kind: ServiceEntry
+    group: networking.istio.io
+    name: login-microsoftonline-com
+  action: ALLOW
+  rules:
+  # Allow only certain apps access
+  # - from:
+  #   - source:
+  #       principals: ["cluster.local/ns/authz-custom/sa/oauth2-proxy"]
+  - from:
+    - source:
+        principals: ["cluster.local/ns/sample/sa/curl"]

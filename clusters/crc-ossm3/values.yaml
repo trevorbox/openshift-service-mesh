@@ -219,6 +219,6 @@ applications:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
       argocd.argoproj.io/sync-wave: '4'
     destination:
-      namespace: sample
+      namespace: httpbin
     source:
       path: components/httpbin

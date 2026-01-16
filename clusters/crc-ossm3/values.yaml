@@ -213,3 +213,12 @@ applications:
       namespace: sample
     source:
       path: components/curl
+
+  httpbin:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: sample
+    source:
+      path: components/httpbin

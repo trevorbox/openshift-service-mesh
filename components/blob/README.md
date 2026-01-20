@@ -182,3 +182,8 @@ oc exec dummy-pod -- cat /var/run/secrets/azure/tokens/azure-identity-token
 
 ![Entra App registration Federated Credential](./.images/entra-admin-center-sign-in-logs-invalid-jwks-after-kube-api-rotation.png)
 
+## cleanup
+
+```sh
+az storage blob delete --account-name ${AZURE_STORAGE_ACCOUNT}   --container-name ${AZURE_STORAGE_CONTAINER}   --name 'openid/v1/jwks'
+```

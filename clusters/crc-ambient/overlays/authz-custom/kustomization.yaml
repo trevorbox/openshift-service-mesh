@@ -12,6 +12,7 @@ helmCharts:
 resources:
   - auth
   - httproute-httpbin-istio-ingress.yaml
+  - secret-oauth2-proxy.yaml
 
 patches:
 - path: patch-deployment.yaml

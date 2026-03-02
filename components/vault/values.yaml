@@ -10,6 +10,10 @@ injector:
 
 server:
 
+  image:
+    repository: "registry.connect.redhat.com/hashicorp/vault"
+    tag: "1.19.0-ubi"
+
   volumes:    
     - name: plugins
       emptyDir: {}

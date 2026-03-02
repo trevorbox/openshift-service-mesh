@@ -4,7 +4,7 @@ metadata:
   name: ewgateway
   namespace: istio-system
 spec:
-  host: ewgateway.apps.east.sandbox5519.opentlc.com
+  host: ewgateway.apps.east.sandbox1572.opentlc.com
   to:
     kind: Service
     name: istio-eastwestgateway

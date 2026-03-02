@@ -1,7 +1,7 @@
 istio:
   enabled: true
 ingressgateway:
-  host: spring-boot-demo-istio-ingress.apps.west.sandbox5367.opentlc.com
+  host: spring-boot-demo-istio-ingress.apps.west.sandbox2116.opentlc.com
 replicaCount: 1
 cryostat:
   agent:

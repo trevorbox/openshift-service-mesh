@@ -16,6 +16,6 @@ spec:
   egress:
     - to:
         - ipBlock:
-            cidr: 10.217.0.0/22 # oc get network cluster -o=jsonpath='{.spec.clusterNetwork[0].cidr}'
+            cidr: 10.128.0.0/14 # oc get network cluster -o=jsonpath='{.spec.clusterNetwork[0].cidr}'
   policyTypes:
     - Egress

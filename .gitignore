@@ -1,3 +1,4 @@
 .vscode/settings.json
 openshift-install
 .certs
+charts

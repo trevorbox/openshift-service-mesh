@@ -13,6 +13,6 @@ operators:
   name: vault-secrets-operator
   source: certified-operators
   sourceNamespace: openshift-marketplace
-  csv: vault-secrets-operator.v0.10.0
+  csv: vault-secrets-operator.v1.0.0
   namespace: vault-secrets-operator
   installPlanVerifierActiveDeadlineSeconds: 1200

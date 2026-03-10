@@ -222,3 +222,13 @@ applications:
       namespace: httpbin
     source:
       path: components/httpbin
+
+  sidecar-generator-operator:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: sidecar-generator-operator-system
+    source:
+      path: config/default
+      repoURL: https://github.com/trevorbox/sidecar-generator-operator.git

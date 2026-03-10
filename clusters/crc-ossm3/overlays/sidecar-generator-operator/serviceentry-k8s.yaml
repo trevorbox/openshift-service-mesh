@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1
+kind: ServiceEntry
+metadata:
+  name: k8s
+  namespace: sidecar-generator-operator-system
+spec:
+  addresses:
+    - 10.217.4.1/32
+  hosts:
+    - kubernetes.default.svc.cluster.local
+  location: MESH_EXTERNAL
+  ports:
+    - name: https
+      number: 443
+      protocol: HTTPS
+  resolution: NONE

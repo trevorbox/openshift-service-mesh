@@ -223,6 +223,16 @@ applications:
     source:
       path: components/httpbin
 
+  # need a serviceentry for REGISTRY_ONLY to k8s api
+  sidecar-generator-operator-crc:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: sidecar-generator-operator-system
+    source:
+      path: clusters/crc-ossm3/overlays/sidecar-generator-operator
+
   sidecar-generator-operator:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous

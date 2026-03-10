@@ -230,5 +230,4 @@ applications:
     destination:
       namespace: sidecar-generator-operator-system
     source:
-      path: config/default
-      repoURL: https://github.com/trevorbox/sidecar-generator-operator.git
+      path: components/sidecar-generator-operator

@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+ - https://github.com/trevorbox/sidecar-generator-operator/config/default?ref=main
+
+images:
+  - name: example.com/sidecar-generator-operator:v0.0.1
+    newName: quay.io/trevorbox/sidecar-generator-operator
+    newTag: v0.0.1
+
+patches:
+  - target:
+        kind: Namespace
+        name: sidecar-generator-operator-system
+    patch: |-
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: sidecar-generator-operator-system
+        labels:
+          istio.io/rev: default

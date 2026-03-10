@@ -40,6 +40,7 @@ projects:
     sourceRepos:
     - https://github.com/trevorbox/openshift-service-mesh
     - https://github.com/redhat-cop/helm-charts
+    - https://github.com/trevorbox/sidecar-generator-operator
     destinations: |
       - namespace: '*'
         server: https://kubernetes.default.svc
@@ -58,6 +59,7 @@ projects:
     sourceRepos:
     - https://github.com/trevorbox/openshift-service-mesh
     - https://github.com/redhat-cop/helm-charts
+    - https://github.com/trevorbox/sidecar-generator-operator
     destinations: |
       - namespace: '*'
         server: https://kubernetes.default.svc?__team=team1

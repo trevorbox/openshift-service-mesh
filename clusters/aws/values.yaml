@@ -98,9 +98,9 @@ applications:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
       argocd.argoproj.io/sync-wave: '2'
     destination:
-      namespace: istio-system
+      namespace: grafana
     source:
-      path: components/grafana-istio
+      path: clusters/aws/overlays/grafana-istio
 
   istio-ingressgateway:
     annotations:

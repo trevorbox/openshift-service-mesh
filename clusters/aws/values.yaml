@@ -30,14 +30,32 @@ default:
 
 applications:
   
-  service-mesh-operator:
+  servicemeshoperator3:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
       argocd.argoproj.io/sync-wave: '-1'
     destination:
       namespace: openshift-gitops
     source:
-      path: components/service-mesh-operator
+      path: components/servicemeshoperator3
+
+  istio-cni-configs:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '1'
+    destination:
+      namespace: istio-cni
+    source:
+      path: components/istio-cni-configs
+
+  ossm3-istio-system:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '2'
+    destination:
+      namespace: istio-system
+    source:
+      path: clusters/aws-east/overlays/ossm3-istio-system
 
   istio-member-namespaces:
     annotations:
@@ -55,16 +73,7 @@ applications:
     destination:
       namespace: openshift-monitoring
     source:
-      path: components/openshift-monitoring
-
-  istio-system:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '2'
-    destination:
-      namespace: istio-system
-    source:
-      path: components/ossm2                          
+      path: components/openshift-monitoring                    
 
   tempo-system:
     annotations:

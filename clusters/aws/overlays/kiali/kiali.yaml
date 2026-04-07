@@ -4,8 +4,8 @@ metadata:
   name: kiali-istio-system
   namespace: kiali
 spec:
-  kubernetes_config:
-    cluster_name: cluster1
+  # kubernetes_config:
+  #   cluster_name: cluster1
   # clustering:
   #   autodetect_secrets:
   #     enabled: true
@@ -83,7 +83,7 @@ spec:
       health_check_url: https://tempo-minio-dev-gateway-tempo-system.apps.asd.sandbox2873.opentlc.com/api/traces/v1/dev/tempo/api/echo
       auth:
         ca_file: /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
-        insecure_skip_verify: false
+        insecure_skip_verify: true
         type: bearer
         use_kiali_token: true
       tempo_config:

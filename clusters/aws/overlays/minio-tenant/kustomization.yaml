@@ -4,11 +4,9 @@ kind: Kustomization
 helmCharts:
 - name: tenant
   repo: "https://operator.min.io"
-  valuesFile: ../../../../components/minio-tenant/values.yaml
+  valuesFile: values.yaml
   namespace: minio-tenant
-  version: ~5.0.14
-  additionalValuesFiles: 
-    - values.yaml
+  version: ~7.0.1
 
 resources:
   - route.yaml

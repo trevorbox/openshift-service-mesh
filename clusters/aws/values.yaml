@@ -164,3 +164,21 @@ applications:
       namespace: nginx-echo-headers
     source:
       path: clusters/aws/overlays/nginx-echo-headers
+
+  opentelemetry-product:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '-1'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: components/opentelemetry-product
+
+  opentelemetry-collector:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '0'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: components/opentelemetry-collector

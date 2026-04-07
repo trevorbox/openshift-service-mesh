@@ -84,7 +84,7 @@ spec:
         tenant: "dev"
         url_format: "openshift"
       use_grpc: false
-      # internal_url: 'https://tempo-minio-dev-gateway.tempo-system.svc.cluster.local:8080/api/traces/v1/dev/tempo'
+      internal_url: 'https://tempo-minio-dev-gateway.tempo-system.svc.cluster.local:8080/api/traces/v1/dev/tempo'
       # external_url: https://tempo-minio-dev-gateway-tempo-system.apps.asd.sandbox2873.opentlc.com/api/traces/v1/dev/search
       # health_check_url: https://tempo-minio-dev-gateway-tempo-system.apps.asd.sandbox2873.opentlc.com/api/traces/v1/dev/tempo/api/echo
       # auth:

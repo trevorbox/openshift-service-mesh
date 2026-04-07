@@ -64,7 +64,7 @@ applications:
     destination:
       namespace: istio-system
     source:
-      path: clusters/aws-east/overlays/ossm3-istio-system
+      path: components/ossm3-istio-system
 
   istio-member-namespaces:
     annotations:
@@ -73,7 +73,7 @@ applications:
     destination:
       namespace: openshift-gitops
     source:
-      path: components/istio-member-namespaces
+      path: clusters/aws-east/overlays/istio-member-namespaces
                          
   openshift-monitoring:
     annotations:

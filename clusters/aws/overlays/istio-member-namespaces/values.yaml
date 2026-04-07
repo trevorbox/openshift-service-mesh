@@ -1,0 +1,10 @@
+members:
+  - istio-ingress
+  - bookinfo
+  - golang-ex
+  - nginx-echo-headers
+labels:
+  istio.io/rev: default
+  argocd.argoproj.io/managed-by: openshift-gitops
+annotations:
+  argocd.argoproj.io/sync-options: Delete=false 

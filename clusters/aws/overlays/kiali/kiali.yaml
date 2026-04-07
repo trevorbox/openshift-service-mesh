@@ -101,7 +101,8 @@ spec:
         type: bearer
         use_kiali_token: true
       tempo_config:
-         url_format: "jaeger"
+        # url_format: "jaeger"
+        url_format: "grafana"
   installation_tag: Kiali3
   istio_labels:
     app_label_name: app

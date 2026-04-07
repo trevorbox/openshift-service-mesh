@@ -73,7 +73,7 @@ applications:
     destination:
       namespace: openshift-gitops
     source:
-      path: clusters/aws-east/overlays/istio-member-namespaces
+      path: clusters/aws/overlays/istio-member-namespaces
                          
   openshift-monitoring:
     annotations:

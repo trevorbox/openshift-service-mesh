@@ -75,34 +75,34 @@ spec:
       thanos_proxy:
         enabled: true
       url: https://thanos-querier.openshift-monitoring.svc.cluster.local:9091
-    # tracing:
-    #   enabled: true
-    #   provider: tempo
-    #   tempo_config:
-    #     name: "minio-dev"
-    #     namespace: "tempo-system"
-    #     tenant: "dev"
-    #     url_format: "openshift"
-    #   use_grpc: false
-    #   internal_url: 'https://tempo-minio-dev-gateway.tempo-system.svc.cluster.local:8080/api/traces/v1/dev/tempo'
-    #   external_url: 'https://console-openshift-console.apps.asd.sandbox2873.opentlc.com'
-    #   auth:
-    #     insecure_skip_verify: true
     tracing:
       enabled: true
       provider: tempo
+      tempo_config:
+        name: "minio-dev"
+        namespace: "tempo-system"
+        tenant: "dev"
+        url_format: "openshift"
       use_grpc: false
       internal_url: 'https://tempo-minio-dev-gateway.tempo-system.svc.cluster.local:8080/api/traces/v1/dev/tempo'
-      external_url: https://tempo-minio-dev-gateway-tempo-system.apps.asd.sandbox2873.opentlc.com/api/traces/v1/dev/search
-      health_check_url: https://tempo-minio-dev-gateway-tempo-system.apps.asd.sandbox2873.opentlc.com/api/traces/v1/dev/tempo/api/echo
+      external_url: 'https://console-openshift-console.apps.asd.sandbox2873.opentlc.com'
       auth:
-        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
         insecure_skip_verify: true
-        type: bearer
-        use_kiali_token: true
-      tempo_config:
-        # url_format: "jaeger"
-        url_format: "grafana"
+    # tracing:
+    #   enabled: true
+    #   provider: tempo
+    #   use_grpc: false
+    #   internal_url: 'https://tempo-minio-dev-gateway.tempo-system.svc.cluster.local:8080/api/traces/v1/dev/tempo'
+    #   external_url: https://tempo-minio-dev-gateway-tempo-system.apps.asd.sandbox2873.opentlc.com/api/traces/v1/dev/search
+    #   health_check_url: https://tempo-minio-dev-gateway-tempo-system.apps.asd.sandbox2873.opentlc.com/api/traces/v1/dev/tempo/api/echo
+    #   auth:
+    #     ca_file: /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
+    #     insecure_skip_verify: true
+    #     type: bearer
+    #     use_kiali_token: true
+    #   tempo_config:
+    #     # url_format: "jaeger"
+    #     url_format: "grafana"
   installation_tag: Kiali3
   istio_labels:
     app_label_name: app

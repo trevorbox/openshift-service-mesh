@@ -88,6 +88,8 @@ spec:
       external_url: 'https://console-openshift-console.apps.asd.sandbox2873.opentlc.com'
       auth:
         insecure_skip_verify: true
+        type: bearer
+        use_kiali_token: true
     # tracing:
     #   enabled: true
     #   provider: tempo

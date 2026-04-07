@@ -6,11 +6,12 @@ resources:
   - namespace-tempo-system.yaml
   - secret-minio-dev.yaml
   - tempostack-minio-dev.yaml
+  - rbac.yaml
 
-helmCharts:
-- name: openshift-oauth-proxy
-  repo: https://trevorbox.github.io/helm-charts
-  namespace: tempo-system
-  valuesFile: values.yaml
-  version: ~0.1.2
-  releaseName: openshift-oauth-proxy
+# helmCharts:
+# - name: openshift-oauth-proxy
+#   repo: https://trevorbox.github.io/helm-charts
+#   namespace: tempo-system
+#   valuesFile: values.yaml
+#   version: ~0.1.2
+#   releaseName: openshift-oauth-proxy

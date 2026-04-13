@@ -1,0 +1,10 @@
+apiVersion: operator.openshift.io/v1
+kind: SecondaryScheduler
+metadata:
+  name: cluster
+  namespace: openshift-secondary-scheduler-operator
+spec:
+  logLevel: Normal
+  operatorLogLevel: Normal
+  schedulerConfig: least-pods-config
+  schedulerImage: 'quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:bd47556c52e5fb18cb0988f638f7b898b5da9b26a390be5fc4a60859ed2eec33'

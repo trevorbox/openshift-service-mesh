@@ -36,6 +36,8 @@ revisions:
           env:
             # Enable automatic address allocation, optional
             PILOT_ENABLE_IP_AUTOALLOCATE: "true"
+            PILOT_FILTER_GATEWAY_CLUSTER_CONFIG: "true"
+            PILOT_SCOPE_GATEWAY_TO_NAMESPACE: "true"
         global:
           proxy:
             resources:

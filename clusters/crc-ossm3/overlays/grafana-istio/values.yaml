@@ -1,6 +1,6 @@
 cookieSecret: supersecret
 datasource:
-  url: 'http://prometheus-server.prometheus.svc.cluster.local'
+  url: 'https://thanos-querier.openshift-monitoring.svc.cluster.local:9091'
   jsonData:
     customQueryParameters:
 consoleLink: 

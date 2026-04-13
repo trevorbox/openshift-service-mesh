@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - namespace-grafana.yaml
+  - datasource-tempo.yaml
 
 helmCharts:
 - name: grafana-istio

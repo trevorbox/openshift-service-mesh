@@ -1,0 +1,28 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: least-pods-config
+  namespace: openshift-secondary-scheduler-operator
+data:
+  config.yaml: |
+    apiVersion: kubescheduler.config.k8s.io/v1
+    kind: KubeSchedulerConfiguration
+    leaderElection:
+      leaderElect: false # Secondary schedulers usually disable this unless running multiple replicas
+    profiles:
+      - schedulerName: least-pods-scheduler
+        plugins:
+          score:
+            disabled:
+              - name: "*"
+            enabled:
+              - name: NodeResourcesFit
+                weight: 1
+        pluginConfig:
+          - name: NodeResourcesFit
+            args:
+              scoringStrategy:
+                type: LeastAllocated
+                resources:
+                  - name: pods
+                    weight: 1

@@ -1,0 +1,99 @@
+apiVersion: operator.cryostat.io/v1beta2
+kind: Cryostat
+metadata:
+  name: cryostat
+spec:
+  targetNamespaces:
+    {{- .Values.targetNamespaces | toYaml | nindent 4 }}
+  enableCertManager: false
+  networkPolicies:
+    coreConfig:
+      disabled: true
+    databaseConfig:
+      disabled: true
+    reportsConfig:
+      disabled: true
+    storageConfig:
+      disabled: true
+  authorizationOptions:
+    openShiftSSO: # only effective when running on OpenShift
+      disable: false # set this to `true` to disable OpenShift SSO integration
+      accessReview: # override this to change the required Role for users and service accounts to access the application
+        verb: get
+        resource: pods
+        namespace: cryostat
+  operandMetadata:
+    podMetadata:
+      labels:
+        maistra.io/expose-route: 'false'
+        sidecar.istio.io/inject: 'true'
+      # note: these get applied to all deployments
+      annotations:
+        sidecar.istio.io/proxyMemory: 64Mi
+        sidecar.istio.io/proxyMemoryLimit: 1Gi
+        # proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
+        # proxy.istio.io/config: |
+        #   proxyMetadata:
+        #     ISTIO_META_DNS_CAPTURE: "false"
+        #     ISTIO_META_DNS_AUTO_ALLOCATE: "false"
+  reportOptions:
+    replicas: 1
+    resources:
+      requests:
+        cpu: 300m
+        memory: 512Mi
+  storageOptions:
+    database:
+      pvc:
+        spec:
+          resources:
+            requests:
+              storage: 10Gi
+    pvc:
+      spec:
+        resources:
+          requests:
+            storage: 50Gi
+  resources:
+    # Resource requirements for the auth proxy.
+    authProxyResources:
+      requests:
+        cpu: 25m
+        memory: 64Mi
+      limits:
+        memory: 128Mi
+    # Resource requirements for the Cryostat application. If specifying a memory limit, at least 384MiB is recommended.
+    coreResources:
+      requests:
+        cpu: 500m
+        memory: 384Mi
+      limits:
+        memory: 768Mi  
+    # Resource requirements for the JFR Data Source container.
+    dataSourceResources:
+      requests:
+        cpu: 200m
+        memory: 200Mi
+      limits:
+        memory: 400Mi
+    # Resource requirements for the database container.
+    databaseResources:
+      requests:
+        cpu: 25m
+        memory: 64Mi
+      limits:
+        memory: 128Mi
+    # Resource requirements for the Grafana container.
+    grafanaResources:
+      requests:
+        cpu: 25m
+        memory: 80Mi
+      limits:
+        memory: 160Mi
+    # Resource requirements for the object storage container.
+    objectStorageResources:
+      requests:
+        cpu: 50m
+        memory: 256Mi
+      limits:
+        memory: 512Mi

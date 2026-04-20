@@ -1,0 +1,4 @@
+targetNamespaces:
+  - spring-boot-demo
+  - spring-boot-demo2
+  # - bookinfo

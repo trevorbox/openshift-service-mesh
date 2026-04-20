@@ -2,3 +2,4 @@
 openshift-install
 .certs
 charts
+!components/cryostat/charts

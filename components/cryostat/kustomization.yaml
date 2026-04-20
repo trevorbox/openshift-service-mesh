@@ -2,15 +2,24 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+# namespace: cryostat
+
 resources:
   # - namespace-cryostat.yaml
-  - cryostat-cryostat.yaml  
+  # - cryostat-cryostat.yaml  
   - service-cryostat-headless.yaml
   # - networkpolicy-allow-any-istio-rev.yaml
 
   # Disble mtls or enable ingress through a istio gateway
   - peerauthentication-disable-mtls-cryostat-ui.yaml
-  - sidecar-default.yaml
-  - sidecar-cryostat.yaml
+  # - sidecar-default.yaml
+  # - sidecar-cryostat.yaml
 
   # - gateway/
+
+helmCharts:
+- name: gen-cryostat
+  # version: 0.1.0
+  repo: ./charts          # Path to the directory containing the chart
+  valuesFile: values.yaml # Local values file to override defaults
+  namespace: cryostat

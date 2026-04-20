@@ -16,6 +16,7 @@ members:
   - test
   - httpbin
   - spring-boot-demo
+  - cryostat
 labels:
   istio.io/rev: default
   argocd.argoproj.io/managed-by: openshift-gitops

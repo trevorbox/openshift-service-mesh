@@ -3,7 +3,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - namespace-cryostat.yaml
+  # - namespace-cryostat.yaml
   - cryostat-cryostat.yaml  
   - service-cryostat-headless.yaml
   - networkpolicy-allow-any-istio-rev.yaml
@@ -11,7 +11,5 @@ resources:
   # Disble mtls or enable ingress through a istio gateway
   - peerauthentication-disable-mtls-cryostat-ui.yaml
   - sidecar-allow-any-outbound.yaml
-
-  - podmonitor.yaml
 
   # - gateway/

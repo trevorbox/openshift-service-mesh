@@ -12,4 +12,6 @@ resources:
   - peerauthentication-disable-mtls-cryostat-ui.yaml
   - sidecar-allow-any-outbound.yaml
 
+  - sidecar-default.yaml
+
   # - gateway/

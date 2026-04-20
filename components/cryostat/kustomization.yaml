@@ -11,5 +11,6 @@ resources:
   # Disble mtls or enable ingress through a istio gateway
   - peerauthentication-disable-mtls-cryostat-ui.yaml
   - sidecar-default.yaml
+  - sidecar-cryostat.yaml
 
   # - gateway/

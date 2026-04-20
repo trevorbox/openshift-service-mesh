@@ -1,11 +1,14 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Sidecar
 metadata:
-  name: default
+  name: cryostat
   namespace: cryostat
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
-  egress:
-  - hosts:
-    - "./*"
+  workloadSelector:
+    labels:
+      app: cryostat
+      component: cryostat
+  outboundTrafficPolicy:
+    mode: ALLOW_ANY

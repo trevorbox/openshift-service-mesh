@@ -276,3 +276,42 @@ applications:
       namespace: openshift-gitops
     source:
       path: components/opentelemetry-collector
+
+  cryostat-operator:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '-1'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: components/cryostat-operator
+
+  cryostat:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: cryostat
+    source:
+      path: clusters/crc-cryostat-ossm3/overlays/cryostat
+
+  spring-boot-demo:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: spring-boot-demo
+    source:
+      # path: components/spring-boot-demo
+      path: clusters/crc-cryostat/overlays/spring-boot-demo
+
+  # this tests deploying the app outside the mesh, but behind the same gateway
+  spring-boot-demo2:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: spring-boot-demo2
+    source:
+      # path: components/spring-boot-demo2
+      path: clusters/crc-cryostat/overlays/spring-boot-demo2

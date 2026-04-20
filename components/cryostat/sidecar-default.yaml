@@ -9,3 +9,5 @@ spec:
   egress:
   - hosts:
     - "./*"
+  outboundTrafficPolicy:
+    mode: ALLOW_ANY

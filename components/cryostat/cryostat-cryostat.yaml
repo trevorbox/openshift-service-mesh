@@ -25,7 +25,9 @@ spec:
       labels:
         maistra.io/expose-route: 'false'
         sidecar.istio.io/inject: 'true'
-      # annotations: 
+      annotations:
+        sidecar.istio.io/proxyMemory: 512Mi
+        sidecar.istio.io/proxyMemoryLimit: 1Gi
         # proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
         # proxy.istio.io/config: |
         #   proxyMetadata:

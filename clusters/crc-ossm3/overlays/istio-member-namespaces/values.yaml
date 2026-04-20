@@ -15,6 +15,7 @@ members:
   - authz-custom
   - test
   - httpbin
+  - spring-boot-demo
 labels:
   istio.io/rev: default
   argocd.argoproj.io/managed-by: openshift-gitops

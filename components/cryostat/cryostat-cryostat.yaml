@@ -96,6 +96,4 @@ spec:
       limits:
         memory: 512Mi
   
-  targetNamespaces:
-    - spring-boot-demo
-    - spring-boot-demo2
+  targetNamespaces: []

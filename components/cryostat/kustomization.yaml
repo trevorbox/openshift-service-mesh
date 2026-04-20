@@ -6,20 +6,34 @@ kind: Kustomization
 
 resources:
   # - namespace-cryostat.yaml
-  # - cryostat-cryostat.yaml  
+  - cryostat-cryostat.yaml  
   - service-cryostat-headless.yaml
   # - networkpolicy-allow-any-istio-rev.yaml
 
   # Disble mtls or enable ingress through a istio gateway
   - peerauthentication-disable-mtls-cryostat-ui.yaml
-  # - sidecar-default.yaml
-  # - sidecar-cryostat.yaml
+  - sidecar-default.yaml
+  - sidecar-cryostat.yaml
 
   # - gateway/
 
-helmCharts:
-- name: gen-cryostat
-  # version: 0.1.0
-  repo: ./charts          # Path to the directory containing the chart
-  valuesFile: values.yaml # Local values file to override defaults
-  namespace: cryostat
+patches:
+  - target:
+      kind: Cryostat
+      name: cryostat
+    patch: |-
+      - op: replace
+        path: "/spec/targetNamespaces"
+        value: 
+          - spring-boot-demo
+          - spring-boot-demo2
+  - target:
+      kind: Sidecar
+      name: cryostat
+    patch: |-
+      - op: replace
+        path: "/spec/egress/0/hosts"
+        value: 
+          - "./*"
+          - "spring-boot-demo/*"
+          - "spring-boot-demo2/*"

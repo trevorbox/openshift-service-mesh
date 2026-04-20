@@ -6,6 +6,9 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
+  egress:
+  - hosts:
+    - "./*"
   workloadSelector:
     labels:
       app: cryostat

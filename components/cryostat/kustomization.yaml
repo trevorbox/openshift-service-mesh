@@ -5,17 +5,19 @@ kind: Kustomization
 # namespace: cryostat
 
 resources:
-  # - namespace-cryostat.yaml
+  - namespace-cryostat.yaml
   - cryostat-cryostat.yaml  
   - service-cryostat-headless.yaml
-  # - networkpolicy-allow-any-istio-rev.yaml
-
-  # Disble mtls or enable ingress through a istio gateway
-  - peerauthentication-disable-mtls-cryostat-ui.yaml
+  - networkpolicy-allow-any-istio-rev.yaml
+  - networkpolicy-allow-istio-system.yaml
+  - networkpolicy-user-workload-access.yaml
+  - podmonitor-istio-proxies-monitor.yaml
   - sidecar-default.yaml
   - sidecar-cryostat.yaml
   - networkpolicy-allow-cryostat-operator.yaml
 
+  # Disble mtls or enable ingress through a istio gateway
+  - peerauthentication-disable-mtls-cryostat-ui.yaml
   # - gateway/
 
 patches:

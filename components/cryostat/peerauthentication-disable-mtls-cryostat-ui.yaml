@@ -11,3 +11,4 @@ spec:
   selector:
     matchLabels:
       app: cryostat
+      component: cryostat

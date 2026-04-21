@@ -14,6 +14,7 @@ resources:
   - peerauthentication-disable-mtls-cryostat-ui.yaml
   - sidecar-default.yaml
   - sidecar-cryostat.yaml
+  - networkpolicy-allow-cryostat-operator.yaml
 
   # - gateway/
 

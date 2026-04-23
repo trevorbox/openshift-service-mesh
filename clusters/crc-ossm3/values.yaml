@@ -320,8 +320,7 @@ applications:
       server: https://kubernetes.default.svc?__team=team1
     project: team1
     source:
-      # path: components/spring-boot-demo
-      path: clusters/crc-cryostat/overlays/spring-boot-demo
+      path: components/spring-boot-demo
 
   # this tests deploying the app outside the mesh, but behind the same gateway
   spring-boot-demo2:
@@ -333,5 +332,4 @@ applications:
       server: https://kubernetes.default.svc?__team=team1
     project: team1
     source:
-      # path: components/spring-boot-demo2
-      path: clusters/crc-cryostat/overlays/spring-boot-demo2
+      path: components/spring-boot-demo2

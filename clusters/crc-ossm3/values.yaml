@@ -127,6 +127,7 @@ applications:
       argocd.argoproj.io/sync-wave: '3'
     destination:
       namespace: istio-ingress
+      server: https://kubernetes.default.svc?__team=team1
     source:
       # path: components/istio-ingressgateway
       path: clusters/crc-canary-upgrade/overlays/istio-ingressgateway
@@ -137,6 +138,7 @@ applications:
       argocd.argoproj.io/sync-wave: '4'
     destination:
       namespace: golang-ex
+      server: https://kubernetes.default.svc?__team=team1
     source:
       path: components/golang-ex
 
@@ -155,6 +157,7 @@ applications:
       argocd.argoproj.io/sync-wave: '4'
     destination:
       namespace: bookinfo
+      server: https://kubernetes.default.svc?__team=team1
     source:
       path: clusters/crc-ossm3/overlays/bookinfo
 
@@ -192,6 +195,7 @@ applications:
       argocd.argoproj.io/sync-wave: '4'
     destination:
       namespace: golang-ex
+      server: https://kubernetes.default.svc?__team=team1
     source:
       path: clusters/crc-ossm3/overlays/golang-ex-istio
 
@@ -201,6 +205,7 @@ applications:
       argocd.argoproj.io/sync-wave: '4'
     destination:
       namespace: nginx-echo-headers
+      server: https://kubernetes.default.svc?__team=team1
     source:
       path: clusters/crc-ossm3/overlays/nginx-echo-headers
 
@@ -219,6 +224,7 @@ applications:
       argocd.argoproj.io/sync-wave: '4'
     destination:
       namespace: sample
+      server: https://kubernetes.default.svc?__team=team1
     source:
       path: components/helloworld
 
@@ -228,6 +234,7 @@ applications:
       argocd.argoproj.io/sync-wave: '4'
     destination:
       namespace: sample
+      server: https://kubernetes.default.svc?__team=team1
     source:
       path: components/curl
 
@@ -237,6 +244,7 @@ applications:
       argocd.argoproj.io/sync-wave: '4'
     destination:
       namespace: httpbin
+      server: https://kubernetes.default.svc?__team=team1
     source:
       path: components/httpbin
 
@@ -301,6 +309,7 @@ applications:
       argocd.argoproj.io/sync-wave: '4'
     destination:
       namespace: spring-boot-demo
+      server: https://kubernetes.default.svc?__team=team1
     source:
       # path: components/spring-boot-demo
       path: clusters/crc-cryostat/overlays/spring-boot-demo
@@ -312,6 +321,7 @@ applications:
       argocd.argoproj.io/sync-wave: '4'
     destination:
       namespace: spring-boot-demo2
+      server: https://kubernetes.default.svc?__team=team1
     source:
       # path: components/spring-boot-demo2
       path: clusters/crc-cryostat/overlays/spring-boot-demo2

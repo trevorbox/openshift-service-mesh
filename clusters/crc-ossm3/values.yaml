@@ -128,6 +128,7 @@ applications:
     destination:
       namespace: istio-ingress
       server: https://kubernetes.default.svc?__team=team1
+    project: team1
     source:
       # path: components/istio-ingressgateway
       path: clusters/crc-canary-upgrade/overlays/istio-ingressgateway
@@ -139,6 +140,7 @@ applications:
     destination:
       namespace: golang-ex
       server: https://kubernetes.default.svc?__team=team1
+    project: team1
     source:
       path: components/golang-ex
 
@@ -158,6 +160,7 @@ applications:
     destination:
       namespace: bookinfo
       server: https://kubernetes.default.svc?__team=team1
+    project: team1
     source:
       path: clusters/crc-ossm3/overlays/bookinfo
 
@@ -196,6 +199,7 @@ applications:
     destination:
       namespace: golang-ex
       server: https://kubernetes.default.svc?__team=team1
+    project: team1
     source:
       path: clusters/crc-ossm3/overlays/golang-ex-istio
 
@@ -206,6 +210,7 @@ applications:
     destination:
       namespace: nginx-echo-headers
       server: https://kubernetes.default.svc?__team=team1
+    project: team1
     source:
       path: clusters/crc-ossm3/overlays/nginx-echo-headers
 
@@ -225,6 +230,7 @@ applications:
     destination:
       namespace: sample
       server: https://kubernetes.default.svc?__team=team1
+    project: team1
     source:
       path: components/helloworld
 
@@ -235,6 +241,7 @@ applications:
     destination:
       namespace: sample
       server: https://kubernetes.default.svc?__team=team1
+    project: team1
     source:
       path: components/curl
 
@@ -245,6 +252,7 @@ applications:
     destination:
       namespace: httpbin
       server: https://kubernetes.default.svc?__team=team1
+    project: team1
     source:
       path: components/httpbin
 
@@ -310,6 +318,7 @@ applications:
     destination:
       namespace: spring-boot-demo
       server: https://kubernetes.default.svc?__team=team1
+    project: team1
     source:
       # path: components/spring-boot-demo
       path: clusters/crc-cryostat/overlays/spring-boot-demo
@@ -322,6 +331,7 @@ applications:
     destination:
       namespace: spring-boot-demo2
       server: https://kubernetes.default.svc?__team=team1
+    project: team1
     source:
       # path: components/spring-boot-demo2
       path: clusters/crc-cryostat/overlays/spring-boot-demo2

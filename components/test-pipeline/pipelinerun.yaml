@@ -1,8 +1,8 @@
 apiVersion: tekton.dev/v1
 kind: PipelineRun
 metadata:
-  # generateName: hello-goodbye-run-
-  name: hello-goodbye-run-0
+  generateName: hello-goodbye-run-
+  # name: hello-goodbye-run-0
   labels:
     # This tells Tekton to wait for Kueue admission
     kueue.x-k8s.io/queue-name: team-a-queue

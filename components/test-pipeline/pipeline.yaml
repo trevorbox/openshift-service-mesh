@@ -11,7 +11,7 @@ spec:
     - name: echo
       image: ubuntu
       script: |
-        echo "Hello $(params.username)!"
+        echo 'Hello $(params.username)!'
 ---
 apiVersion: tekton.dev/v1
 kind: Task
@@ -22,7 +22,7 @@ spec:
     - name: goodbye
       image: ubuntu
       script: |
-        echo "Goodbye $(params.username)!"
+        echo 'Goodbye $(params.username)!'
 ---
 apiVersion: tekton.dev/v1
 kind: Pipeline

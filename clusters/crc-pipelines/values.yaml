@@ -28,6 +28,46 @@ default:
         factor: 2 # a factor to multiply the base duration after each failed retry
         maxDuration: 10m # the maximum amount of time allowed for the backoff strategy
 
+projects:
+
+  cluster-config:
+    annotations:
+      notifications.argoproj.io/subscribe.on-sync-failed.slack: cluster-gitops
+      notifications.argoproj.io/subscribe.on-health-degraded.slack: cluster-gitops
+      argocd.argoproj.io/sync-wave: '-100'
+    description: Project for overall cluster configuration
+    namespace: openshift-gitops
+    sourceRepos:
+    - https://github.com/trevorbox/openshift-service-mesh
+    - https://github.com/redhat-cop/helm-charts
+    - https://github.com/trevorbox/sidecar-generator-operator
+    destinations: |
+      - namespace: '*'
+        server: https://kubernetes.default.svc
+    extraFields: |
+      clusterResourceWhitelist:
+      - group: '*'
+        kind: '*'
+
+  team1:
+    annotations:
+      notifications.argoproj.io/subscribe.on-sync-failed.slack: cluster-gitops
+      notifications.argoproj.io/subscribe.on-health-degraded.slack: cluster-gitops
+      argocd.argoproj.io/sync-wave: '-100'
+    description: Project for overall cluster configuration
+    namespace: openshift-gitops
+    sourceRepos:
+    - https://github.com/trevorbox/openshift-service-mesh
+    - https://github.com/redhat-cop/helm-charts
+    - https://github.com/trevorbox/sidecar-generator-operator
+    destinations: |
+      - namespace: '*'
+        server: https://kubernetes.default.svc?__team=team1
+    extraFields: |
+      clusterResourceWhitelist:
+      - group: '*'
+        kind: '*'
+
 applications:
 
   cert-manager-operator:

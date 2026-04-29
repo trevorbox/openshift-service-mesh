@@ -11,4 +11,4 @@ spec:
     - name: default
       resources:
       - name: "tekton.dev/pipelineruns"
-        nominalQuota: 2
+        nominalQuota: '2'

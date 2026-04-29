@@ -5,7 +5,9 @@ metadata:
 spec:
   namespaceSelector: {} # Allows any namespace to point here, or restrict it to team-a
   resourceGroups:
-  - flavors:
+  - coveredResources:
+    - tekton.dev/pipelineruns
+    flavors:
     - name: default
       resources:
       - name: "tekton.dev/pipelineruns"

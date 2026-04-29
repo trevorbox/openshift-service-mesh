@@ -3,5 +3,7 @@ kind: Kustomization
 
 resources:
 - kueue-cluster.yaml
+- clusterqueue-team-a-cluster-queue.yaml
+- resourceflavor-default.yaml
 
 namespace: openshift-kueue-operator

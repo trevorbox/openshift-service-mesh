@@ -5,6 +5,6 @@ resources:
   - namespace.yaml
   - pipeline.yaml
   - localqueue.yaml
-  # - pipelinerun.yaml
+  - pipelinerun.yaml
 
 namespace: team-a

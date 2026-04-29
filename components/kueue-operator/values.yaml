@@ -9,7 +9,7 @@ operatorGroups:
 
 operators:
 - channel: stable-v1.3
-  installPlanApproval: manual
+  installPlanApproval: Manual
   name: kueue-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

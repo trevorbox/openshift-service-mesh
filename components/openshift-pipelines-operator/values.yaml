@@ -9,7 +9,7 @@ operatorGroups:
 
 operators:
 - channel: latest
-  installPlanApproval: manual
+  installPlanApproval: Manual
   name: openshift-pipelines-operator-rh
   source: redhat-operators
   sourceNamespace: openshift-marketplace

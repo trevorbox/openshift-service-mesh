@@ -1,0 +1,46 @@
+---
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: hello
+spec:
+  params:
+    - name: username
+      type: string
+  steps:
+    - name: echo
+      image: ubuntu
+      script: |
+        echo "Hello $(params.username)!"
+---
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: goodbye
+spec:
+  steps:
+    - name: goodbye
+      image: ubuntu
+      script: |
+        echo "Goodbye $(params.username)!"
+---
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: hello-goodbye-pipeline
+spec:
+  params:
+    - name: username
+      type: string
+  tasks:
+    - name: hello
+      taskRef:
+        name: hello
+      params:
+        - name: username
+          value: $(params.username)
+    - name: goodbye
+      taskRef:
+        name: goodbye
+      runAfter:
+        - hello # Ensures goodbye runs after hello

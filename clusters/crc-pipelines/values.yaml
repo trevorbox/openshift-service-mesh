@@ -105,3 +105,12 @@ applications:
       namespace: openshift-gitops
     source:
       path: components/kueue
+
+  test-pipeline:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '1'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: components/test-pipeline

@@ -9,6 +9,7 @@ spec:
       type: string
   steps:
     - name: echo
+      computeResources: {}
       image: ubuntu
       script: |
         echo "Hello $(params.username)!"
@@ -23,6 +24,7 @@ spec:
       type: string
   steps:
     - name: goodbye
+      computeResources: {}
       image: ubuntu
       script: |
         echo "Goodbye $(params.username)!"
@@ -38,12 +40,14 @@ spec:
   tasks:
     - name: hello
       taskRef:
+        kind: Task
         name: hello
       params:
         - name: username
           value: $(params.username)
     - name: goodbye
       taskRef:
+        kind: Task
         name: goodbye
       params:
         - name: username

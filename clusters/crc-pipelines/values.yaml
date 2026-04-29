@@ -60,7 +60,7 @@ applications:
   kueue:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '-2'
+      argocd.argoproj.io/sync-wave: '0'
     destination:
       namespace: openshift-gitops
     source:

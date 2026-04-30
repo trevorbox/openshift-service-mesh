@@ -13,7 +13,8 @@ spec:
   config:
     integrations:
       frameworks: # The operator requires at lest one framework to be enabled
-      - BatchJob
+      # - BatchJob
+      - "tekton.dev/pipelinerun"
       externalFrameworks:
       - group: tekton.dev
         version: v1

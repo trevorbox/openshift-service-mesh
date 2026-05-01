@@ -23,4 +23,4 @@ spec:
       - name: "memory"
         nominalQuota: 36Gi
       - name: "pods"
-        nominalQuota: '10000'
+        nominalQuota: 10k

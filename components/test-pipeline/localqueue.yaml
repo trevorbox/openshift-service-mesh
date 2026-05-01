@@ -4,4 +4,4 @@ metadata:
   namespace: team-a
   name: team-a-queue
 spec:
-  clusterQueue: team-a-cluster-queue
+  clusterQueue: cluster-pipeline-queue

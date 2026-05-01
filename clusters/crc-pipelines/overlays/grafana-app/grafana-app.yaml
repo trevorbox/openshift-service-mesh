@@ -166,6 +166,7 @@ spec:
               ports:
                 - containerPort: 9091
                   name: https
+                  protocol: TCP
               resources: { }
               volumeMounts:
                 - mountPath: /etc/tls/private

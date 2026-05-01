@@ -12,6 +12,7 @@ spec:
       computeResources: {}
       image: registry.access.redhat.com/ubi10/ubi-micro:latest
       script: |
+        sleep 15
         echo "Hello $(params.username)!"
 ---
 apiVersion: tekton.dev/v1
@@ -27,6 +28,7 @@ spec:
       computeResources: {}
       image: registry.access.redhat.com/ubi10/ubi-micro:latest
       script: |
+        sleep 15
         echo "Goodbye $(params.username)!"
 ---
 apiVersion: tekton.dev/v1

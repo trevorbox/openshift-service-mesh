@@ -142,3 +142,11 @@ applications:
     source:
       path: components/test-pipeline
 
+  kueue-grafana-dashboard:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '2'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: clusters/crc-pipelines/overlays/kueue-grafana-dashboard

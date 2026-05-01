@@ -5,11 +5,12 @@ metadata:
   # name: hello-goodbye-run
   labels:
     # This tells Tekton to wait for Kueue admission
-    kueue.x-k8s.io/queue-name: team-a-queue
+    # defaults made by tekton mutating webhook
+    # kueue.x-k8s.io/priority-class: tekton-kueue-default
+    # kueue.x-k8s.io/queue-name: pipelines-queue
 spec:
   pipelineRef:
     name: hello-goodbye-pipeline
   params:
     - name: username
       value: "Tekton User"
-  # status: "PipelineRunPending"

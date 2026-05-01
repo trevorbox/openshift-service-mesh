@@ -108,7 +108,8 @@ metadata:
 spec:
   config:
     users:
-      viewers_can_edit: "True"
+      # viewers_can_edit: "True"
+      auto_assign_org_role: Admin
     log:
       mode: "console"
       level: "warn"

@@ -10,8 +10,17 @@ spec:
   resourceGroups:
   - coveredResources:
     - tekton.dev/pipelineruns
+    - cpu
+    - memory
+    - pods
     flavors:
     - name: default
       resources:
       - name: "tekton.dev/pipelineruns"
-        nominalQuota: '2'
+        nominalQuota: '20'
+      - name: "cpu"
+        nominalQuota: '9'
+      - name: "memory"
+        nominalQuota: 36Gi
+      - name: "pods"
+        nominalQuota: '10000'

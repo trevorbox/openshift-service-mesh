@@ -10,7 +10,7 @@ spec:
   steps:
     - name: echo
       computeResources: {}
-      image: ubuntu
+      image: registry.access.redhat.com/ubi10/ubi-micro:latest
       script: |
         echo "Hello $(params.username)!"
 ---
@@ -25,7 +25,7 @@ spec:
   steps:
     - name: goodbye
       computeResources: {}
-      image: ubuntu
+      image: registry.access.redhat.com/ubi10/ubi-micro:latest
       script: |
         echo "Goodbye $(params.username)!"
 ---

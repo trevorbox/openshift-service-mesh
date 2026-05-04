@@ -70,14 +70,14 @@ projects:
 
 applications:
 
-  external-secrets-operator-deploy:
+  openshift-external-secrets-operator:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
       argocd.argoproj.io/sync-wave: '-1'
     destination:
       namespace: openshift-gitops
     source:
-      path: components/external-secrets-operator-deploy
+      path: components/openshift-external-secrets-operator
 
   grafana-operator:
     annotations:

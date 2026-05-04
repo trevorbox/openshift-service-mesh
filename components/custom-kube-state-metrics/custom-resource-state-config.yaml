@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: openshift-openshift-custom-kube-state-metrics-config
-  namespace: openshift-openshift-openshift-openshift-custom-kube-state-metrics
+  name: custom-kube-state-metrics-config
+  namespace: openshift-custom-kube-state-metrics
 data:
   custom-resource-state.yaml: |
     spec:

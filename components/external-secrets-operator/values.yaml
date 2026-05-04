@@ -4,15 +4,15 @@ approveManualInstallPlanViaHook: true
 installPlanApproverAndVerifyJobsImage: quay.io/trevorbox/installplanapproverandverifier:4.16.1 # quay.io/openshift/origin-cli:4.16
 
 operatorGroups:
-- name: openshift-external-secrets-operator
+- name: external-secrets-operator
   createNamespace: true
 
 operators:
-- channel: stable-v1
+- channel: alpha
   installPlanApproval: Manual
-  name: openshift-external-secrets-operator
-  source: redhat-operators
+  name: external-secrets-operator
+  source: community-operators
   sourceNamespace: openshift-marketplace
-  csv: openshift-external-secrets-operator.v1.1.0
-  namespace: openshift-external-secrets-operator
+  csv: external-secrets-operator.v0.11.0
+  namespace: external-secrets-operator
   installPlanVerifierActiveDeadlineSeconds: 1200

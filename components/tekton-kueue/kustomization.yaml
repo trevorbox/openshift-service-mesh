@@ -2,6 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - https://github.com/konflux-ci/tekton-kueue/config/default?ref=7ee9a37ed02a85061c3977c46c4d1ba75e590153
+- tekton-kueue-monitoring
 
 images:
 - name: konflux-ci/tekton-kueue

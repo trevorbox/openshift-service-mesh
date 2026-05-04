@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: custom-kube-state-metrics
 
 resources:
+- namespace.yaml
 - custom-resource-state-config.yaml
 - deployment.yaml
 - rbac.yaml

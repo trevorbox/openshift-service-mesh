@@ -48,3 +48,27 @@ data:
                 gauge:
                   path: [metadata, deletionTimestamp]
                   nilIsZero: true
+
+        ###############################################################################
+        # Hanging TaskRun detection — tracks TaskRuns stuck on finalizers
+        # after the Tekton pruner requested deletion.
+        ###############################################################################
+        - groupVersionKind:
+            group: "tekton.dev"
+            version: "v1"
+            kind: "TaskRun"
+          labelsFromPath:
+            taskrun: [metadata, name]
+            namespace: [metadata, namespace]
+            pipeline: [metadata, labels, tekton.dev/pipeline]
+            pipelinetask: [metadata, labels, tekton.dev/pipelineTask]
+            pipelinerun: [metadata, labels, tekton.dev/pipelineRun]
+            finalizers: [metadata, finalizers]
+          metrics:
+            - name: "konflux_taskrun_deletion_timestamp_seconds"
+              help: "Unix timestamp when deletion was requested (0 = not deleted). Use > 0 to find stuck TaskRuns."
+              each:
+                type: Gauge
+                gauge:
+                  path: [metadata, deletionTimestamp]
+                  nilIsZero: true

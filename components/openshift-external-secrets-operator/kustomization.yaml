@@ -7,3 +7,6 @@ helmCharts:
   valuesFile: values.yaml
   namespace: openshift-gitops
   version: 3.0.1
+
+resources:
+- externalsecretsconfig-cluster.yaml

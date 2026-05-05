@@ -6,3 +6,4 @@ namespace: grafana
 resources:
   - namespace-grafana.yaml
   - grafana-app.yaml
+  - consolelink-grafana-kueue-dashboards.yaml

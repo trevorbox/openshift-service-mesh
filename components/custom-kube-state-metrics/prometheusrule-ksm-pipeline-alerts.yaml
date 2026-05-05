@@ -1,0 +1,35 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: ksm-pipeline-alerts
+spec:
+  groups:
+  - name: ksm-pipeline.rules
+    interval: 30s
+    rules:
+    - alert: PipelineRunStuckInDeletion
+      expr: |
+        (
+          time() - (kube_customresource_konflux_pipelinerun_deletion_timestamp_seconds > 0)
+        ) > 15 * 60
+      for: 2m
+      labels:
+        severity: warning
+        component: ksm-pipelines
+      annotations:
+        summary: "PipelineRun stuck in deletion"
+        description: "The PipelineRun {{ $labels.pipelinerun }} in namespace {{ $labels.exported_namespace }} has been pending deletion for more than 15 minutes. This usually indicates a stuck finalizer."
+        runbook_url: TODO
+    - alert: TaskRunStuckInDeletion
+      expr: |
+        (
+          time() - (kube_customresource_konflux_taskrun_deletion_timestamp_seconds > 0)
+        ) > 15 * 60
+      for: 2m
+      labels:
+        severity: warning
+        component: ksm-pipelines
+      annotations:
+        summary: "TaskRun stuck in deletion"
+        description: "The TaskRun {{ $labels.taskrun }} in namespace {{ $labels.exported_namespace }} has been pending deletion for more than 15 minutes. This usually indicates a stuck finalizer."
+        runbook_url: TODO

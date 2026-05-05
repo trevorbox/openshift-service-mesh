@@ -10,3 +10,4 @@ resources:
 - rbac.yaml
 - servicemonitor.yaml
 - service.yaml
+- prometheusrule-ksm-pipeline-alerts.yaml

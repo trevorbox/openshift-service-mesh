@@ -5,6 +5,7 @@ metadata:
 spec:
   pruner:
     disabled: false
+    keep: nil
     keep-since: 2
     resources:
       - pipelinerun

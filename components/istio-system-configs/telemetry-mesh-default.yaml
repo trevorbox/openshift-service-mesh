@@ -1,3 +1,5 @@
+# one or more objects failed to apply, reason: Telemetry.telemetry.istio.io "mesh-default" is invalid: [spec.metrics[0].overrides[2].match.metric: Unsupported value: "REQUEST_BYTES": 
+# supported values: "ALL_METRICS", "REQUEST_COUNT", "REQUEST_DURATION", "REQUEST_SIZE", "RESPONSE_SIZE", "TCP_OPENED_CONNECTIONS", "TCP_CLOSED_CONNECTIONS", "TCP_SENT_BYTES", "TCP_RECEIVED_BYTES", "GRPC_REQUEST_MESSAGES", "GRPC_RESPONSE_MESSAGES", spec.metrics[0].overrides[3].match.metric: Unsupported value: "RESPONSE_BYTES": supported values: "ALL_METRICS", "REQUEST_COUNT", "REQUEST_DURATION", "REQUEST_SIZE", "RESPONSE_SIZE", "TCP_OPENED_CONNECTIONS", "TCP_CLOSED_CONNECTIONS", "TCP_SENT_BYTES", "TCP_RECEIVED_BYTES", "GRPC_REQUEST_MESSAGES", "GRPC_RESPONSE_MESSAGES", <nil>: Invalid value: "null": some validation rules were not checked because the object was invalid; correct the existing errors to complete validation]. Retrying attempt #2 at 11:03PM.
 apiVersion: telemetry.istio.io/v1alpha1
 kind: Telemetry
 metadata:
@@ -32,11 +34,11 @@ spec:
           metric: ALL_METRICS
           mode: CLIENT
         disabled: true
-      - match:
-          metric: REQUEST_BYTES
-          mode: CLIENT_AND_SERVER
-        disabled: true
-      - match:
-          metric: RESPONSE_BYTES
-          mode: CLIENT_AND_SERVER
-        disabled: true
+      # - match:
+      #     metric: REQUEST_BYTES
+      #     mode: CLIENT_AND_SERVER
+      #   disabled: true
+      # - match:
+      #     metric: RESPONSE_BYTES
+      #     mode: CLIENT_AND_SERVER
+      #   disabled: true

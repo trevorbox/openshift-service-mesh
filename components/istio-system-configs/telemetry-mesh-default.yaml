@@ -13,3 +13,30 @@ spec:
   metrics:
   - providers:
     - name: prometheus
+      overrides:
+        - match:
+            metric: ALL_METRICS
+            mode: CLIENT_AND_SERVER
+          tagOverrides:
+            source_principal:
+              operation: REMOVE
+            destination_principal:
+              operation: REMOVE
+            grpc_response_status:
+              operation: REMOVE
+            request_protocol:
+              operation: REMOVE
+            connection_security_policy:
+              operation: REMOVE
+        - match:
+            metric: ALL_METRICS
+            mode: CLIENT
+          disabled: true
+        - match:
+            metric: REQUEST_BYTES
+            mode: CLIENT_AND_SERVER
+          disabled: true
+        - match:
+            metric: RESPONSE_BYTES
+            mode: CLIENT_AND_SERVER
+          disabled: true

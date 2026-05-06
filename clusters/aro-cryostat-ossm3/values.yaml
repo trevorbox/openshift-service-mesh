@@ -150,7 +150,7 @@ applications:
     destination:
       namespace: minio-tenant
     source:
-      path: components/minio-tenant
+      path: clusters/aro-cryostat-ossm3/overlays/minio-tenant
 
   bookinfo:
     annotations:

@@ -8,3 +8,12 @@ helmCharts:
   namespace: spring-boot-demo
   version: ~0.0.13
   releaseName: spring-boot-demo
+
+patches:
+  - target:
+      kind: Service
+      name: spring-boot-demo-headless
+    patch: |-
+      - op: add
+        path: /metadata/annotations/networking.istio.io~1exportTo
+        value: cryostat

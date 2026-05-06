@@ -12,3 +12,12 @@ helmCharts:
 resources:
   - istio-configs.yaml
   - namespace-spring-boot-demo2.yaml
+
+patches:
+  - target:
+      kind: Service
+      name: spring-boot-demo2-headless
+    patch: |-
+      - op: add
+        path: /metadata/annotations/networking.istio.io~1exportTo
+        value: cryostat

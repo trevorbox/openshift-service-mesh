@@ -1,0 +1,77 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cryostat-cron-sa
+  namespace: cryostat
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cryostat-cron-view-binding
+  namespace: cryostat
+subjects:
+  - kind: ServiceAccount
+    name: cryostat-cron-sa
+    namespace: cryostat
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  # The "view" role is usually sufficient for the OAuth proxy 
+  # to permit API requests to the service.
+  name: view
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cryostat-scheduled-recording
+  namespace: cryostat
+spec:
+  schedule: "*/5 * * * *"
+  concurrencyPolicy: Forbid
+  # These fields ensure the CronJob object itself doesn't keep old records
+  successfulJobsHistoryLimit: 0
+  failedJobsHistoryLimit: 1 # Kept at 1 just in case you need to see why a failure happened
+  jobTemplate:
+    spec:
+      # This field tells K8s to delete the Job/Pod 30 seconds after it finishes
+      ttlSecondsAfterFinished: 30
+      template:
+        spec:
+          serviceAccountName: cryostat-cron-sa
+          containers:
+          - name: cryostat-trigger
+            image: curlimages/curl:latest
+            command: ["/bin/sh", "-c"]
+            env:
+            - name: TZ
+              value: "America/Phoenix"
+            args:
+              - |
+                TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
+                API_URL="http://cryostat:4180/api/v4/graphql"
+                
+                # 1. Fetch JMX URLs (Discovery query)
+                TARGETS=$(curl -k -s -H "Authorization: Bearer $TOKEN" \
+                  -H "Content-Type: application/json" \
+                  -d '{"query": "query { targetNodes(filter: { labels: \"app.kubernetes.io/name=spring-boot-demo\" }) { name } }"}' \
+                  $API_URL | grep -o 'service:jmx:[^"]*')
+
+                # 2. Loop through each target
+                for T in $TARGETS; do
+                 
+                  # Create a full date string: YYYY-MM-DD_HH-MM-SS
+                  FULL_DATE=$(date +%Y-%m-%d_%H-%M-%S)
+                  REC_NAME="cryostat-scheduled-recording-${FULL_DATE}"
+                  
+                  echo "Starting recording: $REC_NAME for $T"
+                  
+                  # 3. Call createRecording with the verified v4 schema
+                  curl -k -s -X POST "$API_URL" \
+                    -H "Authorization: Bearer $TOKEN" \
+                    -H "Content-Type: application/json" \
+                    -d "{
+                      \"query\": \"mutation { createRecording(nodes: { name: \\\"$T\\\" }, recording: { name: \\\"$REC_NAME\\\", template: \\\"Profiling\\\", templateType: \\\"TARGET\\\", duration: 240 }) { name } }\"
+                    }"
+                done
+          restartPolicy: OnFailure

@@ -19,6 +19,7 @@ resources:
   # Disble mtls or enable ingress through a istio gateway
   - peerauthentication-disable-mtls-cryostat-ui.yaml
   # - gateway/
+  - cronjob-cryostat-scheduled-recording.yaml
 
 patches:
   - target:

@@ -41,7 +41,7 @@ spec:
           serviceAccountName: cryostat-cron-sa
           containers:
           - name: cryostat-trigger
-            image: curlimages/curl:latest
+            image: registry.access.redhat.com/ubi10/ubi-minimal:latest
             command: ["/bin/sh", "-c"]
             env:
             - name: TZ

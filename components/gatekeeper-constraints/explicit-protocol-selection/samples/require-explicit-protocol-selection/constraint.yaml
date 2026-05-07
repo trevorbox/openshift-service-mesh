@@ -16,6 +16,8 @@ spec:
       matchExpressions:
         - key: istio.io/rev
           operator: Exists
+    excludedNamespaces:
+      - cryostat
   parameters:
     protocols:
     - http

@@ -37,6 +37,9 @@ spec:
       # This field tells K8s to delete the Job/Pod 30 seconds after it finishes
       ttlSecondsAfterFinished: 30
       template:
+        metadata:
+          labels:
+            sidecar.istio.io/inject: 'true'
         spec:
           serviceAccountName: cryostat-cron-sa
           containers:

@@ -36,6 +36,8 @@ spec:
     spec:
       ttlSecondsAfterFinished: 30
       template:
+        metadata:
+          sidecar.istio.io/inject: 'true'
         spec:
           serviceAccountName: cryostat-cron-sa
           containers:

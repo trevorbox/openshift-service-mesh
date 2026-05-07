@@ -28,53 +28,59 @@ metadata:
   namespace: cryostat
 spec:
   schedule: "*/2 * * * *"
+  timeZone: "America/Phoenix"
   concurrencyPolicy: Forbid
-  # These fields ensure the CronJob object itself doesn't keep old records
   successfulJobsHistoryLimit: 0
-  failedJobsHistoryLimit: 1 # Kept at 1 just in case you need to see why a failure happened
+  failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
-      # This field tells K8s to delete the Job/Pod 30 seconds after it finishes
       ttlSecondsAfterFinished: 30
       template:
-        metadata:
-          labels:
-            sidecar.istio.io/inject: 'true'
         spec:
           serviceAccountName: cryostat-cron-sa
           containers:
           - name: cryostat-trigger
-            image: registry.access.redhat.com/ubi10/ubi-minimal:latest
-            command: ["/bin/sh", "-c"]
+            image: curlimages/curl:latest
             env:
             - name: TZ
               value: "America/Phoenix"
+            command: ["/bin/sh", "-c"]
             args:
               - |
+                # --- CONFIGURATION SECTION ---
+                MATCH_LABEL="app.kubernetes.io/name=spring-boot-demo"
+                REC_DURATION_MINS=5
+                MAX_SIZE_MIB=100
+                # -----------------------------
+
+                # 1. Perform Math
+                DURATION_SECS=$(( REC_DURATION_MINS * 60 ))
+                MAX_SIZE_BYTES=$(( MAX_SIZE_MIB * 1024 * 1024 ))
+
                 TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
                 API_URL="http://cryostat:4180/api/v4/graphql"
                 
-                # 1. Fetch JMX URLs (Discovery query)
+                # 2. Discovery: Find pods matching the configured label
+                # We use escaped quotes to ensure the shell variable $MATCH_LABEL is expanded
                 TARGETS=$(curl -k -s -H "Authorization: Bearer $TOKEN" \
                   -H "Content-Type: application/json" \
-                  -d '{"query": "query { targetNodes(filter: { labels: \"app.kubernetes.io/name=spring-boot-demo\" }) { name } }"}' \
+                  -d "{ \"query\": \"query { targetNodes(filter: { labels: \\\"$MATCH_LABEL\\\" }) { name } }\" }" \
                   $API_URL | grep -o 'service:jmx:[^"]*')
 
-                # 2. Loop through each target
+                # 3. Iteration: Start recordings for each pod found
                 for T in $TARGETS; do
-                 
-                  # Create a full date string: YYYY-MM-DD_HH-MM-SS
-                  FULL_DATE=$(date +%Y-%m-%d_%H-%M-%S)
-                  REC_NAME="cryostat-scheduled-recording-${FULL_DATE}"
+                  # Extract IP for a unique filename
+                  FULL_DATE=$(date +"%Y-%m-%d_%H%M%S")
+                  REC_NAME="midnight-profile-${FULL_DATE}"
                   
-                  echo "Starting recording: $REC_NAME for $T"
+                  echo "Triggering $REC_NAME for target $T"
                   
-                  # 3. Call createRecording with the verified v4 schema
+                  # 4. Mutation: Execute the createRecording call
                   curl -k -s -X POST "$API_URL" \
                     -H "Authorization: Bearer $TOKEN" \
                     -H "Content-Type: application/json" \
                     -d "{
-                      \"query\": \"mutation { createRecording(nodes: { name: \\\"$T\\\" }, recording: { name: \\\"$REC_NAME\\\", template: \\\"Profiling\\\", templateType: \\\"TARGET\\\", duration: 240 }) { name } }\"
+                      \"query\": \"mutation { createRecording(nodes: { name: \\\"$T\\\" }, recording: { name: \\\"$REC_NAME\\\", template: \\\"Profiling\\\", templateType: \\\"TARGET\\\", duration: $DURATION_SECS, maxSize: $MAX_SIZE_BYTES }) { name } }\"
                     }"
                 done
           restartPolicy: OnFailure

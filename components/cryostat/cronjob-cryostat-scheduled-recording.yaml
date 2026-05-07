@@ -52,15 +52,21 @@ spec:
           - name: cryostat-trigger
             image: curlimages/curl:latest
             env:
+            - name: REC_DURATION_MINS
+              value: "5"
+            - name: MATCH_LABEL
+              value: "app.kubernetes.io/name=spring-boot-demo"
+            - name: MAX_SIZE_MIB
+              value: "100"
             - name: TZ
               value: "America/Phoenix"
             command: ["/bin/sh", "-c"]
             args:
               - |
                 # --- CONFIGURATION SECTION ---
-                MATCH_LABEL="app.kubernetes.io/name=spring-boot-demo"
-                REC_DURATION_MINS=5
-                MAX_SIZE_MIB=100
+                # MATCH_LABEL="app.kubernetes.io/name=spring-boot-demo"
+                # REC_DURATION_MINS=5
+                # MAX_SIZE_MIB=100
                 # -----------------------------
 
                 # 1. Perform Math

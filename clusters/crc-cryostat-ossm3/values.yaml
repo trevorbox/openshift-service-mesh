@@ -146,7 +146,7 @@ applications:
     destination:
       namespace: istio-system
     source:
-      path: clusters/crc-canary-upgrade/overlays/ossm3-istio-system
+      path: clusters/crc-cryostat-ossm3/overlays/ossm3-istio-system
 
   grafana-istio:
     annotations:

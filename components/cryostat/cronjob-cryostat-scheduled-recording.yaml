@@ -27,7 +27,7 @@ metadata:
   name: cryostat-scheduled-recording
   namespace: cryostat
 spec:
-  schedule: "*/5 * * * *"
+  schedule: "*/2 * * * *"
   concurrencyPolicy: Forbid
   # These fields ensure the CronJob object itself doesn't keep old records
   successfulJobsHistoryLimit: 0

@@ -7,6 +7,8 @@ metadata:
 spec:
   enforcementAction: deny
   match:
+    excludedNamespaces:
+      - cryostat
     kinds:
     - apiGroups:
       - security.istio.io

@@ -71,7 +71,7 @@ spec:
                 for T in $TARGETS; do
                   # Extract IP for a unique filename
                   FULL_DATE=$(date +"%Y-%m-%d_%H%M%S")
-                  REC_NAME="midnight-profile-${FULL_DATE}"
+                  REC_NAME="cryostat-scheduled-recording-${FULL_DATE}"
                   
                   echo "Triggering $REC_NAME for target $T"
                   

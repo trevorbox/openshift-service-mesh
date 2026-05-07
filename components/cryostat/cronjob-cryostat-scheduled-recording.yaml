@@ -28,7 +28,7 @@ metadata:
   namespace: cryostat
 spec:
   schedule: "*/2 * * * *"
-  timeZone: "America/Phoenix"
+  # timeZone: "America/Phoenix"
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 0
   failedJobsHistoryLimit: 1
@@ -37,7 +37,8 @@ spec:
       ttlSecondsAfterFinished: 30
       template:
         metadata:
-          sidecar.istio.io/inject: 'true'
+          labels:
+            sidecar.istio.io/inject: 'true'
         spec:
           serviceAccountName: cryostat-cron-sa
           containers:

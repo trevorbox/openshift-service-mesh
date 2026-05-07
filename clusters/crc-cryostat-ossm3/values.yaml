@@ -203,13 +203,48 @@ applications:
     destination:
       namespace: kiali
     source:
-      path: clusters/crc-canary-upgrade/overlays/kiali
+      path: clusters/crc-ossm3/overlays/kiali
 
-  prometheus:
+  golang-ex-istio:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '2'
+      argocd.argoproj.io/sync-wave: '4'
     destination:
-      namespace: prometheus
+      namespace: golang-ex
+      server: https://kubernetes.default.svc?__team=team1
+    project: team1
     source:
-      path: components/prometheus
+      path: clusters/crc-ossm3/overlays/golang-ex-istio
+
+  nginx-echo-headers:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: nginx-echo-headers
+      server: https://kubernetes.default.svc?__team=team1
+    project: team1
+    source:
+      path: clusters/crc-ossm3/overlays/nginx-echo-headers
+  
+  helloworld:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: sample
+      server: https://kubernetes.default.svc?__team=team1
+    project: team1
+    source:
+      path: components/helloworld
+
+  curl:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: sample
+      server: https://kubernetes.default.svc?__team=team1
+    project: team1
+    source:
+      path: components/curl

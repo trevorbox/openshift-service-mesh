@@ -9,25 +9,25 @@ helmCharts:
   version: ~0.0.13
   releaseName: spring-boot-demo
 
-patches:
-  - target:
-      version: v1
-      kind: Service
-      name: spring-boot-demo-headless
-    patch: |-
-      apiVersion: v1
-      kind: Service
-      metadata:
-        name: spring-boot-demo-headless
-      $patch: delete
-
 # patches:
 #   - target:
+#       version: v1
 #       kind: Service
 #       name: spring-boot-demo-headless
 #     patch: |-
-#       - op: add
-#         path: /metadata/annotations/networking.istio.io~1exportTo
-#         value: cryostat
-#       - op: remove
-#         path: /spec/ports/1
+#       apiVersion: v1
+#       kind: Service
+#       metadata:
+#         name: spring-boot-demo-headless
+#       $patch: delete
+
+patches:
+  - target:
+      kind: Service
+      name: spring-boot-demo-headless
+    patch: |-
+      - op: add
+        path: /metadata/annotations/networking.istio.io~1exportTo
+        value: cryostat
+#      - op: remove
+#        path: /spec/ports/1

@@ -11,10 +11,10 @@ spec:
       protocol: TCP
       port: 4180
       targetPort: 4180
-    - name: http-cryostat-agent
-      protocol: TCP
-      port: 8282
-      targetPort: 8282
+    # - name: http-cryostat-agent
+    #   protocol: TCP
+    #   port: 8282
+    #   targetPort: 8282
   selector:
     app: cryostat
     component: cryostat

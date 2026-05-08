@@ -29,8 +29,8 @@ patches:
       - op: add
         path: "/spec/targetNamespaces"
         value:  
+          - spring-boot-demo
           - spring-boot-demo2
-#          - spring-boot-demo
   - target:
       kind: Sidecar
       name: cryostat

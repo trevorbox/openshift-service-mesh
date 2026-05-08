@@ -17,3 +17,5 @@ patches:
       - op: add
         path: /metadata/annotations/networking.istio.io~1exportTo
         value: cryostat
+      - op: remove
+        path: /spec/ports/1

@@ -22,14 +22,14 @@ resources:
   # - cronjob-cryostat-scheduled-recording.yaml
 
 patches:
-  # - target:
-  #     kind: Cryostat
-  #     name: cryostat
-  #   patch: |-
-  #     - op: replace
-  #       path: "/spec/targetNamespaces"
-  #       value: 
-  #         - spring-boot-demo
+  - target:
+      kind: Cryostat
+      name: cryostat
+    patch: |-
+      - op: add
+        path: "/spec/targetNamespaces"
+        value: 
+          - spring-boot-demo
   #         - spring-boot-demo2
   - target:
       kind: Sidecar

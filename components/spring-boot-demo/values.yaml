@@ -30,5 +30,7 @@ podLabels:
   cryostat.io/container: spring-boot-demo
   cryostat.io/callback-port: "9977"
 podEnv:
+  # - name: CRYOSTAT_AGENT_SMART_TRIGGER_DEFINITIONS
+  #   value: "[(ProcessCpuLoad>0.5||SystemCpuLoad>0.25)&&HeapMemoryUsagePercent>0.1;TargetDuration>duration('1m')]~Continuous"
   - name: CRYOSTAT_AGENT_SMART_TRIGGER_DEFINITIONS
-    value: "[(ProcessCpuLoad>0.5||SystemCpuLoad>0.25)&&HeapMemoryUsagePercent>0.1;TargetDuration>duration('1m')]~Continuous"
+    value: "[ProcessCpuLoad > 0.1 ; TargetDuration > duration(\"30s\")]~profile"

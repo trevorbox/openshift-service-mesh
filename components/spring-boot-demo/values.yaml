@@ -35,4 +35,4 @@ podEnv:
   - name: CRYOSTAT_AGENT_SMART_TRIGGER_DEFINITIONS
     value: "[ProcessCpuLoad > 0.1 ; TargetDuration > duration(\"30s\")]~profile"
   - name: CRYOSTAT_AGENT_HARVESTER_PERIOD_MS
-    value: 1000
+    value: "1000"

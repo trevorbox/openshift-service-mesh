@@ -1,0 +1,11 @@
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: cryostat
+spec:
+  applicationMenu:
+    section: Observability
+    imageURL: data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHBhdGggZmlsbD0iI0ZGMDAwMCIgZD0iTTE2IDJMMiAxNGgxNHYxNkwzMCAxNEgxNlYyeiIvPjwvc3ZnPg==
+  href: https://cryostat-cryostat.apps-crc.testing
+  location: ApplicationMenu
+  text: "Cryostat"

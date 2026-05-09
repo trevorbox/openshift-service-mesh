@@ -36,3 +36,5 @@ podEnv:
     value: "[ProcessCpuLoad > 0.1 ; TargetDuration > duration(\"30s\")]~profile"
   - name: CRYOSTAT_AGENT_HARVESTER_PERIOD_MS
     value: "1000"
+  - name: CRYOSTAT_AGENT_HARVESTER_TEMPLATE
+    value: profile

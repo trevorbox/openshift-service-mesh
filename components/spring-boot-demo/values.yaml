@@ -8,3 +8,27 @@ cryostat:
     enabled: false
   jmx:
     enabled: false
+  headlessService:
+    enabled: true
+    ports:
+    - name: cryostat-agent
+      protocol: TCP
+      appProtocol: tcp
+      port: 9977
+      targetPort: 9977
+    # - name: jfr-jmx
+    #   protocol: TCP
+    #   appProtocol: tcp
+    #   port: 9091
+    #   targetPort: 9091
+podLabels:
+  sidecar.istio.io/inject: "true"
+  # operator injection labels
+  cryostat.io/log-level: debug
+  cryostat.io/name: cryostat
+  cryostat.io/namespace: cryostat
+  cryostat.io/container: spring-boot-demo
+  cryostat.io/callback-port: 9977
+podEnv:
+  - name: CRYOSTAT_AGENT_SMART_TRIGGER_DEFINITIONS
+    value: "[(ProcessCpuLoad>0.5||SystemCpuLoad>0.25)&&HeapMemoryUsagePercent>0.1;TargetDuration>duration('1m')]~Continuous"

@@ -7,4 +7,4 @@ cryostat:
   agent:
     enabled: false
   jmx:
-    enabled: true
+    enabled: false

@@ -20,6 +20,7 @@ resources:
   - peerauthentication-disable-mtls-cryostat-ui.yaml
   # - gateway/
   # - cronjob-cryostat-scheduled-recording.yaml
+  - consolelink-cryostat.yaml
 
 patches:
   - target:

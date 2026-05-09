@@ -13,3 +13,18 @@ patches:
       - op: add
         path: /metadata/labels
         value: {"istio.io/rev": "default"}
+  - target:
+        kind: Cryostat
+        name: cryostat
+    patch: |-
+      - op: add
+        path: /spec/targetDiscoveryOptions
+        value:
+          disableBuiltInDiscovery: true
+      - op: add
+        path: /spec/agentOptions
+        value:
+          allowInsecure: true
+          disableHostnameVerification: true
+          resources: {}
+

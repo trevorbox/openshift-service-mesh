@@ -34,7 +34,7 @@ podEnv:
   #   value: "[(ProcessCpuLoad>0.5||SystemCpuLoad>0.25)&&HeapMemoryUsagePercent>0.1;TargetDuration>duration('1m')]~Continuous"
   - name: CRYOSTAT_AGENT_SMART_TRIGGER_DEFINITIONS
     value: "[ProcessCpuLoad > 0.1 ; TargetDuration > duration(\"30s\")]~profile"
-  - name: CRYOSTAT_AGENT_HARVESTER_PERIOD_MS
-    value: "1000"
-  - name: CRYOSTAT_AGENT_HARVESTER_TEMPLATE
-    value: profile
+  # - name: CRYOSTAT_AGENT_HARVESTER_PERIOD_MS
+  #   value: "1000"
+  # - name: CRYOSTAT_AGENT_HARVESTER_TEMPLATE
+  #   value: profile

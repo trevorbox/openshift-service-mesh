@@ -28,7 +28,7 @@ podLabels:
   cryostat.io/name: cryostat
   cryostat.io/namespace: cryostat
   cryostat.io/container: spring-boot-demo
-  cryostat.io/callback-port: 9977
+  cryostat.io/callback-port: "9977"
 podEnv:
   - name: CRYOSTAT_AGENT_SMART_TRIGGER_DEFINITIONS
     value: "[(ProcessCpuLoad>0.5||SystemCpuLoad>0.25)&&HeapMemoryUsagePercent>0.1;TargetDuration>duration('1m')]~Continuous"

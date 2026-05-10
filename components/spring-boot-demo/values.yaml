@@ -31,7 +31,7 @@ podLabels:
   cryostat.io/callback-port: "9977"
 podEnv:
   - name: CRYOSTAT_AGENT_SMART_TRIGGER_DEFINITIONS
-    value: "[HeapMemoryUsagePercent>0.1;TargetDuration>duration(\"30s\")]~Profiling"
+    value: "[HeapMemoryUsagePercent>0.1;TargetDuration>duration(\"10m\")]~Profiling"
   # The Limits: Defined via Harvester properties (in milliseconds and bytes)
   - name: CRYOSTAT_AGENT_HARVESTER_PERIOD_MS
     value: "30000"

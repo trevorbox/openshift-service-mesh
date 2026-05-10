@@ -40,7 +40,6 @@ podEnv:
   #   value: "1000"
   # - name: CRYOSTAT_AGENT_HARVESTER_TEMPLATE
   #   value: profile
-  cryostat.agent.harvester.max-age-ms
 resources:
   limits:
     memory: 512Mi

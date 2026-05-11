@@ -32,7 +32,7 @@ podLabels:
 podEnv:
   # https://github.com/cryostatio/cryostat-agent#configuration
   - name: CRYOSTAT_AGENT_SMART_TRIGGER_DEFINITIONS
-    value: "[HeapMemoryUsagePercent>0.1;TargetDuration>duration(\"30s\")]~Profiling"
+    value: "[HeapMemoryUsagePercent>0.1;TargetDuration>duration(\"30s\")]~profile"
   # - name: CRYOSTAT_AGENT_SMART_TRIGGER_EVALUATION_PERIOD_MS
   #   value: "3600000" # 1 hour
   - name: CRYOSTAT_AGENT_SMART_TRIGGER_EVALUATION_PERIOD_MS

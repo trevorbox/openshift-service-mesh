@@ -63,9 +63,9 @@ podEnv:
   #   value: "1000"
   # - name: CRYOSTAT_AGENT_HARVESTER_TEMPLATE
   #   value: profile
-  - name: JAVA_OPTS_APPEND
-    # Remove -Duser.dir! Only keep the HeapDumpPath for OOM situations.
-    value: "-XX:HeapDumpPath=/tmp"
+  # - name: JAVA_OPTS_APPEND
+  #   # Remove -Duser.dir! Only keep the HeapDumpPath for OOM situations.
+  #   value: "-XX:HeapDumpPath=/tmp"
 
   - name: JAVA_APP_DIR
     value: "/application"
@@ -74,9 +74,9 @@ podEnv:
     # This tells the Cryostat Agent to use /tmp for its staging files
     value: "/tmp"
 
-  - name: JAVA_TOOL_OPTIONS
-    # Add the tmpdir flag here just to be safe, but keep the rest as is
-    value: "-Djava.io.tmpdir=/tmp"
+  # - name: JAVA_TOOL_OPTIONS
+  #   # Add the tmpdir flag here just to be safe, but keep the rest as is
+  #   value: "-Djava.io.tmpdir=/tmp"
 resources:
   limits:
     memory: 512Mi

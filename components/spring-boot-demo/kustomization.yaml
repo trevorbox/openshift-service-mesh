@@ -42,18 +42,13 @@ patches:
       spec:
         template:
           spec:
-            # 1. Keep /tmp as the working directory for write permissions
-            workingDir: /tmp
             containers:
               - name: spring-boot-demo
+                # 1. Keep /tmp as the working directory for write permissions
+                workingDir: /tmp
                 # 2. Update args to point to the application classpath
                 command: ["java"]
                 args:
                   - "-cp"
                   - "/application"
                   - "org.springframework.boot.loader.launch.JarLauncher"
-                env:
-                  - name: JAVA_APP_DIR
-                    value: "/application"
-                  - name: CRYOSTAT_AGENT_BASE_DIR
-                    value: "/tmp"

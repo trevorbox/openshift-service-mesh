@@ -70,9 +70,9 @@ podEnv:
   - name: JAVA_APP_DIR
     value: "/application"
 
-  - name: CRYOSTAT_AGENT_BASE_DIR
-    # This tells the Cryostat Agent to use /tmp for its staging files
-    value: "/tmp"
+  # - name: CRYOSTAT_AGENT_BASE_DIR
+  #   # This tells the Cryostat Agent to use /tmp for its staging files
+  #   value: "/tmp"
 
   # - name: JAVA_TOOL_OPTIONS
   #   # Add the tmpdir flag here just to be safe, but keep the rest as is

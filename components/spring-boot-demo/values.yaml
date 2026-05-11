@@ -39,20 +39,21 @@ podEnv:
   
 
   # The Limits: Defined via Harvester properties (in milliseconds and bytes)
-  - name: CRYOSTAT_AGENT_HARVESTER_PERIOD_MS
-    value: "3600000" # 1 hour
-  - name: CRYOSTAT_AGENT_HARVESTER_MAX_AGE_MS
-    value: "3600000" # 1 hour
-  - name: CRYOSTAT_AGENT_HARVESTER_MAX_SIZE_B
-    value: "104857600" # 100 MB
-  - name: CRYOSTAT_AGENT_HARVESTER_EXIT_MAX_AGE_MS
-    value: "3600000" # 1 hour
-  - name: CRYOSTAT_AGENT_HARVESTER_EXIT_MAX_SIZE_B
-    value: "104857600" # 100 MB
-  - name: CRYOSTAT_AGENT_HARVESTER_AUTOANALYZE
-    value: "false"
-  - name: CRYOSTAT_AGENT_HARVESTER_MAX_FILES
-    value: "24"
+  # - name: CRYOSTAT_AGENT_HARVESTER_PERIOD_MS
+  #   value: "3600000" # 1 hour
+  # - name: CRYOSTAT_AGENT_HARVESTER_MAX_AGE_MS
+  #   value: "3600000" # 1 hour
+  # - name: CRYOSTAT_AGENT_HARVESTER_MAX_SIZE_B
+  #   value: "104857600" # 100 MB
+  # - name: CRYOSTAT_AGENT_HARVESTER_EXIT_MAX_AGE_MS
+  #   value: "3600000" # 1 hour
+  # - name: CRYOSTAT_AGENT_HARVESTER_EXIT_MAX_SIZE_B
+  #   value: "104857600" # 100 MB
+  # - name: CRYOSTAT_AGENT_HARVESTER_AUTOANALYZE
+  #   value: "false"
+  # - name: CRYOSTAT_AGENT_HARVESTER_MAX_FILES
+  #   value: "24"
+
   # - name: CRYOSTAT_AGENT_HARVESTER_TEMPLATE
   #   value: "Profiling"
   # - name: CRYOSTAT_AGENT_SMART_TRIGGER_DEFINITIONS

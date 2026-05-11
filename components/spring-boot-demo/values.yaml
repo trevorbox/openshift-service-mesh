@@ -33,12 +33,12 @@ podEnv:
   - name: CRYOSTAT_AGENT_SMART_TRIGGER_DEFINITIONS
     value: "[HeapMemoryUsagePercent>0.1;TargetDuration>duration(\"10m\")]~Profiling"
   # The Limits: Defined via Harvester properties (in milliseconds and bytes)
-  - name: CRYOSTAT_AGENT_HARVESTER_PERIOD_MS
-    value: "30000"
-  - name: CRYOSTAT_AGENT_HARVESTER_MAX_AGE_MS
-    value: "1800000"  # 30 minutes
-  - name: CRYOSTAT_AGENT_HARVESTER_MAX_SIZE_B
-    value: "104857600" # 100 MB
+  # - name: CRYOSTAT_AGENT_HARVESTER_PERIOD_MS
+  #   value: "30000"
+  # - name: CRYOSTAT_AGENT_HARVESTER_MAX_AGE_MS
+  #   value: "1800000"  # 30 minutes
+  # - name: CRYOSTAT_AGENT_HARVESTER_MAX_SIZE_B
+  #   value: "104857600" # 100 MB
   # - name: CRYOSTAT_AGENT_SMART_TRIGGER_DEFINITIONS
   #   value: "[(ProcessCpuLoad>0.5||SystemCpuLoad>0.25)&&HeapMemoryUsagePercent>0.1;TargetDuration>duration('1m')]~Continuous"
   # - name: CRYOSTAT_AGENT_SMART_TRIGGER_DEFINITIONS

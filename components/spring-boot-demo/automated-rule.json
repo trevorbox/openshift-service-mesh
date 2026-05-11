@@ -1,0 +1,20 @@
+{
+    "name": "test2",
+    "description": "Profiling record each hour",
+    "matchExpression": "target.alias.startsWith('spring-boot-demo')",
+    "eventSpecifier": "template=Profiling,type=TARGET",
+    "archivalPeriodSeconds": 3600,
+    "initialDelaySeconds": 3600,
+    "preservedArchives": 24,
+    "maxAgeSeconds": 3600,
+    "maxSizeBytes": 104857597,
+    "metadata": {
+        "labels": [
+            {
+                "key": "autoanalyze",
+                "value": "false"
+            }
+        ]
+    },
+    "enabled": false
+}

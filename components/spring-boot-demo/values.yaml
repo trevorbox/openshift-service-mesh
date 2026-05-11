@@ -63,15 +63,17 @@ podEnv:
   #   value: "1000"
   # - name: CRYOSTAT_AGENT_HARVESTER_TEMPLATE
   #   value: profile
-  # Required for UBI images to find JAR when workingDir changes
-  - name: JAVA_APP_DIR
-    value: "/application"
-  # Explicitly points JFR/Heap logs to the writable /tmp
   - name: JAVA_OPTS_APPEND
+    # Remove -Duser.dir! Only keep the HeapDumpPath for OOM situations.
     value: "-XX:HeapDumpPath=/tmp"
-  # Optional: Keeps the Cryostat Agent staged files in /tmp
+
   - name: CRYOSTAT_AGENT_BASE_DIR
+    # This tells the Cryostat Agent to use /tmp for its staging files
     value: "/tmp"
+
+  - name: JAVA_TOOL_OPTIONS
+    # Add the tmpdir flag here just to be safe, but keep the rest as is
+    value: "-Djava.io.tmpdir=/tmp"
 resources:
   limits:
     memory: 512Mi

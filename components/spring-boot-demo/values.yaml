@@ -64,7 +64,7 @@ podEnv:
   # - name: CRYOSTAT_AGENT_HARVESTER_TEMPLATE
   #   value: profile
   - name: JAVA_OPTS_APPEND
-    value: "-XX:HeapDumpPath=/tmp"
+    value: "-XX:HeapDumpPath=/tmp -Duser.dir=/tmp"
 resources:
   limits:
     memory: 512Mi

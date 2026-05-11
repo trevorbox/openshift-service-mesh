@@ -31,3 +31,7 @@ patches:
         value: cryostat
 #      - op: remove
 #        path: /spec/ports/1
+  - path: patch-working-dir.yaml
+    target:
+      kind: Deployment
+      name: spring-boot-demo # Ensure this matches your metadata.name

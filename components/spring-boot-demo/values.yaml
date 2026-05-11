@@ -49,7 +49,7 @@ podEnv:
   - name: CRYOSTAT_AGENT_HARVESTER_EXIT_MAX_SIZE_B
     value: "104857600" # 100 MB
   - name: CRYOSTAT_AGENT_HARVESTER_AUTOANALYZE
-    value: "false"
+    value: false
   - name: CRYOSTAT_AGENT_HARVESTER_MAX_FILES
     value: "24"
 

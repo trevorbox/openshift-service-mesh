@@ -67,6 +67,9 @@ podEnv:
     # Remove -Duser.dir! Only keep the HeapDumpPath for OOM situations.
     value: "-XX:HeapDumpPath=/tmp"
 
+  - name: JAVA_APP_DIR
+    value: "/application"
+
   - name: CRYOSTAT_AGENT_BASE_DIR
     # This tells the Cryostat Agent to use /tmp for its staging files
     value: "/tmp"

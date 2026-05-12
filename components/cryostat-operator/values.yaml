@@ -16,3 +16,7 @@ operators:
   csv: cryostat-operator.v4.1.1-4
   namespace: cryostat-operator
   installPlanVerifierActiveDeadlineSeconds: 1200
+  config:
+    env:
+      - name: INSIGHTS_ENABLED
+        value: 'false'

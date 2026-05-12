@@ -91,9 +91,9 @@ spec:
     # Resource requirements for the object storage container.
     objectStorageResources:
       requests:
-        cpu: 50m
-        memory: 256Mi
+        cpu: 500m
+        memory: 2Gi
       limits:
-        memory: 512Mi
+        memory: 1Gi
   
   # targetNamespaces: []

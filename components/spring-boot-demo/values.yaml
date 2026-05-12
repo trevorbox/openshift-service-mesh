@@ -52,6 +52,8 @@ podEnv:
     value: "false"
   - name: CRYOSTAT_AGENT_HARVESTER_MAX_FILES
     value: "24"
+  - name: JAVA_MAX_MEM_RATIO
+    value: "80.0"
 
   # - name: CRYOSTAT_AGENT_HARVESTER_TEMPLATE
   #   value: "Profiling"

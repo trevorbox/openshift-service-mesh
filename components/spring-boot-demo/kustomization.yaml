@@ -49,9 +49,7 @@ patches:
                 # 2. Update args to point to the application classpath
                 command: ["java"]
                 args:
-                  - "-XX:InitialRAMPercentage=80.0"
-                  - "-XX:MinRAMPercentage=80.0"
-                  - "-XX:MaxRAMPercentage=90.0"
+                  - "-XX:MaxRAMPercentage=80.0"
                   - "-cp"
                   - "/application"
                   - "org.springframework.boot.loader.launch.JarLauncher"

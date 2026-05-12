@@ -79,7 +79,7 @@ podEnv:
   #   value: "-Djava.io.tmpdir=/tmp"
 resources:
   limits:
-    memory: 512Mi
+    memory: 1Gi
   requests:
     cpu: 100m
-    memory: 512Mi
+    memory: 1Gi

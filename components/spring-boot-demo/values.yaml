@@ -24,7 +24,7 @@ cryostat:
 podLabels:
   sidecar.istio.io/inject: "true"
   # operator injection labels
-  cryostat.io/log-level: info
+  cryostat.io/log-level: debug
   cryostat.io/name: cryostat
   cryostat.io/namespace: cryostat
   cryostat.io/container: spring-boot-demo

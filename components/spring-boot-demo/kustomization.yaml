@@ -50,6 +50,5 @@ patches:
                 command: ["java"]
                 args:
                   - "-XX:MaxRAMPercentage=50.0"
-                  - "-cp"
-                  - "/application"
-                  - "org.springframework.boot.loader.launch.JarLauncher"
+                  - "-jar"
+                  - "/application/application.jar"

@@ -23,7 +23,7 @@ patches:
         value: cryostat
   - target:
         kind: Deployment
-        name: spring-boot-demo
+        name: spring-boot-demo2
     patch: |-
       apiVersion: apps/v1
       kind: Deployment

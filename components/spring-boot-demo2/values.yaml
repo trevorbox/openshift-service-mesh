@@ -22,3 +22,5 @@ cryostat:
       appProtocol: tcp
       port: 9091
       targetPort: 9091
+image:
+  repository: quay.io/trevorbox/spring-boot-micro-jre

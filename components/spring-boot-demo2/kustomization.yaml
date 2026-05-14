@@ -28,7 +28,7 @@ patches:
       apiVersion: apps/v1
       kind: Deployment
       metadata:
-        name: spring-boot-demo
+        name: spring-boot-demo2
       spec:
         template:
           spec:

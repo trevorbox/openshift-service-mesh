@@ -17,10 +17,10 @@ patches:
         kind: Cryostat
         name: cryostat
     patch: |-
-      - op: add
-        path: /spec/targetDiscoveryOptions
-        value:
-          disableBuiltInDiscovery: false
+      # - op: add
+      #   path: /spec/targetDiscoveryOptions
+      #   value:
+      #     disableBuiltInDiscovery: true
       - op: add
         path: /spec/agentOptions
         value:

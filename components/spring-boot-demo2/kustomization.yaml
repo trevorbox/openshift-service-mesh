@@ -21,3 +21,24 @@ patches:
       - op: add
         path: /metadata/annotations/networking.istio.io~1exportTo
         value: cryostat
+  - target:
+        kind: Deployment
+        name: spring-boot-demo
+    patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: spring-boot-demo
+      spec:
+        template:
+          spec:
+            containers:
+              - name: spring-boot-demo
+                # 1. Keep /tmp as the working directory for write permissions
+                workingDir: /tmp
+                # 2. Update args to point to the application classpath
+                command: ["java"]
+                args:
+                  - "-XX:MaxRAMPercentage=80.0"
+                  - "-jar"
+                  - "/application/application.jar"

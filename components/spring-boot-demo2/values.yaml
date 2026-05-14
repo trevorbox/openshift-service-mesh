@@ -24,3 +24,9 @@ cryostat:
       targetPort: 9091
 image:
   repository: quay.io/trevorbox/spring-boot-micro-jre
+resources:
+  limits:
+    memory: 1Gi
+  requests:
+    cpu: 100m
+    memory: 1Gi

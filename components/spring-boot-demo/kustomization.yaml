@@ -46,9 +46,9 @@ patches:
               - name: spring-boot-demo
                 # 1. Keep /tmp as the working directory for write permissions
                 workingDir: /tmp
-                # 2. Update args to point to the application classpath
-                command: ["java"]
-                args:
-                  - "-XX:MaxRAMPercentage=50.0"
-                  - "-jar"
-                  - "/application/application.jar"
+                # # 2. Update args to point to the application classpath
+                # command: ["java"]
+                # args:
+                #   - "-XX:MaxRAMPercentage=50.0"
+                #   - "-jar"
+                #   - "/application/application.jar"

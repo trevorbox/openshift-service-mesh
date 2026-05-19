@@ -80,6 +80,7 @@ revisions:
                 headersToDownstreamOnAllow: ["set-cookie"] # headers sent back to the client when request is allowed.
                 headersToDownstreamOnDeny: ["content-type", "set-cookie"] # headers sent back to the client when request is denied.
           outboundTrafficPolicy:
-            mode: REGISTRY_ONLY # ALLOW_ANY
+            # mode: REGISTRY_ONLY
+            mode: ALLOW_ANY
       version: v1.28.5
  

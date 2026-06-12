@@ -157,6 +157,15 @@ applications:
     source:
       path: components/tempo-system
 
+  minio-tenant:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '2'
+    destination:
+      namespace: minio-tenant
+    source:
+      path: components/minio-tenant
+
   grafana-istio:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous

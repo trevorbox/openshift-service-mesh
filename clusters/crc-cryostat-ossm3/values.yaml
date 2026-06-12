@@ -38,7 +38,23 @@ applications:
       namespace: openshift-gitops
     source:
       path: components/servicemeshoperator3
+  cluster-observability-operator:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '-1'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: components/cluster-observability-operator
 
+  cluster-observability-configs:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '1'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: components/cluster-observability-configs
   opentelemetry-product:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous

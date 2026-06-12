@@ -1,0 +1,21 @@
+apiVersion: telemetry.istio.io/v1
+kind: Telemetry
+metadata:
+  name: disable-stats-logging
+  namespace: spring-boot-demo
+spec:
+  accessLogging:
+    - disabled: true
+      providers:
+        - name: envoy
+  metrics:
+    - overrides:
+        - disabled: true
+          match:
+            metric: ALL_METRICS
+            mode: CLIENT_AND_SERVER
+      providers:
+        - name: prometheus
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: spring-boot-demo

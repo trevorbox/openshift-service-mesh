@@ -148,6 +148,15 @@ applications:
     source:
       path: clusters/crc-cryostat-ossm3/overlays/ossm3-istio-system
 
+  tempo-system:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '2'
+    destination:
+      namespace: tempo-system
+    source:
+      path: components/tempo-system
+
   grafana-istio:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous

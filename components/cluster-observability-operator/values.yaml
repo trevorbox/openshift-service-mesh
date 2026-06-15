@@ -13,6 +13,6 @@ operators:
   name: cluster-observability-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  csv: cluster-observability-operator.v1.4.0
+  csv: cluster-observability-operator.v1.5.0
   namespace: cluster-observability-operator
   installPlanVerifierActiveDeadlineSeconds: 1200

@@ -12,7 +12,7 @@ spec:
     type: tempo
     access: proxy
     basicAuth: false
-    url: https://tempo-minio-dev-gateway.tempo-system.svc.cluster.local:8080/api/traces/v1/dev/tempo/
+    url: https://tempo-minio-dev-gateway.tempo-system.svc.cluster.local:8080/api/traces/v1/dev/tempo
     isDefault: false
     editable: true
     jsonData:

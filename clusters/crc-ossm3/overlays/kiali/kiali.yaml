@@ -83,7 +83,9 @@ spec:
         namespace: "tempo-system"
         tenant: "dev"
         url_format: "openshift"
-      use_grpc: true
+        datasource_uid: 1610b0c3-c509-4592-a256-a1871353dbfa
+        org_id: dev
+      use_grpc: false
       internal_url: 'https://tempo-minio-dev-gateway.tempo-system.svc.cluster.local:8080/api/traces/v1/dev/tempo'
       external_url: 'https://console-openshift-console.apps-crc.testing'
       auth:

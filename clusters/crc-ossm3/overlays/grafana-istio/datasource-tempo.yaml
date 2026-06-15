@@ -12,6 +12,20 @@ spec:
     type: tempo
     access: proxy
     basicAuth: false
-    url: http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200
+    url: https://tempo-minio-dev-gateway.tempo-system.svc.cluster.local:8081
     isDefault: false
     editable: true
+    jsonData:
+      "tlsSkipVerify": true
+      "timeInterval": "5s"
+      httpHeaderName1: 'Authorization'
+      httpHeaderName2: 'X-Scope-OrgID'
+    secureJsonData:
+      "httpHeaderValue1": "Bearer ${token}" # Notice the brakes around token
+      "httpHeaderValue2": "dev"
+  valuesFrom:
+    - targetPath: "secureJsonData.httpHeaderValue1"
+      valueFrom:
+        secretKeyRef:
+          name: "grafana-token"
+          key: "token"

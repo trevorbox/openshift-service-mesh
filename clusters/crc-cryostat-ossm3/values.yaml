@@ -189,7 +189,7 @@ applications:
     destination:
       namespace: grafana
     source:
-      path: clusters/crc-cryostat/overlays/grafana-istio
+      path: clusters/crc-ossm3/overlays/grafana-istio
 
   istio-ingressgateway:
     annotations:

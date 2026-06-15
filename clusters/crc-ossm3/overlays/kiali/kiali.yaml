@@ -92,7 +92,7 @@ spec:
         insecure_skip_verify: true
         type: bearer
         use_kiali_token: true
-      namespace_selector: false
+      namespace_selector: true
     # tracing:
     #   enabled: true
     #   provider: tempo

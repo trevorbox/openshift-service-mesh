@@ -3,6 +3,7 @@ kind: TektonConfig
 metadata:
   name: config
 spec:
+  targetNamespace: openshift-pipelines
   pruner:
     disabled: false
     keep-since: 2

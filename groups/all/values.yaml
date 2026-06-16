@@ -124,14 +124,14 @@ applications:
     source:
       path: components/gatekeeper-operator
 
-  # grafana-operator:
-  #   annotations:
-  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
-  #     argocd.argoproj.io/sync-wave: '-1'
-  #   destination:
-  #     namespace: openshift-gitops
-  #   source:
-  #     path: components/grafana-operator
+  grafana-operator:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '-1'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: components/grafana-operator
 
   kiali-operator:
     annotations:

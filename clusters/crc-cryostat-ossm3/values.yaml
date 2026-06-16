@@ -182,14 +182,14 @@ applications:
     source:
       path: components/minio-tenant
 
-  grafana-istio:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '2'
-    destination:
-      namespace: grafana
-    source:
-      path: clusters/crc-ossm3/overlays/grafana-istio
+  # grafana-istio:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '2'
+  #   destination:
+  #     namespace: grafana
+  #   source:
+  #     path: clusters/crc-ossm3/overlays/grafana-istio
 
   istio-ingressgateway:
     annotations:

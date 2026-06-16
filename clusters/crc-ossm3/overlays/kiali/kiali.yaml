@@ -66,7 +66,7 @@ spec:
         - name: Istio Performance Dashboard
         - name: Istio Wasm Extension Dashboard
       enabled: true
-      external_url: https://grafana-instance-route-grafana.apps.asd.sandbox2873.opentlc.com
+      external_url: https://grafana-instance-route-grafana.apps-crc.testing
       internal_url: http://grafana-instance-service.grafana.svc:3000
     prometheus:
       auth:

@@ -10,3 +10,20 @@ spec:
       - pipelinerun
       - taskrun
     schedule: '*/2 * * * *'
+  pipeline:
+    options:
+      deployments:
+        tekton-triggers-core-interceptors:
+          spec:
+            replicas: 2
+            # template:
+            #   spec:
+            #     containers:
+            #       - name: tekton-triggers-core-interceptors
+            #         resources:
+            #           limits:
+            #             cpu: 500m
+            #             memory: 1Gi
+            #           requests:
+            #             cpu: 500m
+            #             memory: 1Gi

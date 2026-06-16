@@ -38,6 +38,10 @@ patches:
         metadata:
           annotations:
             sidecar.istio.io/logLevel: 'rbac:debug,jwt:debug'  # enable RBAC and JWT debug logging
+            sidecar.istio.io/proxyMemory: 1Gi
+            sidecar.istio.io/proxyMemoryLimit: 1Gi
+            sidecar.istio.io/proxyCPU: 50m
+            sidecar.istio.io/proxyCPULimit: '2'
 - target:
     kind: DestinationRule
   patch: |-

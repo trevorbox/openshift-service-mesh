@@ -10,7 +10,6 @@ spec:
       - pipelinerun
       - taskrun
     schedule: '*/2 * * * *'
-    keep: null
   pipeline:
     options:
       deployments:

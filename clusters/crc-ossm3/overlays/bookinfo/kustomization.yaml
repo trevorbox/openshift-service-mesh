@@ -43,3 +43,10 @@ patches:
     - op: add
       path: /spec/replicas
       value: 5
+- target:
+    kind: Deployment
+    name: productpage-v1
+  patch: |-
+    - op: add
+      path: /spec/replicas
+      value: 1

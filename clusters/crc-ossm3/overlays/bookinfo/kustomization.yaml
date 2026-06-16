@@ -6,6 +6,18 @@ resources:
 
 patches:
 - target:
+    kind: Gateway
+  patch: |
+    spec:
+      hosts:
+        - bookinfo-istio-ingress.apps-crc.testing
+- target:
+    kind: VirtualService
+  patch: |
+    spec:
+      hosts:
+        - bookinfo-istio-ingress.apps-crc.testing
+- target:
     kind: Deployment
     name: productpage-v1
   patch: |

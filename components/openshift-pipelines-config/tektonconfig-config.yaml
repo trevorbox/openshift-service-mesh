@@ -12,6 +12,7 @@ spec:
     schedule: '*/2 * * * *'
   pipeline:
     options:
+      disabled: false
       deployments:
         tekton-triggers-core-interceptors:
           spec:

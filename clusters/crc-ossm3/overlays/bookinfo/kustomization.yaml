@@ -8,14 +8,16 @@ patches:
 - target:
     kind: Gateway
   patch: |
-    spec:
-      hosts:
-        - bookinfo-istio-ingress.apps-crc.testing
+    - path: /spec/servers/0/hosts/0
+      op: replace
+      value: bookinfo-istio-ingress.apps-crc.testing
 - target:
     kind: VirtualService
+    group: networking.istio.io
   patch: |
-    spec:
-      hosts:
+    - path: /spec/hosts
+      op: replace
+      value: 
         - bookinfo-istio-ingress.apps-crc.testing
 - target:
     kind: Deployment

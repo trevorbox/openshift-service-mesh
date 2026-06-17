@@ -42,25 +42,25 @@ patches:
             sidecar.istio.io/proxyMemoryLimit: 1Gi
             sidecar.istio.io/proxyCPU: 50m
             sidecar.istio.io/proxyCPULimit: '2'
-- target:
-    kind: DestinationRule
-  patch: |-
-    - op: add
-      path: /spec/trafficPolicy
-      value:
-        connectionPool:
-          http:
-            idleTimeout: 60s
-        loadBalancer:
-          simple: LEAST_REQUEST
-        outlierDetection:
-          baseEjectionTime: 30s
-          consecutive5xxErrors: 0
-          consecutiveGatewayErrors: 0
-          consecutiveLocalOriginFailures: 1
-          interval: 5s
-          maxEjectionPercent: 100
-          splitExternalLocalOriginErrors: true
+# - target:
+#     kind: DestinationRule
+#   patch: |-
+#     - op: add
+#       path: /spec/trafficPolicy
+#       value:
+#         connectionPool:
+#           http:
+#             idleTimeout: 60s
+#         loadBalancer:
+#           simple: LEAST_REQUEST
+#         outlierDetection:
+#           baseEjectionTime: 30s
+#           consecutive5xxErrors: 0
+#           consecutiveGatewayErrors: 0
+#           consecutiveLocalOriginFailures: 1
+#           interval: 5s
+#           maxEjectionPercent: 100
+#           splitExternalLocalOriginErrors: true
 - target:
     kind: Deployment
   patch: |-

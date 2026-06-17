@@ -1,5 +1,20 @@
 #!/bin/bash
 
+# Git Bash converts Unix paths in command lines (e.g. /var/lib/istio/... →
+# C:/Program Files/Git/var/...) before kubectl/oc exec sends them to the pod.
+if [[ -n "${MSYSTEM:-}" || "${OSTYPE:-}" == msys* || "${OSTYPE:-}" == mingw* ]]; then
+  export MSYS2_ARG_CONV_EXCL='*'
+  export MSYS_NO_PATHCONV=1
+fi
+
+kexec() {
+  MSYS2_ARG_CONV_EXCL='*' MSYS_NO_PATHCONV=1 kubectl exec "$@"
+}
+
+ocexec() {
+  MSYS2_ARG_CONV_EXCL='*' MSYS_NO_PATHCONV=1 oc exec "$@"
+}
+
 AFFECTED_POD="spring-boot-demo-c56c55b7-lstdm"
 AFFECTED_NAMESPACE="spring-boot-demo"
 HEALTHY_POD="curl-88cc4ff69-tkjsz"
@@ -10,7 +25,7 @@ SAMPLES=3    # number of samples (3 x 1 hour = 3 hours)
 OUTPUT_DIR="stats_collection_$(date +%Y%m%d_%H%M%S)"
 
 mkdir -p "$OUTPUT_DIR"
-oc exec -n "$AFFECTED_NAMESPACE" "$AFFECTED_POD" -c istio-proxy -- cat /usr/local/bin/envoy > "$OUTPUT_DIR/envoy"
+ocexec -n "$AFFECTED_NAMESPACE" "$AFFECTED_POD" -c istio-proxy -- cat /usr/local/bin/envoy > "$OUTPUT_DIR/envoy"
 chmod +x "$OUTPUT_DIR/envoy"
 
 echo -e "# pprof commands\n" > "$OUTPUT_DIR/pprof_commands.md"
@@ -36,7 +51,7 @@ heap_dump() {
   local last_byte_hex
 
   # /tmp is often read-only in istio-proxy; prefer /var/lib/istio/data.
-  remote_file=$(kubectl exec "$pod" -n "$namespace" -c "$container" -- sh -c "
+  remote_file=$(kexec "$pod" -n "$namespace" -c "$container" -- sh -c "
     for dir in /var/lib/istio/data /tmp; do
       test_file=\"\$dir/.write-test-$dump_id\"
       if touch \"\$test_file\" 2>/dev/null; then
@@ -49,13 +64,13 @@ heap_dump() {
     exit 1
   ") || return 1
 
-  kubectl exec "$pod" -n "$namespace" -c "$container" -- \
+  kexec "$pod" -n "$namespace" -c "$container" -- \
     sh -c "pilot-agent request GET heap_dump > '$remote_file'" || return 1
 
-  kubectl exec "$pod" -n "$namespace" -c "$container" -- \
+  kexec "$pod" -n "$namespace" -c "$container" -- \
     base64 "$remote_file" | base64 -d > "$output_file" || return 1
 
-  kubectl exec "$pod" -n "$namespace" -c "$container" -- \
+  kexec "$pod" -n "$namespace" -c "$container" -- \
     rm -f "$remote_file"
 
   # Strip trailing newline bytes (0x0a / 0x0d) so gzip/pprof can read the file.
@@ -73,25 +88,25 @@ heap_dump() {
 
 for i in $(seq 1 $SAMPLES); do
   FILE_TS=$(date -u +"%Y%m%d_%H%M%S")
-  kubectl exec "$AFFECTED_POD" -n "$AFFECTED_NAMESPACE" -c istio-proxy -- \
+  kexec "$AFFECTED_POD" -n "$AFFECTED_NAMESPACE" -c istio-proxy -- \
     pilot-agent request GET stats > "$OUTPUT_DIR/${FILE_TS}.affected.stats.txt" 2>/dev/null
-  kubectl exec "$AFFECTED_POD" -n "$AFFECTED_NAMESPACE" -c istio-proxy -- \
+  kexec "$AFFECTED_POD" -n "$AFFECTED_NAMESPACE" -c istio-proxy -- \
     pilot-agent request GET memory > "$OUTPUT_DIR/${FILE_TS}.affected.memory.txt" 2>/dev/null
   kubectl exec "$AFFECTED_POD" -n "$AFFECTED_NAMESPACE" -c istio-proxy -- \
     pilot-agent request GET server_info > "$OUTPUT_DIR/${FILE_TS}.affected.server_info.json" 2>/dev/null
-  kubectl exec "$AFFECTED_POD" -n "$AFFECTED_NAMESPACE" -c istio-proxy -- \
+  kexec "$AFFECTED_POD" -n "$AFFECTED_NAMESPACE" -c istio-proxy -- \
     pilot-agent request GET config_dump > "$OUTPUT_DIR/${FILE_TS}.affected.config_dump.json" 2>/dev/null
   heap_dump "$AFFECTED_POD" "$AFFECTED_NAMESPACE" "$OUTPUT_DIR/${FILE_TS}.affected.heap_dump.prof"
   echo "go tool pprof -top "./$OUTPUT_DIR/envoy" "./$OUTPUT_DIR/${FILE_TS}.affected.heap_dump.prof"" >> "$OUTPUT_DIR/pprof_commands.md"
   echo "go tool pprof -http localhost:9999 "./$OUTPUT_DIR/envoy" "./$OUTPUT_DIR/${FILE_TS}.affected.heap_dump.prof"" >> "$OUTPUT_DIR/pprof_commands.md"
 
-  kubectl exec "$HEALTHY_POD" -n "$HEALTHY_NAMESPACE" -c istio-proxy -- \
+  kexec "$HEALTHY_POD" -n "$HEALTHY_NAMESPACE" -c istio-proxy -- \
     pilot-agent request GET stats > "$OUTPUT_DIR/${FILE_TS}.healthy.stats.txt" 2>/dev/null
-  kubectl exec "$HEALTHY_POD" -n "$HEALTHY_NAMESPACE" -c istio-proxy -- \
+  kexec "$HEALTHY_POD" -n "$HEALTHY_NAMESPACE" -c istio-proxy -- \
     pilot-agent request GET memory > "$OUTPUT_DIR/${FILE_TS}.healthy.memory.txt" 2>/dev/null
-  kubectl exec "$HEALTHY_POD" -n "$HEALTHY_NAMESPACE" -c istio-proxy -- \
+  kexec "$HEALTHY_POD" -n "$HEALTHY_NAMESPACE" -c istio-proxy -- \
     pilot-agent request GET server_info > "$OUTPUT_DIR/${FILE_TS}.healthy.server_info.json" 2>/dev/null
-  kubectl exec "$HEALTHY_POD" -n "$HEALTHY_NAMESPACE" -c istio-proxy -- \
+  kexec "$HEALTHY_POD" -n "$HEALTHY_NAMESPACE" -c istio-proxy -- \
     pilot-agent request GET config_dump > "$OUTPUT_DIR/${FILE_TS}.healthy.config_dump.json" 2>/dev/null
   heap_dump "$HEALTHY_POD" "$HEALTHY_NAMESPACE" "$OUTPUT_DIR/${FILE_TS}.healthy.heap_dump.prof"
   echo "go tool pprof -top "./$OUTPUT_DIR/envoy" "./$OUTPUT_DIR/${FILE_TS}.healthy.heap_dump.prof"" >> "$OUTPUT_DIR/pprof_commands.md"

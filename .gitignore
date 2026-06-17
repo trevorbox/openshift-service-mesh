@@ -2,3 +2,4 @@
 openshift-install
 .certs
 charts
+stats_*

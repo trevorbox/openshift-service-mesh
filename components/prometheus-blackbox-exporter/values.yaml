@@ -1,0 +1,25 @@
+securityContext:
+  runAsUser: 
+  runAsGroup: 
+resources: 
+  limits:
+    memory: 300Mi
+    cpu: 300m
+  requests:
+    memory: 50Mi
+    cpu: 100m
+prometheusRule:
+  enabled: true
+  additionalLabels: {}
+  namespace: ""
+  rules: 
+  - alert: ProbeFailure
+    expr: avg_over_time(probe_success[5m]) < 0.95
+    for: 1m
+    labels:
+      severity: error
+      namespace: "{{ $labels.namespace }}"
+      app: "{{ $labels.app }}"
+      url: "{{ $labels.url }}"
+    annotations:
+      message: "The '{{ $labels.app}}' probe has been failing 5% of the time in the last minute"

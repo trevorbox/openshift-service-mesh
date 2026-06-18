@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: bookinfo
+spec:
+  interval: 5s
+  jobName: bookinfo
+  module: http_2xx
+  prober:
+    scheme: http
+    url: prometheus-blackbox-exporter.prometheus-blackbox-exporter.svc:9115
+  targets:
+    staticConfig:
+      static:
+        - https://bookinfo-istio-ingress.apps-crc.testing/productpage
+      labels:
+        app: bookinfo
+        url: https://bookinfo-istio-ingress.apps-crc.testing/productpage

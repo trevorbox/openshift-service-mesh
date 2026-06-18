@@ -294,6 +294,17 @@ applications:
     source:
       path: components/curl
 
+  prometheus-blackbox-exporter:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: sample
+      server: https://kubernetes.default.svc?__team=team1
+    project: team1
+    source:
+      path: components/prometheus-blackbox-exporter
+
   # openshift-pipelines-operator:
   #   annotations:
   #     argocd.argoproj.io/compare-options: IgnoreExtraneous

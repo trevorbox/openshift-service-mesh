@@ -5,7 +5,7 @@ metadata:
 spec:
   interval: 5s
   jobName: bookinfo
-  module: http_2xx
+  module: http_2xx_insecure
   prober:
     scheme: http
     url: prometheus-blackbox-exporter.prometheus-blackbox-exporter.svc:9115
@@ -16,5 +16,3 @@ spec:
       labels:
         app: bookinfo
         url: https://bookinfo-istio-ingress.apps-crc.testing/productpage
-  tlsConfig:
-    insecureSkipVerify: true

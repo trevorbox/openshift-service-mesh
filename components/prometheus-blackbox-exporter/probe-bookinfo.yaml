@@ -2,7 +2,6 @@ apiVersion: monitoring.coreos.com/v1
 kind: Probe
 metadata:
   name: bookinfo
-  namespace: bookinfo
 spec:
   interval: 5s
   jobName: prometheus-blackbox-exporter

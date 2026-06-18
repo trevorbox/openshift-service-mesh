@@ -38,6 +38,6 @@ prometheusRule:
       severity: error
       namespace: "{{ $labels.namespace }}"
       app: "{{ $labels.app }}"
-      url: "{{ $labels.url }}"
+      component: "{{ $labels.component }}"
     annotations:
-      message: "The '{{ $labels.app}}' probe has been failing 5% of the time in the last minute"
+      message: "The 'app: {{ $labels.app}}' 'component: {{ $labels.component}}' probe has been failing 5% of the time in the last minute"

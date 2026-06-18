@@ -2,9 +2,10 @@ apiVersion: monitoring.coreos.com/v1
 kind: Probe
 metadata:
   name: bookinfo
+  namespace: bookinfo
 spec:
   interval: 5s
-  jobName: bookinfo
+  jobName: prometheus-blackbox-exporter
   module: http_2xx_insecure
   prober:
     scheme: http
@@ -15,4 +16,4 @@ spec:
         - https://bookinfo-istio-ingress.apps-crc.testing/productpage
       labels:
         app: bookinfo
-        url: https://bookinfo-istio-ingress.apps-crc.testing/productpage
+        component: productpage

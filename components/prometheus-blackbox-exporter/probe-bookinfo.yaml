@@ -16,3 +16,5 @@ spec:
       labels:
         app: bookinfo
         url: https://bookinfo-istio-ingress.apps-crc.testing/productpage
+  tlsConfig:
+    insecureSkipVerify: true

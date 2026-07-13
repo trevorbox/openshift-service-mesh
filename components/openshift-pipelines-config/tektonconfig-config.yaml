@@ -4,6 +4,24 @@ metadata:
   name: config
 spec:
   targetNamespace: openshift-pipelines
+  result:
+    options:
+      disabled: false
+      deployments:
+        tekton-results-api:
+          spec:
+            replicas: 2
+            template:
+              spec:
+                containers:
+                  - name: api
+                    resources:
+                      limits:
+                        cpu: 500m
+                        memory: 1Gi
+                      requests:
+                        cpu: 500m
+                        memory: 1Gi
   pruner:
     disabled: false
     keep-since: 2

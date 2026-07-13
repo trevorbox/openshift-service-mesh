@@ -11,6 +11,7 @@ spec:
       - pipelinerun
       - taskrun
     schedule: '*/2 * * * *'
+    keep:
   trigger:
     options:
       disabled: false

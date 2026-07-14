@@ -303,20 +303,20 @@ applications:
     source:
       path: components/prometheus-blackbox-exporter
 
-  openshift-pipelines-operator:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '-1'
-    destination:
-      namespace: openshift-gitops
-    source:
-      path: components/openshift-pipelines-operator
+  # openshift-pipelines-operator:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '-1'
+  #   destination:
+  #     namespace: openshift-gitops
+  #   source:
+  #     path: components/openshift-pipelines-operator
 
-  openshift-pipelines-config:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '1'
-    destination:
-      namespace: openshift-gitops
-    source:
-      path: components/openshift-pipelines-config
+  # openshift-pipelines-config:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '1'
+  #   destination:
+  #     namespace: openshift-gitops
+  #   source:
+  #     path: components/openshift-pipelines-config

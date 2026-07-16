@@ -1,13 +1,13 @@
 istioCNI:
   spec:
-    version: v1.26.6
+    version: v1.28.8
     namespace: istio-cni
     # profile: ambient
 # https://istio.io/latest/docs/setup/upgrade/canary/
 istioRevisionTags: 
   # https://istio.io/latest/docs/setup/upgrade/canary/#default-tag
   default:
-    istioRevision: default-v1-26-6
+    istioRevision: default-v1-28-8
 ztunnel:
   enabled: false
   spec:
@@ -82,5 +82,5 @@ revisions:
           outboundTrafficPolicy:
             # mode: REGISTRY_ONLY
             mode: ALLOW_ANY
-      version: v1.26.6
+      version: v1.28.8
  

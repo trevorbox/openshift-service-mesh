@@ -14,5 +14,6 @@ operators:
   source: redhat-operators
   sourceNamespace: openshift-marketplace
   csv: servicemeshoperator3.v3.1.5
+  # csv: servicemeshoperator3.v3.3.5
   namespace: servicemeshoperator3
   installPlanVerifierActiveDeadlineSeconds: 1200

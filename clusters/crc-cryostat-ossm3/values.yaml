@@ -30,14 +30,22 @@ default:
 
 applications:
 
-  servicemeshoperator3:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '-1'
-    destination:
-      namespace: openshift-gitops
-    source:
-      path: components/servicemeshoperator3
+  # servicemeshoperator3:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '-1'
+  #   destination:
+  #     namespace: openshift-gitops
+  #   source:
+  #     path: components/servicemeshoperator3
+  # servicemeshoperator3:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '-1'
+  #   destination:
+  #     namespace: openshift-gitops
+  #   source:
+  #     path: clusters/crc-cryostat-ossm3/overlays/servicemeshoperator3
   cluster-observability-operator:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous

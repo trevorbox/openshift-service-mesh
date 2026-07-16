@@ -1,0 +1,18 @@
+installRequiredPythonLibraries: false
+approveManualInstallPlanViaHook: true
+
+installPlanApproverAndVerifyJobsImage: quay.io/trevorbox/installplanapproverandverifier:4.16.0 # quay.io/openshift/origin-cli:4.16
+
+operatorGroups:
+- name: servicemeshoperator3
+  createNamespace: true
+
+operators:
+- channel: stable
+  installPlanApproval: Manual
+  name: servicemeshoperator3
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  csv: servicemeshoperator3.v3.1.5
+  namespace: servicemeshoperator3
+  installPlanVerifierActiveDeadlineSeconds: 1200

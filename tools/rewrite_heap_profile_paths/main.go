@@ -26,11 +26,11 @@ func main() {
 		os.Exit(2)
 	}
 
-	profAbs, err := filepath.Abs(*profPath)
+	profAbs, err := filepath.Abs(msysToWindows(*profPath))
 	if err != nil {
 		exitErr(err)
 	}
-	rootAbs, err := filepath.Abs(*profRoot)
+	rootAbs, err := filepath.Abs(msysToWindows(*profRoot))
 	if err != nil {
 		exitErr(err)
 	}
@@ -79,4 +79,20 @@ func main() {
 func exitErr(err error) {
 	fmt.Fprintln(os.Stderr, err)
 	os.Exit(1)
+}
+
+// msysToWindows converts Git Bash paths (/c/Users/...) to Windows (C:\Users\...).
+// Without this, the Windows Go runtime treats /c/Users as C:\c\Users.
+func msysToWindows(p string) string {
+	if len(p) >= 3 && p[0] == '/' && p[2] == '/' {
+		d := p[1]
+		if (d >= 'a' && d <= 'z') || (d >= 'A' && d <= 'Z') {
+			drive := string(d)
+			if d >= 'a' && d <= 'z' {
+				drive = string(d - 'a' + 'A')
+			}
+			return drive + ":" + filepath.FromSlash(p[2:])
+		}
+	}
+	return p
 }

@@ -31,25 +31,40 @@ ENVOY_FILE="$PROF_ROOT/usr/local/bin/envoy"
 ENVOY_BIN=".pprof/usr/local/bin/envoy"
 REWRITE_TOOL="$SCRIPT_DIR/tools/rewrite_heap_profile_paths"
 
+# Convert Git Bash / MSYS paths (/c/Users/...) to Windows paths (C:\Users\...) for native .exe tools.
+native_path() {
+  if command -v cygpath >/dev/null 2>&1; then
+    cygpath -w "$1"
+  else
+    printf '%s\n' "$1"
+  fi
+}
+
 # Copy a file from the proxy container into the local .pprof mirror (pod path layout).
-# Use base64 — raw `kubectl exec ... cat` truncates large binaries (e.g. 775M debug envoy → ~82M).
+# Prefer kubectl cp for large files; fall back to base64. Always verify byte size vs pod.
 copy_proxy_file() {
   local pod=$1 namespace=$2 remote=$3
   local local_file="$PROF_ROOT$remote"
   local remote_size local_size
   mkdir -p "$(dirname "$local_file")"
   remote_size=$(kexec "$pod" -n "$namespace" -c istio-proxy -- sh -c "wc -c < '$remote'" 2>/dev/null | tr -d ' \r')
-  if ! kexec "$pod" -n "$namespace" -c istio-proxy -- base64 "$remote" 2>/dev/null | base64 -d > "$local_file"; then
-    rm -f "$local_file"
+  if [[ -z "$remote_size" || ! "$remote_size" =~ ^[0-9]+$ ]]; then
+    echo "warning: could not read size of $remote in pod" >&2
     return 1
   fi
+
+  # kubectl cp is more reliable for large binaries than piping base64 through Git Bash.
+  if ! MSYS2_ARG_CONV_EXCL='*' MSYS_NO_PATHCONV=1 \
+      kubectl cp "${namespace}/${pod}:${remote}" "$local_file" -c istio-proxy 2>/dev/null; then
+    if ! kexec "$pod" -n "$namespace" -c istio-proxy -- base64 "$remote" 2>/dev/null | base64 -d > "$local_file"; then
+      rm -f "$local_file"
+      return 1
+    fi
+  fi
+
   local_size=$(wc -c < "$local_file" | tr -d ' ')
-  if [[ -z "$local_size" || "$local_size" -eq 0 ]]; then
-    rm -f "$local_file"
-    return 1
-  fi
-  if [[ -n "$remote_size" && "$local_size" != "$remote_size" ]]; then
-    echo "warning: size mismatch copying $remote (remote=${remote_size} local=${local_size})" >&2
+  if [[ -z "$local_size" || "$local_size" -eq 0 || "$local_size" != "$remote_size" ]]; then
+    echo "warning: size mismatch copying $remote (remote=${remote_size} local=${local_size:-0})" >&2
     rm -f "$local_file"
     return 1
   fi
@@ -124,14 +139,17 @@ rewrite_bin_for_host() {
 
 rewrite_heap_profile_paths() {
   local prof=$1
-  local prof_abs root_abs bin
+  local prof_abs root_abs bin prof_native root_native
   bin="$(rewrite_bin_for_host)"
+  prof_abs="$(cd "$(dirname "$prof")" && pwd)/$(basename "$prof")"
+  root_abs="$(cd "$PROF_ROOT" && pwd)"
+  # Windows .exe cannot open Git Bash paths like /c/Users/... (becomes C:\c\Users\...).
+  prof_native="$(native_path "$prof_abs")"
+  root_native="$(native_path "$root_abs")"
+
   if [[ -z "$bin" || ! -f "$bin" ]]; then
-    # Fallback for developers: go run from source if prebuilt missing.
     if command -v go >/dev/null 2>&1 && [[ -d "$REWRITE_TOOL" ]]; then
-      prof_abs="$(cd "$(dirname "$prof")" && pwd)/$(basename "$prof")"
-      root_abs="$(cd "$PROF_ROOT" && pwd)"
-      (cd "$REWRITE_TOOL" && go run . -prof "$prof_abs" -root "$root_abs") || {
+      (cd "$REWRITE_TOOL" && go run . -prof "$prof_native" -root "$root_native") || {
         echo "warning: failed to rewrite paths in $prof" >&2
         return 1
       }
@@ -140,10 +158,8 @@ rewrite_heap_profile_paths() {
     echo "warning: no rewrite binary for this OS (expected under $REWRITE_TOOL/bin); profile keeps pod paths" >&2
     return 0
   fi
-  prof_abs="$(cd "$(dirname "$prof")" && pwd)/$(basename "$prof")"
-  root_abs="$(cd "$PROF_ROOT" && pwd)"
-  "$bin" -prof "$prof_abs" -root "$root_abs" || {
-    echo "warning: failed to rewrite paths in $prof_abs" >&2
+  "$bin" -prof "$prof_native" -root "$root_native" || {
+    echo "warning: failed to rewrite paths in $prof_abs (native=$prof_native)" >&2
     return 1
   }
 }

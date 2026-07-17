@@ -15,7 +15,7 @@ ocexec() {
   MSYS2_ARG_CONV_EXCL='*' MSYS_NO_PATHCONV=1 oc exec "$@"
 }
 
-AFFECTED_POD="spring-boot-demo-b95d5c57d-mhdfs"
+AFFECTED_POD="spring-boot-demo-667fb74646-8ghfs"
 AFFECTED_NAMESPACE="spring-boot-demo"
 HEALTHY_POD="curl-74959cfb89-s24qq"
 HEALTHY_NAMESPACE="sample"
@@ -89,6 +89,8 @@ copy_proxy_file() {
 }
 
 mkdir -p "$(dirname "$ENVOY_FILE")"
+echo "Pod envoy (verify this is the debug ~700M+ binary):" >&2
+kexec "$AFFECTED_POD" -n "$AFFECTED_NAMESPACE" -c istio-proxy -- ls -lah /usr/local/bin/envoy >&2 || true
 echo "Copying envoy binary from pod (chunked base64; debug builds ~800MB may take several minutes)..." >&2
 if ! copy_proxy_file "$AFFECTED_POD" "$AFFECTED_NAMESPACE" /usr/local/bin/envoy; then
   echo "error: failed to copy /usr/local/bin/envoy from $AFFECTED_NAMESPACE/$AFFECTED_POD" >&2
@@ -96,6 +98,30 @@ if ! copy_proxy_file "$AFFECTED_POD" "$AFFECTED_NAMESPACE" /usr/local/bin/envoy;
 fi
 chmod +x "$ENVOY_FILE"
 echo "envoy: $(wc -c < "$ENVOY_FILE" | tr -d ' ') bytes -> $ENVOY_FILE" >&2
+if [[ "$(wc -c < "$ENVOY_FILE" | tr -d ' ')" -lt 200000000 ]]; then
+  echo "warning: local envoy is < 200MB — this looks like a stripped binary, not a debug build." >&2
+  echo "warning: check kube context and that the pod runs the debug image (ls -lah above should show ~775M)." >&2
+fi
+
+# Copy shared libraries that envoy links against (ldd is reliable; profile strings is not on Git Bash).
+sync_envoy_libs_from_pod() {
+  local pod=$1 namespace=$2
+  local remote
+  echo "Discovering shared libs via ldd ..." >&2
+  while read -r remote; do
+    [[ -z "$remote" || "$remote" != /* ]] && continue
+    [[ -f "$PROF_ROOT$remote" ]] && continue
+    echo "  copying $remote ..." >&2
+    copy_proxy_file "$pod" "$namespace" "$remote" || echo "  warning: skip $remote" >&2
+  done < <(
+    kexec "$pod" -n "$namespace" -c istio-proxy -- ldd /usr/local/bin/envoy 2>/dev/null \
+      | awk '/=>/ { print $3 }' | grep -E '^/' | sort -u
+  )
+}
+sync_envoy_libs_from_pod "$AFFECTED_POD" "$AFFECTED_NAMESPACE"
+echo "Local .pprof files:" >&2
+find "$PROF_ROOT" -type f -printf '  %p (%s bytes)\n' 2>/dev/null \
+  || find "$PROF_ROOT" -type f | while read -r f; do echo "  $f ($(wc -c < "$f" | tr -d ' ') bytes)"; done
 
 # Extract absolute pod paths embedded in a gzip heap profile (no go/python needed).
 # Protobuf packs filename next to build-id; `strings` glues them as
@@ -113,8 +139,7 @@ profile_pod_paths() {
     | sort -u
 }
 
-# Copy shared libs referenced by the heap profile into .pprof/ (once per path).
-# Skip envoy — already copied. Print progress so long base64 copies do not look hung.
+# Also copy any extra libs referenced only in the heap profile.
 sync_profile_binaries_from_pod() {
   local pod=$1 namespace=$2 prof=$3
   local remote

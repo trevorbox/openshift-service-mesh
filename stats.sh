@@ -41,11 +41,18 @@ native_path() {
 }
 
 # Copy a file from the proxy container into the local .pprof mirror (pod path layout).
-# Prefer kubectl cp for large files; fall back to base64. Always verify byte size vs pod.
+#
+# Do NOT use `kubectl cp`: it needs `tar` on the client and in the container.
+# istio-proxy has no tar, and Windows kubectl.exe often cannot see Git Bash's tar.
+#
+# Single-pipe base64 of ~800MB can truncate on Git Bash (~80MB). Copy in chunks instead.
 copy_proxy_file() {
   local pod=$1 namespace=$2 remote=$3
   local local_file="$PROF_ROOT$remote"
   local remote_size local_size
+  local chunk_mib=16
+  local total_mib i count
+
   mkdir -p "$(dirname "$local_file")"
   remote_size=$(kexec "$pod" -n "$namespace" -c istio-proxy -- sh -c "wc -c < '$remote'" 2>/dev/null | tr -d ' \r')
   if [[ -z "$remote_size" || ! "$remote_size" =~ ^[0-9]+$ ]]; then
@@ -53,14 +60,24 @@ copy_proxy_file() {
     return 1
   fi
 
-  # kubectl cp is more reliable for large binaries than piping base64 through Git Bash.
-  if ! MSYS2_ARG_CONV_EXCL='*' MSYS_NO_PATHCONV=1 \
-      kubectl cp "${namespace}/${pod}:${remote}" "$local_file" -c istio-proxy 2>/dev/null; then
-    if ! kexec "$pod" -n "$namespace" -c istio-proxy -- base64 "$remote" 2>/dev/null | base64 -d > "$local_file"; then
+  rm -f "$local_file"
+  : > "$local_file"
+  total_mib=$(( (remote_size + 1048575) / 1048576 ))
+  i=0
+  while [[ "$i" -lt "$total_mib" ]]; do
+    count=$chunk_mib
+    if [[ $((i + count)) -gt "$total_mib" ]]; then
+      count=$((total_mib - i))
+    fi
+    echo "  copying $remote: $((i * 1048576)) / ${remote_size} bytes ..." >&2
+    if ! kexec "$pod" -n "$namespace" -c istio-proxy -- \
+        sh -c "dd if='$remote' bs=1048576 skip=$i count=$count 2>/dev/null | base64" \
+        | base64 -d >> "$local_file"; then
       rm -f "$local_file"
       return 1
     fi
-  fi
+    i=$((i + count))
+  done
 
   local_size=$(wc -c < "$local_file" | tr -d ' ')
   if [[ -z "$local_size" || "$local_size" -eq 0 || "$local_size" != "$remote_size" ]]; then
@@ -72,7 +89,7 @@ copy_proxy_file() {
 }
 
 mkdir -p "$(dirname "$ENVOY_FILE")"
-echo "Copying envoy binary from pod (debug builds are large; base64 may take a few minutes)..." >&2
+echo "Copying envoy binary from pod (chunked base64; debug builds ~800MB may take several minutes)..." >&2
 if ! copy_proxy_file "$AFFECTED_POD" "$AFFECTED_NAMESPACE" /usr/local/bin/envoy; then
   echo "error: failed to copy /usr/local/bin/envoy from $AFFECTED_NAMESPACE/$AFFECTED_POD" >&2
   exit 1

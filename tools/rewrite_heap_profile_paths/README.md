@@ -1,7 +1,8 @@
 # rewrite_heap_profile_paths
 
-Rewrites absolute pod paths (e.g. `/usr/local/bin/envoy`) inside a tcmalloc
-heap profile to the local `.pprof/` mirror so `go tool pprof` can symbolize.
+Writes paths like `.pprof/usr/local/bin/envoy` (forward slashes, relative to the
+profile directory) so the same archive works on Windows and Linux when you
+`cd` into the collection directory before running pprof.
 
 ## Prebuilt binaries (no Go needed at runtime)
 

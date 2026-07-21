@@ -15,7 +15,7 @@ ocexec() {
   MSYS2_ARG_CONV_EXCL='*' MSYS_NO_PATHCONV=1 oc exec "$@"
 }
 
-AFFECTED_POD="spring-boot-demo-667fb74646-8ghfs"
+AFFECTED_POD="spring-boot-demo-b95d5c57d-hpk7p"
 AFFECTED_NAMESPACE="spring-boot-demo"
 HEALTHY_POD="curl-74959cfb89-s24qq"
 HEALTHY_NAMESPACE="sample"
@@ -209,6 +209,7 @@ rewrite_heap_profile_paths() {
 echo -e "# pprof commands\n" > "$OUTPUT_DIR/pprof_commands.md"
 echo -e "Run all commands from **inside this directory** (\`cd\` here after extract)." >> "$OUTPUT_DIR/pprof_commands.md"
 echo -e "Collection is bash-only (kubectl/oc). Analysis needs Go's \`go tool pprof\`." >> "$OUTPUT_DIR/pprof_commands.md"
+echo -e "Profiles use portable relative paths (\`.pprof/...\`). Always \`cd\` into this directory before running pprof." >> "$OUTPUT_DIR/pprof_commands.md"
 echo -e "Debug envoy must be ~full size (often 700M+). If \`.pprof/.../envoy\` is ~80M, the copy was truncated — re-copy.\n" >> "$OUTPUT_DIR/pprof_commands.md"
 echo -e "## Use these views" >> "$OUTPUT_DIR/pprof_commands.md"
 echo -e "- **Top**: http://localhost:9999/ui/top  (named frames need the full debug binary)" >> "$OUTPUT_DIR/pprof_commands.md"

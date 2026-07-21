@@ -1,9 +1,9 @@
-// Rewrite absolute pod paths in a heap profile to local paths under a .pprof tree.
+// Rewrite heap-profile mapping paths to portable relative paths under .pprof/.
 //
-// Usage: go run . -prof PROFILE -root PPROF_ROOT
+// Usage: rewrite_heap_profile_paths -prof PROFILE -root PPROF_ROOT
 //
-// Optional (for analysis machines with Go). Collection via stats.sh still works
-// without Go; rewriting is skipped if go is unavailable.
+// Writes paths like .pprof/usr/local/bin/envoy (forward slashes) so the same
+// archive works on Windows and Linux when analyzed from the collection directory.
 package main
 
 import (
@@ -34,6 +34,7 @@ func main() {
 	if err != nil {
 		exitErr(err)
 	}
+	profDir := filepath.Dir(profAbs)
 
 	f, err := os.Open(profAbs)
 	if err != nil {
@@ -47,18 +48,26 @@ func main() {
 
 	changed := 0
 	for _, m := range p.Mapping {
-		if !strings.HasPrefix(m.File, "/") {
+		podRel, ok := mappingToPodPath(m.File)
+		if !ok {
 			continue
 		}
-		// Already rewritten into this tree.
-		if strings.HasPrefix(m.File, rootAbs) {
+		// rootAbs is .../.pprof ; podRel is /usr/local/bin/envoy
+		localAbs := filepath.Join(rootAbs, filepath.FromSlash(podRel))
+		rel, err := filepath.Rel(profDir, localAbs)
+		if err != nil {
+			exitErr(err)
+		}
+		// Always store forward slashes for cross-OS portability.
+		newPath := filepath.ToSlash(rel)
+		if m.File == newPath {
 			continue
 		}
-		m.File = filepath.Join(rootAbs, m.File)
+		m.File = newPath
 		changed++
 	}
 
-	tmp, err := os.CreateTemp(filepath.Dir(profAbs), ".heap-*.prof")
+	tmp, err := os.CreateTemp(profDir, ".heap-*.prof")
 	if err != nil {
 		exitErr(err)
 	}
@@ -73,7 +82,31 @@ func main() {
 		os.Remove(tmpPath)
 		exitErr(err)
 	}
-	fmt.Fprintf(os.Stderr, "rewrote %d mapping path(s) under %s\n", changed, rootAbs)
+	fmt.Fprintf(os.Stderr, "rewrote %d mapping path(s) to portable .pprof/... relative paths\n", changed)
+}
+
+// mappingToPodPath returns a pod-style path (/usr/..., /lib/...) from a mapping file.
+// Accepts raw pod paths, prior absolute rewrites (any OS), or relative .pprof/... paths.
+func mappingToPodPath(file string) (string, bool) {
+	// Normalize separators manually — filepath.ToSlash does not convert '\' on Linux.
+	f := strings.ReplaceAll(file, "\\", "/")
+
+	// Already portable relative: .pprof/usr/local/bin/envoy
+	if strings.HasPrefix(f, ".pprof/") {
+		return "/" + strings.TrimPrefix(f, ".pprof/"), true
+	}
+
+	// Prior absolute rewrite containing .../.pprof/usr/... (Windows or Linux abs path)
+	if i := strings.Index(strings.ToLower(f), "/.pprof/"); i >= 0 {
+		return f[i+len("/.pprof"):], true
+	}
+
+	// Raw pod path from the cluster.
+	if strings.HasPrefix(f, "/usr/") || strings.HasPrefix(f, "/lib/") {
+		return f, true
+	}
+
+	return "", false
 }
 
 func exitErr(err error) {
@@ -82,7 +115,6 @@ func exitErr(err error) {
 }
 
 // msysToWindows converts Git Bash paths (/c/Users/...) to Windows (C:\Users\...).
-// Without this, the Windows Go runtime treats /c/Users as C:\c\Users.
 func msysToWindows(p string) string {
 	if len(p) >= 3 && p[0] == '/' && p[2] == '/' {
 		d := p[1]

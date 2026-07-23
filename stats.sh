@@ -15,7 +15,7 @@ ocexec() {
   MSYS2_ARG_CONV_EXCL='*' MSYS_NO_PATHCONV=1 oc exec "$@"
 }
 
-AFFECTED_POD="spring-boot-demo-64c5f7b946-khkqk"
+AFFECTED_POD="spring-boot-demo-b95d5c57d-b7fx8"
 AFFECTED_NAMESPACE="spring-boot-demo"
 HEALTHY_POD="curl-74959cfb89-s24qq"
 HEALTHY_NAMESPACE="sample"

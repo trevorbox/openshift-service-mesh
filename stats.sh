@@ -15,7 +15,7 @@ ocexec() {
   MSYS2_ARG_CONV_EXCL='*' MSYS_NO_PATHCONV=1 oc exec "$@"
 }
 
-AFFECTED_POD="spring-boot-demo-b95d5c57d-hpk7p"
+AFFECTED_POD="spring-boot-demo-b95d5c57d-5fn57"
 AFFECTED_NAMESPACE="spring-boot-demo"
 HEALTHY_POD="curl-74959cfb89-s24qq"
 HEALTHY_NAMESPACE="sample"
@@ -286,6 +286,8 @@ for i in $(seq 1 $SAMPLES); do
     pilot-agent request GET server_info > "$OUTPUT_DIR/${FILE_TS}.affected.server_info.json" 2>/dev/null
   kexec "$AFFECTED_POD" -n "$AFFECTED_NAMESPACE" -c istio-proxy -- \
     pilot-agent request GET config_dump > "$OUTPUT_DIR/${FILE_TS}.affected.config_dump.json" 2>/dev/null
+  kexec "$AFFECTED_POD" -n "$AFFECTED_NAMESPACE" -c istio-proxy -- \
+    pilot-agent request GET clusters > "$OUTPUT_DIR/${FILE_TS}.affected.clusters.txt" 2>/dev/null
   heap_dump "$AFFECTED_POD" "$AFFECTED_NAMESPACE" "$OUTPUT_DIR/${FILE_TS}.affected.heap_dump.prof"
   echo "go tool pprof -top $ENVOY_BIN ${FILE_TS}.affected.heap_dump.prof" >> "$OUTPUT_DIR/pprof_commands.md"
   echo "go tool pprof -http localhost:9999 -no_browser $ENVOY_BIN ${FILE_TS}.affected.heap_dump.prof" >> "$OUTPUT_DIR/pprof_commands.md"
@@ -298,6 +300,8 @@ for i in $(seq 1 $SAMPLES); do
     pilot-agent request GET server_info > "$OUTPUT_DIR/${FILE_TS}.healthy.server_info.json" 2>/dev/null
   kexec "$HEALTHY_POD" -n "$HEALTHY_NAMESPACE" -c istio-proxy -- \
     pilot-agent request GET config_dump > "$OUTPUT_DIR/${FILE_TS}.healthy.config_dump.json" 2>/dev/null
+  kexec "$HEALTHY_POD" -n "$HEALTHY_NAMESPACE" -c istio-proxy -- \
+    pilot-agent request GET clusters > "$OUTPUT_DIR/${FILE_TS}.healthy.clusters.txt" 2>/dev/null
   heap_dump "$HEALTHY_POD" "$HEALTHY_NAMESPACE" "$OUTPUT_DIR/${FILE_TS}.healthy.heap_dump.prof"
   echo "go tool pprof -top $ENVOY_BIN ${FILE_TS}.healthy.heap_dump.prof" >> "$OUTPUT_DIR/pprof_commands.md"
   echo "go tool pprof -http localhost:9999 -no_browser $ENVOY_BIN ${FILE_TS}.healthy.heap_dump.prof" >> "$OUTPUT_DIR/pprof_commands.md"

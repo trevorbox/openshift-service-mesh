@@ -12,3 +12,30 @@ kind: Kustomization
 resources:
   - ../../../../components/spring-boot-demo
   - rolebinding-spring-boot-demo-view.yaml
+
+
+
+
+# OSSM-14026
+
+patches:
+- target:
+    kind: Deployment
+    name: spring-boot-demo
+  patch: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: spring-boot-demo
+    spec:
+      template:
+        metadata:
+          annotations:
+            proxy.istio.io/config: |
+              proxyStatsMatcher:
+                inclusionPrefixes:
+                  - cluster.
+                  - downstream_cx_
+                  - upstream_cx_
+                  - ssl.
+                  - listener.

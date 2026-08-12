@@ -19,5 +19,5 @@ spec:
                 # - httpbin
                 # - nginx-echo-headers
                 # - authz-custom
-                # - sample
+                - sample
                 - istio-egress

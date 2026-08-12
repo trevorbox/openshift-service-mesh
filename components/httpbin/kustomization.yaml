@@ -5,4 +5,4 @@ namespace: httpbin
 resources:
   - gateway-httpbin-waypoint.yaml
   - httpbin.yaml
-  - httproute-httpbin-waypoint-route.yaml
+  # - httproute-httpbin-waypoint-route.yaml

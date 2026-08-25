@@ -84,6 +84,9 @@ oc get namespace -l istio.io/dataplane-mode=ambient
 curl -ivk -H Host:httpbin.example.com --resolve "httpbin.example.com:443:192.168.130.200" https://httpbin.example.com:443/headers
 curl -ivk -H Host:nginx-echo-headers.example.com --resolve "nginx-echo-headers.example.com:443:192.168.130.200" https://nginx-echo-headers.example.com:443
 
+# BGP advertisement (off-subnet VIP). See components/metallb/README.md
+curl -ivk --resolve "httpbin.example.com:443:192.168.200.200" https://httpbin.example.com:443/headers
+
 #route
 curl -ivk -H Host:nginx-echo-headers.example.com --resolve "nginx-echo-headers.example.com:443:192.168.130.11" https://nginx-echo-headers.example.com:443
 

@@ -1,0 +1,12 @@
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: crc-bgp
+  namespace: metallb-system
+spec:
+  # Off-subnet VIPs so the CRC host learns them as BGP routes instead of
+  # treating them as on-link addresses on 192.168.130.0/24 (the crc bridge).
+  addresses:
+    - 192.168.200.200-192.168.200.249
+  autoAssign: false
+  avoidBuggyIPs: false

@@ -1,0 +1,12 @@
+apiVersion: metallb.io/v1beta1
+kind: BGPAdvertisement
+metadata:
+  name: crc
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+    - crc-bgp
+  peers:
+    - crc-host
+  aggregationLength: 32
+  aggregationLengthV6: 128

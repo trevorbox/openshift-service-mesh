@@ -1,0 +1,17 @@
+apiVersion: metallb.io/v1beta2
+kind: BGPPeer
+metadata:
+  name: crc-host
+  namespace: metallb-system
+spec:
+  myASN: 64500
+  peerASN: 64501
+  peerAddress: 192.168.130.1
+  peerPort: 179
+  # CRC node InternalIP is 192.168.126.11 (not reachable from the host).
+  # Source sessions from br-ex so next-hop is the host-facing CRC IP.
+  sourceAddress: 192.168.130.11
+  routerID: 192.168.130.11
+  holdTime: 15s
+  keepaliveTime: 5s
+  connectTime: 5s

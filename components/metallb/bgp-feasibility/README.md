@@ -17,6 +17,10 @@ Use this against **any** logged-in OpenShift cluster (vSphere IPI, bare metal, C
 
 Requires `oc` and `python3`. `--probe` starts a debug pod and needs `cluster-admin` (or equivalent).
 
+The default run **does not** open TCP/179. It only reads the API. The report has a **Checks this run** section (PASS / FAIL / SKIP / INFO) so you can see what was actually tested. `BGP readily available: UNKNOWN` means the gateway BGP port was not probed.
+
+Example: vSphere IPI with MetalLB L2 already assigning an IP on the node `/25` is **L2 working**, not BGP. Re-run with `--probe` to test `nc -vz <gateway> 179` from a node.
+
 ## What “BGP is possible” means
 
 MetalLB BGP is an option only if all of these are true:
@@ -27,7 +31,7 @@ MetalLB BGP is an option only if all of these are true:
 4. You have a **VIP CIDR outside the machine network**. BGP advertises routed prefixes; do not reuse the node subnet.
 5. The router will install those prefixes with **next-hop = node IP** (ECMP if you want traffic spread across nodes).
 
-The script can check 1–3 from the cluster. Items 4–5 are a conversation with the network team (the script prints a copy/paste block).
+Without `--probe` the script only proves (1) and discovers a candidate IP for (2). Item (3) is SKIP until `--probe`. Items (4)–(5) stay with the network team.
 
 ## How the script finds the ToR IP
 

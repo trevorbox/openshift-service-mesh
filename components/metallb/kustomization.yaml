@@ -6,7 +6,8 @@ resources:
   - metallb-metallb.yaml
   - ipaddresspool-crc.yaml
   - l2advertisement-crc.yaml
-  - ipaddresspool-crc-bgp.yaml
-  - bgppeer-crc-host.yaml
-  - bgpadvertisement-crc.yaml
-  - service-ingress-gateway-istio-bgp.yaml
+  # bgp disabled for now
+  # - ipaddresspool-crc-bgp.yaml
+  # - bgppeer-crc-host.yaml
+  # - bgpadvertisement-crc.yaml
+  # - service-ingress-gateway-istio-bgp.yaml

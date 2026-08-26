@@ -49,7 +49,31 @@ oc debug node/<node> -- chroot /host ip -4 route show default
 | --- | --- |
 | TCP connected / succeeded | Something is listening on BGP; continue with ASN and prefix-list |
 | Connection refused | Packet reached the IP; no BGP daemon, or a firewall RST. Not live yet |
-| Timeout / no route | Filtered or wrong peer. BGP is not an option until the path is opened |
+| Timeout / no route | ICMP may work while TCP/179 is **dropped** (ACL, firewall, NSX DFW). The peer is reachable; BGP is filtered. Not a vSphere port-group setting. |
+
+## vSphere IPI: BGP is not configured in vCenter
+
+MetalLB BGP is a **TCP session from the node’s real MAC/IP** to a router (here, usually the default gateway). vSphere already forwarded that path if `ping` to the gateway works.
+
+**Do not** look for a “enable BGP” toggle on the distributed port group. These vSphere settings are for **MetalLB L2** (ARP/NDP, extra MACs), not BGP:
+
+| Port group / DPG policy | L2 MetalLB | BGP MetalLB |
+| --- | --- | --- |
+| Forged transmits | Often **Accept** (speaker uses VIP MAC) | Not required (session uses the VM’s own MAC) |
+| MAC address changes | Often **Accept** | Not required |
+| Promiscuous mode or MAC learning | Sometimes needed | Not required |
+
+Your probe (`ping` OK, `nc` to port 179 **TIMEOUT**) means: L3 to `10.205.245.129` works; **TCP/179 is dropped on or in front of that gateway**. Fix that on the **network** side, then configure MetalLB (`BGPPeer`, off-subnet pool, `BGPAdvertisement`).
+
+Ask the team that owns `10.205.245.129` (ToR SVI, edge firewall, or NSX T0):
+
+1. Run BGP on that address (or give a different peer IP that already does).
+2. Permit **TCP 179** from `10.205.245.128/25` (node IPs) to that peer. If using BFD: UDP 3784/3785.
+3. If **NSX DFW** is in the path: an allow rule for the same (ping allowed + 179 dropped is a classic DFW/ACL miss).
+4. Reserve a VIP CIDR **outside** `10.205.245.128/25` (do not reuse `10.205.245.136` or the API/ingress keepalived VIPs).
+5. Advertise that CIDR upstream with next-hop = node IPs (ECMP optional).
+
+Until (1)–(2) succeed, `--probe` will keep timing out and L2 is the correct MetalLB mode (already working on this cluster).
 
 ## Options the script will suggest
 

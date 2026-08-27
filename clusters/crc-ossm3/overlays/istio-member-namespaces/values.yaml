@@ -16,6 +16,7 @@ members:
   - test
   - httpbin
   - spring-boot-demo
+  # - native-sidecar-drain
   # - cryostat
 labels:
   istio.io/rev: default

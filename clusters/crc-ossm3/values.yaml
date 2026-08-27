@@ -256,6 +256,17 @@ applications:
     source:
       path: components/httpbin
 
+  # native-sidecar-drain-test:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '4'
+  #   destination:
+  #     namespace: native-sidecar-drain
+  #     server: https://kubernetes.default.svc?__team=team1
+  #   project: team1
+  #   source:
+  #     path: components/native-sidecar-drain-test
+
   # sidecar-generator-operator:
   #   annotations:
   #     argocd.argoproj.io/compare-options: IgnoreExtraneous

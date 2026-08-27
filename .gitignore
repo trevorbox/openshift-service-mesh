@@ -3,3 +3,11 @@ openshift-install
 .certs
 charts
 stats_*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/

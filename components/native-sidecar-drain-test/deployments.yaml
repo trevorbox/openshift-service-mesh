@@ -1,0 +1,291 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: drain-app
+  labels:
+    app.kubernetes.io/part-of: native-sidecar-drain-test
+---
+# Cluster-default native sidecar. No sidecar.istio.io/nativeSidecar annotation
+# so this proves Istio 1.28 auto-enablement on Kubernetes >= 1.33.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: native-default
+  labels:
+    app: native-default
+    app.kubernetes.io/part-of: native-sidecar-drain-test
+    drain-test.istio.io/variant: native-default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: native-default
+  template:
+    metadata:
+      labels:
+        app: native-default
+        sidecar.istio.io/inject: "true"
+        drain-test.istio.io/variant: native-default
+      annotations:
+        sidecar.istio.io/logLevel: info
+    spec:
+      serviceAccountName: drain-app
+      terminationGracePeriodSeconds: 40
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: drain-app
+          image: image-registry.openshift-image-registry.svc:5000/openshift/python:3.12-ubi9
+          imagePullPolicy: IfNotPresent
+          command: ["python3", "/opt/app-root/src/server.py"]
+          env:
+            - name: HOME
+              value: /tmp
+            - name: PYTHONUNBUFFERED
+              value: "1"
+            - name: PORT
+              value: "8080"
+            - name: APP_DRAIN_SECONDS
+              value: "15"
+            - name: DRAIN_FLAG_FILE
+              value: /tmp/unhealthy
+          ports:
+            - name: http
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http
+            periodSeconds: 1
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: http
+            periodSeconds: 5
+          resources:
+            requests:
+              cpu: 20m
+              memory: 64Mi
+            limits:
+              memory: 128Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: app
+              mountPath: /opt/app-root/src/server.py
+              subPath: server.py
+          lifecycle:
+            preStop:
+              exec:
+                # One command only: mark unready, then wait for EDS.
+                # touch does not fail the probe by itself; /ready must see the file.
+                command: ["/bin/sh", "-c", "touch /tmp/unhealthy; sleep 5"]
+      volumes:
+        - name: app
+          configMap:
+            name: drain-app-server
+---
+# Native sidecar with the legacy Istio lifecycle knobs set to extreme values.
+# Used to prove holdApplicationUntilProxyStarts is not injected, and that
+# terminationDrainDuration does not hold the proxy up after the app exits.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: native-legacy-flags
+  labels:
+    app: native-legacy-flags
+    app.kubernetes.io/part-of: native-sidecar-drain-test
+    drain-test.istio.io/variant: native-legacy-flags
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: native-legacy-flags
+  template:
+    metadata:
+      labels:
+        app: native-legacy-flags
+        sidecar.istio.io/inject: "true"
+        drain-test.istio.io/variant: native-legacy-flags
+      annotations:
+        sidecar.istio.io/nativeSidecar: "true"
+        sidecar.istio.io/logLevel: info
+        proxy.istio.io/config: |
+          holdApplicationUntilProxyStarts: true
+          terminationDrainDuration: 45s
+    spec:
+      serviceAccountName: drain-app
+      terminationGracePeriodSeconds: 60
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: drain-app
+          image: image-registry.openshift-image-registry.svc:5000/openshift/python:3.12-ubi9
+          imagePullPolicy: IfNotPresent
+          command: ["python3", "/opt/app-root/src/server.py"]
+          env:
+            - name: HOME
+              value: /tmp
+            - name: PYTHONUNBUFFERED
+              value: "1"
+            - name: PORT
+              value: "8080"
+            - name: APP_DRAIN_SECONDS
+              value: "15"
+          ports:
+            - name: http
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http
+            periodSeconds: 1
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: http
+            periodSeconds: 5
+          resources:
+            requests:
+              cpu: 20m
+              memory: 64Mi
+            limits:
+              memory: 128Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: app
+              mountPath: /opt/app-root/src/server.py
+              subPath: server.py
+      volumes:
+        - name: app
+          configMap:
+            name: drain-app-server
+---
+# Classic (non-native) sidecar. holdApplicationUntilProxyStarts is honored
+# here and injects postStart: pilot-agent wait.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: classic-hold
+  labels:
+    app: classic-hold
+    app.kubernetes.io/part-of: native-sidecar-drain-test
+    drain-test.istio.io/variant: classic-hold
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: classic-hold
+  template:
+    metadata:
+      labels:
+        app: classic-hold
+        sidecar.istio.io/inject: "true"
+        drain-test.istio.io/variant: classic-hold
+      annotations:
+        sidecar.istio.io/nativeSidecar: "false"
+        sidecar.istio.io/logLevel: info
+        proxy.istio.io/config: |
+          holdApplicationUntilProxyStarts: true
+          terminationDrainDuration: 45s
+    spec:
+      serviceAccountName: drain-app
+      terminationGracePeriodSeconds: 60
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: drain-app
+          image: image-registry.openshift-image-registry.svc:5000/openshift/python:3.12-ubi9
+          imagePullPolicy: IfNotPresent
+          command: ["python3", "/opt/app-root/src/server.py"]
+          env:
+            - name: HOME
+              value: /tmp
+            - name: PYTHONUNBUFFERED
+              value: "1"
+            - name: PORT
+              value: "8080"
+            - name: APP_DRAIN_SECONDS
+              value: "15"
+          ports:
+            - name: http
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http
+            periodSeconds: 1
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: http
+            periodSeconds: 5
+          resources:
+            requests:
+              cpu: 20m
+              memory: 64Mi
+            limits:
+              memory: 128Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: app
+              mountPath: /opt/app-root/src/server.py
+              subPath: server.py
+      volumes:
+        - name: app
+          configMap:
+            name: drain-app-server
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: curl
+  labels:
+    app: curl
+    app.kubernetes.io/part-of: native-sidecar-drain-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: curl
+  template:
+    metadata:
+      labels:
+        app: curl
+        sidecar.istio.io/inject: "true"
+    spec:
+      serviceAccountName: drain-app
+      terminationGracePeriodSeconds: 10
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: curl
+          image: docker.io/curlimages/curl:latest
+          imagePullPolicy: IfNotPresent
+          command: ["sleep", "infinity"]
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              memory: 64Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]

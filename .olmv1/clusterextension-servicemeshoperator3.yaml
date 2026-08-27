@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: servicemeshoperator3
+---
+apiVersion: olm.operatorframework.io/v1
+kind: ClusterExtension
+metadata:
+  name: servicemeshoperator3
+spec:
+  namespace: servicemeshoperator3
+  source:
+    sourceType: Catalog
+    catalog:
+      packageName: servicemeshoperator3
+      # version: "3.1.0"
+      version: "3.3.5"
+      channels:
+        - stable
+  config:
+    configType: Inline
+    inline:
+      deploymentConfig:
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            cpu: "1"
+            memory: 2Gi

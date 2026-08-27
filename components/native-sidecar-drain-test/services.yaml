@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: native-default
+  labels:
+    app: native-default
+    app.kubernetes.io/part-of: native-sidecar-drain-test
+spec:
+  selector:
+    app: native-default
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: native-legacy-flags
+  labels:
+    app: native-legacy-flags
+    app.kubernetes.io/part-of: native-sidecar-drain-test
+spec:
+  selector:
+    app: native-legacy-flags
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: classic-hold
+  labels:
+    app: classic-hold
+    app.kubernetes.io/part-of: native-sidecar-drain-test
+spec:
+  selector:
+    app: classic-hold
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http

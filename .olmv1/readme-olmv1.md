@@ -78,26 +78,31 @@ oc get clustercatalog
 ```
 
 ## List Packages
+
 opm render registry.redhat.io/redhat/redhat-operator-index:v4.20 | jq -cs '[.[] | select(.schema == "olm.bundle" and (.properties[] | select(.type == "olm.csv.metadata").value.installModes[] | select(.type == "AllNamespaces" and .supported == true)) and .spec.webhookdefinitions == null) | .package] | unique[]'
 opm render registry.redhat.io/redhat/redhat-operator-index:v4.20 | jq -s '.[] | select( .schema == "olm.package") | .name'
 
 ## Channels in a package
+
 opm render registry.redhat.io/redhat/redhat-operator-index:v4.20 | jq -s '.[] | select( .schema == "olm.channel" ) | select( .package == "servicemeshoperator3") | .name'
 
 ## Versions in a channel
+
 opm render registry.redhat.io/redhat/redhat-operator-index:v4.20 | jq -s '.[] | select( .package == "servicemeshoperator3" ) | select( .schema == "olm.channel" ) | select( .name == "stable" ) .entries | .[] | .name'
 
 ## Latest version in a channel
+
 opm render registry.redhat.io/redhat/redhat-operator-index:v4.20 | jq -s '.[] | select( .schema == "olm.channel" ) | select ( .name == "stable") | select( .package == "servicemeshoperator3")'
 
 ## get images
+
 opm render registry.redhat.io/redhat/redhat-operator-index:v4.20 | jq -cs '.[] | select( .schema == "olm.bundle" ) | select( .package == "servicemeshoperator3") | {"name":.name, "image":.image}'
 
 ## extract
+
 oc image extract registry.redhat.io/openshift-service-mesh/istio-sail-operator-bundle@sha256:aa2f99fc2cc6fc519042718ef2934376beca0138cd594cb793d3bbd3af399da9
 
-
-
 ## notes
+
 opm render registry.redhat.io/redhat/redhat-operator-index:v4.18 | jq -cs '.[] | select( .schema == "olm.bundle" ) | select( .package == "openshift-pipelines-operator-rh") | {"name":.name, "image":.image}'
 oc image extract registry.redhat.io/openshift-pipelines/pipelines-operator-bundle@sha256:a7aae937d0ffb78ef948f6c24281ae175d7bf64ba5b0079785e73f4248ac1f9f

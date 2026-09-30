@@ -7,7 +7,7 @@ resources:
   # - clusterrole-snapshot-list.yaml
   # - clusterrolebinding-snapshot-list.yaml
   - storagecluster.yaml
-  # TODO test without these... seems unnecessary
+  # TODO test without these... test if annotation is actually needed
   # - serviceaccount.yaml
   # - role.yaml
   # - rolebinding.yaml

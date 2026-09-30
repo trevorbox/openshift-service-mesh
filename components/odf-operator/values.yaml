@@ -6,6 +6,7 @@ installPlanApproverAndVerifyJobsImage: quay.io/trevorbox/installplanapproverandv
 operatorGroups:
 - name: openshift-storage
   createNamespace: true
+  targetOwnNamespace: true
 
 operators:
 - channel: stable-4.20

@@ -8,8 +8,8 @@ metadata:
     argocd.argoproj.io/sync-options: Replace=true
     argocd.argoproj.io/sync-wave: "1"
 spec:
-  backoffLimit: 6
-  activeDeadlineSeconds: 600
+  backoffLimit: 3
+  activeDeadlineSeconds: 1800
   template:
     spec:
       serviceAccountName: odf-s3-setup
@@ -35,15 +35,16 @@ spec:
               set -euo pipefail
               ns=openshift-storage
               found=0
-              for _ in $(seq 1 60); do
-                if oc get noobaa noobaa -n "$ns" >/dev/null 2>&1; then
+              last_err="not found"
+              for _ in $(seq 1 120); do
+                if last_err=$(oc get noobaa noobaa -n "$ns" 2>&1); then
                   found=1
                   break
                 fi
                 sleep 5
               done
               if [ "$found" != 1 ]; then
-                echo "NooBaa was not created" >&2
+                echo "NooBaa was not created: ${last_err}" >&2
                 exit 1
               fi
               oc annotate noobaa noobaa -n "$ns" noobaa.io/pvc_access_mode_rwo=true --overwrite

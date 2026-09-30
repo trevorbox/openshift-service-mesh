@@ -4,6 +4,8 @@ kind: Kustomization
 namespace: openshift-storage
 
 resources:
+  # - clusterrole-snapshot-list.yaml
+  # - clusterrolebinding-snapshot-list.yaml
   - storagecluster.yaml
   - serviceaccount.yaml
   - role.yaml

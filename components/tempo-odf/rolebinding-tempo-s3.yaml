@@ -1,0 +1,11 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: tempo-s3-credentials
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: tempo-s3-credentials
+subjects:
+  - kind: ServiceAccount
+    name: tempo-s3-credentials

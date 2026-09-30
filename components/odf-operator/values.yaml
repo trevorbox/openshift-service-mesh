@@ -1,0 +1,18 @@
+installRequiredPythonLibraries: false
+approveManualInstallPlanViaHook: true
+
+installPlanApproverAndVerifyJobsImage: quay.io/trevorbox/installplanapproverandverifier:4.16.0 # quay.io/openshift/origin-cli:4.16
+
+operatorGroups:
+- name: openshift-storage
+  createNamespace: true
+
+operators:
+- channel: stable-4.20
+  installPlanApproval: Manual
+  name: odf-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  csv: odf-operator.v4.20.19-rhodf
+  namespace: openshift-storage
+  installPlanVerifierActiveDeadlineSeconds: 1200

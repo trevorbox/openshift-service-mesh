@@ -139,6 +139,24 @@ applications:
     source:
       path: components/openshift-monitoring               
 
+  odf-operator:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '-1'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: components/odf-operator
+
+  odf-s3:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '0'
+    destination:
+      namespace: openshift-storage
+    source:
+      path: components/odf-s3
+
   tempo-system:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
@@ -146,7 +164,7 @@ applications:
     destination:
       namespace: tempo-system
     source:
-      path: components/tempo-system
+      path: components/tempo-odf
 
   grafana-istio:
     annotations:

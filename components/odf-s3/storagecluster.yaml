@@ -1,0 +1,18 @@
+# Standalone Multicloud Object Gateway: S3 on the OpenShift Local hostpath
+# storage class, without a Ceph cluster.
+apiVersion: ocs.openshift.io/v1
+kind: StorageCluster
+metadata:
+  name: ocs-storagecluster
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-wave: "1"
+    uninstall.ocs.openshift.io/cleanup-policy: delete
+    uninstall.ocs.openshift.io/mode: graceful
+spec:
+  resourceProfile: lean
+  enableCephTools: false
+  multiCloudGateway:
+    dbStorageClassName: crc-csi-hostpath-provisioner
+    reconcileStrategy: standalone
+    disableLoadBalancerService: true

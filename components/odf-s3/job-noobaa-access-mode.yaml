@@ -1,0 +1,66 @@
+# OpenShift Local hostpath often rejects ReadWriteOncePod. NooBaa uses that
+# access mode unless this annotation is set before the database PVC binds.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: odf-s3-noobaa-access-mode
+  annotations:
+    argocd.argoproj.io/sync-options: Replace=true
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  backoffLimit: 6
+  activeDeadlineSeconds: 600
+  template:
+    spec:
+      serviceAccountName: odf-s3-setup
+      restartPolicy: Never
+      containers:
+        - name: access-mode
+          image: quay.io/openshift/origin-cli:4.16
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
+          resources:
+            requests:
+              cpu: 10m
+              memory: 64Mi
+          command: ["/bin/bash", "-c"]
+          args:
+            - |
+              set -euo pipefail
+              ns=openshift-storage
+              found=0
+              for _ in $(seq 1 60); do
+                if oc get noobaa noobaa -n "$ns" >/dev/null 2>&1; then
+                  found=1
+                  break
+                fi
+                sleep 5
+              done
+              if [ "$found" != 1 ]; then
+                echo "NooBaa was not created" >&2
+                exit 1
+              fi
+              oc annotate noobaa noobaa -n "$ns" noobaa.io/pvc_access_mode_rwo=true --overwrite
+              for _ in $(seq 1 12); do
+                while IFS='|' read -r name phase modes; do
+                  [ -z "${name:-}" ] && continue
+                  case "$name" in
+                    *noobaa-db*)
+                      case "${modes:-}" in
+                        *ReadWriteOncePod*)
+                          if [ "$phase" = "Pending" ]; then
+                            oc delete pvc "$name" -n "$ns" --wait=false
+                          fi
+                          ;;
+                      esac
+                      ;;
+                  esac
+                done < <(oc get pvc -n "$ns" -o go-template='{{range .items}}{{.metadata.name}}|{{.status.phase}}|{{range .spec.accessModes}}{{.}} {{end}}{{"\n"}}{{end}}')
+                sleep 10
+              done

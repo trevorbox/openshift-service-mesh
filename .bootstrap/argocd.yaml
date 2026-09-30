@@ -597,6 +597,45 @@ spec:
         health_status.status = "Progressing"
         health_status.message = "Waiting for Kiali"
         return health_status
+    - group: ocs.openshift.io
+      kind: StorageCluster
+      check: |
+        local hs = {}
+        if obj.status == nil or obj.status.phase == nil or obj.status.phase == "" then
+          hs.status = "Progressing"
+          hs.message = "Waiting for StorageCluster status"
+          return hs
+        end
+        if obj.status.phase == "Ready" then
+          hs.status = "Healthy"
+          hs.message = "StorageCluster is ready"
+          return hs
+        end
+        if obj.status.phase == "Error" or obj.status.phase == "Failure" then
+          hs.status = "Degraded"
+          hs.message = obj.status.phase
+          return hs
+        end
+        hs.status = "Progressing"
+        hs.message = obj.status.phase
+        return hs
+    - group: objectbucket.io
+      kind: ObjectBucketClaim
+      check: |
+        local hs = {}
+        if obj.status ~= nil and obj.status.phase == "Bound" then
+          hs.status = "Healthy"
+          hs.message = "Object bucket claim is bound"
+          return hs
+        end
+        if obj.status ~= nil and (obj.status.phase == "Failed" or obj.status.phase == "Released") then
+          hs.status = "Degraded"
+          hs.message = obj.status.phase
+          return hs
+        end
+        hs.status = "Progressing"
+        hs.message = "Waiting for object bucket claim"
+        return hs
     - group: minio.min.io
       kind: Tenant
       check: |

@@ -139,6 +139,15 @@ applications:
     source:
       path: components/openshift-monitoring
 
+  minio-operator:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '-1'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: components/minio-operator
+
   minio-tenant:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous

@@ -146,7 +146,7 @@ applications:
     destination:
       namespace: tempo-system
     source:
-      path: components/tempo-system
+      path: components/tempo-odf
 
   grafana-istio:
     annotations:
@@ -189,14 +189,23 @@ applications:
   #   source:
   #     path: clusters/crc-canary-upgrade/overlays/golang-ex-istio
 
-  minio-tenant:
+  odf-operator:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '2'
+      argocd.argoproj.io/sync-wave: '-1'
     destination:
-      namespace: minio-tenant
+      namespace: openshift-gitops
     source:
-      path: components/minio-tenant
+      path: components/odf-operator
+
+  odf-s3:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '0'
+    destination:
+      namespace: openshift-storage
+    source:
+      path: components/odf-s3
 
   spring-boot-demo:
     annotations:

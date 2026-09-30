@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: tempo-system
+
+resources:
+  - ../tempo-system
+  - objectbucketclaim-tempo.yaml
+  - configmap-tempo-s3-cabundle.yaml
+  - serviceaccount-tempo-s3.yaml
+  - role-tempo-s3.yaml
+  - rolebinding-tempo-s3.yaml
+  - job-tempo-s3-secret.yaml
+
+patches:
+  - path: patch-delete-minio-secret.yaml
+  - path: patch-tempostack-odf.yaml

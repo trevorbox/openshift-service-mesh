@@ -7,7 +7,8 @@ resources:
   # - clusterrole-snapshot-list.yaml
   # - clusterrolebinding-snapshot-list.yaml
   - storagecluster.yaml
-  - serviceaccount.yaml
-  - role.yaml
-  - rolebinding.yaml
-  - job-noobaa-access-mode.yaml
+  # TODO test without these... seems unnecessary
+  # - serviceaccount.yaml
+  # - role.yaml
+  # - rolebinding.yaml
+  # - job-noobaa-access-mode.yaml

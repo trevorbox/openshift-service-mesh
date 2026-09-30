@@ -6,7 +6,7 @@ metadata:
   name: odf-s3-noobaa-access-mode
   annotations:
     argocd.argoproj.io/sync-options: Replace=true
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   backoffLimit: 3
   activeDeadlineSeconds: 1800

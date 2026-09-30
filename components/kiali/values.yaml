@@ -12,7 +12,7 @@ grafana:
   in_cluster_url: http://grafana-instance-service.istio-system.svc:3000
   url:
 tracing: 
-  in_cluster_url: http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:16685
+  in_cluster_url: http://tempo-odf-s3-query-frontend.tempo-system.svc.cluster.local:16685
   url: 
 prometheus:
   auth:

@@ -12,6 +12,6 @@ spec:
     type: tempo
     access: proxy
     basicAuth: false
-    url: http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200
+    url: http://tempo-odf-s3-query-frontend.tempo-system.svc.cluster.local:3200
     isDefault: false
     editable: true

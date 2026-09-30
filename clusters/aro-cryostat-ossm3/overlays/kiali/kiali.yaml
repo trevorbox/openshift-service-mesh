@@ -79,12 +79,12 @@ spec:
       enabled: true
       provider: tempo
       tempo_config:
-        name: "minio-dev"
+        name: "odf-s3"
         namespace: "tempo-system"
         tenant: "dev"
         url_format: "openshift"
       use_grpc: false
-      internal_url: 'https://tempo-minio-dev-gateway.tempo-system.svc.cluster.local:8080/api/traces/v1/dev/tempo'
+      internal_url: 'https://tempo-odf-s3-gateway.tempo-system.svc.cluster.local:8080/api/traces/v1/dev/tempo'
       external_url: 'https://console-openshift-console.apps.m9xyredw.eastus.aroapp.io'
       auth:
         insecure_skip_verify: true
@@ -94,9 +94,9 @@ spec:
     #   enabled: true
     #   provider: tempo
     #   use_grpc: false
-    #   internal_url: 'https://tempo-minio-dev-gateway.tempo-system.svc.cluster.local:8080/api/traces/v1/dev/tempo'
-    #   external_url: https://tempo-minio-dev-gateway-tempo-system.apps.asd.sandbox2873.opentlc.com/api/traces/v1/dev/search
-    #   health_check_url: https://tempo-minio-dev-gateway-tempo-system.apps.asd.sandbox2873.opentlc.com/api/traces/v1/dev/tempo/api/echo
+    #   internal_url: 'https://tempo-odf-s3-gateway.tempo-system.svc.cluster.local:8080/api/traces/v1/dev/tempo'
+    #   external_url: https://tempo-odf-s3-gateway-tempo-system.apps.asd.sandbox2873.opentlc.com/api/traces/v1/dev/search
+    #   health_check_url: https://tempo-odf-s3-gateway-tempo-system.apps.asd.sandbox2873.opentlc.com/api/traces/v1/dev/tempo/api/echo
     #   auth:
     #     ca_file: /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
     #     insecure_skip_verify: true

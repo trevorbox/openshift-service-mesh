@@ -59,9 +59,9 @@ spec:
     #   enabled: true
     #   external_url: https://grafana-instance-route-grafana.apps-crc.testing
     #   # grpc_port: 9095
-    #   health_check_url: http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200/ready
+    #   health_check_url: http://tempo-odf-s3-query-frontend.tempo-system.svc.cluster.local:3200/ready
     #   internal_url: >-
-    #     http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:3200/
+    #     http://tempo-odf-s3-query-frontend.tempo-system.svc.cluster.local:3200/
     #   provider: tempo
     #   tempo_config:
     #     datasource_uid: 2aaa2e27-41bd-4e18-a253-2b328390e2bc
@@ -73,11 +73,11 @@ spec:
       # provider: tempo
       provider: jaeger
       use_grpc: false
-      # internal_url: https://tempo-minio-dev-gateway.tempo-system.svc.cluster.local:8080/api/traces/v1/dev/tempo
-      internal_url: 'https://tempo-minio-dev-gateway.tempo-system.svc.cluster.local:8080/api/traces/v1/dev'
-      # external_url: https://tempo-minio-dev-gateway-tempo-system.apps-crc.testing/api/traces/v1/dev/search
-      external_url: https://tempo-minio-dev-gateway-tempo-system.apps-crc.testing/api/traces/v1/dev
-      health_check_url: https://tempo-minio-dev-gateway-tempo-system.apps-crc.testing/api/traces/v1/dev/tempo/api/echo
+      # internal_url: https://tempo-odf-s3-gateway.tempo-system.svc.cluster.local:8080/api/traces/v1/dev/tempo
+      internal_url: 'https://tempo-odf-s3-gateway.tempo-system.svc.cluster.local:8080/api/traces/v1/dev'
+      # external_url: https://tempo-odf-s3-gateway-tempo-system.apps-crc.testing/api/traces/v1/dev/search
+      external_url: https://tempo-odf-s3-gateway-tempo-system.apps-crc.testing/api/traces/v1/dev
+      health_check_url: https://tempo-odf-s3-gateway-tempo-system.apps-crc.testing/api/traces/v1/dev/tempo/api/echo
       auth:
         ca_file: /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
         insecure_skip_verify: true

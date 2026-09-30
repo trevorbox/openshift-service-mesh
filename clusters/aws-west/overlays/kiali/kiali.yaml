@@ -66,9 +66,9 @@ spec:
       enabled: true
       provider: jaeger
       use_grpc: false
-      internal_url: 'https://tempo-minio-dev-gateway.tempo-system.svc.cluster.local:8080/api/traces/v1/dev'
-      external_url: https://tempo-minio-dev-gateway-tempo-system.apps.west.sandbox2116.opentlc.com /api/traces/v1/dev/search
-      health_check_url: https://tempo-minio-dev-gateway-tempo-system.apps.west.sandbox2116.opentlc.com /api/traces/v1/dev/tempo/api/echo
+      internal_url: 'https://tempo-odf-s3-gateway.tempo-system.svc.cluster.local:8080/api/traces/v1/dev'
+      external_url: https://tempo-odf-s3-gateway-tempo-system.apps.west.sandbox2116.opentlc.com /api/traces/v1/dev/search
+      health_check_url: https://tempo-odf-s3-gateway-tempo-system.apps.west.sandbox2116.opentlc.com /api/traces/v1/dev/tempo/api/echo
       auth:
         ca_file: /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
         insecure_skip_verify: true

@@ -3,7 +3,7 @@ kiali:
   namespace: kiali3
 tempo:
   enabled: false
-  host: tempo-minio-dev-distributor.tempo-system.svc.cluster.local
+  host: tempo-odf-s3-distributor.tempo-system.svc.cluster.local
 networkpolicy:
   userWorkloadMonitoring:
     enabled: false
@@ -34,7 +34,7 @@ istio:
         extensionProviders:
           - name: tempo
             opentelemetry:
-              service: tempo-minio-dev-distributor.tempo-system.svc.cluster.local
+              service: tempo-odf-s3-distributor.tempo-system.svc.cluster.local
               port: 4317
         outboundTrafficPolicy:
           mode: REGISTRY_ONLY # ALLOW_ANY

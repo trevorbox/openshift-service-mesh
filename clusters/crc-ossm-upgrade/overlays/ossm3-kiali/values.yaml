@@ -89,7 +89,7 @@ kiali:
         url: 'http://prometheus-server.prometheus.svc.cluster.local'
       tracing:
         enabled: true
-        in_cluster_url: 'http://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:16685'
+        in_cluster_url: 'http://tempo-odf-s3-query-frontend.tempo-system.svc.cluster.local:16685'
         query_timeout: 30
         url: 'https://jaeger-ui-proxy-tempo-system.apps-crc.testing'
         use_grpc: true

@@ -1,13 +1,16 @@
 apiVersion: tempo.grafana.com/v1alpha1
 kind: TempoStack
 metadata:
-  name: minio-dev
+  name: odf-s3
 spec:
   storageSize: 30Gi
-  storage: 
+  storage:
     secret:
-      name: minio-dev
+      name: tempo-s3
       type: s3
+    tls:
+      enabled: true
+      caName: tempo-s3-serving-cabundle
   resources:
     total:
       limits:

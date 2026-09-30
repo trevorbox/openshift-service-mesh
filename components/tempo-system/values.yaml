@@ -1,3 +1,0 @@
-cookieSecret: supersecret
-upstream: https://tempo-minio-dev-query-frontend.tempo-system.svc.cluster.local:16686
-fullnameOverride: jaeger-ui-proxy

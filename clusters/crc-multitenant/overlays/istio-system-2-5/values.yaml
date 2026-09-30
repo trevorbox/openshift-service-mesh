@@ -8,7 +8,7 @@ smcp:
   outboundPolicy: REGISTRY_ONLY # ALLOW_ANY
 tempo:
   enabled: false
-  host: tempo-minio-dev-distributor.tempo-system.svc.cluster.local
+  host: tempo-odf-s3-distributor.tempo-system.svc.cluster.local
 kiali:
   enabled: false
   name: kiali-ossm-2-5-istio-system-2-5

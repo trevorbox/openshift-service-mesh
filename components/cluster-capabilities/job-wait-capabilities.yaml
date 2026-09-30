@@ -1,0 +1,53 @@
+# Keeps this Application Progressing until the platform snapshot APIs exist,
+# so the Data Foundation operator on the next sync wave does not install first.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cluster-capabilities-ready
+  namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-options: Replace=true
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  backoffLimit: 1
+  activeDeadlineSeconds: 2400
+  template:
+    spec:
+      serviceAccountName: cluster-capabilities
+      restartPolicy: Never
+      containers:
+        - name: wait
+          image: quay.io/openshift/origin-cli:4.16
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
+          resources:
+            requests:
+              cpu: 10m
+              memory: 64Mi
+          command: ["/bin/bash", "-c"]
+          args:
+            - |
+              set -euo pipefail
+              for _ in $(seq 1 200); do
+                caps=$(oc get clusterversion version -o jsonpath='{.status.capabilities.enabledCapabilities}' 2>/dev/null || true)
+                crd=$(oc get crd volumesnapshotclasses.snapshot.storage.k8s.io -o jsonpath='{.status.conditions[?(@.type=="Established")].status}' 2>/dev/null || true)
+                storage=$(oc get clusteroperator storage -o jsonpath='{.status.conditions[?(@.type=="Available")].status}' 2>/dev/null || true)
+                snapshot=$(oc get clusteroperator csi-snapshot-controller -o jsonpath='{.status.conditions[?(@.type=="Available")].status}' 2>/dev/null || true)
+                echo "capabilities=${caps} snapshotClass=${crd} storage=${storage} csi-snapshot-controller=${snapshot}"
+                if echo "${caps}" | grep -q 'Storage' \
+                  && echo "${caps}" | grep -q 'CSISnapshot' \
+                  && [ "${crd}" = "True" ] \
+                  && [ "${storage}" = "True" ] \
+                  && [ "${snapshot}" = "True" ]; then
+                  exit 0
+                fi
+                sleep 10
+              done
+              echo "Storage and CSISnapshot were not ready" >&2
+              exit 1

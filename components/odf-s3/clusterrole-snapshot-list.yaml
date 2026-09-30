@@ -1,0 +1,14 @@
+# The ocs-operator ClusterRole can watch VolumeSnapshotClasses but does not
+# grant list. The controller cache cannot start without it, so NooBaa is never
+# created on a cluster that did not already ship these snapshot APIs.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: ocs-operator-snapshot-list
+rules:
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources:
+      - volumesnapshotclasses
+      - volumesnapshots
+      - volumesnapshotcontents
+    verbs: ["get", "list", "watch"]

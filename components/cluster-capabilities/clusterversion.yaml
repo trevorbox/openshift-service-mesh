@@ -1,0 +1,24 @@
+# OpenShift Local ships baselineCapabilitySet None and leaves Storage and
+# CSISnapshot disabled, so the platform never installs the VolumeSnapshot
+# APIs. Enabling a capability is permanent. Only OpenShift Local cluster
+# values reference this component.
+apiVersion: config.openshift.io/v1
+kind: ClusterVersion
+metadata:
+  name: version
+spec:
+  capabilities:
+    baselineCapabilitySet: "None"
+    additionalEnabledCapabilities:
+      - openshift-samples
+      - marketplace
+      - Console
+      - MachineAPI
+      - ImageRegistry
+      - DeploymentConfig
+      - Build
+      - OperatorLifecycleManager
+      - Ingress
+      - CloudCredential
+      - Storage
+      - CSISnapshot

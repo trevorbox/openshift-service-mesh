@@ -1,0 +1,7 @@
+# Helper operator values
+# https://developers.redhat.com/learning/learn:openshift:deployment-red-hat-openshift-data-foundation-using-gitops/resource/resources:end-end-example-1-multicloudgateway-only
+console_plugins:
+  enabled: true
+  plugins:
+    - odf-console
+  job_namespace: openshift-storage

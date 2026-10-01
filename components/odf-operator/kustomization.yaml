@@ -4,10 +4,14 @@ kind: Kustomization
 helmCharts:
 - name: operators-installer
   repo: https://redhat-cop.github.io/helm-charts
-  valuesFile: values.yaml
+  valuesFile: values-operators-installer.yaml
   namespace: openshift-gitops
   version: 3.5.2
-
+- name: helper-operator
+  repo: https://charts.stderr.at
+  valuesFile: values-helper-operator.yaml
+  namespace: openshift-storage
+  version: 1.0.45
 patches:
   - target:
       kind: Namespace

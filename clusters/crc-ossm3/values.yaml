@@ -232,14 +232,14 @@ applications:
     source:
       path: clusters/crc-ossm3/overlays/nginx-echo-headers
 
-  prometheus:
-    annotations:
-      argocd.argoproj.io/compare-options: IgnoreExtraneous
-      argocd.argoproj.io/sync-wave: '2'
-    destination:
-      namespace: prometheus
-    source:
-      path: components/prometheus
+  # prometheus:
+  #   annotations:
+  #     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  #     argocd.argoproj.io/sync-wave: '2'
+  #   destination:
+  #     namespace: prometheus
+  #   source:
+  #     path: components/prometheus
   
   helloworld:
     annotations:
@@ -262,6 +262,15 @@ applications:
     project: team1
     source:
       path: components/curl
+
+  prometheus-blackbox-exporter:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: prometheus-blackbox-exporter
+    source:
+      path: components/prometheus-blackbox-exporter
 
   httpbin:
     annotations:

@@ -1,13 +1,13 @@
 istioCNI:
   spec:
-    version: v1.28.5
+    version: v1.28.10
     namespace: istio-cni
     # profile: ambient
 # https://istio.io/latest/docs/setup/upgrade/canary/
 istioRevisionTags: 
   # https://istio.io/latest/docs/setup/upgrade/canary/#default-tag
   default:
-    istioRevision: default-v1-28-5
+    istioRevision: default-v1-28-10
 ztunnel:
   enabled: false
   spec:
@@ -81,5 +81,5 @@ revisions:
                 headersToDownstreamOnDeny: ["content-type", "set-cookie"] # headers sent back to the client when request is denied.
           outboundTrafficPolicy:
             mode: REGISTRY_ONLY # ALLOW_ANY
-      version: v1.28.5
+      version: v1.28.10
  

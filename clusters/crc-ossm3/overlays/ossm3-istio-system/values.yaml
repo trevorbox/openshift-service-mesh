@@ -6,8 +6,8 @@ istioCNI:
 # https://istio.io/latest/docs/setup/upgrade/canary/
 istioRevisionTags: 
   # https://istio.io/latest/docs/setup/upgrade/canary/#default-tag
-  default:
-    istioRevision: default-v1-28-10
+  asd:
+    istioRevision: asd-v1-28-10
   other:
     istioRevision: other-v1-28-10
 ztunnel:
@@ -16,7 +16,7 @@ ztunnel:
     namespace: ztunnel
     profile: ambient
 revisions:
-  - name: default
+  - name: asd
     spec:
       namespace: istio-system
       updateStrategy:

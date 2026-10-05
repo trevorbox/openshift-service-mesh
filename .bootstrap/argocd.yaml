@@ -32,6 +32,7 @@ spec:
         insecureEdgeTerminationPolicy: Redirect
     service:
       type: ""
+  # See https://github.com/argoproj/argo-cd/tree/master/resource_customizations
   resourceHealthChecks:
     - group: argoproj.io
       kind: ApplicationSet

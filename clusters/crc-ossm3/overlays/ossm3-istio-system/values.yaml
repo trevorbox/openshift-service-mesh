@@ -11,7 +11,7 @@ istioRevisionTags:
   other:
     istioRevision: other-v1-28-10
   default: 
-    istioRevision: asd-v1-28-10
+    istioRevision: other-v1-28-10
 ztunnel:
   enabled: false
   spec:

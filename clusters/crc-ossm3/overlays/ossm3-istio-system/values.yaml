@@ -6,8 +6,8 @@ istioCNI:
 # https://istio.io/latest/docs/setup/upgrade/canary/
 istioRevisionTags: 
   # https://istio.io/latest/docs/setup/upgrade/canary/#default-tag
-  default: null
-    # istioRevision: default-v1-28-10
+  default:
+    istioRevision: default-v1-28-10
 ztunnel:
   enabled: false
   spec:

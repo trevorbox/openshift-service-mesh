@@ -1,0 +1,174 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tcp-idle
+  labels:
+    app.kubernetes.io/part-of: tcp-idle-timeout
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tcp-idle-server
+  labels:
+    app: tcp-idle-server
+    app.kubernetes.io/part-of: tcp-idle-timeout
+spec:
+  selector:
+    app: tcp-idle-server
+  ports:
+    # Port name prefix "tcp" selects the TCP protocol. An "http" name would
+    # program connectionPool.http.idleTimeout instead of the TCP proxy timer.
+    - name: tcp
+      port: 9000
+      targetPort: tcp
+      protocol: TCP
+      appProtocol: tcp
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tcp-idle-server
+  labels:
+    app: tcp-idle-server
+    app.kubernetes.io/part-of: tcp-idle-timeout
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tcp-idle-server
+  template:
+    metadata:
+      labels:
+        app: tcp-idle-server
+        sidecar.istio.io/inject: "true"
+    spec:
+      serviceAccountName: tcp-idle
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: server
+          image: image-registry.openshift-image-registry.svc:5000/openshift/python:3.12-ubi9
+          imagePullPolicy: IfNotPresent
+          command: ["python3", "/scripts/server.py"]
+          env:
+            - name: HOME
+              value: /tmp
+            - name: PYTHONUNBUFFERED
+              value: "1"
+            - name: PYTHONDONTWRITEBYTECODE
+              value: "1"
+            - name: PORT
+              value: "9000"
+          ports:
+            - name: tcp
+              containerPort: 9000
+              protocol: TCP
+          readinessProbe:
+            tcpSocket:
+              port: tcp
+            periodSeconds: 5
+          resources:
+            requests:
+              cpu: 20m
+              memory: 64Mi
+            limits:
+              memory: 128Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: scripts
+              mountPath: /scripts
+      volumes:
+        - name: scripts
+          configMap:
+            name: tcp-idle-scripts
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tcp-idle-client
+  labels:
+    app: tcp-idle-client
+    app.kubernetes.io/part-of: tcp-idle-timeout
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tcp-idle-client
+  template:
+    metadata:
+      labels:
+        app: tcp-idle-client
+        sidecar.istio.io/inject: "true"
+      annotations:
+        # "Session timed out" is logged by the TCP proxy at debug on the
+        # filter logger. misc stays quiet.
+        sidecar.istio.io/componentLogLevel: "misc:error,filter:debug"
+        # tcp.<stat_prefix>.idle_timeout is not in the default Envoy stats
+        # matcher, so the admin /stats output would omit it.
+        proxy.istio.io/config: |
+          proxyStatsMatcher:
+            inclusionPrefixes:
+            - "tcp."
+    spec:
+      serviceAccountName: tcp-idle
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: client
+          image: image-registry.openshift-image-registry.svc:5000/openshift/python:3.12-ubi9
+          imagePullPolicy: IfNotPresent
+          command: ["sleep", "infinity"]
+          env:
+            - name: HOME
+              value: /tmp
+            - name: PYTHONUNBUFFERED
+              value: "1"
+            - name: PYTHONDONTWRITEBYTECODE
+              value: "1"
+            # Keep this equal to DestinationRule connectionPool.tcp.idleTimeout.
+            - name: IDLE_TIMEOUT_SECONDS
+              value: "10"
+            - name: TCP_IDLE_HOST
+              value: tcp-idle-server
+            - name: TCP_IDLE_PORT
+              value: "9000"
+          resources:
+            requests:
+              cpu: 20m
+              memory: 64Mi
+            limits:
+              memory: 128Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: scripts
+              mountPath: /scripts
+      volumes:
+        - name: scripts
+          configMap:
+            name: tcp-idle-scripts
+---
+# Short host is resolved in the namespace of this rule, so the same manifest
+# works in any namespace. idleTimeout is programmed on the client sidecar's
+# outbound TCP proxy for this service, not on the server inbound listener.
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: tcp-idle-server
+  labels:
+    app.kubernetes.io/part-of: tcp-idle-timeout
+spec:
+  host: tcp-idle-server
+  trafficPolicy:
+    connectionPool:
+      tcp:
+        idleTimeout: 10s

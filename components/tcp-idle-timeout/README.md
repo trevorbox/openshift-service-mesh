@@ -35,10 +35,15 @@ oc exec -n <namespace> deploy/tcp-idle-client -c client -- python3 /scripts/clie
 
 ## Config dump
 
-short version
+Short version:
 
 ```bash
-tbox@tbox-thinkpadp1gen7:~/git/trevorbox/openshift-service-mesh$ istioctl pc listener deploy/tcp-idle-client -n test --type TCP --port 9000 -o yaml
+istioctl pc listener deploy/tcp-idle-client -n <namespace> --type TCP --port 9000 -o yaml
+```
+
+Example output:
+
+```text
 - address:
     socketAddress:
       address: 10.217.4.96
@@ -161,7 +166,19 @@ oc logs -n <namespace> deploy/tcp-idle-client -c istio-proxy --since=1m | grep "
 The line from Envoy 1.36 (Istio 1.28) looks like:
 
 ```text
-debug  envoy filter external/envoy/source/common/tcp_proxy/tcp_proxy.cc:1180  [Tags: "ConnectionId":"311"] Session timed out
+debug envoy filter external/envoy/source/common/tcp_proxy/tcp_proxy.cc:1180 [Tags: "ConnectionId":"6"] Session timed out thread=16
+```
+
+Full request logs:
+
+```test
+2026-10-06T23:29:50.667849Z info Envoy proxy is ready
+2026-10-06T23:29:57.452539Z debug envoy filter external/envoy/source/extensions/filters/listener/original_dst/original_dst.cc:69 original_dst: set destination to 10.217.4.96:9000 thread=16
+2026-10-06T23:29:57.452650Z debug envoy filter external/envoy/source/common/tcp_proxy/tcp_proxy.cc:389 [Tags: "ConnectionId":"6"] new tcp proxy session thread=16
+2026-10-06T23:29:57.452675Z debug envoy filter external/envoy/source/common/tcp_proxy/tcp_proxy.cc:602 [Tags: "ConnectionId":"6"] Creating connection to cluster outbound|9000||tcp-idle-server.test.svc.cluster.local thread=16
+2026-10-06T23:29:57.457065Z debug envoy filter external/envoy/source/common/tcp_proxy/tcp_proxy.cc:1156 [Tags: "ConnectionId":"6"] TCP:onUpstreamEvent(), requestedServerName: thread=16
+2026-10-06T23:30:14.453014Z debug envoy filter external/envoy/source/common/tcp_proxy/tcp_proxy.cc:1180 [Tags: "ConnectionId":"6"] Session timed out thread=16
+[2026-10-06T23:29:57.452Z] "- - -" 0 - - - "-" 1 1 17000 - "-" "-" "-" "-" "10.217.0.185:9000" outbound|9000||tcp-idle-server.test.svc.cluster.local 10.217.0.250:48758 10.217.4.96:9000 10.217.0.250:44296 - -
 ```
 
 Match `Session timed out` and `tcp_proxy.cc`. The line number can change across Envoy builds. This line is on the **source** sidecar. The server sidecar does not emit it for this 10s timeout, because its inbound TCP proxy is still on the 1 hour default. The client proxy closes both sides, so the server access log ends at the same moment.

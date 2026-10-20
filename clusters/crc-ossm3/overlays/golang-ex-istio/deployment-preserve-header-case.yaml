@@ -1,0 +1,12 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: golang-ex-featurea
+  namespace: golang-ex
+spec:
+  template:
+    metadata:
+      annotations:
+        proxy.istio.io/config: |
+          proxyHeaders:
+            preserveHttp1HeaderCase: true

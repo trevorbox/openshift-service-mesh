@@ -12,7 +12,7 @@ helmCharts:
     - values.yaml
 
 patches:
-  - path: gateway-preserve-header-case.yaml
+  - path: deployment-preserve-header-case.yaml
     target:
       kind: Deployment
-      name: istio-ingressgateway
+      name: golang-ex-featurea

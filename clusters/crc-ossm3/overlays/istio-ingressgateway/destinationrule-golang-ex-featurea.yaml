@@ -1,0 +1,18 @@
+# The ingress gateway is the client for this host. Sidecar-to-gateway traffic
+# is HTTP/2 unless upgraded traffic is turned off, and HTTP/2 lowercases
+# header names. Keep this hop on HTTP/1.1 so preserveHttp1HeaderCase on the
+# gateway and on golang-ex-featurea can carry the app's header case to the
+# client. This mesh only loads gateway config from the gateway namespace.
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: golang-ex-featurea
+  namespace: istio-ingress
+spec:
+  exportTo:
+    - "."
+  host: golang-ex-featurea.golang-ex.svc.cluster.local
+  trafficPolicy:
+    connectionPool:
+      http:
+        h2UpgradePolicy: DO_NOT_UPGRADE

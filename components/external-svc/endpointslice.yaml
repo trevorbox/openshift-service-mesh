@@ -1,0 +1,25 @@
+# Backend for Service/myservice. 192.168.130.50/32 is added on the CRC
+# bridge by host-app/run-external-app.sh. It is not the CRC VM (.11),
+# the bridge gateway (.1), or the MetalLB L2 pool (.200-.249).
+# Delete this object once the Service has a pod selector and the pod
+# slice is ready, or traffic splits across the VM and the pods.
+kind: EndpointSlice
+apiVersion: discovery.k8s.io/v1
+metadata:
+  name: myservice-external
+  namespace: myservice
+  labels:
+    kubernetes.io/service-name: myservice
+    endpointslice.kubernetes.io/managed-by: external-svc
+addressType: IPv4
+endpoints:
+  - addresses:
+      - "192.168.130.50"
+    conditions:
+      ready: true
+      serving: true
+      terminating: false
+ports:
+  - name: http
+    protocol: TCP
+    port: 8080

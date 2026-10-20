@@ -1,0 +1,15 @@
+# The VM is outside the mesh. Disable mTLS for this host until cutover.
+# Delete this DestinationRule when meshed pods own the Service so clients
+# go back to mesh mTLS.
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: myservice
+  namespace: myservice
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  host: myservice.myservice.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: DISABLE

@@ -131,7 +131,8 @@ applications:
     # project: team1
     source:
       # path: components/istio-ingressgateway
-      path: clusters/crc-canary-upgrade/overlays/istio-ingressgateway
+      # path: clusters/crc-canary-upgrade/overlays/istio-ingressgateway
+      path: clusters/crc-ossm3/overlays/istio-ingressgateway
 
   golang-ex:
     annotations:
@@ -231,6 +232,17 @@ applications:
     project: team1
     source:
       path: clusters/crc-ossm3/overlays/nginx-echo-headers
+
+  external-svc:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: myservice
+      server: https://kubernetes.default.svc?__team=team1
+    project: team1
+    source:
+      path: components/external-svc
 
   # prometheus:
   #   annotations:

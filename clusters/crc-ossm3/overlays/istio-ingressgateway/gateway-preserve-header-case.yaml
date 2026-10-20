@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: istio-ingressgateway
+  namespace: istio-ingress
+spec:
+  template:
+    metadata:
+      annotations:
+        proxy.istio.io/config: |
+          gatewayTopology:
+            numTrustedProxies: 1
+          proxyHeaders:
+            preserveHttp1HeaderCase: true

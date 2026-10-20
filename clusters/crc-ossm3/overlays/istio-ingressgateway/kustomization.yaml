@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../../crc-canary-upgrade/overlays/istio-ingressgateway
+  - destinationrule-golang-ex-featurea.yaml
+
+patches:
+  - path: gateway-preserve-header-case.yaml
+    target:
+      kind: Deployment
+      name: istio-ingressgateway

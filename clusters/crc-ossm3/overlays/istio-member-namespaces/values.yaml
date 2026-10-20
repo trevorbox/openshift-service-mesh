@@ -10,6 +10,7 @@ members:
   - golang-ex
   - bookinfo
   - nginx-echo-headers
+  - myservice
   - oauth2-proxy
   - sample
   - authz-custom

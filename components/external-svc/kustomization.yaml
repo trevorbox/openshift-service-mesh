@@ -17,6 +17,8 @@ helmCharts:
   version: ~0.2.1
   releaseName: myservice
 
+# to cutover to the new service, we need to keep the selector and set endpointSlice ready to false
+
 patches:
   - target:
       group: ""
@@ -24,8 +26,8 @@ patches:
       kind: Service
       name: myservice
     patch: |-
-      - op: remove
-        path: /spec/selector
+      # - op: remove
+      #   path: /spec/selector
       - op: replace
         path: /spec/ports
         value:
@@ -33,3 +35,13 @@ patches:
             protocol: TCP
             port: 80
             targetPort: 8080
+  - target:
+        group: discovery.k8s.io
+        version: v1
+        kind: EndpointSlice
+        name: myservice-external
+        namespace: myservice
+    patch: |-
+      - op: replace
+        path: /endpoints/0/conditions/ready
+        value: false

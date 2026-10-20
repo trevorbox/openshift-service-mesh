@@ -1,1 +1,3 @@
 fullnameOverride: myservice
+serviceAccount:
+  name: "myservice"

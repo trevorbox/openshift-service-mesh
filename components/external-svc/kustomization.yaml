@@ -6,6 +6,7 @@ resources:
   # - service.yaml
   - endpointslice.yaml
   - destinationrule.yaml
+  - serviceaccount.yaml
 
 helmCharts:
 - name: golang-ex

@@ -5,7 +5,8 @@ resources:
   # - namespace.yaml
   # - service.yaml
   - endpointslice.yaml
-  - destinationrule.yaml
+  # remove this once the new service is ready
+  # - destinationrule.yaml
   - serviceaccount.yaml
 
 helmCharts:

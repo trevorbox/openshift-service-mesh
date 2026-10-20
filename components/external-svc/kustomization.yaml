@@ -3,6 +3,32 @@ kind: Kustomization
 
 resources:
   # - namespace.yaml
-  - service.yaml
+  # - service.yaml
   - endpointslice.yaml
   - destinationrule.yaml
+
+helmCharts:
+- name: golang-ex
+  repo: https://trevorbox.github.io/helm-charts
+  namespace: myservice
+  valuesFile: values.yaml
+  # version: ~0.1.1
+  version: ~0.2.1
+  releaseName: myservice
+
+patches:
+  - target:
+      group: ""
+      version: v1
+      kind: Service
+      name: myservice
+    patch: |-
+      - op: remove
+        path: /spec/selector
+      - op: replace
+        path: /spec/ports
+        value:
+          - name: http
+            protocol: TCP
+            port: 80
+            targetPort: 8080

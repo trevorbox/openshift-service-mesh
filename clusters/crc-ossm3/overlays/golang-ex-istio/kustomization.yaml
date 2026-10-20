@@ -10,3 +10,9 @@ helmCharts:
   releaseName: golang-ex-istio
   additionalValuesFiles: 
     - values.yaml
+
+patches:
+  - path: gateway-preserve-header-case.yaml
+    target:
+      kind: Deployment
+      name: istio-ingressgateway

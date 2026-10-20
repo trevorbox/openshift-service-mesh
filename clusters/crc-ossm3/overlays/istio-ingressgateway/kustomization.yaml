@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
   - ../../../crc-canary-upgrade/overlays/istio-ingressgateway
-  - destinationrule-golang-ex-featurea.yaml
+  # - destinationrule-golang-ex-featurea.yaml
 
 patches:
   - path: gateway-preserve-header-case.yaml

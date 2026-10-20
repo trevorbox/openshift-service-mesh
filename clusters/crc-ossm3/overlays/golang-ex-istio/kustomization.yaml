@@ -10,9 +10,3 @@ helmCharts:
   releaseName: golang-ex-istio
   additionalValuesFiles: 
     - values.yaml
-
-patches:
-  - path: deployment-preserve-header-case.yaml
-    target:
-      kind: Deployment
-      name: golang-ex-featurea

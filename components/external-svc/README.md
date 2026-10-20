@@ -106,3 +106,33 @@ The Istio proxy (Envoy plus `istio-agent`, usually a systemd unit on the guest) 
 | Data plane | OVN and kube-proxy send the ClusterIP to `192.168.130.50`. | The VM exists only in the Istio registry. |
 | mTLS | DestinationRule `DISABLE` until meshed pods own the Service. | `MESH_EXTERNAL` stays plaintext without that DestinationRule. |
 | Ownership | The future app chart and this directory share Service `myservice`. Keep that object. | The app chart creates the Service at cutover. The ServiceEntry has to leave in that same change. |
+
+### Cutover results
+
+Example PR to cutover the already deployed app (running pods): <https://github.com/trevorbox/openshift-service-mesh/pull/8/changes>
+
+siege from mesh-member pod to myservice.myservice
+
+```sh
+oc rsh siege-runner-5d67568b86-px8ch
+siege myservice.myservice
+```
+
+```text
+...
+Lifting the server siege...
+Transactions:               21526    hits
+Availability:                  98.12 %
+Elapsed time:                 103.02 secs
+Data transferred:               2.26 MB
+Response time:                119.46 ms
+Transaction rate:             208.95 trans/sec
+Throughput:                     0.02 MB/sec
+Concurrency:                   24.96
+Successful transactions:    21526
+Failed transactions:          413
+Longest transaction:          400.00 ms
+Shortest transaction:           0.00 ms
+```
+
+So there is a short period of time to hydrate the new EndpointSlice from Service Selector.

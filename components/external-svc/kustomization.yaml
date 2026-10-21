@@ -28,7 +28,7 @@ patches:
       kind: Service
       name: myservice
     patch: |-
-      # TODO: CUTOVER SETP 2 remove this patch once the new service is ready
+      # TODO: CUTOVER SETP 1 remove this patch once the new service is ready
       # - op: remove
       #   path: /spec/selector
       - op: replace
@@ -38,14 +38,14 @@ patches:
             protocol: TCP
             port: 80
             targetPort: 8080
-  # TODO: CUTOVER STEP 3 set the endpointSlice ready to false
-  # - target:
-  #       group: discovery.k8s.io
-  #       version: v1
-  #       kind: EndpointSlice
-  #       name: myservice-external
-  #       namespace: myservice
-  #   patch: |-
-  #     - op: replace
-  #       path: /endpoints/0/conditions/ready
-  #       value: false
+  # TODO: CUTOVER STEP 2 set the endpointSlice ready to false
+  - target:
+        group: discovery.k8s.io
+        version: v1
+        kind: EndpointSlice
+        name: myservice-external
+        namespace: myservice
+    patch: |-
+      - op: replace
+        path: /endpoints/0/conditions/ready
+        value: false

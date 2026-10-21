@@ -177,3 +177,14 @@ Shortest transaction:           0.00 ms
 See the logs [siege-runner-5d67568b86-9l97g-istio-proxy.log](./siege-runner-5d67568b86-9l97g-istio-proxy.log)
 
 For a short period between commits the VM and pods are accessible, then we simply mark the external EndpointSlice as not ready and the endpoints from siege pod are just to the myservice pods. No errors.
+
+If a pod is in a not ready state then the client envoy will drop the endpoint
+
+```sh
+oc rsh -c istio-proxy deploy/myservice
+pilot-agent request POST drain_listeners
+exit
+
+#then no endpoints
+istioctl pc endpoints siege-runner-5d67568b86-9l97g.golang-ex | grep myservice
+```

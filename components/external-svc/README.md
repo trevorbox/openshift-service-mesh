@@ -107,7 +107,7 @@ The Istio proxy (Envoy plus `istio-agent`, usually a systemd unit on the guest) 
 | mTLS | DestinationRule `DISABLE` until meshed pods own the Service. | `MESH_EXTERNAL` stays plaintext without that DestinationRule. |
 | Ownership | The future app chart and this directory share Service `myservice`. Keep that object. | The app chart creates the Service at cutover. The ServiceEntry has to leave in that same change. |
 
-### Cutover results
+### Hard cutover
 
 Example PR to cutover the already deployed app (running pods): <https://github.com/trevorbox/openshift-service-mesh/pull/8/changes>
 
@@ -135,4 +135,45 @@ Longest transaction:          400.00 ms
 Shortest transaction:           0.00 ms
 ```
 
-So there is a short period of time to hydrate the new EndpointSlice from Service Selector.
+So there is no seamless cutover if trying to remove the EndpointSlice and add the Service selector to pods at the same time (expected).
+
+#### Seamless cutover
+
+Assume mtls is PERMISSIVE.
+
+```sh
+tbox@tbox-thinkpadp1gen7:~/git/trevorbox$ istioctl pc endpoints siege-runner-5d67568b86-9l97g.golang-ex | grep myse
+rvice
+192.168.130.50:8080                                     HEALTHY     OK                outbound|80||myservice.myservice.svc.cluster.local
+tbox@tbox-thinkpadp1gen7:~/git/trevorbox/openshift-service-mesh$ git commit -am "step 1 add selector"
+[main 24c7c17] step 1 add selector
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+tbox@tbox-thinkpadp1gen7:~/git/trevorbox$ istioctl pc endpoints siege-runner-5d67568b86-9l97g.golang-ex | grep myservice
+10.217.0.78:8080                                        HEALTHY     OK                outbound|80||myservice.myservice.svc.cluster.local
+192.168.130.50:8080                                     HEALTHY     OK                outbound|80||myservice.myservice.svc.cluster.local
+tbox@tbox-thinkpadp1gen7:~/git/trevorbox/openshift-service-mesh$ git commit -am "step 2 remove external endpoint from endpointslice"
+[main 3ab3acd] step 2 remove external endpoint from endpointslice
+ 1 file changed, 12 insertions(+), 12 deletions(-)
+tbox@tbox-thinkpadp1gen7:~/git/trevorbox$ istioctl pc endpoints siege-runner-5d67568b86-9l97g.golang-ex | grep myservice
+10.217.0.78:8080                                        HEALTHY     OK                outbound|80||myservice.myservice.svc.cluster.local
+```
+
+```sh
+Lifting the server siege...
+Transactions:               18969    hits
+Availability:                 100.00 %
+Elapsed time:                  90.48 secs
+Data transferred:               9.92 MB
+Response time:                118.99 ms
+Transaction rate:             209.65 trans/sec
+Throughput:                     0.11 MB/sec
+Concurrency:                   24.95
+Successful transactions:    18969
+Failed transactions:            0
+Longest transaction:          590.00 ms
+Shortest transaction:           0.00 ms
+```
+
+See the logs [siege-runner-5d67568b86-9l97g-istio-proxy.log](./siege-runner-5d67568b86-9l97g-istio-proxy.log)
+
+For a short period between commits the VM and pods are accessible, then we simply mark the external EndpointSlice as not ready and the endpoints from siege pod are just to the myservice pods. No errors.

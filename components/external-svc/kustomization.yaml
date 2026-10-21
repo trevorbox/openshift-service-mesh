@@ -5,7 +5,7 @@ resources:
   # - namespace.yaml
   # - service.yaml
   - endpointslice.yaml
-  # TODO: CUTOVER SETP 1 remove destinationrule.yaml
+  # Assume mtls not required - PERMISSIVE
   # - destinationrule.yaml
   - peerauthentication.yaml
   - serviceaccount.yaml
@@ -29,8 +29,8 @@ patches:
       name: myservice
     patch: |-
       # TODO: CUTOVER SETP 2 remove this patch once the new service is ready
-      - op: remove
-        path: /spec/selector
+      # - op: remove
+      #   path: /spec/selector
       - op: replace
         path: /spec/ports
         value:

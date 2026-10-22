@@ -2,26 +2,17 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  # - namespace.yaml
-  # - service.yaml
-  # - endpointslice.yaml
-  # Assume mtls not required - PERMISSIVE
-  # - destinationrule.yaml
-  # - peerauthentication.yaml
+  # - serviceaccount.yaml
+  - serviceentry.yaml
 
-  - serviceaccount.yaml
-  # - serviceentry.yaml
-
-helmCharts:
-- name: golang-ex
-  repo: https://trevorbox.github.io/helm-charts
-  namespace: myservice
-  valuesFile: values.yaml
-  # version: ~0.1.1
-  version: ~0.2.1
-  releaseName: myservice
-
-# to cutover to the new service, we need to keep the selector and set endpointSlice ready to false
+# helmCharts:
+# - name: golang-ex
+#   repo: https://trevorbox.github.io/helm-charts
+#   namespace: myservice
+#   valuesFile: values.yaml
+#   # version: ~0.1.1
+#   version: ~0.2.1
+#   releaseName: myservice
 
 patches:
   - target:
@@ -30,9 +21,6 @@ patches:
       kind: Service
       name: myservice
     patch: |-
-      # TODO: CUTOVER SETP 1 remove this patch once the new service is ready
-      # - op: remove
-      #   path: /spec/selector
       - op: replace
         path: /spec/ports
         value:
@@ -40,15 +28,3 @@ patches:
             protocol: TCP
             port: 80
             targetPort: 8080
-
-  # TODO: CUTOVER STEP 2 set the endpointSlice ready to false
-  # - target:
-  #       group: discovery.k8s.io
-  #       version: v1
-  #       kind: EndpointSlice
-  #       name: myservice-external
-  #       namespace: myservice
-  #   patch: |-
-  #     - op: replace
-  #       path: /endpoints/0/conditions/ready
-  #       value: false

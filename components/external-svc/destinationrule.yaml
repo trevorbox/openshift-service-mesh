@@ -8,27 +8,9 @@ spec:
   - name: ext-zone-a
     labels:
       zone: a # ServiceEntry endpoint labels
-    trafficPolicy:
-      outlierDetection:
-        consecutive5xxErrors: 3
-        interval: 5s
-        baseEjectionTime: 30s
-        maxEjectionPercent: 100
   - name: ext-zone-b
     labels:
       zone: b # ServiceEntry endpoint labels
-    trafficPolicy:
-      outlierDetection:
-        consecutive5xxErrors: 3
-        interval: 5s
-        baseEjectionTime: 30s
-        maxEjectionPercent: 100
   - name: pods-v1
     labels:      
       version: v1 # Pod labels
-    trafficPolicy:
-      outlierDetection:
-        consecutive5xxErrors: 3
-        interval: 5s
-        baseEjectionTime: 30s
-        maxEjectionPercent: 100

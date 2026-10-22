@@ -6,24 +6,24 @@ spec:
   hosts:
   - myservice.myservice.svc.cluster.local
   http:
-    # Match specific header for canary subset (pre-cutover)
-    - match:
-      - headers:
-          x-zone:
-            exact: b      # Routes if header 'x-zone: b' matches exactly
-      route:
-      - destination:
-          host: myservice.myservice.svc.cluster.local
-          subset: ext-zone-b
+    # # Match specific header for canary subset (pre-cutover)
+    # - match:
+    #   - headers:
+    #       x-zone:
+    #         exact: b      # Routes if header 'x-zone: b' matches exactly
+    #   route:
+    #   - destination:
+    #       host: myservice.myservice.svc.cluster.local
+    #       subset: ext-zone-b
 
-    # Fallback rule for all other traffic (pre-cutover)
-    - route:
-      - destination:
-          host: myservice.myservice.svc.cluster.local
-          subset: ext-zone-a
-
-    # Remove all other match and route rules above after pods are available
+    # # Fallback rule for all other traffic (pre-cutover)
     # - route:
     #   - destination:
     #       host: myservice.myservice.svc.cluster.local
-    #       subset: pods-v1
+    #       subset: ext-zone-a
+
+    # Remove all other match and route rules above after pods are available
+    - route:
+      - destination:
+          host: myservice.myservice.svc.cluster.local
+          subset: pods-v1

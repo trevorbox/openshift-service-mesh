@@ -9,7 +9,7 @@ resources:
   # - destinationrule.yaml
   # - peerauthentication.yaml
 
-  # - serviceaccount.yaml
+  - serviceaccount.yaml
   - serviceentry.yaml
 
 helmCharts:

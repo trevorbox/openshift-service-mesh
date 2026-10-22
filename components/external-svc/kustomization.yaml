@@ -7,7 +7,7 @@ resources:
   # Step 3: remove ServiceEntry
   - serviceentry.yaml  
   - destinationrule.yaml
-  - virtualservice.yaml
+  # - virtualservice.yaml
 
   - serviceaccount.yaml
 

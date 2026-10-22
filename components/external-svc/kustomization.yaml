@@ -5,20 +5,21 @@ kind: Kustomization
 # Step 1: deploy just the ServiceEntry
 resources:
   # Step 3: remove ServiceEntry
-  # - serviceentry.yaml
-  - serviceaccount.yaml
-  # - destinationrule.yaml
-  # - virtualservice.yaml
+  - serviceentry.yaml  
+  - destinationrule.yaml
+  - virtualservice.yaml
+
+  # - serviceaccount.yaml
 
 # Step 2: deploy app
-helmCharts:
-- name: golang-ex
-  repo: https://trevorbox.github.io/helm-charts
-  namespace: myservice
-  valuesFile: values.yaml
-  # version: ~0.1.1
-  version: ~0.2.1
-  releaseName: myservice
+# helmCharts:
+# - name: golang-ex
+#   repo: https://trevorbox.github.io/helm-charts
+#   namespace: myservice
+#   valuesFile: values.yaml
+#   # version: ~0.1.1
+#   version: ~0.2.1
+#   releaseName: myservice
 
 patches:
   - target:

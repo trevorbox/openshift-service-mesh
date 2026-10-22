@@ -4,11 +4,12 @@ kind: Kustomization
 resources:
   # - namespace.yaml
   # - service.yaml
-  - endpointslice.yaml
+  # - endpointslice.yaml
   # Assume mtls not required - PERMISSIVE
   # - destinationrule.yaml
   - peerauthentication.yaml
   - serviceaccount.yaml
+  - serviceentry.yaml
 
 helmCharts:
 - name: golang-ex
@@ -29,8 +30,8 @@ patches:
       name: myservice
     patch: |-
       # TODO: CUTOVER SETP 1 remove this patch once the new service is ready
-      # - op: remove
-      #   path: /spec/selector
+      - op: remove
+        path: /spec/selector
       - op: replace
         path: /spec/ports
         value:
@@ -39,13 +40,13 @@ patches:
             port: 80
             targetPort: 8080
   # TODO: CUTOVER STEP 2 set the endpointSlice ready to false
-  - target:
-        group: discovery.k8s.io
-        version: v1
-        kind: EndpointSlice
-        name: myservice-external
-        namespace: myservice
-    patch: |-
-      - op: replace
-        path: /endpoints/0/conditions/ready
-        value: false
+  # - target:
+  #       group: discovery.k8s.io
+  #       version: v1
+  #       kind: EndpointSlice
+  #       name: myservice-external
+  #       namespace: myservice
+  #   patch: |-
+  #     - op: replace
+  #       path: /endpoints/0/conditions/ready
+  #       value: false

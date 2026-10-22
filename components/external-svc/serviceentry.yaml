@@ -10,6 +10,11 @@ spec:
     - myservice.myservice.svc.cluster.local
   endpoints:
     - address: 192.168.130.50
+      labels:
+        zone: a  # <-- Subset target label
+    - address: 192.168.130.51
+      labels:
+        zone: b
   location: MESH_EXTERNAL
   ports:
     - name: http

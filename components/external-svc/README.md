@@ -22,6 +22,13 @@ sudo components/external-svc/host-app/run-external-app.sh start
 curl -sS http://192.168.130.50:8080/
 ```
 
+## Start another VM stand-in
+
+```sh
+sudo CONTAINER_NAME=crc-external-myservice-2 APP_IP=192.168.130.51 \
+  components/external-svc/host-app/run-external-app.sh start
+```
+
 ## run siege pod
 
 ```sh

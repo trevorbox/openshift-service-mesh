@@ -1,0 +1,13 @@
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: myservice
+spec:
+  host: myservice.myservice.svc.cluster.local
+  subsets:
+  - name: zonea
+    labels:
+      zone: a
+  - name: zoneb
+    labels:
+      zone: b

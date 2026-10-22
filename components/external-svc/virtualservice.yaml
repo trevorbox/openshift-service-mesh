@@ -1,0 +1,23 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: myservice
+spec:
+  hosts:
+  - myservice.myservice.svc.cluster.local
+  http:
+    # 1. Match specific header for canary subset
+    - match:
+      - headers:
+          x-zone:
+            exact: b      # Routes if header 'x-zone: b' matches exactly
+      route:
+      - destination:
+          host: myservice.myservice.svc.cluster.local
+          subset: zoneb
+
+    # 2. Fallback rule for all other traffic
+    - route:
+      - destination:
+          host: myservice.myservice.svc.cluster.local
+          subset: zonea

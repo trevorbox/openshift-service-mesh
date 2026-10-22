@@ -22,6 +22,13 @@ sudo components/external-svc/host-app/run-external-app.sh start
 curl -sS http://192.168.130.50:8080/
 ```
 
+## run siege pod
+
+```sh
+oc rsh -n golang-ex deploy/siege-runner
+siege myservice.myservice
+```
+
 ## Process
 
 1. Deploy ServiceEntry with DNS proxying enabled
@@ -29,9 +36,34 @@ curl -sS http://192.168.130.50:8080/
 3. Remove ServiceEntry
 
 ```sh
-
+tbox@tbox-thinkpadp1gen7:~/git/trevorbox/openshift-service-mesh$ istio
+ctl pc endpoints siege-runner-5d67568b86-cch6w.golang-ex | grep myservice
+192.168.130.50:8080                                     HEALTHY     OK                outbound|80||myservice.myservice.svc.cluster.local
+tbox@tbox-thinkpadp1gen7:~/git/trevorbox/openshift-service-mesh$ git commit -am "Deploy app"
+tbox@tbox-thinkpadp1gen7:~/git/trevorbox/openshift-service-mesh$ git push
+tbox@tbox-thinkpadp1gen7:~/git/trevorbox/openshift-service-mesh$ istioctl pc endpoints siege-runner-5d67568b86-cch6w.golang-ex | grep myservice
+10.217.0.122:8080                                       HEALTHY     OK                outbound|80||myservice.myservice.svc.cluster.local
+192.168.130.50:8080                                     HEALTHY     OK                outbound|80||myservice.myservice.svc.cluster.local
+tbox@tbox-thinkpadp1gen7:~/git/trevorbox/openshift-service-mesh$ git commit -am "remove ServiceEntry"
+tbox@tbox-thinkpadp1gen7:~/git/trevorbox/openshift-service-mesh$ git push
+tbox@tbox-thinkpadp1gen7:~/git/trevorbox/openshift-service-mesh$ istioctl pc endpoints siege-runner-5d67568b86-cch6w.golang-ex | grep myservice
+10.217.0.122:8080                                       HEALTHY     OK                outbound|80||myservice.myservice.svc.cluster.local
 ```
 
-```text
+Siege results...
 
+```text
+Lifting the server siege...
+Transactions:               25284    hits
+Availability:                 100.00 %
+Elapsed time:                 147.16 secs
+Data transferred:              12.28 MB
+Response time:                145.06 ms
+Transaction rate:             171.81 trans/sec
+Throughput:                     0.08 MB/sec
+Concurrency:                   24.92
+Successful transactions:    25284
+Failed transactions:            0
+Longest transaction:          500.00 ms
+Shortest transaction:           0.00 ms
 ```

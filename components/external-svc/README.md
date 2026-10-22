@@ -43,8 +43,6 @@ oc rsh -n golang-ex deploy/siege-runner
 siege -H "x-zone: b" myservice.myservice
 ```
 
-
-
 ## Process
 
 1. Deploy ServiceEntry with DNS proxying enabled
@@ -84,3 +82,11 @@ Failed transactions:            0
 Longest transaction:          500.00 ms
 Shortest transaction:           0.00 ms
 ```
+
+## Zone routing to external VMs cutover process
+
+1. Deploy ServiceEntry with DNS proxying enabled, DestinationRule with subsets, and VirtualService to match on header
+2. Deploy the application like normal (k8s service with selector). The pod endpoints are discovered but not used due to VirtualService.
+3. Change the VirtualService to Pods only subset. If you simply delete the VirtualService then all subsets are routed (unintended consequence)
+4. Remove ServiceEntry, VirtualService, and DestinationRule.
+

@@ -6,7 +6,7 @@ spec:
   hosts:
   - myservice.myservice.svc.cluster.local
   http:
-    # 1. Match specific header for canary subset
+    # Match specific header for canary subset (pre-cutover)
     - match:
       - headers:
           x-zone:
@@ -16,14 +16,14 @@ spec:
           host: myservice.myservice.svc.cluster.local
           subset: ext-zone-b
 
-    # 2. Fallback rule for all other traffic
+    # Fallback rule for all other traffic (pre-cutover)
     - route:
       - destination:
           host: myservice.myservice.svc.cluster.local
           subset: ext-zone-a
-      # 3. Add this in when pods are deployed
-      #   weight: 50
-      # - destination:
-      #     host: myservice.myservice.svc.cluster.local
-      #     subset: pods-v1
-      #   weight: 50
+
+    # Remove all other match and route rules above after pods are available
+    # - route:
+    #   - destination:
+    #       host: myservice.myservice.svc.cluster.local
+    #       subset: pods-v1

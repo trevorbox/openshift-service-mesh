@@ -8,7 +8,7 @@ resources:
   - serviceentry.yaml
   - serviceaccount.yaml
   - destinationrule.yaml
-  - virtualservice.yaml
+  # - virtualservice.yaml
 
 # Step 2: deploy app
 helmCharts:

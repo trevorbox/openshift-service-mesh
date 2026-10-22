@@ -9,7 +9,7 @@ resources:
   # - destinationrule.yaml
   - peerauthentication.yaml
   - serviceaccount.yaml
-  - serviceentry.yaml
+  # - serviceentry.yaml
 
 helmCharts:
 - name: golang-ex

@@ -20,4 +20,4 @@ spec:
     - route:
       - destination:
           host: myservice.myservice.svc.cluster.local
-          subset: zonea
+          # subset: zonea

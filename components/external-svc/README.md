@@ -43,11 +43,14 @@ oc rsh -n golang-ex deploy/siege-runner
 siege -H "x-zone: b" myservice.myservice
 ```
 
+
+
 ## Process
 
 1. Deploy ServiceEntry with DNS proxying enabled
 2. Deploy the application like normal (k8s service with selector). The Endpoints for pods won't be available in client Envoy until ready.
 3. Remove ServiceEntry
+   > NOTE: If you deploy the VirtualService to match on a header and route to explicit subset, you will need to delete that VirtualService first before attempting to remove the ServiceEntry and DestinationRule.
 
 ```sh
 tbox@tbox-thinkpadp1gen7:~/git/trevorbox/openshift-service-mesh$ istio

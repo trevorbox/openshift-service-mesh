@@ -7,9 +7,9 @@ resources:
   # - endpointslice.yaml
   # Assume mtls not required - PERMISSIVE
   # - destinationrule.yaml
-  - peerauthentication.yaml
+  # - peerauthentication.yaml
   - serviceaccount.yaml
-  # - serviceentry.yaml
+  - serviceentry.yaml
 
 helmCharts:
 - name: golang-ex
@@ -30,8 +30,8 @@ patches:
       name: myservice
     patch: |-
       # TODO: CUTOVER SETP 1 remove this patch once the new service is ready
-      # - op: remove
-      #   path: /spec/selector
+      - op: remove
+        path: /spec/selector
       - op: replace
         path: /spec/ports
         value:

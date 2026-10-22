@@ -21,8 +21,8 @@ spec:
       - destination:
           host: myservice.myservice.svc.cluster.local
           subset: ext-zone-a
-        weight: 50
-      - destination:
-          host: myservice.myservice.svc.cluster.local
-          subset: pods-v1
-        weight: 50
+      #   weight: 50
+      # - destination:
+      #     host: myservice.myservice.svc.cluster.local
+      #     subset: pods-v1
+      #   weight: 50

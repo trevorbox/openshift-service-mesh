@@ -5,13 +5,12 @@ metadata:
 spec:
   host: myservice.myservice.svc.cluster.local
   subsets:
-  - name: zonea
+  - name: ext-zone-a
     labels:
-      zone: a
-  - name: zoneb
+      zone: a # ServiceEntry endpoint labels
+  - name: ext-zone-b
     labels:
-      zone: b
-  # pods subset
-  - name: v1
-    labels:
-      version: v1
+      zone: b # ServiceEntry endpoint labels
+  - name: pods-v1
+    labels:      
+      version: v1 # Pod labels

@@ -14,15 +14,15 @@ spec:
       route:
       - destination:
           host: myservice.myservice.svc.cluster.local
-          subset: zoneb
+          subset: ext-zone-b
 
     # 2. Fallback rule for all other traffic
     - route:
       - destination:
           host: myservice.myservice.svc.cluster.local
-          subset: zonea
+          subset: ext-zone-a
         weight: 50
       - destination:
           host: myservice.myservice.svc.cluster.local
-          subset: v1
+          subset: pods-v1
         weight: 50

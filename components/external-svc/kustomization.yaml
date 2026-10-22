@@ -5,7 +5,7 @@ kind: Kustomization
 # Step 1: deploy just the ServiceEntry
 resources:
   # Step 3: remove ServiceEntry
-  - serviceentry.yaml
+  # - serviceentry.yaml
   - serviceaccount.yaml
 
 # Step 2: deploy app

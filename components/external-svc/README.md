@@ -36,6 +36,13 @@ oc rsh -n golang-ex deploy/siege-runner
 siege myservice.myservice
 ```
 
+If you want to test the zone header approach...
+
+```sh
+oc rsh -n golang-ex deploy/siege-runner
+siege -H "x-zone: b" myservice.myservice
+```
+
 ## Process
 
 1. Deploy ServiceEntry with DNS proxying enabled

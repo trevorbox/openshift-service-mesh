@@ -6,7 +6,7 @@ kind: Kustomization
 resources:
   # Step 3: remove ServiceEntry
   # - serviceentry.yaml  
-  - destinationrule.yaml
+  # - destinationrule.yaml
   # - virtualservice.yaml
 
   - serviceaccount.yaml

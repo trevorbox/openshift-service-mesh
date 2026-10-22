@@ -5,9 +5,9 @@ kind: Kustomization
 # Step 1: deploy just the ServiceEntry
 resources:
   # Step 3: remove ServiceEntry
-  - serviceentry.yaml  
-  - destinationrule.yaml
-  # - virtualservice.yaml
+  # - serviceentry.yaml  
+  # - destinationrule.yaml
+  - virtualservice.yaml
 
   - serviceaccount.yaml
 

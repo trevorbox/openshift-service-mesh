@@ -1,10 +1,14 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+
+# Step 1: deploy just the ServiceEntry
 resources:
+  # Step 3: remove ServiceEntry
   - serviceentry.yaml
   # - serviceaccount.yaml
 
+# Step 2: deploy app
 # helmCharts:
 # - name: golang-ex
 #   repo: https://trevorbox.github.io/helm-charts

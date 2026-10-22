@@ -3,8 +3,8 @@ kind: ServiceEntry
 metadata:
   name: myservice
   namespace: myservice
-  labels:
-    networking.istio.io/enable-autoallocate-ip: "false"
+  # labels:
+  #   networking.istio.io/enable-autoallocate-ip: "false"
 spec:
   hosts:
     - myservice.myservice.svc.cluster.local
@@ -16,4 +16,4 @@ spec:
       number: 80
       protocol: HTTP
       targetPort: 8080
-  resolution: STATIC
+  resolution: DNS

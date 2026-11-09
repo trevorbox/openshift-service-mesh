@@ -30,6 +30,15 @@ default:
 
 applications:
 
+  ansible-automation-platform-operator:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '-1'
+    destination:
+      namespace: openshift-gitops
+    source:
+      path: components/ansible-automation-platform-operator
+
   servicemeshoperator3:
     annotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous

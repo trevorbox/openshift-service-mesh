@@ -14,5 +14,5 @@ operators:
   source: redhat-operators
   sourceNamespace: openshift-marketplace
   csv: aap-operator.v2.7.0-0.1793374941
-  namespace: ansible-automation-platform-operator
+  namespace: aap
   installPlanVerifierActiveDeadlineSeconds: 1200

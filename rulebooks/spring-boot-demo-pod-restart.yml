@@ -1,0 +1,36 @@
+---
+# Event-Driven Ansible only imports rulebooks from /rulebooks or
+# /extensions/eda/rulebooks at the root of the Git project.
+#
+# ansible.eda.webhook rejects any request that does not send
+# Authorization: Bearer <webhook_token>. The activation extra var supplies
+# the token. Alertmanager sends the same value from secret eda-webhook-token.
+# The whole Alertmanager JSON body arrives as event.payload. commonLabels
+# matches one grouped notification, and this route groups by namespace,
+# alertname, and pod.
+- name: Restart spring-boot-demo on heap pressure
+  hosts: all
+  sources:
+    - name: alertmanager
+      ansible.eda.webhook:
+        host: 0.0.0.0
+        port: 5000
+        token: "{{ webhook_token }}"
+  rules:
+    - name: Restart the pod when heap stays high
+      condition: >
+        event.payload.status == "firing" and
+        event.payload.commonLabels.alertname == "SpringBootDemoHeapHigh"
+      throttle:
+        once_within: 15 minutes
+        group_by_attributes:
+          - event.payload.commonLabels.namespace
+          - event.payload.commonLabels.pod
+      action:
+        run_job_template:
+          name: restart-spring-boot-demo-pod
+          organization: Default
+          job_args:
+            extra_vars:
+              namespace: "{{ event.payload.commonLabels.namespace }}"
+              pod: "{{ event.payload.commonLabels.pod }}"

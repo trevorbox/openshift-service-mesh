@@ -6,6 +6,7 @@ installPlanApproverAndVerifyJobsImage: quay.io/trevorbox/installplanapproverandv
 operatorGroups:
 - name: aap
   createNamespace: true
+  targetOwnNamespace: true
 
 operators:
 - channel: stable-2.7

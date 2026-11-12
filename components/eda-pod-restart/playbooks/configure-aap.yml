@@ -131,7 +131,9 @@
         organization_name: Default
         credential_type_name: Red Hat Ansible Automation Platform
         inputs:
-          host: "{{ aap_url }}"
+          # A host with no path makes ansible-rulebook call /api/v2, which the
+          # gateway does not serve. A path switches it to /api/controller/v2.
+          host: "{{ aap_url | regex_replace('/+$', '') }}/api/controller/"
           oauth_token: "{{ aap_token }}"
           verify_ssl: false
       no_log: true

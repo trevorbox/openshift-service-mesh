@@ -83,7 +83,10 @@ spec:
   eda:
     disabled: false
     no_log: true
-    ui_disabled: false
+    # The platform operator always sets this on the EDA object. Leaving it
+    # false makes that object flip every reconcile, and eda-api rolls a new pod
+    # each time. Decisions is served by the platform gateway.
+    ui_disabled: true
     api:
       replicas: 1
       resource_requirements:

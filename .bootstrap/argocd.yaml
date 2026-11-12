@@ -946,22 +946,37 @@ spec:
       kind: AnsibleJob
       check: |
         hs = {}
+
+        -- url is unset when the controller job fails before a job is created,
+        -- for example when the job template name cannot be found.
+        function jobMessage(jobstatus, result)
+          local msg = jobstatus .. " job"
+          local detail = result.url
+          if detail == nil or detail == "" then
+            detail = obj.status.error_message
+          end
+          if detail ~= nil and detail ~= "" then
+            msg = msg .. " - " .. detail
+          end
+          return msg
+        end
+
         if obj.status ~= nil then
-          if obj.status.ansibleJobResult ~= nil then
+          if obj.status.ansibleJobResult ~= nil and obj.status.ansibleJobResult.status ~= nil then
             jobstatus = obj.status.ansibleJobResult.status
             if jobstatus == "successful" then
               hs.status = "Healthy"
-              hs.message = jobstatus .. " job - " .. obj.status.ansibleJobResult.url
+              hs.message = jobMessage(jobstatus, obj.status.ansibleJobResult)
               return hs
             end
             if jobstatus == "failed" or jobstatus == "error" or jobstatus == "canceled" then
               hs.status = "Degraded"
-              hs.message = jobstatus .. " job - " .. obj.status.ansibleJobResult.url
+              hs.message = jobMessage(jobstatus, obj.status.ansibleJobResult)
               return hs
             end
             if jobstatus == "new" or jobstatus == "pending" or jobstatus == "waiting" or jobstatus == "running" then
               hs.status = "Progressing"
-              hs.message = jobstatus .. " job - " .. obj.status.ansibleJobResult.url
+              hs.message = jobMessage(jobstatus, obj.status.ansibleJobResult)
               return hs
             end
           end

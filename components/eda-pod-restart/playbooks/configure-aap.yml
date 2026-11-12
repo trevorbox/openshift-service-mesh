@@ -134,7 +134,6 @@
           host: "{{ aap_url }}"
           oauth_token: "{{ aap_token }}"
           verify_ssl: false
-      register: dispatch_credential
       no_log: true
 
     - name: Create the decision environment
@@ -184,8 +183,9 @@
         restart_policy: on-failure
         log_level: info
         state: enabled
+        # The module resolves these by name, then sends the ids.
         eda_credentials:
-          - "{{ dispatch_credential.id }}"
+          - AAP-Controller-Dispatch
         event_streams:
           - event_stream: "{{ event_stream_name }}"
             source_name: alertmanager

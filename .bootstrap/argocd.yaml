@@ -942,6 +942,85 @@ spec:
         hs = getStatusFromConditions(obj, hs)
 
         return hs
+    # Stay Progressing until the resource operator has created the controller
+    # object. The configure-aap-eda AnsibleJob is a later sync wave and
+    # launches only after these are Healthy.
+    - group: tower.ansible.com
+      kind: JobTemplate
+      check: |
+        hs = {}
+        if obj.status == nil or obj.status.isFinished ~= true then
+          hs.status = "Progressing"
+          hs.message = "Waiting for the resource operator to create the job template"
+          return hs
+        end
+        if obj.status.error == true then
+          hs.status = "Degraded"
+          hs.message = obj.status.message
+          return hs
+        end
+        hs.status = "Healthy"
+        if obj.status.message ~= nil then
+          hs.message = obj.status.message
+        end
+        return hs
+    - group: tower.ansible.com
+      kind: AnsibleProject
+      check: |
+        hs = {}
+        if obj.status == nil or obj.status.isFinished ~= true then
+          hs.status = "Progressing"
+          hs.message = "Waiting for the resource operator to create the project"
+          return hs
+        end
+        if obj.status.error == true then
+          hs.status = "Degraded"
+          hs.message = obj.status.message
+          return hs
+        end
+        hs.status = "Healthy"
+        if obj.status.message ~= nil then
+          hs.message = obj.status.message
+        end
+        return hs
+    - group: tower.ansible.com
+      kind: AnsibleCredential
+      check: |
+        hs = {}
+        if obj.status == nil or obj.status.isFinished ~= true then
+          hs.status = "Progressing"
+          hs.message = "Waiting for the resource operator to create the credential"
+          return hs
+        end
+        if obj.status.error == true then
+          hs.status = "Degraded"
+          hs.message = obj.status.message
+          return hs
+        end
+        hs.status = "Healthy"
+        if obj.status.message ~= nil then
+          hs.message = obj.status.message
+        end
+        return hs
+    - group: tower.ansible.com
+      kind: AnsibleInventory
+      check: |
+        hs = {}
+        if obj.status == nil or obj.status.isFinished ~= true then
+          hs.status = "Progressing"
+          hs.message = "Waiting for the resource operator to create the inventory"
+          return hs
+        end
+        if obj.status.error == true then
+          hs.status = "Degraded"
+          hs.message = obj.status.message
+          return hs
+        end
+        hs.status = "Healthy"
+        if obj.status.message ~= nil then
+          hs.message = obj.status.message
+        end
+        return hs
     - group: tower.ansible.com
       kind: AnsibleJob
       check: |

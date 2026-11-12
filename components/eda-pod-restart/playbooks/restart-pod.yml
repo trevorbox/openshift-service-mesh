@@ -1,0 +1,37 @@
+---
+# Deletes one pod so its Deployment recreates it.
+# Extra vars come from the alert labels: namespace, pod.
+- name: Restart the pod named by an Alertmanager event
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Require the alert labels
+      ansible.builtin.assert:
+        that:
+          - namespace | default('') | length > 0
+          - pod | default('') | length > 0
+        fail_msg: namespace and pod extra vars are required
+
+    - name: Read the target pod
+      kubernetes.core.k8s_info:
+        api_version: v1
+        kind: Pod
+        name: "{{ pod }}"
+        namespace: "{{ namespace }}"
+      register: target
+
+    - name: Refuse to delete anything except spring-boot-demo
+      ansible.builtin.assert:
+        that:
+          - target.resources | length == 1
+          - (target.resources[0].metadata.labels['app.kubernetes.io/name'] | default('')) == 'spring-boot-demo'
+        fail_msg: "pod {{ namespace }}/{{ pod }} is not app.kubernetes.io/name=spring-boot-demo"
+
+    - name: Delete the pod so the deployment recreates it
+      kubernetes.core.k8s:
+        state: absent
+        api_version: v1
+        kind: Pod
+        name: "{{ pod }}"
+        namespace: "{{ namespace }}"

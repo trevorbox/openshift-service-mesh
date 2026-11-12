@@ -1,0 +1,32 @@
+apiVersion: monitoring.coreos.com/v1beta1
+kind: AlertmanagerConfig
+metadata:
+  name: eda-pod-restart
+spec:
+  route:
+    receiver: eda-pod-restart
+    groupBy:
+      - namespace
+      - alertname
+      - pod
+    groupWait: 30s
+    groupInterval: 5m
+    repeatInterval: 30m
+    matchers:
+      - name: alertname
+        value: SpringBootDemoHeapHigh
+        matchType: "="
+  receivers:
+    - name: eda-pod-restart
+      webhookConfigs:
+        # Pinned by configure-aap.yml. The gateway validates the bearer token.
+        - url: https://aap.apps-crc.testing/eda-event-streams/api/eda/v1/external_event_stream/c4e8a1d2-7b63-4f90-8e15-2a6d9c0b4f31/post/
+          sendResolved: false
+          httpConfig:
+            tlsConfig:
+              insecureSkipVerify: true
+            authorization:
+              type: Bearer
+              credentials:
+                name: eda-webhook-token
+                key: token

@@ -1,0 +1,10 @@
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: ansible-automation-platform
+spec:
+  href: https://aap.apps-crc.testing
+  location: ApplicationMenu
+  text: Ansible Automation Platform
+  applicationMenu:
+    section: Automation

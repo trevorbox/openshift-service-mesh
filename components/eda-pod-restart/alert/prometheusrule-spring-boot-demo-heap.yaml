@@ -1,0 +1,35 @@
+# 80% is above the idle heap of this demo, so the rule does not fire by
+# itself. A lower threshold that stays under the steady-state heap will
+# restart the pod on every repeat interval.
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: spring-boot-demo-heap
+  labels:
+    openshift.io/prometheus-rule-evaluation-scope: leaf-prometheus
+spec:
+  groups:
+    - name: spring-boot-demo.rules
+      rules:
+        - alert: SpringBootDemoHeapHigh
+          expr: |
+            (
+              sum by (namespace, pod) (
+                jvm_memory_used_bytes{namespace="spring-boot-demo", area="heap"}
+              )
+              /
+              sum by (namespace, pod) (
+                jvm_memory_max_bytes{namespace="spring-boot-demo", area="heap"} > 0
+              )
+            ) > 0.80
+          for: 5m
+          labels:
+            severity: warning
+            workload: spring-boot-demo
+          annotations:
+            summary: spring-boot-demo JVM heap is above 80%
+            description: >-
+              Pod {{ $labels.pod }} in {{ $labels.namespace }} has been using
+              more than 80% of its JVM heap for 5 minutes. Event-Driven Ansible
+              deletes the pod so the Deployment recreates it. This is a
+              platform workaround until the application is fixed.

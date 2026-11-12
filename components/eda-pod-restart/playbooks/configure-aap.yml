@@ -1,0 +1,191 @@
+---
+# Runs as the configure-aap-eda job template. The aap-eda-bootstrap credential
+# injects K8S_AUTH_API_KEY. This playbook does not create Secrets.
+- name: Configure the Alertmanager event stream
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    aap_host: "{{ lookup('env', 'AAP_HOST') | default('aap.apps-crc.testing', true) }}"
+    namespace: "{{ lookup('env', 'NAMESPACE') | default('aap', true) }}"
+    app_namespace: spring-boot-demo
+    git_repo: "{{ lookup('env', 'GIT_REPO') | default('https://github.com/trevorbox/openshift-service-mesh.git', true) }}"
+    git_branch: "{{ lookup('env', 'GIT_BRANCH') | default('main', true) }}"
+    event_stream_name: Alertmanager-Stream
+    event_stream_uuid: c4e8a1d2-7b63-4f90-8e15-2a6d9c0b4f31
+    event_stream_url: "https://{{ aap_host }}/eda-event-streams/api/eda/v1/external_event_stream/{{ event_stream_uuid }}/post/"
+    k8s_api: "{{ lookup('env', 'K8S_AUTH_HOST') | default('https://kubernetes.default.svc', true) }}"
+    k8s_token: "{{ lookup('env', 'K8S_AUTH_API_KEY') }}"
+  module_defaults:
+    group/ansible.eda.eda:
+      controller_host: "{{ aap_url | default('https://' + aap_host, true) }}"
+      controller_token: "{{ aap_token | default('', true) }}"
+      validate_certs: false
+      request_timeout: 120
+  tasks:
+    - name: Require the bootstrap credential
+      ansible.builtin.assert:
+        that:
+          - k8s_token | length > 0
+        fail_msg: The job template needs the aap-eda-bootstrap Kubernetes credential.
+
+    - name: Wait for secret aap-access
+      ansible.builtin.uri:
+        url: "{{ k8s_api }}/api/v1/namespaces/{{ namespace }}/secrets/aap-access"
+        validate_certs: false
+        headers:
+          Authorization: "Bearer {{ k8s_token }}"
+        status_code: [200, 404]
+      register: access_secret
+      until:
+        - access_secret.status | default(0) == 200
+        - (access_secret.json.data.token | default('')) | length > 0
+        - (access_secret.json.data.host | default('')) | length > 0
+      retries: 40
+      delay: 15
+      no_log: true
+
+    - name: Read the gateway connection
+      ansible.builtin.set_fact:
+        aap_token: "{{ access_secret.json.data.token | b64decode }}"
+        aap_url: "{{ access_secret.json.data.host | b64decode }}"
+      no_log: true
+
+    - name: Wait for the pod-restart service account token
+      ansible.builtin.uri:
+        url: "{{ k8s_api }}/api/v1/namespaces/{{ namespace }}/secrets/eda-pod-restart-token"
+        validate_certs: false
+        headers:
+          Authorization: "Bearer {{ k8s_token }}"
+        status_code: [200, 404]
+      register: restart_token
+      until:
+        - restart_token.status | default(0) == 200
+        - (restart_token.json.data.token | default('')) | length > 0
+      retries: 40
+      delay: 5
+      no_log: true
+
+    - name: Wait for the webhook token
+      ansible.builtin.uri:
+        url: "{{ k8s_api }}/api/v1/namespaces/{{ app_namespace }}/secrets/eda-webhook-token"
+        validate_certs: false
+        headers:
+          Authorization: "Bearer {{ k8s_token }}"
+        status_code: [200, 404]
+      register: webhook_secret
+      until:
+        - webhook_secret.status | default(0) == 200
+        - (webhook_secret.json.data.token | default('')) | length > 0
+      retries: 40
+      delay: 15
+      no_log: true
+
+    - name: Read the webhook token
+      ansible.builtin.set_fact:
+        webhook_token: "{{ webhook_secret.json.data.token | b64decode }}"
+      no_log: true
+
+    - name: Create the Token Event Stream credential
+      ansible.eda.credential:
+        name: Alertmanager-Webhook-Token
+        organization_name: Default
+        credential_type_name: Token Event Stream
+        inputs:
+          auth_type: token
+          token: "{{ webhook_token }}"
+          http_header_key: Authorization
+      no_log: true
+
+    - name: Create the Alertmanager event stream
+      ansible.eda.event_stream:
+        name: "{{ event_stream_name }}"
+        organization_name: Default
+        credential_name: Alertmanager-Webhook-Token
+        uuid: "{{ event_stream_uuid }}"
+        forward_events: true
+
+    - name: Read the event stream
+      ansible.builtin.uri:
+        url: "https://{{ aap_host }}/api/eda/v1/event-streams/?name={{ event_stream_name }}"
+        headers:
+          Authorization: "Bearer {{ aap_token }}"
+        validate_certs: false
+        status_code: 200
+      register: event_streams
+
+    - name: Require the pinned event stream URL
+      vars:
+        stream: "{{ event_streams.json.results | selectattr('name', 'equalto', event_stream_name) | list | first | default({}) }}"
+      ansible.builtin.assert:
+        that:
+          - stream.url is defined
+          - event_stream_uuid in stream.url
+        fail_msg: >-
+          Alertmanager posts to {{ event_stream_url }}.
+          The platform returned {{ stream.url | default('no url') }}.
+
+    - name: Create the credential that launches the restart job
+      ansible.eda.credential:
+        name: AAP-Controller-Dispatch
+        organization_name: Default
+        credential_type_name: Red Hat Ansible Automation Platform
+        inputs:
+          host: "{{ aap_url }}"
+          oauth_token: "{{ aap_token }}"
+          verify_ssl: false
+      register: dispatch_credential
+      no_log: true
+
+    - name: Create the decision environment
+      ansible.eda.decision_environment:
+        name: de-supported
+        organization_name: Default
+        image_url: registry.redhat.io/ansible-automation-platform-27/de-supported-rhel9:latest
+      register: decision_environment
+      until: decision_environment is succeeded
+      retries: 20
+      delay: 15
+
+    - name: Import the rulebook project
+      ansible.eda.project:
+        name: eda-pod-restart
+        description: Rulebook that restarts spring-boot-demo from an Alertmanager event stream
+        url: "{{ git_repo }}"
+        scm_branch: "{{ git_branch }}"
+        organization_name: Default
+        sync: true
+        wait: true
+      register: eda_project
+      until: eda_project is succeeded
+      retries: 20
+      delay: 15
+
+    - name: Wait until the rulebook is imported
+      ansible.builtin.uri:
+        url: "https://{{ aap_host }}/api/eda/v1/rulebooks/?name=spring-boot-demo-pod-restart.yml"
+        headers:
+          Authorization: "Bearer {{ aap_token }}"
+        validate_certs: false
+        status_code: 200
+      register: rulebooks
+      until: rulebooks.json.results | default([]) | length > 0
+      retries: 30
+      delay: 10
+
+    - name: Enable the activation on the event stream
+      ansible.eda.rulebook_activation:
+        name: spring-boot-demo-pod-restart
+        description: Alertmanager event stream. Restarts the firing spring-boot-demo pod.
+        organization_name: Default
+        project_name: eda-pod-restart
+        rulebook_name: spring-boot-demo-pod-restart.yml
+        decision_environment_name: de-supported
+        restart_policy: on-failure
+        log_level: info
+        state: enabled
+        eda_credentials:
+          - "{{ dispatch_credential.id }}"
+        event_streams:
+          - event_stream: "{{ event_stream_name }}"
+            source_name: alertmanager

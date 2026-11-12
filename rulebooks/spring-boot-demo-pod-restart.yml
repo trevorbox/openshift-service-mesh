@@ -2,12 +2,10 @@
 # Event-Driven Ansible only imports rulebooks from /rulebooks or
 # /extensions/eda/rulebooks at the root of the Git project.
 #
-# ansible.eda.webhook rejects any request that does not send
-# Authorization: Bearer <webhook_token>. The activation extra var supplies
-# the token. Alertmanager sends the same value from secret eda-webhook-token.
-# The whole Alertmanager JSON body arrives as event.payload. commonLabels
-# matches one grouped notification, and this route groups by namespace,
-# alertname, and pod.
+# The activation swaps this webhook source for the Alertmanager-Stream event
+# stream. The gateway checks Authorization: Bearer before it forwards the
+# body. The swapped source still delivers that body as event.payload.
+# commonLabels matches one grouped notification.
 - name: Restart spring-boot-demo on heap pressure
   hosts: all
   sources:
@@ -15,7 +13,6 @@
       ansible.eda.webhook:
         host: 0.0.0.0
         port: 5000
-        token: "{{ webhook_token }}"
   rules:
     - name: Restart the pod when heap stays high
       condition: >

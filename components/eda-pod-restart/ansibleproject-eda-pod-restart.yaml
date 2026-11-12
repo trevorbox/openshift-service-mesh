@@ -1,0 +1,15 @@
+apiVersion: tower.ansible.com/v1alpha1
+kind: AnsibleProject
+metadata:
+  name: eda-pod-restart
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  connection_secret: aap-access
+  name: eda-pod-restart
+  organization: Default
+  scm_type: git
+  repo: https://github.com/trevorbox/openshift-service-mesh.git
+  branch: main
+  description: Playbook that deletes the spring-boot-demo pod named by an alert

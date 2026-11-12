@@ -1,0 +1,26 @@
+{
+  "receiver": "eda-pod-restart",
+  "status": "firing",
+  "commonLabels": {
+    "alertname": "SpringBootDemoHeapHigh",
+    "namespace": "spring-boot-demo",
+    "pod": "REPLACE_WITH_POD_NAME",
+    "severity": "warning"
+  },
+  "alerts": [
+    {
+      "status": "firing",
+      "labels": {
+        "alertname": "SpringBootDemoHeapHigh",
+        "namespace": "spring-boot-demo",
+        "pod": "REPLACE_WITH_POD_NAME",
+        "severity": "warning"
+      },
+      "annotations": {
+        "summary": "manual test of the pod restart workaround"
+      },
+      "startsAt": "2026-11-09T00:00:00.000Z",
+      "endsAt": "0001-01-01T00:00:00Z"
+    }
+  ]
+}

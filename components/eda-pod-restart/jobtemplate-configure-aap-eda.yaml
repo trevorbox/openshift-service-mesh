@@ -1,0 +1,17 @@
+apiVersion: tower.ansible.com/v1alpha1
+kind: JobTemplate
+metadata:
+  name: configure-aap-eda
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  connection_secret: aap-access
+  name: configure-aap-eda
+  description: Create the Alertmanager event stream, EDA credentials, and activation.
+  organization: Default
+  project: eda-pod-restart
+  inventory: localhost
+  playbook: components/eda-pod-restart/playbooks/configure-aap.yml
+  credentials:
+    - aap-eda-bootstrap

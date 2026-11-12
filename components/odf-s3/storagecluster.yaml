@@ -4,6 +4,7 @@ apiVersion: ocs.openshift.io/v1
 kind: StorageCluster
 metadata:
   name: ocs-storagecluster
+  namespace: openshift-storage
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
     argocd.argoproj.io/sync-wave: "1"
@@ -12,6 +13,31 @@ metadata:
 spec:
   resourceProfile: lean
   enableCephTools: false
+  # The lean profile still requests about 15Gi for NooBaa on one CRC node
+  # (core 4Gi, two db pods at 4Gi, endpoint 2Gi) while the processes sit
+  # under 1Gi combined. That request leaves no room for the AAP pods.
+  resources:
+    noobaa-core:
+      requests:
+        cpu: 100m
+        memory: 1Gi
+      limits:
+        cpu: "1"
+        memory: 2Gi
+    noobaa-db:
+      requests:
+        cpu: 50m
+        memory: 512Mi
+      limits:
+        cpu: 500m
+        memory: 1Gi
+    noobaa-endpoint:
+      requests:
+        cpu: 50m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 1Gi
   multiCloudGateway:
     dbStorageClassName: crc-csi-hostpath-provisioner
     reconcileStrategy: standalone

@@ -1,0 +1,11 @@
+# Launches configure-aap-eda once, when this object is created.
+apiVersion: tower.ansible.com/v1alpha1
+kind: AnsibleJob
+metadata:
+  name: configure-aap-eda
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  connection_secret: aap-access
+  job_template_name: configure-aap-eda

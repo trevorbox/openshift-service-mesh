@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: spring-boot-demo
+
+resources:
+  - role-eda-pod-restart.yaml
+  - rolebinding-eda-pod-restart.yaml
+  - role-aap-eda-bootstrap-webhook-token.yaml
+  - rolebinding-aap-eda-bootstrap-webhook-token.yaml
+  - prometheusrule-spring-boot-demo-heap.yaml
+  - alertmanagerconfig-eda-pod-restart.yaml

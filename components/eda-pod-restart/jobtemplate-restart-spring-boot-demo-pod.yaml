@@ -1,0 +1,18 @@
+apiVersion: tower.ansible.com/v1alpha1
+kind: JobTemplate
+metadata:
+  name: restart-spring-boot-demo-pod
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  connection_secret: aap-access
+  name: restart-spring-boot-demo-pod
+  description: Delete the spring-boot-demo pod from the alert so the Deployment recreates it.
+  organization: Default
+  project: eda-pod-restart
+  inventory: localhost
+  playbook: components/eda-pod-restart/playbooks/restart-pod.yml
+  credentials:
+    - openshift-pod-restart
+  ask_variables_on_launch: true

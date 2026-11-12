@@ -1,0 +1,118 @@
+# Platform gateway is the UI for this install. OpenShift also adds an
+# Application menu link (consolelink.yaml) to the same route.
+#
+# Hub, Lightspeed, MCP, and the metrics service stay off so a CRC node can
+# run controller + Event-Driven Ansible. The gateway UI still includes
+# Automation Execution and Automation Decisions.
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: aap
+  namespace: aap
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  no_log: true
+  redis_mode: standalone
+  route_host: aap.apps-crc.testing
+  public_base_url: https://aap.apps-crc.testing
+  lightspeed:
+    disabled: true
+  hub:
+    disabled: true
+  mcp:
+    disabled: true
+  metrics:
+    disabled: true
+  database:
+    postgres_storage_class: crc-csi-hostpath-provisioner
+    storage_requirements:
+      requests:
+        storage: 8Gi
+    resource_requirements:
+      requests:
+        cpu: 100m
+        memory: 512Mi
+      limits:
+        cpu: "1"
+        memory: 2Gi
+  redis:
+    replicas: 1
+    resource_requirements:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
+  api:
+    replicas: 1
+    resource_requirements:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        memory: 1Gi
+  controller:
+    disabled: false
+    create_preload_data: true
+    replicas: 1
+    web_replicas: 1
+    task_replicas: 1
+    web_manage_replicas: true
+    task_manage_replicas: true
+    no_log: true
+    web_resource_requirements:
+      requests:
+        cpu: 100m
+        memory: 1Gi
+      limits:
+        memory: 2Gi
+    task_resource_requirements:
+      requests:
+        cpu: 100m
+        memory: 1Gi
+      limits:
+        memory: 2Gi
+    ee_resource_requirements:
+      requests:
+        cpu: 50m
+        memory: 256Mi
+      limits:
+        memory: 1Gi
+  eda:
+    disabled: false
+    no_log: true
+    ui_disabled: false
+    api:
+      replicas: 1
+      resource_requirements:
+        requests:
+          cpu: 50m
+          memory: 512Mi
+        limits:
+          memory: 1Gi
+    ui:
+      replicas: 1
+      resource_requirements:
+        requests:
+          cpu: 25m
+          memory: 128Mi
+        limits:
+          memory: 512Mi
+    default_worker:
+      replicas: 1
+      resource_requirements:
+        requests:
+          cpu: 50m
+          memory: 256Mi
+        limits:
+          memory: 1Gi
+    activation_worker:
+      replicas: 1
+      resource_requirements:
+        requests:
+          cpu: 50m
+          memory: 256Mi
+        limits:
+          memory: 1Gi

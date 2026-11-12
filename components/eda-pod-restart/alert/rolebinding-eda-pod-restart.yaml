@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: eda-pod-restart
+subjects:
+  - kind: ServiceAccount
+    name: eda-pod-restart
+    namespace: aap
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: eda-pod-restart

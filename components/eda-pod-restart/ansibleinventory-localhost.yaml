@@ -1,0 +1,13 @@
+apiVersion: tower.ansible.com/v1alpha1
+kind: AnsibleInventory
+metadata:
+  name: localhost
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  connection_secret: aap-access
+  name: localhost
+  organization: Default
+  description: Local connection. The playbook targets implicit localhost.
+  state: present

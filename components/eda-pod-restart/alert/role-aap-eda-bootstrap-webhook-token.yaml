@@ -1,0 +1,11 @@
+# The configure-aap-eda job reads the webhook token. It does not write it.
+# AlertmanagerConfig can only select a Secret in this namespace.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: aap-eda-bootstrap-webhook-token
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    resourceNames: ["eda-webhook-token"]
+    verbs: ["get"]

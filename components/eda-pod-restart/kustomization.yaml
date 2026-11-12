@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: aap
+
+resources:
+  - serviceaccount-eda-pod-restart.yaml
+  - serviceaccount-aap-eda-bootstrap.yaml
+  - role-aap-eda-bootstrap.yaml
+  - rolebinding-aap-eda-bootstrap.yaml
+  - secret-eda-pod-restart-token.yaml
+  - secret-aap-eda-bootstrap-token.yaml
+  - ansiblecredential-openshift-pod-restart.yaml
+  - ansiblecredential-aap-eda-bootstrap.yaml
+  - ansibleproject-eda-pod-restart.yaml
+  - ansibleinventory-localhost.yaml
+  - jobtemplate-restart-spring-boot-demo-pod.yaml
+  - jobtemplate-configure-aap-eda.yaml
+  - ansiblejob-configure-aap-eda.yaml

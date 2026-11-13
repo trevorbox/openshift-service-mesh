@@ -10,7 +10,7 @@ resources:
   - rolebinding-aap-eda-bootstrap.yaml
   - secret-eda-pod-restart-token.yaml
   - secret-aap-eda-bootstrap-token.yaml
-  - ansiblecredential-openshift-pod-restart.yaml
+  - ansiblecredential-crc-ossm3.yaml
   - ansiblecredential-aap-eda-bootstrap.yaml
   - ansibleproject-eda-pod-restart.yaml
   - ansibleinventory-localhost.yaml

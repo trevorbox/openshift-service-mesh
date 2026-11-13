@@ -7,5 +7,14 @@ metadata:
 rules:
   - apiGroups: [""]
     resources: ["secrets"]
-    resourceNames: ["aap-access", "eda-pod-restart-token"]
+    resourceNames: ["aap-access", "eda-pod-restart-token", "eda-webhook-token"]
     verbs: ["get"]
+  # create cannot be limited by resourceNames. The playbook creates only
+  # eda-webhook-token, then updates that named secret.
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["create"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    resourceNames: ["eda-webhook-token"]
+    verbs: ["update", "patch"]

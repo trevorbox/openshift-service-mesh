@@ -17,17 +17,24 @@
     - name: Restart the pod when heap stays high
       condition: >
         event.payload.status == "firing" and
-        event.payload.commonLabels.alertname == "SpringBootDemoHeapHigh"
+        event.payload.commonLabels.alertname == "SpringBootDemoHeapHigh" and
+        event.payload.commonLabels.cluster is defined
       throttle:
         once_within: 15 minutes
         group_by_attributes:
+          - event.payload.commonLabels.cluster
           - event.payload.commonLabels.namespace
           - event.payload.commonLabels.pod
       action:
         run_job_template:
           name: restart-spring-boot-demo-pod
           organization: Default
+          # The credential name is the cluster label. One job template serves
+          # every cluster that posts to this event stream.
           job_args:
+            credentials:
+              - "{{ event.payload.commonLabels.cluster }}"
             extra_vars:
+              cluster: "{{ event.payload.commonLabels.cluster }}"
               namespace: "{{ event.payload.commonLabels.namespace }}"
               pod: "{{ event.payload.commonLabels.pod }}"

@@ -1,6 +1,7 @@
 ---
 # Deletes one pod so its Deployment recreates it.
-# Extra vars come from the alert labels: namespace, pod.
+# The launch attaches the Kubernetes credential named by the cluster label.
+# That credential injects K8S_AUTH_HOST and K8S_AUTH_API_KEY.
 - name: Restart the pod named by an Alertmanager event
   hosts: localhost
   connection: local
@@ -9,9 +10,12 @@
     - name: Require the alert labels
       ansible.builtin.assert:
         that:
+          - cluster | default('') | length > 0
           - namespace | default('') | length > 0
           - pod | default('') | length > 0
-        fail_msg: namespace and pod extra vars are required
+          - lookup('env', 'K8S_AUTH_HOST') | length > 0
+          - lookup('env', 'K8S_AUTH_API_KEY') | length > 0
+        fail_msg: Launch this job with the Kubernetes credential named by the cluster label.
 
     - name: Read the target pod
       kubernetes.core.k8s_info:

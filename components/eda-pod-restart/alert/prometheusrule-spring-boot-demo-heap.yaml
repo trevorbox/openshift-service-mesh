@@ -26,6 +26,8 @@ spec:
           labels:
             severity: warning
             workload: spring-boot-demo
+            # Must match an OpenShift bearer credential in AAP.
+            cluster: crc-ossm3
           annotations:
             summary: spring-boot-demo JVM heap is above 80%
             description: >-

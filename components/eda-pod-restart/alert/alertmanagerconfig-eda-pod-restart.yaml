@@ -6,6 +6,7 @@ spec:
   route:
     receiver: eda-pod-restart
     groupBy:
+      - cluster
       - namespace
       - alertname
       - pod

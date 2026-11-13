@@ -5,6 +5,7 @@
     "alertname": "SpringBootDemoHeapHigh",
     "namespace": "spring-boot-demo",
     "pod": "REPLACE_WITH_POD_NAME",
+    "cluster": "crc-ossm3",
     "severity": "warning"
   },
   "alerts": [
@@ -14,6 +15,7 @@
         "alertname": "SpringBootDemoHeapHigh",
         "namespace": "spring-boot-demo",
         "pod": "REPLACE_WITH_POD_NAME",
+        "cluster": "crc-ossm3",
         "severity": "warning"
       },
       "annotations": {

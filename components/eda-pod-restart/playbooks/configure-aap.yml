@@ -1,6 +1,7 @@
 ---
 # Runs as the configure-aap-eda job template. The aap-eda-bootstrap credential
-# injects K8S_AUTH_API_KEY. This playbook does not create Secrets.
+# injects K8S_AUTH_API_KEY. The webhook token is created in namespace aap.
+# Copy secret eda-webhook-token to spring-boot-demo on each workload cluster.
 - name: Configure the Alertmanager event stream
   hosts: localhost
   connection: local
@@ -8,7 +9,6 @@
   vars:
     aap_host: "{{ lookup('env', 'AAP_HOST') | default('aap.apps-crc.testing', true) }}"
     namespace: "{{ lookup('env', 'NAMESPACE') | default('aap', true) }}"
-    app_namespace: spring-boot-demo
     git_repo: "{{ lookup('env', 'GIT_REPO') | default('https://github.com/trevorbox/openshift-service-mesh.git', true) }}"
     git_branch: "{{ lookup('env', 'GIT_BRANCH') | default('main', true) }}"
     event_stream_name: Alertmanager-Stream
@@ -66,24 +66,58 @@
       delay: 5
       no_log: true
 
-    - name: Wait for the webhook token
+    - name: Read the webhook token secret
       ansible.builtin.uri:
-        url: "{{ k8s_api }}/api/v1/namespaces/{{ app_namespace }}/secrets/eda-webhook-token"
+        url: "{{ k8s_api }}/api/v1/namespaces/{{ namespace }}/secrets/eda-webhook-token"
         validate_certs: false
         headers:
           Authorization: "Bearer {{ k8s_token }}"
         status_code: [200, 404]
       register: webhook_secret
-      until:
-        - webhook_secret.status | default(0) == 200
-        - (webhook_secret.json.data.token | default('')) | length > 0
-      retries: 40
-      delay: 15
+      no_log: true
+
+    - name: Generate a webhook token
+      ansible.builtin.command: python3 -c 'import secrets; print(secrets.token_hex(32))'
+      register: generated_webhook_token
+      changed_when: false
+      when: webhook_secret.status | default(0) != 200
+      no_log: true
+
+    - name: Store the webhook token on this cluster
+      ansible.builtin.uri:
+        url: "{{ k8s_api }}/api/v1/namespaces/{{ namespace }}/secrets"
+        method: POST
+        validate_certs: false
+        headers:
+          Authorization: "Bearer {{ k8s_token }}"
+        status_code: [201, 409]
+        body_format: json
+        body:
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: eda-webhook-token
+            namespace: "{{ namespace }}"
+          type: Opaque
+          stringData:
+            token: "{{ generated_webhook_token.stdout }}"
+      when: webhook_secret.status | default(0) != 200
+      no_log: true
+
+    - name: Read the webhook token secret again
+      ansible.builtin.uri:
+        url: "{{ k8s_api }}/api/v1/namespaces/{{ namespace }}/secrets/eda-webhook-token"
+        validate_certs: false
+        headers:
+          Authorization: "Bearer {{ k8s_token }}"
+        status_code: 200
+      register: webhook_secret_created
+      when: webhook_secret.status | default(0) != 200
       no_log: true
 
     - name: Read the webhook token
       ansible.builtin.set_fact:
-        webhook_token: "{{ webhook_secret.json.data.token | b64decode }}"
+        webhook_token: "{{ (webhook_secret_created.json | default(webhook_secret.json)).data.token | b64decode }}"
       no_log: true
 
     - name: Create the Token Event Stream credential

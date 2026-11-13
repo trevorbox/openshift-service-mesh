@@ -13,6 +13,6 @@ spec:
   project: eda-pod-restart
   inventory: localhost
   playbook: components/eda-pod-restart/playbooks/restart-pod.yml
-  credentials:
-    - openshift-pod-restart
+  # The rulebook supplies the credential whose name matches commonLabels.cluster.
+  ask_credential_on_launch: true
   ask_variables_on_launch: true

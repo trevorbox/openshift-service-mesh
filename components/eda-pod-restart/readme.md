@@ -20,27 +20,34 @@ AAP gateway Token Event Stream
         v
 rulebook activation spring-boot-demo-pod-restart
         |  run_job_template restart-spring-boot-demo-pod
+        |  credential named by commonLabels.cluster
         v
 controller job deletes the named pod
 ```
 
-The controller credential is the `AnsibleCredential` custom resource
-`openshift-pod-restart`. It names secret `eda-pod-restart-token` and reads
-key `token`. That is the secret External Secrets can replace.
+Each workload cluster needs an `AnsibleCredential` whose name is the
+`cluster` label on its alerts. `crc-ossm3` is the example. It names secret
+`eda-pod-restart-token` and reads key `token`. `kubernetes_api` is that
+cluster's API. When AAP runs on another cluster, put a token from the
+workload cluster in the secret and set `kubernetes_api` to that cluster's
+API URL. Add one credential per cluster. The job template does not pin one.
 
-Two more secrets are inputs, not objects this repo creates. Create them after
-the platform gateway answers, and before the `eda-pod-restart` application
-syncs. The resource operator marks an Ansible custom resource finished when
-`aap-access` is missing, and it does not try again.
+`aap/aap-access` is the only secret this repo does not create. Create it
+after the platform gateway answers, and before the `eda-pod-restart`
+application syncs. The resource operator marks an Ansible custom resource
+finished when `aap-access` is missing, and it does not try again.
 
-`eda-pod-restart-token` and `aap-eda-bootstrap-token` are the exceptions.
-This component creates those ServiceAccount token secrets, and OpenShift
-fills the `token` key.
+`eda-pod-restart-token` and `aap-eda-bootstrap-token` are ServiceAccount
+token secrets. This component creates them, and OpenShift fills `token`.
+`configure-aap.yml` creates `aap/eda-webhook-token` on the AAP cluster and
+puts that value in the Token Event Stream credential. Copy that secret to
+`spring-boot-demo` on every workload cluster. AlertmanagerConfig can only
+select a Secret in its own namespace.
 
 | Secret | Keys | Who reads it |
 | --- | --- | --- |
 | `aap/aap-access` | `token`, `host` | every Ansible custom resource, and the EDA credential that launches the job |
-| `spring-boot-demo/eda-webhook-token` | `token` | AlertmanagerConfig, and `configure-aap.yml` copies it into the Token Event Stream credential |
+| `aap/eda-webhook-token` | `token` | `configure-aap.yml` creates it. Copy it to each workload cluster. |
 
 ```sh
 PASS=$(oc get secret aap-admin-password -n aap -o jsonpath='{.data.password}' | base64 -d)
@@ -51,15 +58,29 @@ TOKEN=$(curl -sk -u "admin:${PASS}" -H 'Content-Type: application/json' \
 oc create secret generic aap-access -n aap \
   --from-literal=token="${TOKEN}" \
   --from-literal=host='https://aap.apps-crc.testing/'
-oc create secret generic eda-webhook-token -n spring-boot-demo \
-  --from-literal=token="$(openssl rand -hex 32)"
 ```
 
-`host` is the gateway URL, with the trailing slash. The webhook value is a
-static bearer token. It is not an AAP login token. Later, External Secrets
-can own both secrets. After it changes `eda-webhook-token`, delete
-`AnsibleJob` `configure-aap-eda` and the batch Job of the same name so the
-playbook copies the new value.
+`host` is the gateway URL, with the trailing slash. After the configure job
+has run, copy the webhook secret to the workload cluster:
+
+```sh
+oc get secret eda-webhook-token -n aap -o json | python3 -c '
+import json, sys
+secret = json.load(sys.stdin)
+json.dump({
+    "apiVersion": "v1",
+    "kind": "Secret",
+    "metadata": {"name": secret["metadata"]["name"]},
+    "type": secret["type"],
+    "data": secret["data"],
+}, sys.stdout)
+' | oc apply -n spring-boot-demo -f -
+```
+
+Run that apply with a context for the workload cluster. Later, External
+Secrets can own `aap-access`. The webhook secret is owned by the playbook
+on the AAP cluster. Copy it again after a new token is generated. A rerun
+keeps the existing token.
 
 `AnsibleJob` `configure-aap-eda` launches `configure-aap.yml` in AAP when
 the custom resource is created. The job template credential
@@ -97,15 +118,16 @@ Use that UI to watch the workaround:
 | Rulebook | `rulebooks/spring-boot-demo-pod-restart.yml` (repo root; EDA only reads that directory) |
 | Playbook | `playbooks/restart-pod.yml` |
 | Restart job template | `jobtemplate-restart-spring-boot-demo-pod.yaml` |
-| Controller project, inventory, Kubernetes credentials | `ansibleproject-eda-pod-restart.yaml`, `ansibleinventory-localhost.yaml`, `ansiblecredential-openshift-pod-restart.yaml`, `ansiblecredential-aap-eda-bootstrap.yaml` |
+| Controller project, inventory, Kubernetes credentials | `ansibleproject-eda-pod-restart.yaml`, `ansibleinventory-localhost.yaml`, `ansiblecredential-crc-ossm3.yaml`, `ansiblecredential-aap-eda-bootstrap.yaml` |
 | Run `playbooks/configure-aap.yml` once | `jobtemplate-configure-aap-eda.yaml`, `ansiblejob-configure-aap-eda.yaml` |
 | Event stream, EDA credential, EDA project, activation | that AAP job |
 | PrometheusRule, AlertmanagerConfig, pod delete Role | `alert/prometheusrule-spring-boot-demo-heap.yaml`, `alert/alertmanagerconfig-eda-pod-restart.yaml`, `alert/role-eda-pod-restart.yaml` |
 
-The job template credential is a token for ServiceAccount `eda-pod-restart`.
+Credential `crc-ossm3` is a token for ServiceAccount `eda-pod-restart`.
 That account can get and delete pods in `spring-boot-demo` and nothing else.
 The playbook also refuses a pod whose `app.kubernetes.io/name` is not
-`spring-boot-demo`.
+`spring-boot-demo`. Another cluster gets its own credential, named exactly
+as its `cluster` alert label, and its own copy of that service account.
 
 Push this repository to `main` before the controller project can see
 `configure-aap.yml` and the rulebook. After later playbook edits, sync the
@@ -124,7 +146,7 @@ oc run curl-eda --rm -it --restart=Never --image=registry.access.redhat.com/ubi9
   curl -sk -D- -o /dev/null -X POST https://aap.apps-crc.testing/eda-event-streams/api/eda/v1/external_event_stream/c4e8a1d2-7b63-4f90-8e15-2a6d9c0b4f31/post/ \
     -H 'Authorization: Bearer ${TOKEN}' \
     -H 'Content-Type: application/json' \
-    -d '{\"receiver\":\"eda-pod-restart\",\"status\":\"firing\",\"commonLabels\":{\"alertname\":\"SpringBootDemoHeapHigh\",\"namespace\":\"spring-boot-demo\",\"pod\":\"${POD}\"},\"alerts\":[{\"status\":\"firing\",\"labels\":{\"alertname\":\"SpringBootDemoHeapHigh\",\"namespace\":\"spring-boot-demo\",\"pod\":\"${POD}\"},\"annotations\":{\"summary\":\"manual test\"},\"startsAt\":\"2026-11-09T00:00:00.000Z\",\"endsAt\":\"0001-01-01T00:00:00Z\"}]}'
+    -d '{\"receiver\":\"eda-pod-restart\",\"status\":\"firing\",\"commonLabels\":{\"alertname\":\"SpringBootDemoHeapHigh\",\"namespace\":\"spring-boot-demo\",\"pod\":\"${POD}\",\"cluster\":\"crc-ossm3\"},\"alerts\":[{\"status\":\"firing\",\"labels\":{\"alertname\":\"SpringBootDemoHeapHigh\",\"namespace\":\"spring-boot-demo\",\"pod\":\"${POD}\",\"cluster\":\"crc-ossm3\"},\"annotations\":{\"summary\":\"manual test\"},\"startsAt\":\"2026-11-09T00:00:00.000Z\",\"endsAt\":\"0001-01-01T00:00:00Z\"}]}'
 "
 ```
 

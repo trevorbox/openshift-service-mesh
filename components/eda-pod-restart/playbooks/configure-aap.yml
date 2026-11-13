@@ -238,6 +238,37 @@
           No OpenShift bearer credential is available to launch the restart job.
           Add an AnsibleCredential whose name is the cluster label on the alert.
 
+    - name: Find the rulebook activation
+      ansible.builtin.uri:
+        url: "https://{{ aap_host }}/api/eda/v1/activations/?name=spring-boot-demo-pod-restart"
+        headers:
+          Authorization: "Bearer {{ aap_token }}"
+        validate_certs: false
+        status_code: 200
+      register: existing_activation
+
+    - name: Disable the activation so it can be updated
+      ansible.eda.rulebook_activation:
+        name: spring-boot-demo-pod-restart
+        state: disabled
+      when: existing_activation.json.count | int > 0
+
+    - name: Wait until the activation is stopped
+      ansible.builtin.uri:
+        url: "https://{{ aap_host }}/api/eda/v1/activations/?name=spring-boot-demo-pod-restart"
+        headers:
+          Authorization: "Bearer {{ aap_token }}"
+        validate_certs: false
+        status_code: 200
+      register: stopped_activation
+      until:
+        - stopped_activation.json.results | default([]) | length > 0
+        - not (stopped_activation.json.results[0].is_enabled | bool)
+        - stopped_activation.json.results[0].status in ['stopped', 'failed', 'error', 'completed', 'pending']
+      retries: 24
+      delay: 5
+      when: existing_activation.json.count | int > 0
+
     - name: Enable the activation on the event stream
       ansible.eda.rulebook_activation:
         name: spring-boot-demo-pod-restart
@@ -248,7 +279,8 @@
         decision_environment_name: de-supported
         restart_policy: on-failure
         log_level: info
-        # present updates an activation that is already enabled. enabled does not.
+        # The API rejects a PATCH unless the activation is disabled and stopped.
+        # present then writes the credential map and starts it again.
         state: present
         # The launch API takes credential ids. The rulebook looks the cluster
         # label up in this map. Re-run this job after adding a cluster credential.
@@ -259,8 +291,3 @@
         event_streams:
           - event_stream: "{{ event_stream_name }}"
             source_name: alertmanager
-
-    - name: Reload the activation so it reads the credential map
-      ansible.eda.rulebook_activation:
-        name: spring-boot-demo-pod-restart
-        restart: true

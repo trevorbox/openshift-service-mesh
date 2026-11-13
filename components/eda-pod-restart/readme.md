@@ -20,7 +20,7 @@ AAP gateway Token Event Stream
         v
 rulebook activation spring-boot-demo-pod-restart
         |  run_job_template restart-spring-boot-demo-pod
-        |  credential named by commonLabels.cluster
+        |  credential id for the name in commonLabels.cluster
         v
 controller job deletes the named pod
 ```
@@ -31,6 +31,11 @@ Each workload cluster needs an `AnsibleCredential` whose name is the
 cluster's API. When AAP runs on another cluster, put a token from the
 workload cluster in the secret and set `kubernetes_api` to that cluster's
 API URL. Add one credential per cluster. The job template does not pin one.
+
+The controller launch API accepts credential ids, not names.
+`configure-aap.yml` stores that name-to-id map on the activation, and the
+rulebook sends the id. Run the configure job again after adding a
+credential so the map includes it.
 
 `aap/aap-access` is the only secret this repo does not create. Create it
 after the platform gateway answers, and before the `eda-pod-restart`

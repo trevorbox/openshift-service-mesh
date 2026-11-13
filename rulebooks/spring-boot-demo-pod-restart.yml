@@ -29,11 +29,12 @@
         run_job_template:
           name: restart-spring-boot-demo-pod
           organization: Default
-          # The credential name is the cluster label. One job template serves
-          # every cluster that posts to this event stream.
+          # The launch API accepts credential ids, not names. configure-aap.yml
+          # stores name -> id in the activation variable cluster_credential_ids.
+          # The alert label is still the credential name.
           job_args:
             credentials:
-              - "{{ event.payload.commonLabels.cluster }}"
+              - "{{ cluster_credential_ids[event.payload.commonLabels.cluster] | int }}"
             extra_vars:
               cluster: "{{ event.payload.commonLabels.cluster }}"
               namespace: "{{ event.payload.commonLabels.namespace }}"

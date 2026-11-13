@@ -208,6 +208,36 @@
       retries: 30
       delay: 10
 
+    - name: List controller credentials
+      ansible.builtin.uri:
+        url: "https://{{ aap_host }}/api/controller/v2/credentials/?page_size=200"
+        headers:
+          Authorization: "Bearer {{ aap_token }}"
+        validate_certs: false
+        status_code: 200
+      register: controller_credentials
+
+    - name: Start an empty cluster credential map
+      ansible.builtin.set_fact:
+        cluster_credential_ids: {}
+
+    - name: Map each cluster credential name to its controller id
+      ansible.builtin.set_fact:
+        cluster_credential_ids: "{{ cluster_credential_ids | combine({item.name: item.id}) }}"
+      loop: "{{ controller_credentials.json.results }}"
+      when:
+        - item.name != 'aap-eda-bootstrap'
+        - item.summary_fields.credential_type.name == 'OpenShift or Kubernetes API Bearer Token'
+
+    - name: Require a credential id for every cluster label
+      ansible.builtin.assert:
+        that:
+          - controller_credentials.json.count | int <= 200
+          - cluster_credential_ids | length > 0
+        fail_msg: >-
+          No OpenShift bearer credential is available to launch the restart job.
+          Add an AnsibleCredential whose name is the cluster label on the alert.
+
     - name: Enable the activation on the event stream
       ansible.eda.rulebook_activation:
         name: spring-boot-demo-pod-restart
@@ -218,10 +248,19 @@
         decision_environment_name: de-supported
         restart_policy: on-failure
         log_level: info
-        state: enabled
+        # present updates an activation that is already enabled. enabled does not.
+        state: present
+        # The launch API takes credential ids. The rulebook looks the cluster
+        # label up in this map. Re-run this job after adding a cluster credential.
+        extra_vars: "{{ {'cluster_credential_ids': cluster_credential_ids} | to_nice_yaml }}"
         # The module resolves these by name, then sends the ids.
         eda_credentials:
           - AAP-Controller-Dispatch
         event_streams:
           - event_stream: "{{ event_stream_name }}"
             source_name: alertmanager
+
+    - name: Reload the activation so it reads the credential map
+      ansible.eda.rulebook_activation:
+        name: spring-boot-demo-pod-restart
+        restart: true

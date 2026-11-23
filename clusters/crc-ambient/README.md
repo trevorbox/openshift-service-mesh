@@ -10,6 +10,8 @@
 oc patch networks.operator.openshift.io cluster --type=merge -p '{"spec":{"defaultNetwork":{"ovnKubernetesConfig":{"gatewayConfig":{"routingViaHost": true}}}}}'
 ```
 
+Why this is required, and why any hostNetwork pod on the same node can skip STRICT mTLS: [readme-routing-via-host.md](readme-routing-via-host.md).
+
 ## Notes
 
 Had to delete PeerAuthentication with STRICT mtls mode to remove these errors in ztunnel for liveness/readiness probes to start working

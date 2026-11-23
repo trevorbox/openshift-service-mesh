@@ -9,11 +9,11 @@ operatorGroups:
   targetOwnNamespace: true
 
 operators:
-- channel: stable-4.20
+- channel: stable-5.0
   installPlanApproval: Manual
   name: odf-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  csv: odf-operator.v4.20.19-rhodf
+  csv: odf-operator.v5.0.0-rhodf
   namespace: openshift-storage
   installPlanVerifierActiveDeadlineSeconds: 1200

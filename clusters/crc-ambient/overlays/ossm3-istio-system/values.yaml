@@ -1,6 +1,6 @@
 istioCNI:
   spec:
-    version: v1.27.3
+    version: v1.31.1
     namespace: istio-cni
     profile: ambient # Changed to ambient
     values:
@@ -16,7 +16,7 @@ ztunnel:
   spec:
     namespace: ztunnel
     # profile: ambient
-    version: v1.27.3
+    version: v1.31.1
     values:
       ztunnel:
         logLevel: info
@@ -97,4 +97,4 @@ revisions:
                 headersToDownstreamOnDeny: ["content-type", "set-cookie"] # headers sent back to the client when request is denied.
           outboundTrafficPolicy:
             mode: REGISTRY_ONLY # ALLOW_ANY
-      version: v1.27.3
+      version: v1.31.1
